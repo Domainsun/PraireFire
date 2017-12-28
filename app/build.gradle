@@ -17,7 +17,7 @@ android {
         }
     }
 }
-
+/**/
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     //noinspection GradleCompatible
@@ -38,19 +38,24 @@ dependencies {
     //列表
     implementation 'com.yanzhenjie:recyclerview-swipe:1.1.2'
     //底部菜单栏
-    implementation ('com.ashokvarma.android:bottom-navigation-bar:1.2.0'){
+    implementation('com.ashokvarma.android:bottom-navigation-bar:1.2.0') {
         exclude module: 'support-v4'
         exclude module: 'support-annotations'
         exclude group: 'com.android.support'
     }
     /*OKhttp 网络通信*/
-    implementation ('com.squareup.okhttp3:okhttp:3.9.1'){
+    implementation('com.squareup.okhttp3:okhttp:3.9.1') {
         exclude module: 'support-v4'
     }
     /*图片加载*/
-    compile ('com.facebook.fresco:fresco:1.7.1'){
+    compile('com.facebook.fresco:fresco:1.7.1') {
         exclude module: 'support-v4'
     }
+
+    /*黄油刀*/
+
+    compile 'com.jakewharton:butterknife:8.8.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 
 }
 
