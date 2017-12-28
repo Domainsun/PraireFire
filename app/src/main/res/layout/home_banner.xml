@@ -1,0 +1,10 @@
+<com.daimajia.slider.library.SliderLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/home_banner_slider"
+    android:layout_width="match_parent"
+    custom:pager_animation="Accordion"
+    custom:auto_cycle="true"
+    custom:indicator_visibility="visible"
+    custom:pager_animation_span="1100"
+    android:layout_height="150dp"/>

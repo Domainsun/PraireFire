@@ -35,6 +35,14 @@ dependencies {
         exclude module: 'support-annotations'
         exclude group: 'com.android.support'
     }
+    implementation 'com.jakewharton:butterknife:8.5.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
+    //三级缓存的图片加载器
+    implementation 'com.squareup.picasso:picasso:2.3.2'
+//属性动画的兼容包
+    implementation 'com.nineoldandroids:library:2.4.0'
+//依赖开源的轮播大图控件
+    implementation 'com.daimajia.slider:library:1.1.5@aar'
 }
 
 

@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">燎原生活</string>
     <string name="checkin">点击进入</string>
+    <string name="my">我的</string>
+    <string name="order">订单</string>
+    <string name="map">地图</string>
+    <string name="index">首页</string>
 </resources>

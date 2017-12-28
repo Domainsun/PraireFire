@@ -31,18 +31,17 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
 
     @Override
     protected void initViews() {
-        BottomNavigationBar bottomNavigationBar = (BottomNavigationBar) findViewById(R.id.bottom_navigation_bar);
+        BottomNavigationBar bottomNavigationBar =  findViewById(R.id.bottom_navigation_bar);
         bottomNavigationBar.setMode(BottomNavigationBar.MODE_FIXED);
         bottomNavigationBar
                 .setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC
                 );
-        bottomNavigationBar.addItem(new BottomNavigationItem(R.mipmap.home, "首页").setActiveColorResource(R.color.orange))
-                .addItem(new BottomNavigationItem(R.mipmap.location, "地图").setActiveColorResource(R.color.orange))
-                .addItem(new BottomNavigationItem(R.mipmap.order, "订单").setActiveColorResource(R.color.orange))
-                .addItem(new BottomNavigationItem(R.mipmap.me, "附近").setActiveColorResource(R.color.orange))
+        bottomNavigationBar.addItem(new BottomNavigationItem(R.mipmap.home, getString(R.string.index)).setActiveColorResource(R.color.orange))
+                .addItem(new BottomNavigationItem(R.mipmap.location, getString(R.string.map)).setActiveColorResource(R.color.orange))
+                .addItem(new BottomNavigationItem(R.mipmap.order, getString(R.string.order)).setActiveColorResource(R.color.orange))
+                .addItem(new BottomNavigationItem(R.mipmap.me, getString(R.string.my)).setActiveColorResource(R.color.orange))
                 .setFirstSelectedPosition(0)
                 .initialise();
-
         fragments = getFragments();
         setDefaultFragment();
         bottomNavigationBar.setTabSelectedListener(this);
@@ -94,11 +93,11 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
     }
 
     @Override
-    public void onTabReselected(int i) {
+    public void onTabReselected(int position) {
 
     }
     /**
-     * 设置默认的
+     * 设置默认的页面（首页）
      */
     private void setDefaultFragment() {
         FragmentManager fm = getSupportFragmentManager();

@@ -1,30 +1,17 @@
 package com.praire.fire.base;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 
 
 
 public abstract class BaseActivity extends AppCompatActivity {
 
-    private static final int NUM_OF_ITEMS = 100;
-
-    private static final int NUM_OF_ITEMS_FEW = 3;
-
-    protected ActionBar actionBar;
-
-    protected Intent intent;
     // Refer fragment class
     protected FragmentManager fm;
 
-    protected FragmentTransaction fragmentTransaction;
 
-    protected Fragment currentFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
