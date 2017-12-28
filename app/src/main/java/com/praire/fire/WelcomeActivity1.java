@@ -2,29 +2,26 @@ package com.praire.fire;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.Handler;
 import android.os.Bundle;
-
-
+import android.os.Handler;
 
 /**
- * 欢迎页面
- * @author lyp
+ * Created by lyp on 2017/12/27.
  */
-public class GuidActivity extends Activity {
 
+public class WelcomeActivity1 extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_guid);
+        setContentView(R.layout.activity_welcome1);
         Handler handler = new Handler();
         //当计时结束,跳转至主界面
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(GuidActivity.this, WelcomeActivity1.class);
+                Intent intent = new Intent(WelcomeActivity1.this, WelcomeActivity2.class);
                 startActivity(intent);
-                GuidActivity.this.finish();
+                WelcomeActivity1.this.finish();
             }
         }, 3000);
     }

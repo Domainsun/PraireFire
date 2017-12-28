@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">PraireFire</string>
+    <string name="app_name">燎原生活</string>
+    <string name="checkin">点击进入</string>
 </resources>
