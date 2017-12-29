@@ -7,5 +7,13 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
-
+    <!--自定义样式修改RatingBar的图标以及颜色-->
+    <style name="GlimmerRatingBar"
+        parent="Base.Widget.AppCompat.RatingBar">
+        <!--修改默认图片-->
+        <item name="android:progressDrawable">@drawable/glimmer_ratingbar</item>
+        <!--修改默认大小-->
+        <item name="android:maxHeight">13dp</item>
+        <item name="android:minHeight">13dp</item>
+    </style>
 </resources>

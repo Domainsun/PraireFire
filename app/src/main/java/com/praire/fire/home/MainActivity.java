@@ -1,4 +1,4 @@
-package com.praire.fire.home.fragment;
+package com.praire.fire.home;
 
 
 import android.support.v4.app.Fragment;
@@ -9,7 +9,9 @@ import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.praire.fire.R;
 import com.praire.fire.base.BaseActivity;
-import com.praire.fire.home.OrderFragment;
+import com.praire.fire.home.fragment.HomeFragment;
+import com.praire.fire.home.fragment.MyFragment;
+import com.praire.fire.home.fragment.OrderFragment;
 import com.praire.fire.map.MapFragment;
 
 import java.util.ArrayList;
