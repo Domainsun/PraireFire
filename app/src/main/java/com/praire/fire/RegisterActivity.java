@@ -12,15 +12,13 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.praire.fire.base.BaseActivity;
-import com.praire.fire.data.Data;
+import com.praire.fire.okhttp.JavaBean.APIResultBean;
+import com.praire.fire.okhttp.JavaBean.J2O;
+import com.praire.fire.okhttp.UseAPIs;
 import com.praire.fire.okhttp.UseApi;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
-import static android.content.ContentValues.TAG;
 
 public class RegisterActivity extends Activity {
 
@@ -46,6 +44,8 @@ public class RegisterActivity extends Activity {
     public  static Handler handler_register;
     public static final int PhotoCode =1;
     UseApi api=new UseApi();
+    J2O j2O=new J2O();
+
 
     private String phone="";
     private String photoCode="";
@@ -64,8 +64,6 @@ public class RegisterActivity extends Activity {
 
 
     }
-
-
 
     private void initview() {
         api.getPhotoCode();
@@ -101,32 +99,41 @@ public class RegisterActivity extends Activity {
                 if (phone.equals("") || photoCode.equals("")) {
                     Toast.makeText(this, "请输入手机号和图形验证码", Toast.LENGTH_SHORT).show();
                 } else {
-                    new Thread(){
-                        @Override
-                        public void run() {
-                            super.run();
-                            api.sendSmsCode(phone,photoCode,photoCodeCookie);
-                        }
-                    }.start();
+                    String result="";
+                    result=new UseAPIs().sendSmsCode(phone,photoCode,photoCodeCookie);
+                    APIResultBean a=j2O.getAPIResult(result);
+                    if ("0".equals(a.getCode())) {
+                        Toast.makeText(this, "发送成功", Toast.LENGTH_SHORT).show();
+
+//                        new CountDownUtil()
+//                                .setCountDownMillis(60_000L)//倒计时60000ms
+//                                .setCountDownColor(android.R.color.holo_blue_light,android.R.color.darker_gray)//不同状态字体颜色
+//                                .setOnClickListener(new View.OnClickListener() {
+//                                    @Override
+//                                    public void onClick(View v) {
+//                                        Log.e("MainActivity","发送成功");
+//                                    }
+//                                })
+//                                .start();
+
+
+                    } else {
+                        Toast.makeText(this, a.getMsg(), Toast.LENGTH_SHORT).show();
+                        api.getPhotoCode();
+                    }
                 }
                 break;
             case R.id.btn_register:
-
                 phone=edInputPhone.getText().toString();
                 smsCode=etInputSmsCode.getText().toString();
                 pw=etInputPw.getText().toString();
                 invitation=etInputInvitationCode.getText().toString();
-
-
-                new Thread(){
-                    @Override
-                    public void run() {
-                        super.run();
-                        api.register(phone,smsCode,pw,invitation,photoCodeCookie);
-                    }
-                }.start();
-
-
+                String result="";
+                result=new UseAPIs().register(phone,pw,invitation,photoCodeCookie);
+                APIResultBean a=j2O.getAPIResult(result);
+                Toast.makeText(this, a.getMsg()+"", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, invitation, Toast.LENGTH_SHORT).show();
+                System.out.println(result);
                 break;
         }
     }

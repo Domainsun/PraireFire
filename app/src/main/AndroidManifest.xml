@@ -3,6 +3,7 @@
     package="com.praire.fire">
 
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,9 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".GuidActivity">
-
-        </activity>
+        <activity android:name=".GuidActivity"></activity>
         <activity android:name=".home.fragment.MainActivity" />
         <activity android:name=".WelcomeActivity1" />
         <activity android:name=".WelcomeActivity2" />
@@ -23,6 +22,10 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".SettledActivity">
+
+
         </activity>
     </application>
 
