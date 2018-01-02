@@ -1,6 +1,7 @@
 package com.praire.fire.home.fragment;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,7 +15,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
@@ -75,7 +75,9 @@ public class HomeFragment extends BaseFragment implements BaseSliderView.OnSlide
     private ShopListAdapter adapter;
     private int index = 1;
     private List<ShopBean.PagelistBean> evEntitys = new ArrayList<>();
-
+    private int lastVisibleItem;
+    private LinearLayoutManager            linearLayoutManager;
+    private boolean loadMore = true;
     @Override
     public View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
@@ -105,68 +107,57 @@ public class HomeFragment extends BaseFragment implements BaseSliderView.OnSlide
         homeBannerSlider.setDuration(3000);
 //        homeBannerSlider.addOnPageChangeListener(this);
 
-
-        homeEcyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        linearLayoutManager = new LinearLayoutManager(getActivity());
+        homeEcyclerView.setLayoutManager(linearLayoutManager);
         homeEcyclerView.setItemAnimator(new DefaultItemAnimator());
         //添加分割线
         homeEcyclerView.addItemDecoration(new RecycleViewDivider(
                 getActivity(), LinearLayoutManager.HORIZONTAL));
-
-
-    }
-
-    private void setListData() {
-        adapter = new ShopListAdapter(R.layout.item_shop_list, evEntitys);
+        adapter = new ShopListAdapter(getActivity());
         homeEcyclerView.setAdapter(adapter);
-        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                Toast.makeText(getActivity(), "onItemClick" + position, Toast.LENGTH_SHORT).show();
-            }
-        });
-       /* // 滑动最后一个Item的时候回调onLoadMoreRequested方法RequestLoadMoreListener
-        adapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
-            @Override
-            public void onLoadMoreRequested() {
-                ++index;
-                requestShopList(index);
+      /*  homeEcyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
-                homeEcyclerView.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (mCurrentCounter >= TOTAL_COUNTER) {
-                            //数据全部加载完毕
-                            adapter.loadMoreEnd();
-                        } else {
-                            if (isErr) {
-                                //成功获取更多数据
-                                adapter.addData(DataServer.getSampleData(PAGE_SIZE));
-                                mCurrentCounter = adapter.getData().size();
-                                adapter.loadMoreComplete();
-                            } else {
-                                //获取更多数据失败
-                                isErr = true;
-                                Toast.makeText(getActivity(), R.string.network_err, Toast.LENGTH_LONG).show();
-                                adapter.loadMoreFail();
 
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (newState == RecyclerView.SCROLL_STATE_IDLE && lastVisibleItem + 1 == adapter.getItemCount()) {
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (loadMore) {
+                                getNextPage();
                             }
                         }
-                    }
+                    }, 1000);
 
-                }, 3000);
+
+                }
             }
-        }, homeEcyclerView);
 
-        */
-
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition();
+            }
+        });*/
     }
+
+
 
     @Override
     public void initData() {
 
 
     }
-
+    private void getNextPage() {
+        if (evEntitys.isEmpty() || evEntitys.size() % 10 != 0) {
+            loadMore = false;
+            return;
+        }
+        index++;
+        requestShopList(index);
+    }
     /**
      * 获取商家列表
      */
@@ -183,6 +174,7 @@ public class HomeFragment extends BaseFragment implements BaseSliderView.OnSlide
                     @Override
                     public void run() {
                         Toast.makeText(getActivity(), "网络出错，请重试", Toast.LENGTH_SHORT).show();
+                        loadMore = false;
                     }
                 });
                 e.printStackTrace();
@@ -192,14 +184,17 @@ public class HomeFragment extends BaseFragment implements BaseSliderView.OnSlide
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
 
                 String data = response.body().string();
+                if(data == null){
+                    loadMore = false;
+                }
                 Log.e("data", data);
                 Gson gson = new Gson();
-                ShopBean evEntity = gson.fromJson(data, ShopBean.class);
+                final ShopBean evEntity = gson.fromJson(data, ShopBean.class);
                 evEntitys = evEntity.getPagelist();
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        setListData();
+                        adapter.setEntities(evEntitys);
                     }
                 });
 

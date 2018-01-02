@@ -8,6 +8,8 @@ import com.praire.fire.base.BaseApplication;
  */
 
 public class MyApplication extends BaseApplication {
+
+
     @Override
     protected void create() {
         Fresco.initialize(this);

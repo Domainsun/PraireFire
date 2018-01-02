@@ -19,7 +19,6 @@ android {
 }
 /**/
 dependencies {
-
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     //noinspection GradleCompatible
     implementation 'com.android.support:appcompat-v7:26.0.2'
@@ -28,18 +27,14 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-
     //    //列表
     //    implementation 'com.yanzhenjie:recyclerview-swipe:1.1.2'
-
-
     //底部菜单栏
     implementation('com.ashokvarma.android:bottom-navigation-bar:1.2.0') {
         exclude module: 'support-v4'
         exclude module: 'support-annotations'
         exclude group: 'com.android.support'
     }
-
     //三级缓存的图片加载器
     implementation 'com.squareup.picasso:picasso:2.3.2'
     //属性动画的兼容包
@@ -50,25 +45,22 @@ dependencies {
     implementation('com.squareup.okhttp3:okhttp:3.9.1') {
         exclude module: 'support-v4'
     }
-
     /*图片加载  是否重复功能com.squareup.picasso:picasso:2.3.2 ?待定*/
     compile('com.facebook.fresco:fresco:1.7.1') {
         exclude module: 'support-v4'
     }
-
     //Gson
     compile 'com.google.code.gson:gson:2.2.4'
-    //列表适配器
-    compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.34'
     //列表
     compile 'com.android.support:recyclerview-v7:26.0.0-alpha1'
-
-
     /*黄油刀*/
     compile 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+    compile 'com.huxq17.xrefreshview:xrefreshview:3.6.9'
+    //xrefreshview依赖下面的库
+    compile 'com.android.support:support-v4:26.0.0'
 
-
+    compile 'com.android.support:design:26.0.0-alpha1'
 
 }
 

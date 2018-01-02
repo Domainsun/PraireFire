@@ -3,8 +3,8 @@
     package="com.praire.fire">
 
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
 
@@ -25,17 +25,29 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".RegisterActivity"/>
+        <activity android:name=".RegisterActivity" />
 
         <activity android:name=".home.MainActivity" />
-         <activity android:name=".WelcomeActivity1" />
+        <activity android:name=".WelcomeActivity1" />
         <activity android:name=".WelcomeActivity2" />
         <activity android:name=".WelcomeActivity3" />
 
-        <activity android:name=".merchant.SettledActivity">
+        <activity android:name=".merchant.SettledActivity" />
 
+        <activity android:name=".car.CarActivity" />
 
-        </activity>
+        <activity android:name=".edu.EducationActivity" />
+
+        <activity android:name=".my.CustomerServiceActivity" />
+        <activity android:name=".my.IntegralActivity" />
+        <activity android:name=".my.InvitationIntegralActivity" />
+        <activity android:name=".my.MyCollectActivity" />
+        <activity android:name=".my.MyEvaluateActivity" />
+        <activity android:name=".my.MyWalletActivity" />
+        <activity android:name=".my.NearbyActivity" />
+        <activity android:name=".my.SetActivity" />
+        <activity android:name=".my.ShoppingCarActivity" />
+        <activity android:name=".my.AccountManagementActivity" />
     </application>
 
 </manifest>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:xrefreshview="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/grey_background"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@mipmap/head_backgroud">
+
+        <ImageView
+            android:id="@+id/order_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:padding="8dp"
+            android:src="@mipmap/back"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textColor="@color/white"
+            android:textSize="21sp"
+            android:text="@string/order"/>
+    </RelativeLayout>
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:textSize="19sp"
+    android:textColor="@color/text_color"
+    android:gravity="center_vertical"
+    android:paddingLeft="15dp"
+    android:background="@color/white"
+    android:text="我的订单"/>
+    <android.support.design.widget.TabLayout
+        android:id="@+id/order_tabs"
+        android:layout_width="match_parent"
+        android:layout_marginTop="1dp"
+        android:layout_height="50dp"
+        android:background="@color/white"
+        app:tabSelectedTextColor="@color/text_color"
+        app:tabIndicatorColor="@color/white"
+        app:tabTextColor="@color/grey"
+        app:tabGravity="fill"
+        app:tabMode="fixed" />
+
+    <com.andview.refreshview.XRefreshView
+        android:id="@+id/order_list_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="1dp"
+         >
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/order_list_recyclerview"
+            android:layout_marginBottom="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.andview.refreshview.XRefreshView>
+</LinearLayout>
