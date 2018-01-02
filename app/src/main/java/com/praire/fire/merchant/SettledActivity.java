@@ -1,8 +1,10 @@
-package com.praire.fire;
+package com.praire.fire.merchant;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+
+import com.praire.fire.R;
 
 import java.util.List;
 

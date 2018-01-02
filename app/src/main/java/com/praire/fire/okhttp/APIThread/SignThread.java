@@ -1,6 +1,6 @@
 package com.praire.fire.okhttp.APIThread;
 
-import com.praire.fire.data.CommonUrl;
+import com.praire.fire.common.ConstanUrl;
 
 import java.io.IOException;
 import java.util.concurrent.Callable;
@@ -34,7 +34,7 @@ public class SignThread implements Callable {
                 .add("pwd", pwd)
                 .build();
         Request request = new Request.Builder()
-                .url(CommonUrl.login)
+                .url(ConstanUrl.login)
                 .post(formBody)
                 .build();
         Response response = client.newCall(request).execute();

@@ -6,13 +6,12 @@
     <color name="white">#FFFFFF</color>
     <color name="orange">#FF9118</color>
     <color name="grey">#989898</color>
-<<<<<<< HEAD
+
     <color name="select_bg_bantouming">#ccffdca5</color>
     <color name="grey_background">#f6f6f6</color>
     <color name="text_color">#282828</color>
-=======
+
     <color name="viewcolor">#669999</color>
 
->>>>>>> 74b785e32dc39b8f80ed9cbd6045903b5e0a0032
 
 </resources>

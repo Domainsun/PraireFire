@@ -1,6 +1,6 @@
 package com.praire.fire.okhttp.APIThread;
 
-import com.praire.fire.data.CommonUrl;
+import com.praire.fire.common.ConstanUrl;
 
 import java.io.IOException;
 import java.util.concurrent.Callable;
@@ -36,7 +36,7 @@ public class RegisterThread implements Callable {
                 .add("managertel", managertel)
                 .build();
         Request request = new Request.Builder()
-                .url(CommonUrl.register)
+                .url(ConstanUrl.register)
                 .post(formBody)
                 .addHeader("cookie",cookie)
                 .build();

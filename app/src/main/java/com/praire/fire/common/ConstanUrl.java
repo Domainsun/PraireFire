@@ -7,6 +7,9 @@ package com.praire.fire.common;
  */
 
 public class ConstanUrl {
+    public final static String login="https://www.lygyxh.cn/api.php/Public/login";
+    public final static String register="https://www.lygyxh.cn/api.php/Public/register";
+
     /**
      * 商家列表
      */
