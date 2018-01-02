@@ -25,9 +25,10 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 import static android.content.ContentValues.TAG;
+import static com.praire.fire.common.ConstanUrl.PhotoCode;
 
 /**
- * Created by sunlo on 2017/12/28.
+ * Created by domain on 2017/12/29.
  */
 
 public class UseApi {
@@ -67,15 +68,13 @@ public class UseApi {
             public void onResponse(Call call, Response response) throws IOException {
                 if (response.isSuccessful()) {
                     photocookie=response.headers("set-cookie").get(0);
-                    System.out.println("henader\n"+response.headers());
-                    System.out.println("cookieuserapi"+photocookie);
                     setPhotocookie(photocookie);
                     InputStream in = response.body().byteStream();
                     //转化为bitmap
                     Bitmap bitmap = BitmapFactory.decodeStream(in);
                     Log.d(TAG, "onResponse: "+bitmap);
                     Message message=Message.obtain();
-                    message.what=RegisterActivity.PhotoCode;
+                    message.what=PhotoCode;
                     message.obj=bitmap;
                     RegisterActivity.handler_register.sendMessage(message);
                 }

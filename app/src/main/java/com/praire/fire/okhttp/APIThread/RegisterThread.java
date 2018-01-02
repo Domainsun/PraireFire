@@ -16,12 +16,15 @@ import okhttp3.Response;
  */
 
 public class RegisterThread implements Callable {
+    /**
+     * Created by domain on 2017/12/29.
+     */
+    String tel, pwd,cookie,managertel,smsCode;
 
-    String tel, pwd,cookie,managertel;
-
-    public RegisterThread(String tel, String pwd, String managertel, String cookie) {
+    public RegisterThread(String tel, String pwd, String smsCode,String managertel, String cookie) {
         this.tel = tel;
         this.pwd = pwd;
+        this.smsCode=smsCode;
         this.cookie = cookie;
         this.managertel = managertel;
     }
@@ -33,21 +36,20 @@ public class RegisterThread implements Callable {
         RequestBody formBody = new FormBody.Builder()
                 .add("tel", tel)
                 .add("pwd", pwd)
+                .add("smscode", smsCode)
                 .add("managertel", managertel)
                 .build();
         Request request = new Request.Builder()
-                .url(ConstanUrl.register)
+                .url(ConstanUrl.Register)
                 .post(formBody)
-                .addHeader("cookie",cookie)
+//                .addHeader("cookie",cookie)
                 .build();
         Response response = client.newCall(request).execute();
         if (!response.isSuccessful()) {
             throw new IOException("Unexpected code " + response);
         }
         String cookie = response.headers("set-cookie").get(0);
-
         String result = response.body().string();
-
         return result;
     }
 }

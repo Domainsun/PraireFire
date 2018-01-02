@@ -1,6 +1,11 @@
 package com.praire.fire.okhttp.APIThread;
 
+import android.app.Application;
+import android.os.Message;
+
+import com.praire.fire.RegisterActivity;
 import com.praire.fire.common.ConstanUrl;
+import com.praire.fire.common.MyApp;
 
 import java.io.IOException;
 import java.util.concurrent.Callable;
@@ -11,18 +16,20 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
+import static com.praire.fire.common.ConstanUrl.Hsign;
+
 /**
- * Created by sunlo on 2017/12/29.
+ * Created by domain on 2017/12/29.
  */
 
 public class SignThread implements Callable {
 
-    String tel, pwd,cookie;
-
-    public SignThread(String tel, String pwd, String cookie) {
+    String tel, pwd;
+    MyApp application;
+    public SignThread(String tel, String pwd,MyApp application) {
         this.tel = tel;
         this.pwd = pwd;
-        this.cookie = cookie;
+        this.application=application;
     }
 
     @Override
@@ -34,7 +41,7 @@ public class SignThread implements Callable {
                 .add("pwd", pwd)
                 .build();
         Request request = new Request.Builder()
-                .url(ConstanUrl.login)
+                .url(ConstanUrl.LOGIN)
                 .post(formBody)
                 .build();
         Response response = client.newCall(request).execute();
@@ -42,6 +49,8 @@ public class SignThread implements Callable {
             throw new IOException("Unexpected code " + response);
         }
         String cookie = response.headers("set-cookie").get(0);
+
+        application.setSignCookie(cookie);
         String result = response.body().string();
         return result;
     }

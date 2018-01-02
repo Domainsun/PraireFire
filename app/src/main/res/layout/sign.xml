@@ -96,13 +96,14 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
+            android:id="@+id/et_phone"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="15dp"
             android:layout_marginStart="@dimen/y200"
             android:background="@null"
             android:hint="手机号"
-            android:textSize="13sp"
             android:inputType="phone"
+            android:textSize="13sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -131,6 +132,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
+            android:id="@+id/et_pw"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/y200"
@@ -165,6 +167,7 @@
 
 
         <Button
+            android:id="@+id/btn_sign"
             android:layout_width="@dimen/x630"
             android:layout_height="@dimen/y100"
             android:layout_marginEnd="@dimen/x32"
@@ -186,6 +189,7 @@
         >
 
         <TextView
+            android:id="@+id/tv_register"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="手机快速注册"
@@ -196,6 +200,7 @@
              />
 
         <TextView
+            android:id="@+id/tv_findPw"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="找回密码"
