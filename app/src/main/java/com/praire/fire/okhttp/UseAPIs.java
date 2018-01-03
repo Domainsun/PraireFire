@@ -1,13 +1,17 @@
 package com.praire.fire.okhttp;
 
+import android.app.Application;
+
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 
+import com.praire.fire.common.MyApp;
 import com.praire.fire.okhttp.APIThread.RegisterThread;
 import com.praire.fire.okhttp.APIThread.SendSmsCodeThread;
+import com.praire.fire.okhttp.APIThread.SignThread;
 
 /**
- * Created by sunlo on 2017/12/29.
+ * Created by domain on 2017/12/29.
  */
 
 public class UseAPIs {
@@ -28,9 +32,9 @@ public class UseAPIs {
         return result;
     }
 
-    public String register(String tel, String pwd, String managertel, String cookie) {
+    public String register(String tel, String pwd, String smsCode,String managertel, String cookie) {
         String result = "";
-        RegisterThread tSign = new RegisterThread(tel,pwd,managertel,cookie);
+        RegisterThread tSign = new RegisterThread(tel,pwd,smsCode,managertel,cookie);
         FutureTask<String> ft = new FutureTask<>(tSign);
         Thread Thread = new Thread(ft);
         Thread.start();
@@ -43,4 +47,22 @@ public class UseAPIs {
         }
         return result;
     }
+    public String sign(String tel, String pwd, MyApp application) {
+        String result = "";
+        SignThread tSign = new SignThread(tel,pwd,application);
+        FutureTask<String> ft = new FutureTask<>(tSign);
+        Thread Thread = new Thread(ft);
+        Thread.start();
+        try {
+            result = ft.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+
+
 }

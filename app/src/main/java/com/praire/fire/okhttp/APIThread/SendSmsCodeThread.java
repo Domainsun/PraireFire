@@ -1,5 +1,11 @@
 package com.praire.fire.okhttp.APIThread;
 
+import android.app.Application;
+import android.os.Message;
+
+import com.praire.fire.RegisterActivity;
+import com.praire.fire.common.ConstanUrl;
+
 import java.io.IOException;
 import java.util.concurrent.Callable;
 
@@ -9,14 +15,16 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
+import static com.praire.fire.common.ConstanUrl.HsmsCode;
+
 /**
- * Created by sunlo on 2017/12/29.
+ * Created by domain on 2017/12/29.
  */
+
 
 public class SendSmsCodeThread implements Callable {
 
     String tel, checkcode,cookie;
-
     public SendSmsCodeThread(String tel, String checkcode, String cookie) {
         this.tel = tel;
         this.checkcode = checkcode;
@@ -32,7 +40,7 @@ public class SendSmsCodeThread implements Callable {
                 .add("checkcode",checkcode)
                 .build();
         Request request = new Request.Builder()
-                .url("https://www.lygyxh.cn/api.php/Verifytel/sendsms")
+                .url(ConstanUrl.SENDSMSCODE)
                 .addHeader("cookie",cookie)
                 .post(formBody)
                 .build();
@@ -41,9 +49,12 @@ public class SendSmsCodeThread implements Callable {
             throw new IOException("Unexpected code " + response);
         }
         String cookie = response.headers("set-cookie").get(0);
-        System.out.println("sendsmscodecookie"+cookie);
+        System.out.println(cookie);
+        Message message=Message.obtain();
+        message.what=HsmsCode;
+        message.obj=cookie;
+        RegisterActivity.handler_register.sendMessage(message);
         String result = response.body().string();
-
         return result;
     }
 }

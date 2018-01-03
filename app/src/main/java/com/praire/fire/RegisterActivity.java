@@ -1,8 +1,11 @@
 package com.praire.fire;
 
 import android.app.Activity;
+import android.app.Application;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -10,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.praire.fire.okhttp.JavaBean.APIResultBean;
@@ -19,6 +23,9 @@ import com.praire.fire.okhttp.UseApi;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static com.praire.fire.common.ConstanUrl.HsmsCode;
+import static com.praire.fire.common.ConstanUrl.PhotoCode;
 
 public class RegisterActivity extends Activity {
 
@@ -42,7 +49,7 @@ public class RegisterActivity extends Activity {
     Button btnRegister;
 
     public  static Handler handler_register;
-    public static final int PhotoCode =1;
+
     UseApi api=new UseApi();
     J2O j2O=new J2O();
 
@@ -53,19 +60,40 @@ public class RegisterActivity extends Activity {
     private String pw="";
     private String invitation="";
     String photoCodeCookie="";
+    String smsCodeCookie="";
+    CountDownTimer timer;
+    Application application=getApplication();
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         ButterKnife.bind(this);
-        initdata();
         initview();
 
 
     }
 
     private void initview() {
+
+        timer = new CountDownTimer(60000, 1000) {
+
+            @Override
+            public void onTick(long millisUntilFinished) {
+                btnSendSmsCode.setText((millisUntilFinished / 1000) + "秒后重发");
+                btnSendSmsCode.setEnabled(false);
+            }
+
+            @Override
+            public void onFinish() {
+                btnSendSmsCode.setEnabled(true);
+                btnSendSmsCode.setText("发送验证码");
+            }
+        };
+
+
         api.getPhotoCode();
         handler_register=new Handler(){
             @Override
@@ -75,13 +103,13 @@ public class RegisterActivity extends Activity {
                     Bitmap bitmap= (Bitmap) msg.obj;
                     ivShowCode.setImageBitmap(bitmap);
                     photoCodeCookie= api.getPhotocookie();
-                    System.out.println("cookie"+photoCodeCookie);
+                }else if (msg.what==HsmsCode) {
+                    smsCodeCookie= (String) msg.obj;
                 }
-            }
-        };
-    }
-    private void initdata() {
+                }
 
+
+        };
     }
 
 
@@ -94,6 +122,7 @@ public class RegisterActivity extends Activity {
                 api.getPhotoCode();
                 break;
             case R.id.btn_sendSmsCode:
+
                 phone=edInputPhone.getText().toString();
                 photoCode=edInputPhotoCode.getText().toString();
                 if (phone.equals("") || photoCode.equals("")) {
@@ -102,21 +131,9 @@ public class RegisterActivity extends Activity {
                     String result="";
                     result=new UseAPIs().sendSmsCode(phone,photoCode,photoCodeCookie);
                     APIResultBean a=j2O.getAPIResult(result);
-                    if ("0".equals(a.getCode())) {
+                    if ("1".equals(a.getCode())) {
                         Toast.makeText(this, "发送成功", Toast.LENGTH_SHORT).show();
-
-//                        new CountDownUtil()
-//                                .setCountDownMillis(60_000L)//倒计时60000ms
-//                                .setCountDownColor(android.R.color.holo_blue_light,android.R.color.darker_gray)//不同状态字体颜色
-//                                .setOnClickListener(new View.OnClickListener() {
-//                                    @Override
-//                                    public void onClick(View v) {
-//                                        Log.e("MainActivity","发送成功");
-//                                    }
-//                                })
-//                                .start();
-
-
+                            timer.start();
                     } else {
                         Toast.makeText(this, a.getMsg(), Toast.LENGTH_SHORT).show();
                         api.getPhotoCode();
@@ -128,14 +145,23 @@ public class RegisterActivity extends Activity {
                 smsCode=etInputSmsCode.getText().toString();
                 pw=etInputPw.getText().toString();
                 invitation=etInputInvitationCode.getText().toString();
-                String result="";
-                result=new UseAPIs().register(phone,pw,invitation,photoCodeCookie);
-                APIResultBean a=j2O.getAPIResult(result);
-                Toast.makeText(this, a.getMsg()+"", Toast.LENGTH_SHORT).show();
-                Toast.makeText(this, invitation, Toast.LENGTH_SHORT).show();
-                System.out.println(result);
+
+                if (phone.equals("") || pw.equals("")|| smsCode.equals("")) {
+                    Toast.makeText(this, "请填写完整", Toast.LENGTH_SHORT).show();
+                } else {
+                    String result="";
+                    result=new UseAPIs().register(phone,pw,smsCode,invitation,smsCodeCookie);
+                    APIResultBean a=j2O.getAPIResult(result);
+                    if ("1".equals(a.getCode())) {
+                        Intent i=new Intent(this,SignAcitvity.class);
+                        i.putExtra("phone",phone);
+                        startActivity(i);
+                    }
+                }
+
                 break;
         }
     }
+
 
 }

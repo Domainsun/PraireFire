@@ -12,6 +12,7 @@
     <color name="text_color">#282828</color>
 
     <color name="viewcolor">#669999</color>
+    <color name="text_white">#ffffff</color>
 
 
 </resources>

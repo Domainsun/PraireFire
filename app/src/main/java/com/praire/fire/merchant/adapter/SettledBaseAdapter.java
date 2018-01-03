@@ -1,5 +1,6 @@
 package com.praire.fire.merchant.adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,8 @@ import android.widget.TextView;
 
 import com.praire.fire.R;
 
+import java.util.List;
+
 /**
  * Created by sunlo on 2017/12/29.
  */
@@ -15,18 +18,25 @@ import com.praire.fire.R;
 public class SettledBaseAdapter extends  RecyclerView.Adapter<SettledBaseAdapter.ViewHolder> {
 
 
-    @Override
-    public SettledBaseAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_settled,parent,false);
-        ViewHolder holder = new ViewHolder(view);
-        return holder;
+
+    private List<String> data;
+    private LayoutInflater inflater;
+
+    public SettledBaseAdapter(Context context) {
+        inflater = LayoutInflater.from(context);
     }
 
 
     @Override
-    public void onBindViewHolder(SettledBaseAdapter.ViewHolder holder, int position) {
-//        holder.name.setText(book.getName());
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        ViewHolder holder = new ViewHolder(inflater.inflate(
+                R.layout.item_settled, parent, false));
+        return holder;
+    }
 
+    @Override
+    public void onBindViewHolder(SettledBaseAdapter.ViewHolder holder, int position) {
+        holder.name.setText(data.get(position));
     }
 
     @Override
@@ -40,6 +50,10 @@ public class SettledBaseAdapter extends  RecyclerView.Adapter<SettledBaseAdapter
             super(view);
             name =view.findViewById(R.id.tv);
         }
+    }
+
+    public void setData(List<String> pDatas) {
+        data = pDatas;
     }
 
 }

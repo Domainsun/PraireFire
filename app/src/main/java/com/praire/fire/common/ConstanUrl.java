@@ -7,9 +7,18 @@ package com.praire.fire.common;
  */
 
 public class ConstanUrl {
-    public final static String login="https://www.lygyxh.cn/api.php/Public/login";
-    public final static String register="https://www.lygyxh.cn/api.php/Public/register";
+    /**/
+    public static final int PhotoCode =1;
+    public static final int HsmsCode=2;
+    public static final int Hsign=3;
 
+
+    /*登录*/
+    public final static String LOGIN="https://www.lygyxh.cn/api.php/Public/login";
+    /*注册*/
+    public final static String Register="https://www.lygyxh.cn/api.php/Public/register";
+    /*发送短信验证码*/
+    public final static String SENDSMSCODE="https://www.lygyxh.cn/api.php/Verifytel/sendsms";
     /**
      * 商家列表
      */
