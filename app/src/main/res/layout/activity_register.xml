@@ -18,7 +18,7 @@
             android:layout_width="@dimen/x44"
             android:layout_height="@dimen/y44"
             android:layout_marginStart="@dimen/x30"
-            android:src="@drawable/sign_close"
+            android:src="@mipmap/sign_close"
             app:layout_constraintStart_toStartOf="parent" />
         <TextView
             android:id="@+id/textView"
@@ -49,7 +49,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/sign_liaoyuan" />
+            android:src="@mipmap/sign_liaoyuan" />
     </android.support.constraint.ConstraintLayout>
 
 

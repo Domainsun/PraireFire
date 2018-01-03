@@ -23,7 +23,7 @@ public class WelcomeActivity3 extends Activity {
         checkin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(WelcomeActivity3.this, MainActivity.class);
+                Intent intent = new Intent(WelcomeActivity3.this, SignAcitvity.class);
                 startActivity(intent);
                 WelcomeActivity3.this.finish();
             }

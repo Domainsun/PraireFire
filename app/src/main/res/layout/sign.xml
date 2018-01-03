@@ -20,9 +20,8 @@
             android:layout_width="@dimen/x44"
             android:layout_height="@dimen/y44"
             android:layout_marginStart="@dimen/x30"
-            android:src="@drawable/sign_close"
+            android:src="@mipmap/sign_close"
             app:layout_constraintStart_toStartOf="parent" />
-
         <TextView
             android:id="@+id/textView"
             android:layout_width="wrap_content"
@@ -30,7 +29,7 @@
             android:layout_marginEnd="@dimen/x16"
             android:layout_marginStart="@dimen/x16"
             android:text="燎原登录"
-            android:textColor="#000"
+            android:textColor="@color/text_color"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -54,7 +53,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/sign_liaoyuan" />
+            android:src="@mipmap/sign_liaoyuan" />
     </android.support.constraint.ConstraintLayout>
 
 
@@ -89,7 +88,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/x30"
             android:text="账号:"
-            android:textColor="#000"
+            android:textColor="@color/text_color"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -125,7 +124,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/x30"
             android:text="密码:"
-            android:textColor="#000"
+            android:textColor="@color/text_color"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -174,7 +173,7 @@
             android:layout_marginStart="@dimen/x32"
             android:background="@drawable/shape"
             android:text="登录"
-            android:textColor="#000"
+            android:textColor="@color/text_color"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

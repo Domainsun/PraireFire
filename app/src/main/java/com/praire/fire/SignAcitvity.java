@@ -1,8 +1,8 @@
 package com.praire.fire;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -56,6 +56,7 @@ public class SignAcitvity extends Activity {
 
     }
 
+    @SuppressLint("HandlerLeak")
     private void initview() {
        myApplication = (MyApp) getApplication();
 
@@ -68,7 +69,7 @@ public class SignAcitvity extends Activity {
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
-                if (msg.what==Hsign) {
+                if (msg.what == Hsign) {
                     String signCookie= (String) msg.obj;
                     myApplication.setSignCookie(signCookie);
 

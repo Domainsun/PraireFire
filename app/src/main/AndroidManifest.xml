@@ -17,14 +17,14 @@
         android:supportsRtl="true"
 
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".GuidActivity">
+        <activity android:name=".SignAcitvity">
 
         </activity>
 
         <activity android:name=".RegisterActivity">
 
         </activity>
-        <activity android:name=".SignAcitvity">
+        <activity android:name=".GuidActivity">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
