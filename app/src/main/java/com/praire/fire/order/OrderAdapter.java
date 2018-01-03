@@ -2,9 +2,12 @@ package com.praire.fire.order;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.praire.fire.R;
+import com.praire.fire.home.adapter.ShopListAdapter;
 import com.praire.fire.home.bean.ShopBean;
 
 import java.util.ArrayList;
@@ -31,7 +34,10 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return null;
+         MyViewHolder holder = new MyViewHolder(LayoutInflater.from(
+                context).inflate(R.layout.item_shop_list, parent,
+                false));
+        return holder;
     }
 
     @Override
