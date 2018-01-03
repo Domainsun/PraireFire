@@ -10,6 +10,18 @@ import com.praire.fire.base.BaseApplication;
 public class MyApplication extends BaseApplication {
 
 
+    private String signCookie="";
+
+
+    public String getSignCookie() {
+        return signCookie;
+    }
+
+    public void setSignCookie(String signCookie) {
+        this.signCookie = signCookie;
+    }
+
+
     @Override
     protected void create() {
         Fresco.initialize(this);

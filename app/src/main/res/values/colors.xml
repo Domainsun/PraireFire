@@ -13,6 +13,8 @@
 
     <color name="viewcolor">#669999</color>
     <color name="text_white">#ffffff</color>
+    <color name="black">#000000</color>
+    <color name="text_8f">#8f8f8f</color>
 
 
 </resources>
