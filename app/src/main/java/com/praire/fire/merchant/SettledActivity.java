@@ -38,8 +38,8 @@ public class SettledActivity extends AppCompatActivity {
     private void initView() {
         adapter = new SettledBaseAdapter(this);
         adapter.setData(mDatas);
-        mRecyclerView.setAdapter(adapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerView.setAdapter(adapter);
 
     }
 

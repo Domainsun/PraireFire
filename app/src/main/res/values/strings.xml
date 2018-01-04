@@ -6,5 +6,7 @@
     <string name="map">地图</string>
     <string name="index">首页</string>
     <string name="network_err">没有更多数据了</string>
+    <string name="account_management">账号管理</string>
+    <string name="shipping_address">收货地址</string>
 
 </resources>

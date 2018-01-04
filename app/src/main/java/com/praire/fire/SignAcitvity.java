@@ -13,7 +13,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.praire.fire.common.MyApp;
 import com.praire.fire.home.MainActivity;
 import com.praire.fire.okhttp.JavaBean.APIResultBean;
 import com.praire.fire.okhttp.JavaBean.J2O;
@@ -24,8 +23,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.praire.fire.common.ConstanUrl.Hsign;
-import static com.praire.fire.common.ConstanUrl.HsmsCode;
-import static com.praire.fire.common.ConstanUrl.PhotoCode;
 
 /**
  * Created by sunlo on 2018/1/2.
@@ -45,7 +42,7 @@ public class SignAcitvity extends Activity {
     @BindView(R.id.tv_findPw)
     TextView tvFindPw;
     public  static Handler handler_sign;
-    MyApp myApplication;
+    MyApplication myApplication;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,10 +55,7 @@ public class SignAcitvity extends Activity {
 
     @SuppressLint("HandlerLeak")
     private void initview() {
-       myApplication = (MyApp) getApplication();
-
-
-
+       myApplication = (MyApplication) getApplication();
         Intent i= getIntent();
         phone=i.getStringExtra("phone");
         etPhone.setText(phone);
@@ -72,15 +66,12 @@ public class SignAcitvity extends Activity {
                 if (msg.what == Hsign) {
                     String signCookie= (String) msg.obj;
                     myApplication.setSignCookie(signCookie);
-
-                    System.out.println("Myapplication cookie:"+myApplication.getSignCookie());
                 }
             }
 
 
         };
     }
-
     @OnClick({R.id.btn_sign, R.id.tv_register, R.id.tv_findPw})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -100,7 +91,6 @@ public class SignAcitvity extends Activity {
                 }
 
             }
-
                 break;
 
             case R.id.tv_register:

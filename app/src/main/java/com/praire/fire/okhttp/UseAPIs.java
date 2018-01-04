@@ -1,11 +1,9 @@
 package com.praire.fire.okhttp;
 
-import android.app.Application;
-
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 
-import com.praire.fire.common.MyApp;
+import com.praire.fire.MyApplication;
 import com.praire.fire.okhttp.APIThread.RegisterThread;
 import com.praire.fire.okhttp.APIThread.SendSmsCodeThread;
 import com.praire.fire.okhttp.APIThread.SignThread;
@@ -47,7 +45,7 @@ public class UseAPIs {
         }
         return result;
     }
-    public String sign(String tel, String pwd, MyApp application) {
+    public String sign(String tel, String pwd, MyApplication application) {
         String result = "";
         SignThread tSign = new SignThread(tel,pwd,application);
         FutureTask<String> ft = new FutureTask<>(tSign);

@@ -58,7 +58,6 @@ public abstract class BaseTitleActivity extends BaseActivity implements BaseLayo
 
 	public void setDefaultBack() {
 		ImageView left = new ImageView(this);
-//		left.setImageResource(R.drawable.backgray);
 		left.setImageResource(R.mipmap.back);
 		left.setDuplicateParentStateEnabled(true);
 		setTitleLeft(left);
@@ -91,7 +90,7 @@ public abstract class BaseTitleActivity extends BaseActivity implements BaseLayo
 
 		TextView right = new TextView(this);
 		right.setTextColor(getResources().getColorStateList(R.color.white));
-		right.setTextSize(TypedValue.COMPLEX_UNIT_PX, 16);
+		right.setTextSize(TypedValue.COMPLEX_UNIT_PX, 19);
 		right.setText(str);
 		if (rightTxtColor > 0) {
 			right.setTextColor(getResources().getColor(rightTxtColor));
@@ -113,7 +112,7 @@ public abstract class BaseTitleActivity extends BaseActivity implements BaseLayo
 		}
 		TextView middleV = new TextView(this);
 		middleV.setTextColor(getResources().getColor(R.color.white));
-		middleV.setTextSize(TypedValue.COMPLEX_UNIT_PX, 16);
+		middleV.setTextSize(TypedValue.COMPLEX_UNIT_PX, 42);
 		middleV.setText(title);
 		middleV.setGravity(Gravity.CENTER_VERTICAL);
 		middleV.setMaxLines(1);

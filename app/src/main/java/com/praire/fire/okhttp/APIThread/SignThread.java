@@ -1,11 +1,7 @@
 package com.praire.fire.okhttp.APIThread;
 
-import android.app.Application;
-import android.os.Message;
-
-import com.praire.fire.RegisterActivity;
+import com.praire.fire.MyApplication;
 import com.praire.fire.common.ConstanUrl;
-import com.praire.fire.common.MyApp;
 
 import java.io.IOException;
 import java.util.concurrent.Callable;
@@ -16,8 +12,6 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-import static com.praire.fire.common.ConstanUrl.Hsign;
-
 /**
  * Created by domain on 2017/12/29.
  */
@@ -25,8 +19,8 @@ import static com.praire.fire.common.ConstanUrl.Hsign;
 public class SignThread implements Callable {
 
     String tel, pwd;
-    MyApp application;
-    public SignThread(String tel, String pwd,MyApp application) {
+    MyApplication application;
+    public SignThread(String tel, String pwd,MyApplication application) {
         this.tel = tel;
         this.pwd = pwd;
         this.application=application;

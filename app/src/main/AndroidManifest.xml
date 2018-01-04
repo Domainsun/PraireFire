@@ -9,7 +9,7 @@
 
 
     <application
-        android:name=".common.MyApp"
+        android:name=".MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -17,6 +17,15 @@
         android:supportsRtl="true"
 
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+
+
+        <activity android:name=".GuidActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".SignAcitvity">
 
         </activity>
@@ -24,23 +33,13 @@
         <activity android:name=".RegisterActivity">
 
         </activity>
-        <activity android:name=".GuidActivity">
-
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".merchant.SettledActivity"/>
 
 
         <activity android:name=".home.MainActivity" />
         <activity android:name=".WelcomeActivity1" />
         <activity android:name=".WelcomeActivity2" />
         <activity android:name=".WelcomeActivity3" />
-
-        <activity android:name=".merchant.SettledActivity" />
-
         <activity android:name=".car.CarActivity" />
 
         <activity android:name=".edu.EducationActivity" />
@@ -55,6 +54,12 @@
         <activity android:name=".my.SetActivity" />
         <activity android:name=".my.ShoppingCarActivity" />
         <activity android:name=".my.AccountManagementActivity" />
+        <activity android:name=".my.ShippingAddressActivity"/>
+        <activity android:name=".my.CertificationActivity"/>
+        <activity android:name=".my.BankCardActivity"/>
+        <activity android:name=".my.ChangLoginPswActivity"/>
+        <activity android:name=".my.PassWordManagementActivity"/>
+        <activity android:name=".my.VerifyPhoneActivity"/>
     </application>
 
 </manifest>

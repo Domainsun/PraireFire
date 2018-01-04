@@ -7,11 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.praire.fire.R;
+import com.praire.fire.home.adapter.ShopListAdapter;
 import com.praire.fire.home.bean.ShopBean;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -33,7 +35,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
          MyViewHolder holder = new MyViewHolder(LayoutInflater.from(
-                context).inflate(R.layout.item_order_list, parent,
+                context).inflate(R.layout.item_shop_list, parent,
                 false));
         return holder;
     }

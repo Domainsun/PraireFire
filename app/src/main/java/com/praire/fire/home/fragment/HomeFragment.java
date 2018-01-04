@@ -105,7 +105,6 @@ public class HomeFragment extends BaseFragment implements BaseSliderView.OnSlide
         homeBannerSlider.setCustomAnimation(new DescriptionAnimation());
         //设置切换时长3000 ,时长越小，切换速度越快
         homeBannerSlider.setDuration(3000);
-//        homeBannerSlider.addOnPageChangeListener(this);
 
         linearLayoutManager = new LinearLayoutManager(getActivity());
         homeEcyclerView.setLayoutManager(linearLayoutManager);
@@ -187,7 +186,6 @@ public class HomeFragment extends BaseFragment implements BaseSliderView.OnSlide
                 if(data == null){
                     loadMore = false;
                 }
-                Log.e("data", data);
                 Gson gson = new Gson();
                 final ShopBean evEntity = gson.fromJson(data, ShopBean.class);
                 evEntitys = evEntity.getPagelist();

@@ -56,12 +56,11 @@ dependencies {
     /*黄油刀*/
     compile 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
-    compile 'com.huxq17.xrefreshview:xrefreshview:3.6.9'
-    //xrefreshview依赖下面的库
-    compile 'com.android.support:support-v4:26.0.0'
-
+    //    compile 'com.huxq17.xrefreshview:xrefreshview:3.6.9'
+    //    //xrefreshview依赖下面的库
+    //    compile 'com.android.support:support-v4:26.0.0'
     compile 'com.android.support:design:26.0.0-alpha1'
-
+    compile project(':xrefreshview')
 }
 
 
