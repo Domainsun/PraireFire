@@ -41,7 +41,7 @@ public class SettledBaseAdapter extends  RecyclerView.Adapter<SettledBaseAdapter
 
     @Override
     public int getItemCount() {
-        return 0;
+        return data.size();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder{

@@ -60,12 +60,19 @@ dependencies {
     //    //xrefreshview依赖下面的库
     //    compile 'com.android.support:support-v4:26.0.0'
     compile 'com.android.support:design:26.0.0-alpha1'
+
+    /*仿ios城市三级联动选择*/
+    compile 'liji.library.dev:citypickerview:1.1.0'
     compile project(':xrefreshview')
+    /*知乎图片选择*/
+    compile 'com.zhihu.android:matisse:0.4.3'
+    /*谷歌权限申请*/
+    implementation 'pub.devrel:easypermissions:1.1.1'
+    /*时间选择*/
+    compile 'com.contrarywind:Android-PickerView:3.2.7'
+
+
 }
-
-
-
-
 
 
 

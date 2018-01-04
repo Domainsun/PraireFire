@@ -11,9 +11,7 @@ import com.praire.fire.merchant.adapter.SettledBaseAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class SettledActivity extends AppCompatActivity {
 
@@ -27,7 +25,7 @@ public class SettledActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.settled);
+        setContentView(R.layout.activity_settled);
         ButterKnife.bind(this);
         mRecyclerView=findViewById(R.id.recyclerview);
 

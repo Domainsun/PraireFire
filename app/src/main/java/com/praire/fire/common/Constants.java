@@ -7,6 +7,10 @@ package com.praire.fire.common;
 public class Constants {
     public static final  String BUSSINESS_ID  = "BUSSINESS_ID";
     public static final int REQUEST_CODE_COMMONT = 0x00001;
+    public static final int REQUEST_CODE_UPLOAD_SHOP_PHOTO = 2;
+    public static final String LOGIN_COOKIE = "loginCookie";
+
+
     /**
      * 刷新后头部固定时间,毫秒
      */

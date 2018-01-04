@@ -13,16 +13,20 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.praire.fire.common.Constants;
 import com.praire.fire.home.MainActivity;
 import com.praire.fire.okhttp.JavaBean.APIResultBean;
 import com.praire.fire.okhttp.JavaBean.J2O;
 import com.praire.fire.okhttp.UseAPIs;
+import com.praire.fire.utils.SharePreferenceMgr;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.praire.fire.common.ConstanUrl.Hsign;
+import static com.praire.fire.common.ConstanUrl.LOGIN;
+import static com.praire.fire.common.Constants.LOGIN_COOKIE;
 
 /**
  * Created by sunlo on 2018/1/2.
@@ -46,7 +50,7 @@ public class SignAcitvity extends Activity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.sign);
+        setContentView(R.layout.activity_sign);
         ButterKnife.bind(this);
 
        initview();
@@ -86,6 +90,9 @@ public class SignAcitvity extends Activity {
                 APIResultBean a= new J2O().getAPIResult(result);
                 Toast.makeText(this, a.getMsg()+"", Toast.LENGTH_SHORT).show();
                 if ("1".equals(a.getCode())) {
+
+                    SharePreferenceMgr.put(this, Constants.LOGIN_COOKIE,myApplication.getSignCookie());
+
                     Intent i=new Intent(this, MainActivity.class);
                     startActivity(i);
                 }

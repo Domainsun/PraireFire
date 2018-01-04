@@ -12,7 +12,8 @@ public class ConstanUrl {
     public static final int HsmsCode=2;
     public static final int Hsign=3;
 
-
+    /*申请入驻*/
+    public final static String settled="https://www.lygyxh.cn/api.php/Shop/in";
     /*登录*/
     public final static String LOGIN="https://www.lygyxh.cn/api.php/Public/login";
     /*注册*/
