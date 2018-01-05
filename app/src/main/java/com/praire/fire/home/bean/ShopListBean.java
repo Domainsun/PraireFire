@@ -10,15 +10,7 @@ import java.util.List;
  * Created by lyp on 2017/12/28.
  */
 
-public class ShopBean implements Parcelable {
-
-
-    /**
-     * code : 1
-     * p : 1
-     * pagelist : [{"id":"5","type":"56","name":"赣州修理厂","door":"http://lysh-upload.oss-cn-shanghai.aliyuncs.com/shop/door/201712/f4b3b6b532815e262613c99ff9076d3c.jpg?OSSAccessKeyId=LTAIjyidULA5tuIB&Expires=1514531580&Signature=juLhdtv5BIqSgZGJVYNRcAKyRTA%3D","contact":"刘燕兵","tel":"15007061760","opentime":"9:00-22:00","address":"江西省赣州市章贡区沙河大道花园别墅3街2号","star":"5.00","lng":"123.567895","lat":"568.987654","desc":"赣州修理厂是一家10年老店，技术精湛，价格合理","city":"章贡区"}]
-     */
-
+public class ShopListBean implements Parcelable {
     private int code;
     private int p;
     private List<PagelistBean> pagelist;
@@ -47,15 +39,7 @@ public class ShopBean implements Parcelable {
         this.pagelist = pagelist;
     }
 
-   /* @Override
-    public int describeContents() {
-        return 0;
-    }
 
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-
-    }*/
 
     public static class PagelistBean {
         /**
@@ -205,25 +189,25 @@ public class ShopBean implements Parcelable {
         dest.writeList(this.pagelist);
     }
 
-    public ShopBean() {
+    public ShopListBean() {
     }
 
-    protected ShopBean(Parcel in) {
+    protected ShopListBean(Parcel in) {
         this.code = in.readInt();
         this.p = in.readInt();
         this.pagelist = new ArrayList<PagelistBean>();
         in.readList(this.pagelist, PagelistBean.class.getClassLoader());
     }
 
-    public static final Creator<ShopBean> CREATOR = new Creator<ShopBean>() {
+    public static final Creator<ShopListBean> CREATOR = new Creator<ShopListBean>() {
         @Override
-        public ShopBean createFromParcel(Parcel source) {
-            return new ShopBean(source);
+        public ShopListBean createFromParcel(Parcel source) {
+            return new ShopListBean(source);
         }
 
         @Override
-        public ShopBean[] newArray(int size) {
-            return new ShopBean[size];
+        public ShopListBean[] newArray(int size) {
+            return new ShopListBean[size];
         }
     };
 }

@@ -79,5 +79,9 @@ public class ConstanUrl {
      * 支付创建
      */
     public static final String COMMONINFO_createpay = "https://www.lygyxh.cn/api.php/Pay/createpay";
+    /**
+     * 店铺信息
+     */
+    public static final String Shop_Info = "https://www.lygyxh.cn/api.php/Shop/info";
 
 }

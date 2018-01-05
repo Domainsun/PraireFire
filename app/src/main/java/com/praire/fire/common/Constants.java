@@ -6,10 +6,12 @@ package com.praire.fire.common;
 
 public class Constants {
     public static final  String BUSSINESS_ID  = "BUSSINESS_ID";
+    public static final  String PRODUCT_ID  = "PRODUCT_ID";
     public static final int REQUEST_CODE_COMMONT = 0x00001;
     /**
      * 刷新后头部固定时间,毫秒
      */
     public static final int REFRESH_PINNED_TIME = 0;
+    public static final String UI_TYPE = "UI_TYPE";
     public static String photoCookie="";
 }

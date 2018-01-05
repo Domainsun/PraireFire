@@ -1,7 +1,5 @@
 package com.praire.fire.home.fragment;
 
-import android.content.Intent;
-import android.net.NetworkRequest;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
@@ -14,13 +12,11 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.andview.refreshview.XRefreshView;
-import com.google.gson.Gson;
 import com.praire.fire.MyApplication;
 import com.praire.fire.R;
 import com.praire.fire.base.BaseFragment;
 import com.praire.fire.common.ConstanUrl;
 import com.praire.fire.common.Constants;
-import com.praire.fire.home.bean.ShopBean;
 import com.praire.fire.order.OrderAdapter;
 import com.praire.fire.utils.RecycleViewDivider;
 
@@ -184,7 +180,7 @@ public class OrderFragment extends BaseFragment implements TabLayout.OnTabSelect
                         }
                         Log.e("data", data);
                        /* Gson gson = new Gson();
-                        final ShopBean evEntity = gson.fromJson(data, ShopBean.class);
+                        final ShopListBean evEntity = gson.fromJson(data, ShopListBean.class);
                         orderEntitys = evEntity.getPagelist();
                         getActivity().runOnUiThread(new Runnable() {
                             @Override

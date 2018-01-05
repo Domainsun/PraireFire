@@ -8,5 +8,9 @@
     <string name="network_err">没有更多数据了</string>
     <string name="account_management">账号管理</string>
     <string name="shipping_address">收货地址</string>
+    <string name="shopping_car">购物车</string>
+    <string name="no_evaluate">好评！</string>
+    <string name="shop">店铺</string>
+    <string name="user_evaluate">用户评价</string>
 
 </resources>

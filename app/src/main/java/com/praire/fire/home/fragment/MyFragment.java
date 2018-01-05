@@ -18,7 +18,7 @@ import com.praire.fire.my.MyEvaluateActivity;
 import com.praire.fire.my.MyWalletActivity;
 import com.praire.fire.my.NearbyActivity;
 import com.praire.fire.my.SetActivity;
-import com.praire.fire.my.ShoppingCarActivity;
+import com.praire.fire.car.ShoppingCarActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
