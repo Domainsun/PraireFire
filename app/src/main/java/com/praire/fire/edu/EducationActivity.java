@@ -3,15 +3,18 @@ package com.praire.fire.edu;
 import android.content.Context;
 import android.content.Intent;
 
+import com.praire.fire.R;
 import com.praire.fire.base.BaseActivity;
+import com.praire.fire.base.BaseTitleActivity;
 import com.praire.fire.car.CarActivity;
 import com.praire.fire.common.Constants;
 
 /**
+ * 教育
  * Created by lyp on 2017/12/29.
  */
 
-public class EducationActivity extends BaseActivity {
+public class EducationActivity extends BaseTitleActivity {
 
     public static void startActivity(Context context,  boolean forResult) {
         Intent intent = new Intent(context, EducationActivity.class);
@@ -24,7 +27,7 @@ public class EducationActivity extends BaseActivity {
     }
     @Override
     protected int getFragmentLayout() {
-        return 0;
+        return R.layout.activity_education;
     }
 
     @Override
@@ -45,5 +48,11 @@ public class EducationActivity extends BaseActivity {
     @Override
     protected void initData() {
 
+    }
+
+    @Override
+    public void initiTile() {
+        setDefaultBack();
+        setTitleMiddle(getString(R.string.education));
     }
 }

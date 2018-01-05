@@ -189,8 +189,7 @@ public class ShopListBean implements Parcelable {
         dest.writeList(this.pagelist);
     }
 
-    public ShopListBean() {
-    }
+
 
     protected ShopListBean(Parcel in) {
         this.code = in.readInt();

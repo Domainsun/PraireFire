@@ -17,7 +17,7 @@ import com.praire.fire.R;
 import com.praire.fire.base.BaseFragment;
 import com.praire.fire.common.ConstanUrl;
 import com.praire.fire.common.Constants;
-import com.praire.fire.order.OrderAdapter;
+import com.praire.fire.order.adapter.OrderAdapter;
 import com.praire.fire.utils.RecycleViewDivider;
 
 import java.io.IOException;

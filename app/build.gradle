@@ -63,17 +63,9 @@ dependencies {
     //    compile 'com.android.support:support-v4:26.0.0'
 
     compile 'com.android.support:design:26.0.0-alpha1'
-<<<<<<< HEAD
-
 
     //ymlf圆形图片
     compile 'de.hdodenhof:circleimageview:2.1.0'
-//   6.0 权限申请
-    compile 'pub.devrel:easypermissions:0.2.0'
-}
-
-=======
->>>>>>> 69b681b722d0abcab1003cd9bb498bcc3a6f7ff9
 
     /*仿ios城市三级联动选择*/
     compile 'liji.library.dev:citypickerview:1.1.0'

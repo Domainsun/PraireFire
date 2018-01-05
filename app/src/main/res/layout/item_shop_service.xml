@@ -48,6 +48,7 @@
         </LinearLayout>
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/item_shop_service_add_ll"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"

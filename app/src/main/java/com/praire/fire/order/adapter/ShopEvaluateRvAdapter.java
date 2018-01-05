@@ -36,7 +36,7 @@ public class ShopEvaluateRvAdapter extends RecyclerView.Adapter<ShopEvaluateRvAd
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
         MyViewHolder holder = new MyViewHolder(LayoutInflater.from(
-                context).inflate(R.layout.item_shop_ecaluate, parent,
+                context).inflate(R.layout.item_shop_evaluate, parent,
                 false));
         return holder;
     }
