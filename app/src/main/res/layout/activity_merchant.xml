@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/grey_background"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/y96"
+            android:background="@mipmap/head_backgroud">
+
+            <TextView
+                android:id="@+id/tv_back"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/y60"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:gravity="center"
+                android:layout_centerVertical="true"
+                android:drawablePadding="@dimen/x20"
+                android:drawableRight="@mipmap/back" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:text="商家入驻申请"
+                android:textColor="@android:color/white"
+                android:textSize="20sp" />
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/y100"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/x30"
+            android:text="开店流程"
+            android:textColor="@color/text_color"
+            android:textSize="19sp" />
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/y230"
+            android:layout_marginTop="@dimen/y2"
+            android:background="@color/white">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/y125"
+                android:src="@mipmap/shop_process"
+                android:layout_centerVertical="true"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/y100"
+            android:layout_marginTop="@dimen/y2"
+            android:background="@color/white">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_color"
+                android:drawablePadding="@dimen/x30"
+                android:layout_centerVertical="true"
+                android:textSize="19sp"
+                android:text="店铺区域"
+                android:layout_marginLeft="@dimen/x30"/>
+            <TextView
+                android:id="@+id/tv_chose_shop_region"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableRight="@mipmap/tail"
+                android:layout_alignParentRight="true"
+                android:gravity="center"
+                android:textColor="@color/grey"
+                android:drawablePadding="@dimen/x18"
+                android:layout_centerVertical="true"
+                android:textSize="16sp"
+                android:layout_marginRight="@dimen/x30"
+                android:text="赣州章贡区"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/y100"
+            android:layout_marginTop="@dimen/y2"
+            android:background="@color/white">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_color"
+                android:drawablePadding="@dimen/x30"
+                android:layout_centerVertical="true"
+                android:textSize="19sp"
+                android:text="店铺类别"
+                android:layout_marginLeft="@dimen/x30"/>
+            <TextView
+                android:id="@+id/tv_chose_shop_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableRight="@mipmap/tail"
+                android:layout_alignParentRight="true"
+                android:gravity="center"
+                android:textColor="@color/grey"
+                android:drawablePadding="@dimen/x18"
+                android:layout_centerVertical="true"
+                android:textSize="16sp"
+                android:layout_marginRight="@dimen/x30" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/y100"
+            android:layout_marginTop="@dimen/y2"
+            android:background="@color/white">
+
+            <TextView
+                android:id="@+id/tv_shop_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/x26"
+                android:drawablePadding="@dimen/x30"
+                android:text="店名"
+                android:textColor="@color/text_color"
+                android:textSize="19sp" />
+
+            <EditText
+                android:id="@+id/et_shop_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                android:background="@null"
+                android:hint="20字以内"
+                android:paddingLeft="@dimen/x250" />
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/y100"
+            android:layout_marginTop="@dimen/y2"
+            android:background="@color/white">
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/x26"
+                android:drawablePadding="@dimen/x30"
+                android:text="商家详情"
+                android:textColor="@color/text_color"
+                android:textSize="19sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/y200"
+            android:layout_marginTop="@dimen/y2"
+            android:background="@color/white">
+
+            <EditText
+                android:id="@+id/et_shop_details"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:background="@null"
+                android:hint="添加商家介绍"
+                android:paddingLeft="@dimen/x76"
+                android:paddingTop="@dimen/y32" />
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/y200"
+            android:layout_marginTop="@dimen/y2"
+            android:background="@color/white">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/x30"
+                android:text="上传门店照片"
+                android:textColor="@color/text_color"
+                android:textSize="19sp" />
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/upload_shop_photo"
+                android:layout_alignParentRight="true"
+                android:layout_width="@dimen/y200"
+                android:layout_height="@dimen/y140"
+                android:layout_marginRight="@dimen/x30"
+                android:layout_marginTop="@dimen/y30"
+                fresco:placeholderImage="@mipmap/ic_launcher" />
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/y200"
+            android:layout_marginTop="@dimen/y2"
+            android:background="@color/white">
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/x30"
+                android:text="上传营业执照"
+                android:textColor="@color/text_color"
+                android:textSize="19sp" />
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/upload_business_license"
+                android:layout_alignParentRight="true"
+                android:layout_width="@dimen/y200"
+                android:layout_height="@dimen/y140"
+                android:layout_marginRight="@dimen/x30"
+                android:layout_marginTop="@dimen/y30"
+                fresco:placeholderImage="@mipmap/ic_launcher" />
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/y200"
+            android:layout_marginTop="@dimen/y2"
+            android:background="@color/white">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/x30"
+                android:text="上传身份证照片(正面)"
+                android:textColor="@color/text_color"
+                android:textSize="19sp" />
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/upload_id_card"
+                android:layout_alignParentRight="true"
+                android:layout_width="@dimen/y200"
+                android:layout_height="@dimen/y140"
+                android:layout_marginRight="@dimen/x30"
+                android:layout_marginTop="@dimen/y30"
+                fresco:placeholderImage="@mipmap/ic_launcher" />
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/y100"
+            android:layout_marginTop="@dimen/y2"
+            android:background="@color/white">
+
+            <TextView
+                android:id="@+id/tv_contacts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/x26"
+                android:drawablePadding="@dimen/x30"
+                android:text="联系人"
+                android:textColor="@color/text_color"
+                android:textSize="19sp" />
+
+            <EditText
+                android:id="@+id/et_Contact_person"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:background="@null"
+                android:hint="20字以内"
+                android:paddingLeft="@dimen/x250" />
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/y100"
+            android:layout_marginTop="@dimen/y2"
+            android:background="@color/white">
+
+            <TextView
+                android:id="@+id/tv_contact_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/x26"
+                android:drawablePadding="@dimen/x30"
+                android:text="联系电话"
+                android:textColor="@color/text_color"
+                android:textSize="19sp" />
+
+            <EditText
+                android:id="@+id/et_Contact_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                android:background="@null"
+                android:hint="20字以内"
+                android:paddingLeft="@dimen/x250" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/y100"
+            android:layout_marginTop="@dimen/y2"
+            android:background="@color/white">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/x30"
+                android:drawablePadding="@dimen/x30"
+                android:text="营业时间"
+                android:textColor="@color/text_color"
+                android:textSize="19sp" />
+
+            <TextView
+                android:id="@+id/tv_chose_shop_open_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/x30"
+                android:drawablePadding="@dimen/x18"
+                android:drawableRight="@mipmap/tail"
+                android:gravity="center"
+                android:textColor="@color/grey"
+                android:textSize="16sp" />
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/y100"
+            android:layout_marginTop="@dimen/y2"
+            android:background="@color/white">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_color"
+                android:drawablePadding="@dimen/x30"
+                android:layout_centerVertical="true"
+                android:textSize="19sp"
+                android:text="所在地区"
+                android:layout_marginLeft="@dimen/x30"/>
+            <TextView
+                android:id="@+id/tv_chose_shop_mapregion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableRight="@mipmap/tail"
+                android:layout_alignParentRight="true"
+                android:gravity="center"
+                android:textColor="@color/grey"
+                android:drawablePadding="@dimen/x18"
+                android:layout_centerVertical="true"
+                android:textSize="16sp"
+                android:layout_marginRight="@dimen/x30"
+                android:text="地图选区"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/y200"
+            android:layout_marginTop="@dimen/y2"
+            android:background="@color/white">
+
+            <TextView
+                android:id="@+id/tv_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/x26"
+                android:drawablePadding="@dimen/x30"
+                android:text="详细地址"
+                android:textColor="@color/text_color"
+                android:textSize="19sp" />
+
+            <EditText
+                android:id="@+id/et_details_adress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:paddingTop="@dimen/y100"
+                android:background="@null"
+                android:paddingLeft="@dimen/x30" />
+        </RelativeLayout>
+
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/y200"
+            android:layout_marginTop="@dimen/y50"
+            android:background="@color/white">
+
+
+           <Button
+               android:id="@+id/submit"
+               style="?android:attr/borderlessButtonStyle"
+               android:layout_width="@dimen/x690"
+               android:layout_height="@dimen/y100"
+               android:background="@color/orange"
+               android:gravity="center"
+               android:textColor="@color/white"
+               android:textSize="19sp"
+               android:layout_centerHorizontal="true"
+               android:layout_centerVertical="true"
+               android:text="提交审核"/>
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+</ScrollView>

@@ -9,54 +9,61 @@
     android:layout_height="wrap_content"
     android:background="@color/grey_background"
     android:orientation="vertical">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="140dp"
         android:background="@mipmap/head_backgroud">
+
         <ImageView
             android:id="@+id/fragment_my_earphone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_margin="15dp"
-            android:src="@mipmap/earphone"/>
+            android:src="@mipmap/earphone" />
+
         <ImageView
             android:id="@+id/fragment_my_set"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toLeftOf="@+id/fragment_my_earphone"
             android:layout_marginTop="15dp"
-            android:src="@mipmap/set_up"/>
+            android:layout_toLeftOf="@+id/fragment_my_earphone"
+            android:src="@mipmap/set_up" />
+
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/fragment_my_img"
             android:layout_width="65dp"
             android:layout_height="65dp"
-            android:layout_marginTop="48dp"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
+            android:layout_marginTop="48dp"
             fresco:placeholderImage="@mipmap/ic_launcher" />
+
         <TextView
             android:id="@+id/fragment_my_phone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="60dp"
-            android:textColor="@color/white"
             android:layout_toRightOf="@+id/fragment_my_img"
-            android:textSize="21sp"
-            android:text="15012121211"/>
+            android:text="15012121211"
+            android:textColor="@color/white"
+            android:textSize="21sp" />
+
         <TextView
             android:id="@+id/fragment_my_vip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:background="@mipmap/member"
             android:layout_below="@+id/fragment_my_phone"
             android:layout_toRightOf="@+id/fragment_my_img"
+            android:background="@mipmap/member"
             android:gravity="right|center_vertical"
             android:paddingRight="5dp"
-            android:textSize="14sp"
-            android:text="普通会员"/>
+            android:text="普通会员"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
     </RelativeLayout>
+
     <RelativeLayout
         android:id="@+id/fragment_my_wallet_rl"
         android:layout_width="match_parent"

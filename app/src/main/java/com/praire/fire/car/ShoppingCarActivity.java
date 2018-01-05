@@ -10,7 +10,6 @@ import com.praire.fire.common.Constants;
  * 购物车
  * Created by lyp on 2018/1/2.
  */
-
 public class ShoppingCarActivity extends BaseActivity {
     public static void startActivity(Context context, boolean forResult) {
         Intent intent = new Intent(context, ShoppingCarActivity.class);

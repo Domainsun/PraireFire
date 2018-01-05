@@ -63,6 +63,7 @@ dependencies {
     //    compile 'com.android.support:support-v4:26.0.0'
 
     compile 'com.android.support:design:26.0.0-alpha1'
+<<<<<<< HEAD
 
 
     //ymlf圆形图片
@@ -71,9 +72,21 @@ dependencies {
     compile 'pub.devrel:easypermissions:0.2.0'
 }
 
+=======
+>>>>>>> 69b681b722d0abcab1003cd9bb498bcc3a6f7ff9
+
+    /*仿ios城市三级联动选择*/
+    compile 'liji.library.dev:citypickerview:1.1.0'
+    compile project(':xrefreshview')
+    /*知乎图片选择*/
+    compile 'com.zhihu.android:matisse:0.4.3'
+    /*谷歌权限申请*/
+    implementation 'pub.devrel:easypermissions:1.1.1'
+    /*时间选择*/
+    compile 'com.contrarywind:Android-PickerView:3.2.7'
 
 
-
+}
 
 
 
