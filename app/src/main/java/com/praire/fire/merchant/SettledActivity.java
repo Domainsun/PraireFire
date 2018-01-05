@@ -4,9 +4,11 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.Toast;
 
 import com.praire.fire.R;
-import com.praire.fire.merchant.adapter.SettledBaseAdapter;
+import com.praire.fire.merchant.adapter.SetledAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,10 +18,9 @@ import butterknife.ButterKnife;
 public class SettledActivity extends AppCompatActivity {
 
 
-    RecyclerView recyclerview;
     private RecyclerView mRecyclerView;
     private List<String> mDatas;
-    private SettledBaseAdapter adapter;
+    private SetledAdapter adapter;
 
 
     @Override
@@ -27,16 +28,23 @@ public class SettledActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settled);
         ButterKnife.bind(this);
-        mRecyclerView=findViewById(R.id.recyclerview);
+        mRecyclerView = findViewById(R.id.recyclerview);
 
         initData();
         initView();
     }
 
     private void initView() {
-        adapter = new SettledBaseAdapter(this);
+        adapter = new SetledAdapter(this);
         adapter.setData(mDatas);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter.setmOnItemClickListener(new SetledAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                Toast.makeText(SettledActivity.this, position+"", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         mRecyclerView.setAdapter(adapter);
 
     }

@@ -72,8 +72,6 @@ public class SignAcitvity extends Activity {
                     myApplication.setSignCookie(signCookie);
                 }
             }
-
-
         };
     }
     @OnClick({R.id.btn_sign, R.id.tv_register, R.id.tv_findPw})

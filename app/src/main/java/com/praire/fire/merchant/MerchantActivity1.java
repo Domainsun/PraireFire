@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,13 +19,12 @@ import com.bigkoo.pickerview.TimePickerView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.lljjcoder.citypickerview.widget.CityPicker;
 import com.praire.fire.R;
+import com.praire.fire.common.CommonMethod;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
-import com.zhihu.matisse.engine.impl.GlideEngine;
 import com.zhihu.matisse.engine.impl.PicassoEngine;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -33,7 +33,11 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import pub.devrel.easypermissions.EasyPermissions;
 
+import static com.praire.fire.common.Constants.REQUEST_CODE_CHOOSE_SHOP_TYPE;
+import static com.praire.fire.common.Constants.REQUEST_CODE_UPLOAD_ID_CARD;
 import static com.praire.fire.common.Constants.REQUEST_CODE_UPLOAD_SHOP_PHOTO;
+import static com.praire.fire.common.Constants.REQUEST_CODE_CHOOSE_MAP_ADDRESS;
+import static com.praire.fire.common.Constants.REQUEST_CODE_UPLOAD_bUSINESS_lICENSE;
 
 /**
  * Created by sunlo on 2018/1/4.
@@ -77,6 +81,11 @@ public class MerchantActivity1 extends Activity implements EasyPermissions.Permi
     @BindView(R.id.submit)
     Button submit;
 
+    CommonMethod commonMethod=new CommonMethod();
+    String base64_shop_photo="";
+    String base64_business_license="";
+    String getBase64_identity_card="";
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,7 +104,10 @@ public class MerchantActivity1 extends Activity implements EasyPermissions.Permi
                 choseShopRegion();
                 break;
             case R.id.tv_chose_shop_type:
+                Intent i=new Intent(this,SettledActivity.class);
+                startActivityForResult(i, REQUEST_CODE_CHOOSE_SHOP_TYPE);
                 break;
+
             case R.id.tv_shop_name:
                 break;
             case R.id.et_shop_name:
@@ -103,11 +115,13 @@ public class MerchantActivity1 extends Activity implements EasyPermissions.Permi
             case R.id.et_shop_details:
                 break;
             case R.id.upload_shop_photo:
-                showChoosePic();
+                showChoosePic(REQUEST_CODE_UPLOAD_SHOP_PHOTO);
                 break;
             case R.id.upload_business_license:
+                showChoosePic(REQUEST_CODE_UPLOAD_bUSINESS_lICENSE);
                 break;
             case R.id.upload_id_card:
+                showChoosePic(REQUEST_CODE_UPLOAD_ID_CARD);
                 break;
             case R.id.et_Contact_person:
                 break;
@@ -117,6 +131,8 @@ public class MerchantActivity1 extends Activity implements EasyPermissions.Permi
                 choseTime();
                 break;
             case R.id.tv_chose_shop_mapregion:
+                Intent i2=new Intent(this,MapChooseActivity.class);
+                startActivityForResult(i2, REQUEST_CODE_CHOOSE_MAP_ADDRESS);
                 break;
             case R.id.et_details_adress:
                 break;
@@ -186,8 +202,7 @@ public class MerchantActivity1 extends Activity implements EasyPermissions.Permi
 
 
 
-
-    private void showChoosePic() {
+    private void showChoosePic(int request_code) {
         String[] perms = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
         if (EasyPermissions.hasPermissions(this, perms)) {
             Matisse.from(MerchantActivity1.this)
@@ -198,7 +213,7 @@ public class MerchantActivity1 extends Activity implements EasyPermissions.Permi
                     .restrictOrientation(android.content.pm.ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
                     .thumbnailScale(0.85f) // 缩略图的比例
                     .imageEngine(new PicassoEngine()) // 使用的图片加载引擎
-                    .forResult(REQUEST_CODE_UPLOAD_SHOP_PHOTO); // 设置作为标记的请求码
+                    .forResult(request_code); // 设置作为标记的请求码
         } else {
             EasyPermissions.requestPermissions(this, "打开相册需要获取权限",
                     0, perms);
@@ -212,16 +227,38 @@ public class MerchantActivity1 extends Activity implements EasyPermissions.Permi
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
+        Uri uri;
         if (requestCode == REQUEST_CODE_UPLOAD_SHOP_PHOTO && resultCode == RESULT_OK) {
               /*照片选择后的回调*/
             List<Uri>  mSelected = Matisse.obtainResult(data);
             if (!(mSelected.size()==0)) {
-                uploadShopPhoto.setImageURI(mSelected.get(0));
+                uri=mSelected.get(0);
+                uploadShopPhoto.setImageURI(uri);
+                base64_shop_photo=commonMethod.uriToBase64(uri,this);
+                Log.d("base64_shop_photo",base64_shop_photo);
             }
+        }
 
+        if (requestCode == REQUEST_CODE_UPLOAD_bUSINESS_lICENSE && resultCode == RESULT_OK) {
+              /*照片选择后的回调*/
+            List<Uri>  mSelected = Matisse.obtainResult(data);
+            if (!(mSelected.size()==0)) {
+                uri=mSelected.get(0);
+                uploadBusinessLicense.setImageURI(uri);
+                base64_business_license=commonMethod.uriToBase64(uri,this);
+                Log.d("base64_shop_photo",base64_business_license);
+            }
+        }
 
-
+        if (requestCode == REQUEST_CODE_UPLOAD_ID_CARD && resultCode == RESULT_OK) {
+              /*照片选择后的回调*/
+            List<Uri>  mSelected = Matisse.obtainResult(data);
+            if (!(mSelected.size()==0)) {
+                uri=mSelected.get(0);
+                uploadIdCard.setImageURI(uri);
+                getBase64_identity_card=commonMethod.uriToBase64(uri,this);
+                Log.d("getBase64_identity_card",getBase64_identity_card);
+            }
         }
     }
 /*-------------------------权限申请的回调-------------------------------*/
@@ -244,4 +281,7 @@ public class MerchantActivity1 extends Activity implements EasyPermissions.Permi
     }
 
    /* -----------------------------------*//**/
+
+
+
 }

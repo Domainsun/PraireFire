@@ -1,9 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    tools:context="com.praire.fire.merchant.MapChooseActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -25,21 +27,21 @@
             android:id="@+id/tv_confirm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
             android:paddingRight="@dimen/x30"
             android:gravity="center"
             android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"
-            android:text="店铺类别"
+            android:text="确定"
             android:textColor="@android:color/white"
             android:textSize="20sp"/>
 
     </RelativeLayout>
 
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerview"
+    <com.amap.api.maps2d.MapView
+        android:id="@+id/map"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
+        android:layout_height="match_parent">
+    </com.amap.api.maps2d.MapView>
+
 
 </LinearLayout>

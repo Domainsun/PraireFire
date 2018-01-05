@@ -9,6 +9,11 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+//        ndk {
+//            //设置支持的SO库架构（开发者可以根据需要，选择一个或多个平台的so）
+//            abiFilters "armeabi", "armeabi-v7a", "arm64-v8a", "x86", "arm64-v8a", "x86_64"
+//        }
     }
     buildTypes {
         release {
@@ -16,6 +21,8 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+
 }
 /**/
 dependencies {
@@ -77,6 +84,25 @@ dependencies {
     /*时间选择*/
     compile 'com.contrarywind:Android-PickerView:3.2.7'
 
+//    2D地图
+
+    compile 'com.amap.api:map2d:latest.integration'
+
+////    3D地图
+//
+//    compile 'com.amap.api:3dmap:latest.integration'
+
+//    导航
+
+    compile 'com.amap.api:navi-3dmap:latest.integration'
+
+//    搜索
+
+    compile 'com.amap.api:search:latest.integration'
+
+//    定位
+
+    compile 'com.amap.api:location:latest.integration'
 
 }
 
