@@ -7,13 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.praire.fire.R;
-import com.praire.fire.home.adapter.ShopListAdapter;
-import com.praire.fire.home.bean.ShopBean;
+import com.praire.fire.home.bean.ShopListBean;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -22,12 +20,12 @@ import butterknife.ButterKnife;
 
 public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder> {
     private Context context;
-    private List<ShopBean.PagelistBean> entities = new ArrayList<>();
+    private List<ShopListBean.PagelistBean> entities = new ArrayList<>();
     public OrderAdapter(Context context) {
         this.context = context;
     }
 
-    public void setEntities(List<ShopBean.PagelistBean> entities) {
+    public void setEntities(List<ShopListBean.PagelistBean> entities) {
         this.entities = entities;
         notifyDataSetChanged();
     }

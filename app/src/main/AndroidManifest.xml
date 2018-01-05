@@ -58,7 +58,7 @@
         <activity android:name=".my.MyWalletActivity" />
         <activity android:name=".my.NearbyActivity" />
         <activity android:name=".my.SetActivity" />
-        <activity android:name=".my.ShoppingCarActivity" />
+        <activity android:name=".car.ShoppingCarActivity" />
         <activity android:name=".my.AccountManagementActivity" />
         <activity android:name=".my.ShippingAddressActivity" />
         <activity android:name=".my.CertificationActivity" />

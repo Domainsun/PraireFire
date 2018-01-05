@@ -1,6 +1,8 @@
 package com.praire.fire.home;
 
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -9,6 +11,7 @@ import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.praire.fire.R;
 import com.praire.fire.base.BaseActivity;
+import com.praire.fire.common.Constants;
 import com.praire.fire.home.fragment.HomeFragment;
 import com.praire.fire.home.fragment.MyFragment;
 import com.praire.fire.home.fragment.OrderFragment;
@@ -18,13 +21,25 @@ import java.util.ArrayList;
 
 
 /**
- *主页
+ * 主页
+ *
  * @author lyp
  * @date 2017/12/27
  */
-public class MainActivity extends BaseActivity implements BottomNavigationBar.OnTabSelectedListener{
+public class MainActivity extends BaseActivity implements BottomNavigationBar.OnTabSelectedListener {
 
     private ArrayList<Fragment> fragments;
+
+    public static void startActivity(Context context, int type, boolean forResult) {
+        Intent intent = new Intent(context, MainActivity.class);
+        intent.putExtra(Constants.UI_TYPE, type);
+        if (!forResult) {
+
+            context.startActivity(intent);
+        } else if (context instanceof BaseActivity) {
+            ((BaseActivity) context).startActivityForResult(intent, Constants.REQUEST_CODE_COMMONT);
+        }
+    }
 
     @Override
     protected int getFragmentLayout() {
@@ -33,7 +48,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
 
     @Override
     protected void initViews() {
-        BottomNavigationBar bottomNavigationBar =  findViewById(R.id.bottom_navigation_bar);
+        BottomNavigationBar bottomNavigationBar = findViewById(R.id.bottom_navigation_bar);
         bottomNavigationBar.setMode(BottomNavigationBar.MODE_FIXED);
         bottomNavigationBar
                 .setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC
@@ -47,6 +62,10 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         fragments = getFragments();
         setDefaultFragment();
         bottomNavigationBar.setTabSelectedListener(this);
+        //从店铺点击进入
+        if (getIntent() != null) {
+            bottomNavigationBar.selectTab(getIntent().getIntExtra(Constants.UI_TYPE, 0));
+        }
     }
 
     @Override
@@ -98,6 +117,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
     public void onTabReselected(int position) {
 
     }
+
     /**
      * 设置默认的页面（首页）
      */

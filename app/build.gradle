@@ -35,7 +35,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     //    //列表
-    //    implementation 'com.yanzhenjie:recyclerview-swipe:1.1.2'
+        implementation 'com.yanzhenjie:recyclerview-swipe:1.1.2'
     //底部菜单栏
     implementation('com.ashokvarma.android:bottom-navigation-bar:1.2.0') {
         exclude module: 'support-v4'
@@ -63,10 +63,24 @@ dependencies {
     /*黄油刀*/
     compile 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+    //上拉，下拉刷新加载更多
+    compile project(':xrefreshview')
     //    compile 'com.huxq17.xrefreshview:xrefreshview:3.6.9'
     //    //xrefreshview依赖下面的库
     //    compile 'com.android.support:support-v4:26.0.0'
+
     compile 'com.android.support:design:26.0.0-alpha1'
+<<<<<<< HEAD
+
+
+    //ymlf圆形图片
+    compile 'de.hdodenhof:circleimageview:2.1.0'
+//   6.0 权限申请
+    compile 'pub.devrel:easypermissions:0.2.0'
+}
+
+=======
+>>>>>>> 69b681b722d0abcab1003cd9bb498bcc3a6f7ff9
 
     /*仿ios城市三级联动选择*/
     compile 'liji.library.dev:citypickerview:1.1.0'

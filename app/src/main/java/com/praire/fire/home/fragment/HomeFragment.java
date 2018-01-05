@@ -1,12 +1,10 @@
 package com.praire.fire.home.fragment;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,8 +23,9 @@ import com.praire.fire.base.BaseFragment;
 import com.praire.fire.car.CarActivity;
 import com.praire.fire.common.ConstanUrl;
 import com.praire.fire.edu.EducationActivity;
+import com.praire.fire.car.ShopActivity;
 import com.praire.fire.home.adapter.ShopListAdapter;
-import com.praire.fire.home.bean.ShopBean;
+import com.praire.fire.home.bean.ShopListBean;
 import com.praire.fire.home.bean.SwipeBean;
 import com.praire.fire.utils.RecycleViewDivider;
 
@@ -74,7 +73,7 @@ public class HomeFragment extends BaseFragment implements BaseSliderView.OnSlide
     Unbinder unbinder;
     private ShopListAdapter adapter;
     private int index = 1;
-    private List<ShopBean.PagelistBean> evEntitys = new ArrayList<>();
+    private List<ShopListBean.PagelistBean> evEntitys = new ArrayList<>();
     private int lastVisibleItem;
     private LinearLayoutManager            linearLayoutManager;
     private boolean loadMore = true;
@@ -114,6 +113,12 @@ public class HomeFragment extends BaseFragment implements BaseSliderView.OnSlide
                 getActivity(), LinearLayoutManager.HORIZONTAL));
         adapter = new ShopListAdapter(getActivity());
         homeEcyclerView.setAdapter(adapter);
+        adapter.setOnItemClickListener(new ShopListAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                ShopActivity.startActivity(getActivity(),evEntitys.get(position).getId(),false);
+            }
+        });
       /*  homeEcyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
 
@@ -187,7 +192,7 @@ public class HomeFragment extends BaseFragment implements BaseSliderView.OnSlide
                     loadMore = false;
                 }
                 Gson gson = new Gson();
-                final ShopBean evEntity = gson.fromJson(data, ShopBean.class);
+                final ShopListBean evEntity = gson.fromJson(data, ShopListBean.class);
                 evEntitys = evEntity.getPagelist();
                 getActivity().runOnUiThread(new Runnable() {
                     @Override

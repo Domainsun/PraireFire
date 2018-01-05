@@ -13,7 +13,7 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.praire.fire.R;
-import com.praire.fire.home.bean.ShopBean;
+import com.praire.fire.home.bean.ShopListBean;
 import com.praire.fire.utils.CalculateUtils;
 
 import java.util.ArrayList;
@@ -26,16 +26,16 @@ import butterknife.ButterKnife;
  * 评价列表适配器
  */
 
-public class ShopListAdapter extends RecyclerView.Adapter<ShopListAdapter.MyViewHolder> {
+public class ShopListAdapter extends RecyclerView.Adapter<ShopListAdapter.MyViewHolder> implements View.OnClickListener{
 
     private Context context;
-    private List<ShopBean.PagelistBean> entities = new ArrayList<>();
+    private List<ShopListBean.PagelistBean> entities = new ArrayList<>();
 
     public ShopListAdapter(Context context) {
         this.context = context;
     }
 
-    public void setEntities(List<ShopBean.PagelistBean> entities) {
+    public void setEntities(List<ShopListBean.PagelistBean> entities) {
         this.entities = entities;
         notifyDataSetChanged();
     }
@@ -51,7 +51,9 @@ public class ShopListAdapter extends RecyclerView.Adapter<ShopListAdapter.MyView
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        ShopBean.PagelistBean item = entities.get(position);
+        //将position保存在itemView的Tag中，以便点击时进行获取
+        holder.itemView.setTag(position);
+        ShopListBean.PagelistBean item = entities.get(position);
         holder.itemShopListName.setText(item.getName());
         holder.itemShopListStar.setRating(Float.valueOf(item.getStar()));
         holder.itemShopListScroe.setText(item.getStar() + "分");
@@ -105,7 +107,21 @@ public class ShopListAdapter extends RecyclerView.Adapter<ShopListAdapter.MyView
         }
 
     }
+    private OnItemClickListener mOnItemClickListener;
+    @Override
+    public void onClick(View v) {
+        if (mOnItemClickListener != null) {
+            //注意这里使用getTag方法获取position
+            mOnItemClickListener.onItemClick(v,(int)v.getTag());
+        }
 
+    }
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.mOnItemClickListener = listener;
+    }
+    public  interface OnItemClickListener {
+        void onItemClick(View view , int position);
+    }
 
 }
 
