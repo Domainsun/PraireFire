@@ -8,6 +8,10 @@ public class Constants {
     public static final  String BUSSINESS_ID  = "BUSSINESS_ID";
     public static final int REQUEST_CODE_COMMONT = 0x00001;
     public static final int REQUEST_CODE_UPLOAD_SHOP_PHOTO = 2;
+    public static final int REQUEST_CODE_UPLOAD_bUSINESS_lICENSE = 3;
+    public static final int REQUEST_CODE_UPLOAD_ID_CARD= 4;
+    public static final int REQUEST_CODE_CHOOSE_MAP_ADDRESS = 1;
+    public static final int REQUEST_CODE_CHOOSE_SHOP_TYPE = 5;
     public static final String LOGIN_COOKIE = "loginCookie";
 
 
