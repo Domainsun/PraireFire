@@ -22,7 +22,6 @@ import java.util.ArrayList;
 
 /**
  * 主页
- *
  * @author lyp
  * @date 2017/12/27
  */
@@ -34,7 +33,6 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         Intent intent = new Intent(context, MainActivity.class);
         intent.putExtra(Constants.UI_TYPE, type);
         if (!forResult) {
-
             context.startActivity(intent);
         } else if (context instanceof BaseActivity) {
             ((BaseActivity) context).startActivityForResult(intent, Constants.REQUEST_CODE_COMMONT);

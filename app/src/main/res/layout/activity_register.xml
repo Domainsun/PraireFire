@@ -210,7 +210,7 @@
             android:layout_width="@dimen/x200"
             android:layout_height="@dimen/y70"
             android:layout_marginEnd="@dimen/x30"
-            android:background="@drawable/shape_send_match_code"
+            android:background="@drawable/shape_btn_resgister"
             android:gravity="center"
             android:text="发送验证码"
             android:textColor="#fff"
@@ -349,7 +349,7 @@
         android:layout_marginEnd="@dimen/x30"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginStart="@dimen/x30"
-        android:background="@drawable/shape_send_match_code"
+        android:background="@drawable/shape_btn_resgister"
         />
 
 </android.support.constraint.ConstraintLayout>
