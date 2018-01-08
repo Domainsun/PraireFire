@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.praire.fire.R;
+import com.praire.fire.merchant.bean.RegionListBean;
 import com.praire.fire.merchant.bean.ShopTypeBeanList;
 
 import java.util.List;
@@ -17,20 +18,20 @@ import java.util.List;
  * Created by sunlo on 2018/1/5.
  */
 
-public class SetledAdapter extends RecyclerView.Adapter<SetledAdapter.MyViewHolder>  {
+public class RegionAdapter extends RecyclerView.Adapter<RegionAdapter.MyViewHolder>  {
 
 
-    private List<ShopTypeBeanList.ListBean> data;
+    private List<RegionListBean.ListBean.SonBeanX.SonBean> data;
     private LayoutInflater inflater;
 
-    public SetledAdapter(Context context) {
+    public RegionAdapter(Context context) {
         inflater = LayoutInflater.from(context);
     }
 
     private OnItemClickListener mOnItemClickListener = null;
 
     public interface OnItemClickListener {
-        void onItemClick(View view,int position);
+        void onItemClick(View view, int position);
     }
     public void setmOnItemClickListener(OnItemClickListener mOnItemClickListener) {
         this.mOnItemClickListener = mOnItemClickListener;
@@ -39,23 +40,21 @@ public class SetledAdapter extends RecyclerView.Adapter<SetledAdapter.MyViewHold
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        MyViewHolder holder = new MyViewHolder(inflater.inflate(R.layout.item_setled, parent,
+        MyViewHolder holder = new MyViewHolder(inflater.inflate(R.layout.item_region, parent,
                 false));
 
         return holder;
     }
 
-    ImageView imageView;
 
-    Boolean b=true;
+
+
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
         holder.name.setText(data.get(position).getName());
-
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                holder.iv.setImageResource(R.mipmap.store_type_selected);
                 mOnItemClickListener.onItemClick(view,position);
             }
         });
@@ -71,17 +70,15 @@ public class SetledAdapter extends RecyclerView.Adapter<SetledAdapter.MyViewHold
         return data.size();
     }
 
-    public void setData(List<ShopTypeBeanList.ListBean> Datas) {
+    public void setData(List<RegionListBean.ListBean.SonBeanX.SonBean> Datas) {
         data = Datas;
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
         TextView name;
-        ImageView iv;
         public MyViewHolder(View itemView) {
             super(itemView);
-            name =itemView.findViewById(R.id.tv_type);
-            iv=itemView.findViewById(R.id.iv_choose);
+            name =itemView.findViewById(R.id.tv_county);
         }
 
     }

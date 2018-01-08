@@ -1,4 +1,4 @@
-package com.praire.fire.okhttp.JavaBean;
+package com.praire.fire.okhttp.GsonUtils;
 
 import com.google.gson.Gson;
 

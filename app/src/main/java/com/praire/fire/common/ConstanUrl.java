@@ -14,6 +14,10 @@ public class ConstanUrl {
 
     /*申请入驻*/
     public final static String settled="https://www.lygyxh.cn/api.php/Shop/in";
+    /*得到店铺类型*/
+    public final static String GET_SHOP_TYPE="https://www.lygyxh.cn/api.php/Class/getShopType";
+    public final static String GET_REGION="https://www.lygyxh.cn/api.php/class/getArea";
+    public final static String GET_SHOP_INFO="https://www.lygyxh.cn/api.php/Shop/info";
     /*登录*/
     public final static String LOGIN="https://www.lygyxh.cn/api.php/Public/login";
     /*注册*/

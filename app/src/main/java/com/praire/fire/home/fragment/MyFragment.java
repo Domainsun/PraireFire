@@ -1,14 +1,18 @@
 package com.praire.fire.home.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.praire.fire.R;
 import com.praire.fire.base.BaseFragment;
+import com.praire.fire.merchant.MerchantActivity1;
 import com.praire.fire.my.AccountManagementActivity;
 import com.praire.fire.my.CustomerServiceActivity;
 import com.praire.fire.my.IntegralActivity;
@@ -19,11 +23,17 @@ import com.praire.fire.my.MyWalletActivity;
 import com.praire.fire.my.NearbyActivity;
 import com.praire.fire.my.SetActivity;
 import com.praire.fire.car.ShoppingCarActivity;
+import com.praire.fire.okhttp.GsonUtils.J2O;
+import com.praire.fire.okhttp.JavaBean.ShopInfoBean;
+import com.praire.fire.okhttp.UseAPIs;
+import com.praire.fire.utils.SharePreferenceMgr;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+
+import static com.praire.fire.common.Constants.LOGIN_COOKIE;
 
 /**
  * 我的
@@ -118,7 +128,32 @@ public class MyFragment extends BaseFragment {
                 MyEvaluateActivity.startActivity(getActivity(), false);
                 break;
             case R.id.fragment_my_merchant_services_rl:
-//                .startActivity(getActivity(),false);
+
+                /*by domain*/
+
+
+                String cookie= (String) SharePreferenceMgr.get(getContext(),LOGIN_COOKIE,"");
+                String result=new UseAPIs().getShopInfo(cookie);
+
+                ShopInfoBean s=new J2O().getShopInfo(result);
+
+                Toast.makeText(getContext(), s.getChecked()+"", Toast.LENGTH_SHORT).show();
+
+                if (s.getChecked().equals("0") || s.getChecked().equals("2")) {  /*审核中*/
+                    Intent i=new Intent(getContext(),MerchantActivity1.class);
+                    Bundle b=new Bundle();
+//                    b.putParcelable("shopInfo",s);
+                    b.putSerializable("shopInfo",s);
+                    i.putExtras(b);
+                    startActivity(i);
+
+                } else if (s.getChecked().equals("1")) {/*通过*/
+                    /*跳到商家服务*/
+                }
+
+
+
+
                 break;
             case R.id.fragment_my_nearby_rl:
                 NearbyActivity.startActivity(getActivity(), false);

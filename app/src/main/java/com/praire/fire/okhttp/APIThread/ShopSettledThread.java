@@ -53,7 +53,7 @@ public class ShopSettledThread implements Callable {
                 .add("address", address)
                 .add("lng", lng)
                 .add("lat", lat)
-                .add("city", city)
+                .add("city_id", city)
                 .add("desc", desc)
                 .add("identify", identify)
                 .build();

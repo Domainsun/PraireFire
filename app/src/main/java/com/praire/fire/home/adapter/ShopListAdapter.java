@@ -114,7 +114,6 @@ public class ShopListAdapter extends RecyclerView.Adapter<ShopListAdapter.MyView
             //注意这里使用getTag方法获取position
             mOnItemClickListener.onItemClick(v,(int)v.getTag());
         }
-
     }
     public void setOnItemClickListener(OnItemClickListener listener) {
         this.mOnItemClickListener = listener;
