@@ -16,7 +16,7 @@ import android.widget.Toast;
 import com.praire.fire.common.Constants;
 import com.praire.fire.home.MainActivity;
 import com.praire.fire.okhttp.JavaBean.APIResultBean;
-import com.praire.fire.okhttp.JavaBean.J2O;
+import com.praire.fire.okhttp.GsonUtils.J2O;
 import com.praire.fire.okhttp.UseAPIs;
 import com.praire.fire.utils.SharePreferenceMgr;
 
@@ -25,8 +25,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.praire.fire.common.ConstanUrl.Hsign;
-import static com.praire.fire.common.ConstanUrl.LOGIN;
-import static com.praire.fire.common.Constants.LOGIN_COOKIE;
 
 /**
  * Created by sunlo on 2018/1/2.

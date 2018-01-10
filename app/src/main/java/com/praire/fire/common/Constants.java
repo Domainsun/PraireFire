@@ -13,6 +13,7 @@ public class Constants {
     public static final int REQUEST_CODE_UPLOAD_ID_CARD= 4;
     public static final int REQUEST_CODE_CHOOSE_MAP_ADDRESS = 1;
     public static final int REQUEST_CODE_CHOOSE_SHOP_TYPE = 5;
+    public static final int REQUEST_CODE_CHOOSE_REGION = 6;
     public static final String LOGIN_COOKIE = "loginCookie";
 
 

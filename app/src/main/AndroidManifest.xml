@@ -36,6 +36,7 @@
 
         <activity android:name=".GuidActivity">
 
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -52,6 +53,15 @@
         <service android:name="com.amap.api.location.APSService" />
 
         <activity android:name=".SignAcitvity" />
+
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
+
+
         <activity android:name=".RegisterActivity" />
         <activity android:name=".merchant.SettledActivity" />
         <activity android:name=".home.MainActivity" />
@@ -78,12 +88,16 @@
         <activity android:name=".my.PassWordManagementActivity" />
         <activity android:name=".my.VerifyPhoneActivity" />
         <activity android:name=".merchant.MapChooseActivity" />
-        <activity android:name=".merchant.adapter.SettledActivity" />
+
+
         <activity android:name=".map.MapSearchActivity" />
         <activity android:name=".map.RoutePlanningActivity" />
         <activity android:name=".map.DriveRouteDetailActivity"/>
         <activity android:name=".map.WalkRouteDetailActivity"/>
         <activity android:name=".map.BusRouteDetailActivity"/>
+        <activity android:name=".merchant.SettledActivity1" />
+        <activity android:name=".merchant.RegionChooseActivity"/>
+
     </application>
 
 </manifest>

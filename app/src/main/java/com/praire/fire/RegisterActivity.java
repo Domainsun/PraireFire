@@ -8,16 +8,14 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.praire.fire.okhttp.JavaBean.APIResultBean;
-import com.praire.fire.okhttp.JavaBean.J2O;
+import com.praire.fire.okhttp.GsonUtils.J2O;
 import com.praire.fire.okhttp.UseAPIs;
 import com.praire.fire.okhttp.UseApi;
 import butterknife.BindView;

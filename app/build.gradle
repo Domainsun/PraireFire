@@ -35,7 +35,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     //    //列表
-        implementation 'com.yanzhenjie:recyclerview-swipe:1.1.2'
+    implementation 'com.yanzhenjie:recyclerview-swipe:1.1.2'
     //底部菜单栏
     implementation('com.ashokvarma.android:bottom-navigation-bar:1.2.0') {
         exclude module: 'support-v4'
@@ -103,6 +103,9 @@ dependencies {
 //    定位
 
     compile 'com.amap.api:location:latest.integration'
+
+    /*可以自定义布局，自定义数据的wheelview*/
+    compile 'com.wx.wheelview:wheelview:1.3.3'
 
 }
 
