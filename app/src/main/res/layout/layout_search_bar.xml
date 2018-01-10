@@ -15,7 +15,6 @@
         android:layout_marginLeft="15dp"
         android:drawablePadding="5dp"
         android:drawableRight="@mipmap/icon_homepage_downarrow"
-        android:text="章贡区"
         android:textColor="@color/white"
         android:textSize="14sp" />
 

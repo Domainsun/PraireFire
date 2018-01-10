@@ -25,6 +25,11 @@ public class ConstanUrl {
      */
     public static final String COMMONINFO_SHOPLIST = "https://www.lygyxh.cn/api.php/Commoninfo/shoplist";
     /**
+     * 商家列表
+     */
+    public static final String SEARCH_NEARSHOP = "https://www.lygyxh.cn/api.php/Search/nearshop";
+
+    /**
      * 轮播图片
      */
     public static final String COMMONINFO_GET_SWIPE = "https://www.lygyxh.cn/api.php/Article/getSwipe";

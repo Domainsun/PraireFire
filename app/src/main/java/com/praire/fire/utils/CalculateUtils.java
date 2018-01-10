@@ -18,11 +18,11 @@ public class CalculateUtils {
      * @param endLon
      * @return 距离：单位为米
      */
-    public static double getDistance(String startLat,String startLon,String endLat,String endLon){
-        double radLat1 = rad(Double.valueOf(startLat));
+    public static double getDistance(double startLat,double startLon,String endLat,String endLon){
+        double radLat1 = rad(startLat);
         double radLat2 = rad(Double.valueOf(endLat));
         double a = radLat1 - radLat2;
-        double b = rad(Double.valueOf(startLon)) - rad(Double.valueOf(endLon));
+        double b = rad(startLon) - rad(Double.valueOf(endLon));
         double distance = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin(a / 2), 2)
                 + Math.cos(radLat1) * Math.cos(radLat2)
                 * Math.pow(Math.sin(b / 2), 2)));
@@ -39,10 +39,14 @@ public class CalculateUtils {
      * @return
      */
     public static String showDistance(double distance){
+//        保留一位小数
+        java.text.DecimalFormat df = new java.text.DecimalFormat("#.0");
         if(distance < 1000.00){
-            return  distance+"m";
+            return  df.format(distance)+"m";
         }
-        return distance/1000+"km";
+
+        String distances = df.format(distance / 1000);
+        return distances+"km";
     }
 
 

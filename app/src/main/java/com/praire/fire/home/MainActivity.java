@@ -3,10 +3,20 @@ package com.praire.fire.home;
 
 import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 
+import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationClient;
+import com.amap.api.location.AMapLocationClientOption;
+import com.amap.api.location.AMapLocationListener;
+import com.amap.api.maps2d.AMap;
+import com.amap.api.maps2d.model.BitmapDescriptorFactory;
+import com.amap.api.maps2d.model.MyLocationStyle;
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.praire.fire.R;
@@ -16,18 +26,24 @@ import com.praire.fire.home.fragment.HomeFragment;
 import com.praire.fire.home.fragment.MyFragment;
 import com.praire.fire.home.fragment.OrderFragment;
 import com.praire.fire.map.MapFragment;
+import com.praire.fire.utils.SharePreferenceMgr;
 
 import java.util.ArrayList;
 
 
 /**
  * 主页
+ *
  * @author lyp
  * @date 2017/12/27
  */
 public class MainActivity extends BaseActivity implements BottomNavigationBar.OnTabSelectedListener {
 
     private ArrayList<Fragment> fragments;
+
+
+
+
 
     public static void startActivity(Context context, int type, boolean forResult) {
         Intent intent = new Intent(context, MainActivity.class);
@@ -46,6 +62,8 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
 
     @Override
     protected void initViews() {
+
+
         BottomNavigationBar bottomNavigationBar = findViewById(R.id.bottom_navigation_bar);
         bottomNavigationBar.setMode(BottomNavigationBar.MODE_FIXED);
         bottomNavigationBar
@@ -80,6 +98,8 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
     protected void initData() {
 
     }
+
+
 
     @Override
     public void onTabSelected(int position) {
@@ -134,5 +154,11 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         fragments.add(new MyFragment());
         return fragments;
     }
+
+
+
+
+
+
 
 }

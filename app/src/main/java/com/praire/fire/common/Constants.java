@@ -21,5 +21,32 @@ public class Constants {
      */
     public static final int REFRESH_PINNED_TIME = 0;
     public static final String UI_TYPE = "UI_TYPE";
+    public static final String INTENT_DATA = "INTENT_DATA";
     public static String photoCookie="";
+    /**
+     * 经纬度
+     */
+    public static String ENDLATLNG = "endLATLNG";
+    /** 经纬度
+     */
+    public static String STARTLATLNG = "startLATLNG";
+    /**
+     * 经度
+     */
+    public static String Longitude = "Longitude";
+    /**
+     * 获取经度
+     */
+    public static String Latitude  = "Latitude";
+    /**
+     * 当前 市区－区
+     */
+    public static String District = "District";
+    /**
+     * 搜索关键字
+     */
+    public static String SEARCH_KEY = "LATLNG";
+
+    public static final String DRIVE_RESULT = "drive_result";
+    public static final String DRIVE_PATH = "drive_path";
 }
