@@ -15,11 +15,21 @@ import okhttp3.Response;
  * Created by sunlo on 2017/12/29.
  */
 
-public class GetRegionThread implements Callable {
+public class GetIncomThread implements Callable {
     /**
      * Created by domain on 2017/12/29.
      */
 
+
+    String startdate="";
+    String enddate="";
+    String cookie="";
+
+    public GetIncomThread(String startdate, String enddate, String cookie) {
+        this.startdate = startdate;
+        this.enddate = enddate;
+        this.cookie = cookie;
+    }
 
     @Override
     public Object call() throws Exception {
@@ -28,10 +38,9 @@ public class GetRegionThread implements Callable {
         RequestBody formBody = new FormBody.Builder()
                 .build();
         Request request = new Request.Builder()
-                .url(ConstanUrl.GET_REGION)
-
+                .url(ConstanUrl.GET_BUSINESS_INCOME+"?startdate="+startdate+"enddate="+enddate)
                 .get()
-//                .addHeader("cookie",cookie)
+                .addHeader("cookie",cookie)
                 .build();
         Response response = client.newCall(request).execute();
         if (!response.isSuccessful()) {

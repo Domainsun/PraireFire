@@ -142,11 +142,10 @@ public class MerchantActivity1 extends Activity implements EasyPermissions.Permi
         s= (ShopInfoBean) b.getSerializable("shopInfo");
 
         if (s.getChecked().equals("0")) {
-            tvChoseShopRegion.setText(s.getCity_id());
-            tvChoseShopType.setText(s.getType());
+            tvChoseShopRegion.setText(s.getCity_name());
+            tvChoseShopType.setText(s.getType_name());
             etShopName.setText(s.getName());
             etShopDetails.setText(s.getDesc());
-
             uploadShopPhoto.setImageURI(s.getDoor());
             uploadBusinessLicense.setImageURI(s.getLicence());
             uploadIdCard.setImageURI(s.getIdentify());
@@ -155,15 +154,35 @@ public class MerchantActivity1 extends Activity implements EasyPermissions.Permi
             tvChoseShopOpenTime.setText(s.getOpentime());
             tvChoseShopMapregion.setText(s.getLat()+","+s.getLng());
             tvAddress.setText(s.getAddress());
-            submit.setText("审核中...");
+            submit.setText("审核中");
+            submit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(MerchantActivity1.this, "审核中，请耐心等待", Toast.LENGTH_SHORT).show();
+                }
+            });
             submit.setEnabled(false);
 
         } else if (s.getChecked().equals("2")) {
-            tvChoseShopRegion.setText(s.getCity_id());
-            tvChoseShopType.setText(s.getType());
+            shop_region=s.getCity_id();
+            shop_type=s.getType();
+            shop_name=s.getName();
+            shop_details=s.getDesc();
+            base64_shop_photo=s.getDoor();
+            base64_business_license=s.getLicence();
+            getBase64_identity_card=s.getIdentify();
+            contacts=s.getContact();
+            contact_phone=s.getTel();
+            shop_opentime=s.getOpentime();
+            shop_lat=s.getLat();
+            shop_lng=s.getLng();
+            shop_details_address=s.getAddress();
+            Log.d("getAddress",shop_details_address);
+
+            tvChoseShopRegion.setText(s.getCity_name());
+            tvChoseShopType.setText(s.getType_name());
             etShopName.setText(s.getName());
             etShopDetails.setText(s.getDesc());
-
             uploadShopPhoto.setImageURI(s.getDoor());
             uploadBusinessLicense.setImageURI(s.getLicence());
             uploadIdCard.setImageURI(s.getIdentify());
@@ -171,10 +190,10 @@ public class MerchantActivity1 extends Activity implements EasyPermissions.Permi
             etContactPhone.setText(s.getTel());
             tvChoseShopOpenTime.setText(s.getOpentime());
             tvChoseShopMapregion.setText(s.getLat()+","+s.getLng());
-            tvAddress.setText(s.getAddress());
+            etDetailsAdress.setText(s.getAddress());
             submit.setText("重新提交");
 
-            Toast.makeText(this, s.getCheck_desc(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "您的申请被拒绝，原因:"+s.getCheck_desc(), Toast.LENGTH_SHORT).show();
 
         }
 
@@ -189,6 +208,7 @@ public class MerchantActivity1 extends Activity implements EasyPermissions.Permi
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_back:
+                this.finish();
                 break;
             case R.id.tv_chose_shop_region:
                 show1();
@@ -230,15 +250,19 @@ public class MerchantActivity1 extends Activity implements EasyPermissions.Permi
                 shop_details_address=etDetailsAdress.getText().toString();
                 cookie= (String) SharePreferenceMgr.get(this,LOGIN_COOKIE,"");
 
-                if (shop_region.length() == 0 || shop_type.length() == 0 || shop_name.length() == 0 || shop_details.length() == 0 || base64_shop_photo.length() == 0 || base64_business_license.length() == 0 || getBase64_identity_card.length() == 0 || contacts.length() == 0 || contact_phone.length() == 0 || shop_opentime.length() == 0 || shop_opentime.length() < 8 || shop_lat.length() == 0 ||shop_lng.length() == 0 || shop_details_address.length() == 0) {
-
-                    Toast.makeText(this, "请将信息填写完整", Toast.LENGTH_SHORT).show();
-                } else {
+//                Toast.makeText(this, shop_details_address, Toast.LENGTH_SHORT).show();
+              if (shop_region.length() == 0 || shop_type.length() == 0 || shop_name.length() == 0 || shop_details.length() == 0 || base64_shop_photo.length() == 0 || base64_business_license.length() == 0 || getBase64_identity_card.length() == 0 || contacts.length() == 0 || contact_phone.length() == 0 || shop_opentime.length() == 0 || shop_opentime.length() < 8 || shop_lat.length() == 0 ||shop_lng.length() == 0 || shop_details_address.length() == 0) {
+                Toast.makeText(this, "请将信息填写完整", Toast.LENGTH_SHORT).show();         } else {
                        String s="";
                        s=new UseAPIs().shopSettled(shop_type,shop_name,base64_shop_photo,base64_business_license,contacts,contact_phone,shop_opentime,shop_details_address,shop_lng,shop_lat,shop_region,shop_details,getBase64_identity_card,cookie);
                        APIResultBean a=new J2O().getAPIResult(s);
                        Toast.makeText(MerchantActivity1.this, a.getMsg()+"", Toast.LENGTH_SHORT).show();
-                }
+
+                  if (a.getCode().equals("1")) {
+                      submit.setText("审核中");
+                      submit.setEnabled(false);
+                  }
+              }
 
 
                 break;

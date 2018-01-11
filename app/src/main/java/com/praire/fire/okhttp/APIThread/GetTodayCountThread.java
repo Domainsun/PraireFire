@@ -15,11 +15,16 @@ import okhttp3.Response;
  * Created by sunlo on 2017/12/29.
  */
 
-public class GetRegionThread implements Callable {
+public class GetTodayCountThread implements Callable {
     /**
      * Created by domain on 2017/12/29.
      */
 
+    String cookie;
+
+    public GetTodayCountThread(String cookie) {
+        this.cookie = cookie;
+    }
 
     @Override
     public Object call() throws Exception {
@@ -28,10 +33,9 @@ public class GetRegionThread implements Callable {
         RequestBody formBody = new FormBody.Builder()
                 .build();
         Request request = new Request.Builder()
-                .url(ConstanUrl.GET_REGION)
-
+                .url(ConstanUrl.GET_BUSINESS_TODAY_COUNT)
                 .get()
-//                .addHeader("cookie",cookie)
+                .addHeader("cookie",cookie)
                 .build();
         Response response = client.newCall(request).execute();
         if (!response.isSuccessful()) {

@@ -15,7 +15,7 @@ import okhttp3.Response;
  * Created by sunlo on 2017/12/29.
  */
 
-public class GetRegionThread implements Callable {
+public class GetServiceTypeThread implements Callable {
     /**
      * Created by domain on 2017/12/29.
      */
@@ -28,8 +28,7 @@ public class GetRegionThread implements Callable {
         RequestBody formBody = new FormBody.Builder()
                 .build();
         Request request = new Request.Builder()
-                .url(ConstanUrl.GET_REGION)
-
+                .url(ConstanUrl.GET_SERVICE_TYPE)
                 .get()
 //                .addHeader("cookie",cookie)
                 .build();

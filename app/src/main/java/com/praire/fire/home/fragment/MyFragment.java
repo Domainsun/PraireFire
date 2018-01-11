@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.praire.fire.R;
 import com.praire.fire.base.BaseFragment;
+import com.praire.fire.merchant.BusinessServiceActivity;
 import com.praire.fire.merchant.MerchantActivity1;
 import com.praire.fire.my.AccountManagementActivity;
 import com.praire.fire.my.CustomerServiceActivity;
@@ -134,10 +135,8 @@ public class MyFragment extends BaseFragment {
 
                 String cookie= (String) SharePreferenceMgr.get(getContext(),LOGIN_COOKIE,"");
                 String result=new UseAPIs().getShopInfo(cookie);
-
                 ShopInfoBean s=new J2O().getShopInfo(result);
 
-                Toast.makeText(getContext(), s.getChecked()+"", Toast.LENGTH_SHORT).show();
 
                 if (s.getChecked().equals("0") || s.getChecked().equals("2")) {  /*审核中*/
                     Intent i=new Intent(getContext(),MerchantActivity1.class);
@@ -149,6 +148,9 @@ public class MyFragment extends BaseFragment {
 
                 } else if (s.getChecked().equals("1")) {/*通过*/
                     /*跳到商家服务*/
+
+                    Intent i=new Intent(getContext(),BusinessServiceActivity.class);
+                    startActivity(i);
                 }
 
 

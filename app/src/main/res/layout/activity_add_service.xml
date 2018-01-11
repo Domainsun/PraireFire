@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/grey_background"
+    tools:context="com.praire.fire.merchant.AddServiceActivity">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y96"
+        android:background="@mipmap/background_business_head">
+
+        <TextView
+            android:id="@+id/tv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/y60"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:gravity="center"
+            android:layout_centerVertical="true"
+            android:drawablePadding="@dimen/x20"
+            android:drawableRight="@mipmap/back" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:text="服务详情"
+            android:textColor="@android:color/white"
+            android:textSize="20sp" />
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y100"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/tv_service_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/x30"
+            android:text="服务名称:"
+            android:textColor="@color/text_color"
+            android:textSize="19sp" />
+
+        <EditText
+            android:id="@+id/et_service_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/tv_service_name"
+            android:background="@null"
+            android:layout_marginLeft="@dimen/x24"
+            android:hint="洗车"
+            android:textSize="16sp"
+            android:textColor="@color/grey"
+            />
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y100"
+        android:background="@color/white"
+        android:layout_marginTop="@dimen/y2"
+        android:id="@+id/rl_service_type">
+
+        <TextView
+            android:id="@+id/tv_service_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/x30"
+            android:text="服务类别:"
+            android:textColor="@color/text_color"
+            android:textSize="19sp" />
+
+
+        <TextView
+            android:id="@+id/tv_show_service_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/tv_service_type"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/x30"
+            android:text=""
+            android:textSize="16sp"
+            android:textColor="@color/grey" />
+
+
+        <TextView
+            android:id="@+id/tv_choose_service_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/x30"
+            android:drawableRight="@mipmap/tail"
+            android:textSize="16sp"
+            android:textColor="@color/grey" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y100"
+        android:background="@color/white"
+        android:layout_marginTop="@dimen/y2">
+
+        <TextView
+            android:id="@+id/tv_service_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/x30"
+            android:text="服务单价:"
+            android:textColor="@color/text_color"
+            android:textSize="19sp" />
+
+        <EditText
+            android:maxLength="6"
+            android:singleLine="true"
+            android:inputType="number"
+            android:id="@+id/et_service_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/tv_service_price"
+            android:background="@null"
+            android:layout_marginLeft="@dimen/x24"
+            android:textSize="16sp"
+            android:textColor="@color/grey"
+            />
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y300"
+        android:layout_marginTop="@dimen/y2"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/tv_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginTop="@dimen/y30"
+            android:layout_marginLeft="@dimen/x30"
+            android:text="产品介绍:"
+            android:textColor="@color/text_color"
+            android:textSize="19sp" />
+
+        <EditText
+            android:layout_marginLeft="@dimen/x30"
+            android:layout_alignParentLeft="true"
+            android:id="@+id/et_product_introduction"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@null"
+           />
+    </RelativeLayout>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="bottom">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/y200"
+            android:layout_marginTop="@dimen/y50"
+            android:background="@color/white"
+            >
+            <Button
+                android:id="@+id/submit"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="@dimen/x690"
+                android:layout_height="@dimen/y100"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:background="@color/orange"
+                android:gravity="center"
+                android:text="保存"
+                android:textColor="@color/white"
+                android:textSize="19sp" />
+        </RelativeLayout>
+    </LinearLayout>
+
+
+
+
+</LinearLayout>

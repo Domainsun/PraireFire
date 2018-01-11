@@ -37,31 +37,18 @@
         <activity android:name=".GuidActivity">
 
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".merchant.MerchantActivity1">
-            <!-- <intent-filter>
-                 <action android:name="android.intent.action.MAIN" />
-
-                 <category android:name="android.intent.category.LAUNCHER" />
-             </intent-filter>-->
-        </activity>
-        <!-- 定位需要的服务 使用2.0的定位需要加上这个 -->
-        <service android:name="com.amap.api.location.APSService" />
-
-        <activity android:name=".SignAcitvity" />
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
 
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
             <!-- </intent-filter> -->
+        </activity>
+        <activity android:name=".merchant.MerchantActivity1" />
+        <activity android:name=".SignAcitvity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".RegisterActivity" />
         <activity android:name=".merchant.SettledActivity" />
         <activity android:name=".home.MainActivity" />
@@ -98,6 +85,10 @@
         <activity android:name=".merchant.SettledActivity1" />
         <activity android:name=".merchant.RegionChooseActivity"/>
 
+        <activity android:name=".merchant.RegionChooseActivity" />
+        <activity android:name=".merchant.BusinessServiceActivity" />
+        <activity android:name=".merchant.ServiceManageActivity" />
+        <activity android:name=".merchant.AddServiceActivity"></activity>
     </application>
 
 </manifest>

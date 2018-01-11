@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/grey_background"
+    tools:context="com.praire.fire.merchant.BusinessServiceActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y96"
+        android:background="@mipmap/background_business_head">
+
+        <TextView
+            android:id="@+id/tv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/y60"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:gravity="center"
+            android:layout_centerVertical="true"
+            android:drawablePadding="@dimen/x20"
+            android:drawableRight="@mipmap/back" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:text="商家服务"
+            android:textColor="@android:color/white"
+            android:textSize="20sp" />
+    </RelativeLayout>
+
+<LinearLayout
+    android:id="@+id/ll_income"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/y280"
+    android:background="@mipmap/background_business_center"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="今日收益(元)"
+
+        android:layout_gravity="center_horizontal"
+        android:textSize="14sp"
+        android:textColor="@color/white"
+        android:paddingTop="@dimen/y30"/>
+
+    <TextView
+        android:id="@+id/tv_money"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="0.00"
+        android:textColor="@color/white"
+        android:textSize="40sp" />
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:layout_marginBottom="@dimen/y20">
+    <TextView
+        android:id="@+id/tv_deal_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="共交易0笔"
+        android:layout_weight="1"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:textColor="@color/white"/>
+
+    <TextView
+        android:id="@+id/tv_consume_count"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="共消费0笔"
+        android:textSize="18sp"
+        android:textColor="@color/white"/>
+
+
+    <TextView
+        android:id="@+id/tv_refund_count"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="共退款0笔"
+        android:textSize="18sp"
+        android:textColor="@color/white"/>
+
+
+</LinearLayout>
+
+
+</LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y100"
+        android:background="@color/ffb81e"
+        android:orientation="horizontal"
+        >
+        <TextView
+            android:id="@+id/tv_reconciliation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@id/view"
+            android:layout_marginRight="@dimen/x122"
+            android:layout_centerVertical="true"
+            android:drawableLeft="@mipmap/business_reconciliation"
+            android:drawablePadding="@dimen/x18"
+            android:text="对账"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+        <View
+            android:layout_width="@dimen/x2"
+            android:layout_height="@dimen/y50"
+            android:background="@color/white"
+            android:layout_centerInParent="true"
+            android:id="@+id/view" />
+        <TextView
+            android:id="@+id/tv_withdrawal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/view"
+            android:layout_marginLeft="@dimen/x122"
+            android:layout_centerVertical="true"
+            android:drawableLeft="@mipmap/business_withdrawals"
+            android:drawablePadding="@dimen/x18"
+            android:text="提现"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/rl_service_manage"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y100"
+        android:layout_marginTop="@dimen/y20"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/x30"
+            android:drawableLeft="@mipmap/business_service"
+            android:drawablePadding="@dimen/x20"
+            android:text="服务管理"
+            android:textColor="@color/text_color"
+            android:textSize="17sp"
+
+            />
+
+        <TextView
+            android:id="@+id/tv_chose_shop_region"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/x30"
+            android:drawablePadding="@dimen/x18"
+            android:drawableRight="@mipmap/tail"
+            android:gravity="center"
+            android:text=""
+            android:textColor="@color/grey"
+            android:textSize="16sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_commodity_manage"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y100"
+        android:layout_marginTop="@dimen/y2"
+        android:background="@color/white">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_color"
+            android:layout_centerVertical="true"
+            android:textSize="17sp"
+            android:text="商品管理"
+            android:layout_marginLeft="@dimen/x30"
+            android:drawableLeft="@mipmap/business_commodity"
+            android:drawablePadding="@dimen/x20"
+
+            />
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableRight="@mipmap/tail"
+            android:layout_alignParentRight="true"
+            android:gravity="center"
+            android:textColor="@color/grey"
+            android:drawablePadding="@dimen/x18"
+            android:layout_centerVertical="true"
+            android:textSize="16sp"
+            android:layout_marginRight="@dimen/x30"
+            android:text=""/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_order_manage"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y100"
+        android:layout_marginTop="@dimen/y2"
+        android:background="@color/white">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_color"
+
+            android:layout_centerVertical="true"
+            android:textSize="17sp"
+            android:text="订单管理"
+            android:layout_marginLeft="@dimen/x30"
+            android:drawableLeft="@mipmap/business_order"
+            android:drawablePadding="@dimen/x20"
+
+            />
+
+        <TextView
+            android:layout_width="@dimen/x40"
+            android:layout_height="@dimen/x40"
+            android:background="@drawable/shape_msg_bg"
+            android:layout_alignRight="@id/tv_order_manage_go"
+            android:layout_marginRight="@dimen/x50"
+            android:textColor="@color/white"
+            android:gravity="center_horizontal"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:textSize="16sp"
+            android:text="1"/>
+
+        <TextView
+            android:id="@+id/tv_order_manage_go"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableRight="@mipmap/tail"
+            android:layout_alignParentRight="true"
+            android:gravity="center"
+            android:textColor="@color/grey"
+            android:drawablePadding="@dimen/x18"
+            android:layout_centerVertical="true"
+            android:textSize="16sp"
+            android:layout_marginRight="@dimen/x30"
+            android:text=""/>
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/rl_member_manage"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y100"
+        android:layout_marginTop="@dimen/y2"
+        android:background="@color/white">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_color"
+
+            android:layout_centerVertical="true"
+            android:textSize="17sp"
+            android:text="会员管理"
+            android:layout_marginLeft="@dimen/x30"
+            android:drawableLeft="@mipmap/business_member"
+            android:drawablePadding="@dimen/x20"
+
+            />
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableRight="@mipmap/tail"
+            android:layout_alignParentRight="true"
+            android:gravity="center"
+            android:textColor="@color/grey"
+            android:drawablePadding="@dimen/x18"
+            android:layout_centerVertical="true"
+            android:textSize="16sp"
+            android:layout_marginRight="@dimen/x30"
+            android:text=""/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_evaluate_manage"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y100"
+        android:layout_marginTop="@dimen/y2"
+        android:background="@color/white">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_color"
+            android:layout_centerVertical="true"
+            android:textSize="17sp"
+            android:text="评价管理"
+            android:layout_marginLeft="@dimen/x30"
+            android:drawableLeft="@mipmap/business_evaluate"
+            android:drawablePadding="@dimen/x20"
+            />
+
+        <TextView
+            android:layout_width="@dimen/x40"
+            android:layout_height="@dimen/x40"
+            android:background="@drawable/shape_msg_bg"
+            android:layout_alignRight="@id/tv_evaluate_manage_go"
+            android:layout_marginRight="@dimen/x50"
+            android:gravity="center_horizontal"
+            android:textColor="@color/white"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:textSize="16sp"
+            android:text="1"/>
+
+        <TextView
+            android:id="@+id/tv_evaluate_manage_go"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableRight="@mipmap/tail"
+            android:layout_alignParentRight="true"
+            android:gravity="center"
+            android:textColor="@color/grey"
+            android:drawablePadding="@dimen/x18"
+            android:layout_centerVertical="true"
+            android:textSize="16sp"
+            android:layout_marginRight="@dimen/x30"
+            android:text=""/>
+    </RelativeLayout>
+</LinearLayout>

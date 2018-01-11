@@ -5,11 +5,15 @@
     <color name="colorAccent">#FF4081</color>
     <color name="white">#FFFFFF</color>
     <color name="orange">#FF9118</color>
+    <color name="f5d">#5d5d5d</color>
+    <color name="f9e19">#FF9e19</color>
     <color name="grey">#989898</color>
+    <color name="product_text">#101010</color>
 
     <color name="select_bg_bantouming">#ccffdca5</color>
     <color name="grey_background">#f6f6f6</color>
     <color name="text_color">#282828</color>
+    <color name="ffb81e">#ffb81e</color>
 
     <color name="viewcolor">#669999</color>
     <color name="text_white">#ffffff</color>
