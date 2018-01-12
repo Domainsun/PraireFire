@@ -12,7 +12,7 @@ import com.amap.api.services.route.BusPath;
 import com.amap.api.services.route.BusRouteResult;
 import com.praire.fire.R;
 import com.praire.fire.map.BusRouteDetailActivity;
-import com.praire.fire.utils.AMapUtil;
+import com.praire.fire.utils.map.AMapUtil;
 
 import java.util.List;
 

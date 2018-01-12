@@ -6,6 +6,7 @@
     <color name="white">#FFFFFF</color>
     <color name="orange">#FF9118</color>
     <color name="grey">#989898</color>
+    <color name="status_bar">#e4a83e</color>
 
     <color name="select_bg_bantouming">#ccffdca5</color>
     <color name="grey_background">#f6f6f6</color>
@@ -17,5 +18,5 @@
     <color name="text_8f">#8f8f8f</color>
     <color name="blue">#4c90f9</color>
     <color name="transparent">#00000000</color>
-
+    <color name="t_transparent">#E8E8E8</color>
 </resources>

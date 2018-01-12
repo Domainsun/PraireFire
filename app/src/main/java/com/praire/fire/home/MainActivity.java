@@ -5,10 +5,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.view.View;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
@@ -27,6 +30,7 @@ import com.praire.fire.home.fragment.MyFragment;
 import com.praire.fire.home.fragment.OrderFragment;
 import com.praire.fire.map.MapFragment;
 import com.praire.fire.utils.SharePreferenceMgr;
+import com.praire.fire.utils.statusbarcolor.Eyes;
 
 import java.util.ArrayList;
 
@@ -40,9 +44,8 @@ import java.util.ArrayList;
 public class MainActivity extends BaseActivity implements BottomNavigationBar.OnTabSelectedListener {
 
     private ArrayList<Fragment> fragments;
-
-
-
+    private BottomNavigationBar bottomNavigationBar;
+    private MapFragment mapFragment;
 
 
     public static void startActivity(Context context, int type, boolean forResult) {
@@ -64,7 +67,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
     protected void initViews() {
 
 
-        BottomNavigationBar bottomNavigationBar = findViewById(R.id.bottom_navigation_bar);
+        bottomNavigationBar = findViewById(R.id.bottom_navigation_bar);
         bottomNavigationBar.setMode(BottomNavigationBar.MODE_FIXED);
         bottomNavigationBar
                 .setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC
@@ -101,6 +104,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
 
 
 
+
     @Override
     public void onTabSelected(int position) {
         if (fragments != null) {
@@ -120,7 +124,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
 
     @Override
     public void onTabUnselected(int position) {
-        if (fragments != null) {
+        /*if (fragments != null) {
             if (position < fragments.size()) {
                 FragmentManager fm = getSupportFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
@@ -128,7 +132,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
                 ft.remove(fragment);
                 ft.commitAllowingStateLoss();
             }
-        }
+        }*/
     }
 
     @Override
@@ -147,16 +151,38 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
     }
 
     private ArrayList<Fragment> getFragments() {
+        mapFragment = new MapFragment();
+//        mapFragment.setArguments();
         ArrayList<Fragment> fragments = new ArrayList<>();
         fragments.add(new HomeFragment());
-        fragments.add(new MapFragment());
+        fragments.add(mapFragment);
         fragments.add(new OrderFragment());
         fragments.add(new MyFragment());
         return fragments;
     }
 
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == Constants.REQUEST_CODE_SEARCH && resultCode == RESULT_OK) {
+            Log.e("onActivityResult","onActivityResult1");
+            if (data != null) {
 
+               String statusType = data.getStringExtra(Constants.SEARCH_TYPE);
+                String searchKey =  data.getStringExtra(Constants.SEARCH_KEY);
+                Bundle bundle = new Bundle();
+                bundle.putString(Constants.SEARCH_TYPE,statusType);
+                bundle.putString(Constants.SEARCH_KEY, searchKey);
+                mapFragment.setArguments( bundle);
+                bottomNavigationBar.selectTab(1);
+//                mapInputKey.setText(searchKey);
+                Log.e("searchKey",searchKey);
+                Log.e("statusType",statusType);
+
+//                requestShopList(longitude,latitude,statusType,searchKey);
+            }
+        }
+    }
 
 
 

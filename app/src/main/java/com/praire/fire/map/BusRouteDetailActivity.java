@@ -23,7 +23,7 @@ import com.amap.api.services.route.BusPath;
 import com.amap.api.services.route.BusRouteResult;
 import com.praire.fire.R;
 import com.praire.fire.map.adapter.BusSegmentListAdapter;
-import com.praire.fire.utils.AMapUtil;
+import com.praire.fire.utils.map.AMapUtil;
 
 public class BusRouteDetailActivity extends Activity implements OnMapLoadedListener,
         OnMapClickListener, InfoWindowAdapter, OnInfoWindowClickListener, OnMarkerClickListener {

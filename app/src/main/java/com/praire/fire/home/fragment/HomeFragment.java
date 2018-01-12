@@ -1,6 +1,9 @@
 package com.praire.fire.home.fragment;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -55,7 +58,7 @@ import okhttp3.Response;
  * Created by lyp on 2017/12/27.
  */
 
-public class HomeFragment extends BaseFragment implements BaseSliderView.OnSliderClickListener , AMapLocationListener {
+public class HomeFragment extends BaseFragment implements BaseSliderView.OnSliderClickListener, AMapLocationListener {
 
 
     @BindView(R.id.search_bar_address)
@@ -78,7 +81,6 @@ public class HomeFragment extends BaseFragment implements BaseSliderView.OnSlide
     TextView homeClothes;
     @BindView(R.id.home_ecyclerView)
     RecyclerView homeEcyclerView;
-    Unbinder unbinder;
     private ShopListAdapter adapter;
     private int index = 1;
     private List<ShopListBean.PagelistBean> evEntitys = new ArrayList<>();
@@ -92,12 +94,12 @@ public class HomeFragment extends BaseFragment implements BaseSliderView.OnSlide
     public AMapLocationClient mLocationClient = null;
     //声明AMapLocationClientOption对象
     public AMapLocationClientOption mLocationOption = null;
-    private  AMapLocation myLocation;
+    private AMapLocation myLocation;
 
     @Override
     public View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-        unbinder = ButterKnife.bind(this, view);
+        ButterKnife.bind(this, view);
         return view;
     }
 
@@ -112,7 +114,6 @@ public class HomeFragment extends BaseFragment implements BaseSliderView.OnSlide
 //                requestShopList(index);
             }
         }).start();
-
 
 
         //设置指示器的位置
@@ -172,6 +173,7 @@ public class HomeFragment extends BaseFragment implements BaseSliderView.OnSlide
 
 
     }
+
     /**
      * 设置一些amap的属性
      */
@@ -221,13 +223,9 @@ public class HomeFragment extends BaseFragment implements BaseSliderView.OnSlide
         call.enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(getActivity(), "网络出错，请重试", Toast.LENGTH_SHORT).show();
-                        loadMore = false;
-                    }
-                });
+                Message msg = new Message();
+                msg.what = 0;
+                uiHandler.sendMessage(msg);
                 e.printStackTrace();
             }
 
@@ -242,17 +240,33 @@ public class HomeFragment extends BaseFragment implements BaseSliderView.OnSlide
                 Gson gson = new Gson();
                 final ShopListBean evEntity = gson.fromJson(data, ShopListBean.class);
                 evEntitys = evEntity.getPagelist();
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        adapter.setEntities(evEntitys, longitude,latitude);
-                    }
-                });
+                Message msg = new Message();
+                msg.what = 1;
+                uiHandler.sendMessage(msg);
+
 
             }
         });
 
     }
+
+    @Override
+    protected void networkResponse(Message msg) {
+        switch (msg.what) {
+            case 0:
+                Toast.makeText(getActivity(), "网络出错，请重试", Toast.LENGTH_SHORT).show();
+                break;
+            case 1:
+                adapter.setEntities(evEntitys, longitude, latitude);
+                break;
+            case 2:
+                getAdSuccess((List<SwipeBean.SwipelistBean>) msg.obj);
+                break;
+            default:
+                break;
+        }
+    }
+
 
     /**
      * 获取轮播图片
@@ -266,12 +280,11 @@ public class HomeFragment extends BaseFragment implements BaseSliderView.OnSlide
         call.enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(getActivity(), "网络出错，请重试", Toast.LENGTH_SHORT).show();
-                    }
-                });
+
+                Message msg = new Message();
+                msg.what = 0;
+                uiHandler.sendMessage(msg);
+
                 e.printStackTrace();
             }
 
@@ -282,12 +295,16 @@ public class HomeFragment extends BaseFragment implements BaseSliderView.OnSlide
                 Gson gson = new Gson();
                 SwipeBean bean = gson.fromJson(data, SwipeBean.class);
                 final List<SwipeBean.SwipelistBean> swipelist = bean.getSwipelist();
-                getActivity().runOnUiThread(new Runnable() {
+                Message msg = new Message();
+                msg.what = 2;
+                msg.obj = swipelist;
+                uiHandler.sendMessage(msg);
+               /* getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        getAdSuccess(swipelist);
+
                     }
-                });
+                });*/
             }
         });
 
@@ -349,9 +366,7 @@ public class HomeFragment extends BaseFragment implements BaseSliderView.OnSlide
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if (unbinder != null) {
-            unbinder.unbind();
-        }
+
         //销毁定位客户端，同时销毁本地定位服务。
         mLocationClient.onDestroy();
     }
@@ -377,7 +392,6 @@ public class HomeFragment extends BaseFragment implements BaseSliderView.OnSlide
     }
 
 
-
     /**
      * 动态图点击事件
      *
@@ -393,7 +407,8 @@ public class HomeFragment extends BaseFragment implements BaseSliderView.OnSlide
 
 
     /**
-     *  定位回调监听
+     * 定位回调监听
+     *
      * @param amapLocation
      */
     @Override
@@ -420,9 +435,9 @@ public class HomeFragment extends BaseFragment implements BaseSliderView.OnSlide
                 searchBarAddress.setText(amapLocation.getDistrict());
 
                 longitude = amapLocation.getLongitude();
-                        latitude = amapLocation.getLatitude();
+                latitude = amapLocation.getLatitude();
 
-                Log.e("amapLocation",amapLocation.toString());
+                Log.e("amapLocation", amapLocation.toString());
 //                SharePreferenceMgr.put(getActivity() ,Constants.Latitude,amapLocation.getLatitude());
 //                SharePreferenceMgr.put(getActivity() ,Constants.Longitude,amapLocation.getLongitude());
                 new Thread(new Runnable() {
@@ -432,10 +447,10 @@ public class HomeFragment extends BaseFragment implements BaseSliderView.OnSlide
                     }
                 }).start();
 //                SharePreferenceMgr.put(getContext(),Constants.District,amapLocation.getDistrict());
-                Log.e("amapLocation1", longitude+"");
-            }else {
+                Log.e("amapLocation1", longitude + "");
+            } else {
                 //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
-                Log.e("AmapError","location Error, ErrCode:"
+                Log.e("AmapError", "location Error, ErrCode:"
                         + amapLocation.getErrorCode() + ", errInfo:"
                         + amapLocation.getErrorInfo());
             }

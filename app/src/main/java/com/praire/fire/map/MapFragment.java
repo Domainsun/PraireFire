@@ -1,14 +1,20 @@
 package com.praire.fire.map;
 
+import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.os.SystemClock;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -17,82 +23,81 @@ import android.view.ViewGroup;
 import android.view.animation.BounceInterpolator;
 import android.view.animation.Interpolator;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
-import com.amap.api.maps2d.AMap;
-import com.amap.api.maps2d.MapView;
-import com.amap.api.maps2d.Projection;
-import com.amap.api.maps2d.model.BitmapDescriptorFactory;
-import com.amap.api.maps2d.model.LatLng;
-import com.amap.api.maps2d.model.Marker;
-import com.amap.api.maps2d.model.MarkerOptions;
-import com.amap.api.maps2d.model.MyLocationStyle;
+import com.amap.api.maps.CameraUpdateFactory;
+import com.amap.api.maps.Projection;
+import com.amap.api.maps.TextureMapView;
+import com.amap.api.maps.AMap;
+
+import com.amap.api.maps.model.BitmapDescriptorFactory;
+import com.amap.api.maps.model.CameraPosition;
+import com.amap.api.maps.model.LatLng;
+import com.amap.api.maps.model.Marker;
+import com.amap.api.maps.model.MarkerOptions;
+import com.amap.api.maps.model.MyLocationStyle;
+import com.amap.api.navi.model.NaviLatLng;
 import com.amap.api.services.core.LatLonPoint;
-import com.amap.api.services.geocoder.BusinessArea;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.praire.fire.R;
 import com.praire.fire.base.BaseFragment;
 import com.praire.fire.car.ShopActivity;
 import com.praire.fire.common.ConstanUrl;
+import com.praire.fire.common.Constants;
+import com.praire.fire.data.IntentDataForGPSNaviActivity;
 import com.praire.fire.data.IntentDataForRoutePlanningActivity;
-import com.praire.fire.home.adapter.ShopListAdapter;
-import com.praire.fire.home.bean.ShopListBean;
 import com.praire.fire.map.adapter.NearlyShopAdapter;
 import com.praire.fire.map.bean.NearlyShopBean;
 import com.praire.fire.utils.RecycleViewDivider;
+import com.praire.fire.utils.statusbarcolor.Eyes;
 import com.yanzhenjie.recyclerview.swipe.SwipeItemClickListener;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
+
+import javax.xml.transform.Result;
+
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+import static android.app.Activity.RESULT_OK;
+
 /**
  * 地图
  * Created by lyp on 2017/12/27.
  */
 
-public class MapFragment extends BaseFragment implements AMap.OnMarkerClickListener, AMap.OnMyLocationChangeListener/*, LocationSource ,AMapLocationListener*/ {
+public class MapFragment extends BaseFragment implements AMap.OnMarkerClickListener, AMap.OnMyLocationChangeListener, View.OnClickListener {
+
+
     /**
      * 获取距离多少米范围内的商家信息
      */
     public static final String NEARLY_RADIUS = "30000";
-    @BindView(R.id.map)
-    MapView mMapView;
-    @BindView(R.id.map_recyclerView)
+    TextureMapView mMapView;
     SwipeMenuRecyclerView mapRecyclerView;
-    @BindView(R.id.check_more_tv)
     TextView checkMoreTv;
-    Unbinder unbinder;
-    @BindView(R.id.map_input_key)
     EditText mapInputKey;
-    @BindView(R.id.map_business_info_name)
     TextView mapBusinessInfoName;
-    @BindView(R.id.map_business_info_info)
     TextView mapBusinessInfoInfo;
-    @BindView(R.id.map_business_info)
     TextView mapBusinessInfo;
-    @BindView(R.id.map_business_info_navigation)
     TextView mapBusinessInfoNavigation;
-    @BindView(R.id.map_business_info_ll)
     LinearLayout mapBusinessInfoLl;
-    @BindView(R.id.map_business_info_round)
     LinearLayout mapBusinessInfoRound;
+    ImageView back, clean;
     private AMap aMap;
     private MarkerOptions markerOption;
     private AMapLocationClient mlocationClient;
@@ -108,23 +113,61 @@ public class MapFragment extends BaseFragment implements AMap.OnMarkerClickListe
      */
     private int bPersion = 0;
 
+    private LatLng CHONGQING;// 重庆市经纬度
+    private CameraPosition cameraPosition;
+    private String searchKey = "",statusType = "";
+
+    protected CameraPosition getCameraPosition() {
+        return cameraPosition;
+    }
+
+
+    protected void setCameraPosition(CameraPosition cameraPosition) {
+        this.cameraPosition = cameraPosition;
+    }
+
+    protected LatLng getTarget() {
+        return CHONGQING;
+    }
 
     @Override
     public View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_map, container, false);
-        unbinder = ButterKnife.bind(this, view);
         //在activity执行onCreate时执行mMapView.onCreate(savedInstanceState)，创建地图
-        mMapView.onCreate(savedInstanceState);
+        initFindView(view);
+//        mMapView.onCreate(savedInstanceState);
         return view;
+    }
+
+
+    private void initFindView(View view) {
+//        mMapView = view.findViewById(R.id.map);
+        mapRecyclerView = view.findViewById(R.id.map_recyclerView);
+        checkMoreTv = view.findViewById(R.id.check_more_tv);
+        mapInputKey = view.findViewById(R.id.map_input_key);
+        mapBusinessInfoName = view.findViewById(R.id.map_business_info_name);
+        mapBusinessInfoInfo = view.findViewById(R.id.map_business_info_info);
+        mapBusinessInfo = view.findViewById(R.id.map_business_info);
+        mapBusinessInfoNavigation = view.findViewById(R.id.map_business_info_navigation);
+        mapBusinessInfoLl = view.findViewById(R.id.map_business_info_ll);
+        mapBusinessInfoRound = view.findViewById(R.id.map_business_info_round);
+        back = view.findViewById(R.id.map_back);
+        clean = view.findViewById(R.id.map_clean);
+        checkMoreTv.setOnClickListener(this);
+        mapBusinessInfo.setOnClickListener(this);
+        mapBusinessInfoNavigation.setOnClickListener(this);
+        mapInputKey.setOnClickListener(this);
+        mapBusinessInfoRound.setOnClickListener(this);
+        back.setOnClickListener(this);
+        clean.setOnClickListener(this);
+
     }
 
     @Override
     public void initListener() {
-        if (aMap == null) {
-            aMap = mMapView.getMap();
-            setUpMap();
-
-        }
+        Eyes.setStatusBarColor(getActivity(), ContextCompat.getColor(getActivity(), R.color.status_bar));
+//        statusType = getArguments().getString(Constants.SEARCH_TYPE);
+//        searchKey = getArguments().getString(Constants.SEARCH_KEY);
 
         mapRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mapRecyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -132,13 +175,24 @@ public class MapFragment extends BaseFragment implements AMap.OnMarkerClickListe
         mapRecyclerView.addItemDecoration(new RecycleViewDivider(
                 getActivity(), LinearLayoutManager.HORIZONTAL));
         adapter = new NearlyShopAdapter(getActivity());
-        mapRecyclerView.setAdapter(adapter);
+
+        adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onChanged() {
+                super.onChanged();
+                if (mapRecyclerView != null && mapRecyclerView.getAdapter() == null) {
+                    mapRecyclerView.setAdapter(adapter);
+                }
+            }
+        });
         mapRecyclerView.setSwipeItemClickListener(new SwipeItemClickListener() {
             @Override
             public void onItemClick(View itemView, int position) {
                 ShopActivity.startActivity(getActivity(), evEntitys.get(position).getId(), false);
             }
         });
+
+//        mapRecyclerView.setAdapter(adapter);
 
     }
 
@@ -148,13 +202,13 @@ public class MapFragment extends BaseFragment implements AMap.OnMarkerClickListe
         mapInputKey.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 
             @Override
-            public boolean onEditorAction(TextView v, int actionId,KeyEvent event) {
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 
                 boolean aBoolean = (actionId == 0 || actionId == 3) && event != null;
                 if (aBoolean) {
 
-                        String key = mapInputKey.getText().toString();
-                        MapSearchActivity.startActivity(getActivity(),key,false);
+                    String key = mapInputKey.getText().toString();
+                    MapSearchActivity.startActivity(getActivity(), key, false);
                     //写你要做的事情
                     return false;
                 }
@@ -166,25 +220,22 @@ public class MapFragment extends BaseFragment implements AMap.OnMarkerClickListe
 
     }
 
+
     /**
      * 获取商家列表
      */
-    private void requestShopList(final double longitude, final double latitude) {
+    private void requestShopList(final double longitude, final double latitude,String statusType,String  searchKey) {
         OkHttpClient okHttpClient = new OkHttpClient();
         Request request = new Request.Builder()
-                .url(ConstanUrl.SEARCH_NEARSHOP + "?lng=" + longitude + "&lat=" + latitude)
+                .url(ConstanUrl.SEARCH_NEARSHOP + "?lng=" + longitude + "&lat=" + latitude+ "?name=" + searchKey + "&type=" + statusType)
                 .build();
         Call call = okHttpClient.newCall(request);
         call.enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(getActivity(), "网络出错，请重试", Toast.LENGTH_SHORT).show();
-//                        loadMore = false;
-                    }
-                });
+                Message msg = new Message();
+                msg.what = 0;
+                uiHandler.sendMessage(msg);
                 e.printStackTrace();
             }
 
@@ -195,20 +246,36 @@ public class MapFragment extends BaseFragment implements AMap.OnMarkerClickListe
                 if (data != null) {
 //                    loadMore = false;
                     Gson gson = new Gson();
+                    evEntitys.clear();
                     evEntitys = gson.fromJson(data, new TypeToken<List<NearlyShopBean>>() {
                     }.getType());
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            adapter.setEntities(evEntitys, longitude, latitude);
-                            addMarkersToMap();// 往地图上添加marker
-                        }
-                    });
+
+                    Message msg = new Message();
+                    msg.what = 1;
+//                    msg.obj = evEntitys;
+                    uiHandler.sendMessage(msg);
+
+
                 }
 
             }
         });
 
+    }
+
+    @Override
+    protected void networkResponse(Message msg) {
+        switch (msg.what) {
+            case 0:
+                Toast.makeText(getActivity(), "网络出错，请重试", Toast.LENGTH_SHORT).show();
+                break;
+            case 1:
+                adapter.setEntities(evEntitys, longitude, latitude);
+                addMarkersToMap();// 往地图上添加marker
+                break;
+            default:
+                break;
+        }
     }
 
     /**
@@ -242,7 +309,7 @@ public class MapFragment extends BaseFragment implements AMap.OnMarkerClickListe
      * 方法必须重写
      */
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         mMapView.onSaveInstanceState(outState);
     }
@@ -252,13 +319,45 @@ public class MapFragment extends BaseFragment implements AMap.OnMarkerClickListe
      */
     @Override
     public void onDestroyView() {
+        //保存地图状态
+        setCameraPosition(aMap.getCameraPosition());
         super.onDestroyView();
 
         if (mMapView != null) {
             //在activity执行onDestroy时执行mMapView.onDestroy()，销毁地图
             mMapView.onDestroy();
         }
-        unbinder.unbind();
+    }
+
+     @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mMapView = (TextureMapView) getView().findViewById(R.id.map);
+
+        if (mMapView != null) {
+            mMapView.onCreate(savedInstanceState);
+            aMap = mMapView.getMap();
+            setUpMap();
+            if (getCameraPosition() == null) {
+                aMap.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(getTarget(), 10, 0, 0)));
+            } else {
+                aMap.moveCamera(CameraUpdateFactory.newCameraPosition(getCameraPosition()));
+            }
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        try {
+            Field childFragmentManager = Fragment.class.getDeclaredField("mChildFragmentManager");
+            childFragmentManager.setAccessible(true);
+            childFragmentManager.set(this, null);
+        } catch (NoSuchFieldException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
@@ -283,43 +382,6 @@ public class MapFragment extends BaseFragment implements AMap.OnMarkerClickListe
             //在activity执行onPause时执行mMapView.onPause ()，暂停地图的绘制
             mMapView.onPause();
         }
-    }
-
-
-    @OnClick({R.id.map_back, R.id.map_clean, R.id.check_more_tv, R.id.map_business_info,
-            R.id.map_business_info_navigation , R.id.map_input_key , R.id.map_business_info_round})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.map_back:
-                mapRecyclerView.setVisibility(mapRecyclerView.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
-                mapBusinessInfoLl.setVisibility(mapBusinessInfoLl.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
-                mapBusinessInfoRound.setVisibility(mapBusinessInfoRound.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
-                break;
-            case R.id.map_clean:
-                mapInputKey.setText("");
-                break;
-            case R.id.check_more_tv:
-                checkMoreTv.setVisibility(View.GONE);
-                mapRecyclerView.setVisibility(View.VISIBLE);
-                break;
-            case R.id.map_business_info:
-                ShopActivity.startActivity(getActivity(), businessId,false);
-                break;
-            case R.id.map_business_info_navigation:
-                break;
-            case R.id.map_input_key:
-                MapSearchActivity.startActivity(getActivity(),"",false);
-                break;
-            case R.id.map_business_info_round:
-                IntentDataForRoutePlanningActivity data = new IntentDataForRoutePlanningActivity();
-                data.mStartPoint = new LatLonPoint(latitude, longitude);
-                data.mEndPoint = new LatLonPoint(Double.valueOf(evEntitys.get(bPersion).getLat()), Double.valueOf(evEntitys.get(bPersion).getLng()));
-                RoutePlanningActivity.startActivity(getActivity(),data,false);
-                break;
-            default:
-                break;
-        }
-
     }
 
 
@@ -360,7 +422,7 @@ public class MapFragment extends BaseFragment implements AMap.OnMarkerClickListe
         mapBusinessInfoName.setText(marker.getTitle());
         mapBusinessInfoInfo.setText(evEntitys.get(marker.getPeriod()).getDesc());
         businessId = evEntitys.get(marker.getPeriod()).getId();
-        bPersion= marker.getPeriod();
+        bPersion = marker.getPeriod();
         return true;
     }
 
@@ -411,7 +473,8 @@ public class MapFragment extends BaseFragment implements AMap.OnMarkerClickListe
                 int locationType = bundle.getInt(MyLocationStyle.LOCATION_TYPE);
                 longitude = location.getLongitude();
                 latitude = location.getLatitude();
-                requestShopList(longitude, latitude);
+                CHONGQING = new LatLng(latitude, longitude);// 重庆市经纬度
+                requestShopList(longitude, latitude,statusType,searchKey);
 
                 Log.e("amap", "定位信息， code: " + errorCode + " errorInfo: " + errorInfo + " locationType: " + locationType);
             } else {
@@ -425,4 +488,59 @@ public class MapFragment extends BaseFragment implements AMap.OnMarkerClickListe
     }
 
 
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.map_back:
+                mapRecyclerView.setVisibility(mapRecyclerView.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
+                mapBusinessInfoLl.setVisibility(mapBusinessInfoLl.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
+                mapBusinessInfoRound.setVisibility(mapBusinessInfoRound.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
+                break;
+            case R.id.map_clean:
+                mapInputKey.setText("");
+                break;
+            case R.id.check_more_tv:
+                checkMoreTv.setVisibility(View.GONE);
+                mapRecyclerView.setVisibility(View.VISIBLE);
+                break;
+            case R.id.map_business_info:
+                ShopActivity.startActivity(getActivity(), businessId, false);
+                break;
+            case R.id.map_business_info_navigation:
+                IntentDataForGPSNaviActivity gdata = new IntentDataForGPSNaviActivity();
+                gdata.mStartPoint = new NaviLatLng(latitude, longitude);
+                gdata.mEndPoint = new NaviLatLng(Double.valueOf(evEntitys.get(bPersion).getLat()), Double.valueOf(evEntitys.get(bPersion).getLng()));
+                GPSNaviActivity.startActivity(getActivity(), gdata, false);
+                break;
+            case R.id.map_input_key:
+                MapSearchActivity.startActivity(getActivity(), mapInputKey.getText().toString(), true);
+                break;
+            case R.id.map_business_info_round:
+                IntentDataForRoutePlanningActivity data = new IntentDataForRoutePlanningActivity();
+                data.mStartPoint = new LatLonPoint(latitude, longitude);
+                data.mEndPoint = new LatLonPoint(Double.valueOf(evEntitys.get(bPersion).getLat()), Double.valueOf(evEntitys.get(bPersion).getLng()));
+                RoutePlanningActivity.startActivity(getActivity(), data, false);
+                break;
+            default:
+                break;
+        }
+
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.e("onActivityResult","onActivityResult");
+        if (requestCode == Constants.REQUEST_CODE_SEARCH && resultCode == RESULT_OK) {
+Log.e("onActivityResult","onActivityResult1");
+            if (data != null) {
+                statusType = data.getStringExtra(Constants.SEARCH_TYPE);
+                searchKey =  data.getStringExtra(Constants.SEARCH_KEY);
+                mapInputKey.setText(searchKey);
+                Log.e("searchKey",searchKey);
+                Log.e("statusType",statusType);
+                requestShopList(longitude,latitude,statusType,searchKey);
+            }
+        }
+    }
 }

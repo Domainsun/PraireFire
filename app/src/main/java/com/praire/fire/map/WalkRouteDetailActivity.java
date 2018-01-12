@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.amap.api.services.route.WalkPath;
 import com.praire.fire.R;
 import com.praire.fire.map.adapter.WalkSegmentListAdapter;
-import com.praire.fire.utils.AMapUtil;
+import com.praire.fire.utils.map.AMapUtil;
 
 public class WalkRouteDetailActivity extends Activity {
 	private WalkPath mWalkPath;

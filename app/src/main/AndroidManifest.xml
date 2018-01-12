@@ -21,6 +21,7 @@
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:name=".MyApplication"
@@ -54,12 +55,12 @@
 
         <activity android:name=".SignAcitvity" />
 
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
+        <!-- <intent-filter> -->
+        <!-- <action android:name="android.intent.action.MAIN" /> -->
 
 
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
+        <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+        <!-- </intent-filter> -->
 
 
         <activity android:name=".RegisterActivity" />
@@ -92,12 +93,12 @@
 
         <activity android:name=".map.MapSearchActivity" />
         <activity android:name=".map.RoutePlanningActivity" />
-        <activity android:name=".map.DriveRouteDetailActivity"/>
-        <activity android:name=".map.WalkRouteDetailActivity"/>
-        <activity android:name=".map.BusRouteDetailActivity"/>
+        <activity android:name=".map.DriveRouteDetailActivity" />
+        <activity android:name=".map.WalkRouteDetailActivity" />
+        <activity android:name=".map.BusRouteDetailActivity" />
         <activity android:name=".merchant.SettledActivity1" />
-        <activity android:name=".merchant.RegionChooseActivity"/>
-
+        <activity android:name=".merchant.RegionChooseActivity" />
+        <activity android:name=".map.GPSNaviActivity" />
     </application>
 
 </manifest>

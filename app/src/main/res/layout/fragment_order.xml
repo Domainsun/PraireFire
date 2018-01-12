@@ -47,17 +47,11 @@
         app:tabTextColor="@color/grey"
         app:tabGravity="fill"
         app:tabMode="fixed" />
+<com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView
+    android:id="@+id/order_list_recyclerview"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="1dp"
+    android:layout_marginBottom="5dp"/>
 
-    <com.andview.refreshview.XRefreshView
-        android:id="@+id/order_list_refresh"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="1dp"
-         >
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/order_list_recyclerview"
-            android:layout_marginBottom="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </com.andview.refreshview.XRefreshView>
 </LinearLayout>

@@ -16,7 +16,7 @@ import com.amap.api.services.route.DrivePath;
 import com.amap.api.services.route.DriveStep;
 import com.amap.api.services.route.TMC;
 import com.praire.fire.R;
-import com.praire.fire.utils.AMapUtil;
+import com.praire.fire.utils.map.AMapUtil;
 
 import java.util.ArrayList;
 import java.util.List;

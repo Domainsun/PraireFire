@@ -33,7 +33,7 @@ import com.praire.fire.base.BaseActivity;
 import com.praire.fire.common.Constants;
 import com.praire.fire.data.IntentDataForRoutePlanningActivity;
 import com.praire.fire.map.adapter.BusResultListAdapter;
-import com.praire.fire.utils.AMapUtil;
+import com.praire.fire.utils.map.AMapUtil;
 import com.praire.fire.utils.ToastUtil;
 
 import butterknife.BindView;
@@ -59,12 +59,13 @@ public class RoutePlanningActivity extends AppCompatActivity implements AMap.OnM
     private Context mContext;
     private RouteSearch mRouteSearch;
     private DriveRouteResult mDriveRouteResult;
-    private LatLonPoint mStartPoint;// = new LatLonPoint(39.942295, 116.335891);//起点，116.335891,39.942295
-    private LatLonPoint mEndPoint;// = new LatLonPoint(39.995576, 116.481288);//终点，116.481288,39.995576
+    private LatLonPoint mStartPoint;
+    private LatLonPoint mEndPoint;
     private final int ROUTE_TYPE_DRIVE = 2;
     private RelativeLayout mBottomLayout, mHeadLayout;
     private TextView mRotueTimeDes, mRouteDetailDes;
-    private ProgressDialog progDialog = null;// 搜索时进度条
+    // 搜索时进度条
+    private ProgressDialog progDialog = null;
     private RouteSearch.FromAndTo fromAndTo;
     private final int ROUTE_TYPE_BUS = 1;
     private final int ROUTE_TYPE_WALK = 3;
@@ -92,7 +93,8 @@ public class RoutePlanningActivity extends AppCompatActivity implements AMap.OnM
 
         mContext = this.getApplicationContext();
         mapView = (MapView) findViewById(R.id.route_map);
-        mapView.onCreate(bundle);// 此方法必须重写
+        // 此方法必须重写
+        mapView.onCreate(bundle);
         init();
         setfromandtoMarker();
         searchRouteResult(ROUTE_TYPE_DRIVE);
@@ -124,7 +126,6 @@ public class RoutePlanningActivity extends AppCompatActivity implements AMap.OnM
         mRouteDetailDes = (TextView) findViewById(R.id.secondline);
         mBusResultList = (ListView) findViewById(R.id.bus_result_list);
         busResultlayout = findViewById(R.id.bus_result);
-//        mHeadLayout.setVisibility(View.GONE);
         IntentDataForRoutePlanningActivity data = getIntent().getParcelableExtra(Constants.INTENT_DATA);
         mStartPoint = data.mStartPoint;
         mEndPoint = data.mEndPoint;
@@ -198,8 +199,8 @@ public class RoutePlanningActivity extends AppCompatActivity implements AMap.OnM
             case ROUTE_TYPE_BUS:
                 // fromAndTo包含路径规划的起点和终点，RouteSearch.BusLeaseWalk表示公交查询模式
                 // 第三个参数表示公交查询城市区号，第四个参数表示是否计算夜班车，0表示不计算,1表示计算
-                RouteSearch.BusRouteQuery query1 = new RouteSearch.BusRouteQuery(fromAndTo, RouteSearch.BusLeaseWalk, city, 0);
-                query1.setCityd(city);//终点城市区号
+                RouteSearch.BusRouteQuery query1 = new RouteSearch.BusRouteQuery(fromAndTo, RouteSearch.BusLeaseWalk, city, 1);
+//                query1.setCityd(city);//终点城市区号
                 mRouteSearch.calculateBusRouteAsyn(query1);//开始规划路径
                 break;
             // 步行

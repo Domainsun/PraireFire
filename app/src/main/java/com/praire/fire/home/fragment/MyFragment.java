@@ -6,6 +6,8 @@ import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,30 +42,59 @@ import static com.praire.fire.common.Constants.LOGIN_COOKIE;
  * Created by lyp on 2017/12/27.
  */
 
-public class MyFragment extends BaseFragment {
-    @BindView(R.id.fragment_my_img)
+public class MyFragment extends BaseFragment implements View.OnClickListener{
     SimpleDraweeView fragmentMyImg;
-    @BindView(R.id.fragment_my_phone)
     TextView fragmentMyPhone;
-    @BindView(R.id.fragment_my_vip)
     TextView fragmentMyVip;
-    @BindView(R.id.fragment_my_wallet)
     TextView fragmentMyWallet;
-    @BindView(R.id.fragment_my_integral)
     TextView fragmentMyIntegral;
-    @BindView(R.id.fragment_my_invitation_integral)
     TextView fragmentMyInvitationIntegral;
-    @BindView(R.id.fragment_my_order)
     TextView fragmentMyOrder;
-    @BindView(R.id.fragment_my_shoppingcar)
     TextView fragmentMyShoppingcar;
-    Unbinder unbinder;
-
+    RelativeLayout nearby,merchantServices,myEvaluate,myOrder,shoppingcar,collect,wallet,myIntegral,invitationIntegral;
+    ImageView set,earphone;
     @Override
     public View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my, container, false);
-        unbinder = ButterKnife.bind(this, view);
+        initFindView(view);
         return view;
+    }
+
+    private void initFindView(View view) {
+        fragmentMyImg = view.findViewById(R.id.fragment_my_img);
+        fragmentMyPhone = view.findViewById(R.id.fragment_my_phone);
+        fragmentMyWallet = view.findViewById(R.id.fragment_my_wallet);
+        fragmentMyIntegral = view.findViewById(R.id.fragment_my_integral);
+        fragmentMyInvitationIntegral = view.findViewById(R.id.fragment_my_invitation_integral);
+        fragmentMyOrder = view.findViewById(R.id.fragment_my_order);
+        fragmentMyShoppingcar = view.findViewById(R.id.fragment_my_shoppingcar);
+
+        nearby = view.findViewById(R.id.fragment_my_nearby_rl);
+        merchantServices = view.findViewById(R.id.fragment_my_merchant_services_rl);
+        myEvaluate = view.findViewById(R.id.fragment_my_evaluate_rl);
+        fragmentMyVip = view.findViewById(R.id.fragment_my_vip);
+        myOrder = view.findViewById(R.id.fragment_my_order_rl);
+        shoppingcar = view.findViewById(R.id.fragment_my_shoppingcar_rl);
+        collect = view.findViewById(R.id.fragment_my_collect_rl);
+        wallet = view.findViewById(R.id.fragment_my_wallet_rl);
+        myIntegral = view.findViewById(R.id.fragment_my_integral_rl);
+        invitationIntegral = view.findViewById(R.id.fragment_my_invitation_integral_rl);
+
+        set = view.findViewById(R.id.fragment_my_set);
+        earphone = view.findViewById(R.id.fragment_my_earphone);
+
+        fragmentMyImg.setOnClickListener(this);
+        nearby.setOnClickListener(this);
+        myEvaluate.setOnClickListener(this);
+        fragmentMyPhone.setOnClickListener(this);
+        fragmentMyVip.setOnClickListener(this);
+        myOrder.setOnClickListener(this);
+        collect.setOnClickListener(this);
+        wallet.setOnClickListener(this);
+        myIntegral.setOnClickListener(this);
+        invitationIntegral.setOnClickListener(this);
+        set.setOnClickListener(this);
+        earphone.setOnClickListener(this);
     }
 
     @Override
@@ -78,19 +109,7 @@ public class MyFragment extends BaseFragment {
 
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        if(unbinder != null) {
-            unbinder.unbind();
-        }
-    }
-
-    @OnClick({R.id.fragment_my_earphone, R.id.fragment_my_set, R.id.fragment_my_img,
-            R.id.fragment_my_wallet_rl, R.id.fragment_my_integral_rl, R.id.fragment_my_invitation_integral_rl,
-            R.id.fragment_my_order_rl, R.id.fragment_my_shoppingcar_rl, R.id.fragment_my_collect_rl,
-            R.id.fragment_my_evaluate_rl, R.id.fragment_my_merchant_services_rl, R.id.fragment_my_nearby_rl,
-            R.id.fragment_my_phone, R.id.fragment_my_vip})
-    public void onViewClicked(View view) {
+    public void onClick(View view) {
         switch (view.getId()) {
             case R.id.fragment_my_phone:
                 AccountManagementActivity.startActivity(getActivity(),false);
@@ -151,9 +170,6 @@ public class MyFragment extends BaseFragment {
                     /*跳到商家服务*/
                 }
 
-
-
-
                 break;
             case R.id.fragment_my_nearby_rl:
                 NearbyActivity.startActivity(getActivity(), false);
@@ -162,8 +178,4 @@ public class MyFragment extends BaseFragment {
                 break;
         }
     }
-
-
-
-
 }

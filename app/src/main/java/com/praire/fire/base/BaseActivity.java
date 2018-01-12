@@ -53,9 +53,9 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void init() {
         initReferFragment();
         initViews();
+        initListeners();
         initData();
         initAdapters();
-        initListeners();
     }
     protected void initReferFragment() {
         fm = getSupportFragmentManager();

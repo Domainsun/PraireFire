@@ -12,7 +12,7 @@ import com.amap.api.services.route.DriveRouteResult;
 import com.praire.fire.R;
 import com.praire.fire.common.Constants;
 import com.praire.fire.map.adapter.DriveSegmentListAdapter;
-import com.praire.fire.utils.AMapUtil;
+import com.praire.fire.utils.map.AMapUtil;
 
 
 public class DriveRouteDetailActivity extends Activity {

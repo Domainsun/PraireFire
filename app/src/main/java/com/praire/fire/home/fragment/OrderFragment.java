@@ -1,6 +1,9 @@
 package com.praire.fire.home.fragment;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,20 +14,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.andview.refreshview.XRefreshView;
 import com.praire.fire.MyApplication;
 import com.praire.fire.R;
 import com.praire.fire.base.BaseFragment;
 import com.praire.fire.common.ConstanUrl;
 import com.praire.fire.common.Constants;
+import com.praire.fire.home.bean.SwipeBean;
 import com.praire.fire.order.adapter.OrderAdapter;
 import com.praire.fire.utils.RecycleViewDivider;
+import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
 
 import java.io.IOException;
+import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
@@ -57,13 +59,9 @@ public class OrderFragment extends BaseFragment implements TabLayout.OnTabSelect
      */
     private static final int FOR_ALL_ORDER = 3;
 
-    @BindView(R.id.order_tabs)
     TabLayout tabLayout;
-    @BindView(R.id.order_list_recyclerview)
-    RecyclerView recyclerView;
-    @BindView(R.id.order_list_refresh)
-    XRefreshView refresh;
-    Unbinder unbinder;
+    SwipeMenuRecyclerView srecyclerView;
+
 
     private boolean isFirst = true;
     private int orderType = 0;
@@ -72,19 +70,22 @@ public class OrderFragment extends BaseFragment implements TabLayout.OnTabSelect
     private OrderAdapter adapter;
     private boolean loadMore = true;
     /**
-     * //订单状态（0：待付款，1：已付款）
+     * 订单状态(0:未支付 1:已支付 2:已消费 3:已退款 4:已评价)
      */
     private String statusType = "0";
-    /**
-     * //是否评价（0：未评价，1：已评价）
-     */
-    private String isComment = "0";
+
 
     @Override
     public View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_order, container, false);
-        unbinder = ButterKnife.bind(this, view);
+        initFindView(view);
         return view;
+    }
+
+    private void initFindView(View view) {
+        tabLayout = view.findViewById(R.id.order_tabs);
+        srecyclerView = view.findViewById(R.id.order_list_recyclerview);
+
     }
 
     @Override
@@ -95,12 +96,11 @@ public class OrderFragment extends BaseFragment implements TabLayout.OnTabSelect
         tabLayout.addTab(tabLayout.newTab().setText("全部订单"));
         tabLayout.setOnTabSelectedListener(this);
         adapter = new OrderAdapter(getActivity());
-
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        srecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         //添加分割线
-        recyclerView.addItemDecoration(new RecycleViewDivider(
+        srecyclerView.addItemDecoration(new RecycleViewDivider(
                 getActivity(), LinearLayoutManager.HORIZONTAL));
-        recyclerView.setAdapter(adapter);
+        srecyclerView.setAdapter(adapter);
       /*  adapter.setOnItemClickListener(new ProductOrderRVAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
@@ -116,24 +116,7 @@ public class OrderFragment extends BaseFragment implements TabLayout.OnTabSelect
             }
         });*/
 
-        refresh.setNestedScrollView(R.id.order_list_recyclerview);
-        refresh.setPullRefreshEnable(true);
-        refresh.setPullLoadEnable(true);
-        // 设置刷新view的类型
-//        refresh.setRefreshViewType(XRefreshViewType.ABSLISTVIEW);
-        refresh.setPinnedTime(Constants.REFRESH_PINNED_TIME);
-        refresh.setXRefreshViewListener(new XRefreshView.SimpleXRefreshListener() {
-            @Override
-            public void onRefresh() {
-                initData();
-            }
 
-            @Override
-            public void onLoadMore() {
-                getNextPage();
-            }
-
-        });
     }
 
     @Override
@@ -150,7 +133,6 @@ public class OrderFragment extends BaseFragment implements TabLayout.OnTabSelect
                 OkHttpClient okHttpClient = new OkHttpClient();
                 RequestBody formBody = new FormBody.Builder()
                         .add("status", statusType)
-                        .add("comment", isComment)
                         .add("PHPSESSID", new MyApplication().getSignCookie())
                         .build();
                 Request request = new Request.Builder()
@@ -161,13 +143,9 @@ public class OrderFragment extends BaseFragment implements TabLayout.OnTabSelect
                 call.enqueue(new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast.makeText(getActivity(), "网络出错，请重试", Toast.LENGTH_SHORT).show();
-                                loadMore = false;
-                            }
-                        });
+                        Message msg = new Message();
+                        msg.what = 0;
+                        uiHandler.sendMessage(msg);
                         e.printStackTrace();
                     }
 
@@ -179,6 +157,9 @@ public class OrderFragment extends BaseFragment implements TabLayout.OnTabSelect
                             loadMore = false;
                         }
                         Log.e("data", data);
+                        Message msg = new Message();
+                        msg.what = 1;
+                        uiHandler.sendMessage(msg);
                        /* Gson gson = new Gson();
                         final ShopListBean evEntity = gson.fromJson(data, ShopListBean.class);
                         orderEntitys = evEntity.getPagelist();
@@ -196,6 +177,18 @@ public class OrderFragment extends BaseFragment implements TabLayout.OnTabSelect
         });
     }
 
+    @Override
+    protected void networkResponse(Message msg) {
+        switch (msg.what) {
+            case 0:
+                Toast.makeText(getActivity(), "网络出错，请重试", Toast.LENGTH_SHORT).show();
+                break;
+            case 1:
+                break;
+            default:
+                break;
+        }
+    }
 
     public void getNextPage() {
        /* if (entities == null || entities.isEmpty()) {
@@ -210,9 +203,7 @@ public class OrderFragment extends BaseFragment implements TabLayout.OnTabSelect
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if (unbinder != null) {
-            unbinder.unbind();
-        }
+
     }
 
     @Override
@@ -220,22 +211,18 @@ public class OrderFragment extends BaseFragment implements TabLayout.OnTabSelect
         switch (tab.getPosition()) {
             case 0:
                 statusType = "0";
-                isComment = "0";
                 orderType = FOR_WAIT_PAY;
                 break;
             case 1:
                 statusType = "1";
-                isComment = "0";
                 orderType = FOR_WAIT_SIGN;
                 break;
             case 2:
-                statusType = "1";
-                isComment = "0";
+                statusType = "4";
                 orderType = FOR_WAIT_EVALUATE;
                 break;
             case 3:
                 statusType = "";
-                isComment = "";
                 orderType = FOR_ALL_ORDER;
                 break;
             default:

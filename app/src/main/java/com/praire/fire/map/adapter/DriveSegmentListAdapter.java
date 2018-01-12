@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.amap.api.services.route.DriveStep;
 import com.praire.fire.R;
-import com.praire.fire.utils.AMapUtil;
+import com.praire.fire.utils.map.AMapUtil;
 
 import java.util.ArrayList;
 import java.util.List;
