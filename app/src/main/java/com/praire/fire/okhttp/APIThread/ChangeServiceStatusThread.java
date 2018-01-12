@@ -15,23 +15,30 @@ import okhttp3.Response;
  * Created by sunlo on 2017/12/29.
  */
 
-public class GetRegionThread implements Callable {
+public class ChangeServiceStatusThread implements Callable {
     /**
      * Created by domain on 2017/12/29.
      */
+    String id,cookie,status;
 
+    public ChangeServiceStatusThread(String id, String cookie, String status) {
+        this.id = id;
+        this.cookie = cookie;
+        this.status = status;
+    }
 
     @Override
     public Object call() throws Exception {
 
         final OkHttpClient client = new OkHttpClient();
         RequestBody formBody = new FormBody.Builder()
+                .add("id", id)
+                .add("status", status)
                 .build();
         Request request = new Request.Builder()
-                .url(ConstanUrl.GET_REGION)
-
-                .get()
-//                .addHeader("cookie",cookie)
+                .url(ConstanUrl.SERVICE_DELETE)
+                .post(formBody)
+                .addHeader("cookie",cookie)
                 .build();
         Response response = client.newCall(request).execute();
         if (!response.isSuccessful()) {

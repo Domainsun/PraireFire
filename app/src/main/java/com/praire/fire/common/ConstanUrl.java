@@ -14,14 +14,24 @@ public class ConstanUrl {
 
     /*申请入驻*/
     public final static String settled="https://www.lygyxh.cn/api.php/Shop/in";
+    public final static String ADD_SERVICE="https://www.lygyxh.cn/api.php/Service/in";
+
+
+    /*得到商家收益数据*/
+    public final static String GET_BUSINESS_INCOME="https://www.lygyxh.cn/api.php/shopCount/countincomebydate";
+    public final static String GET_BUSINESS_TODAY_COUNT="https://www.lygyxh.cn/api.php/ShopCount/todaycount";
     /*得到店铺类型*/
     public final static String GET_SHOP_TYPE="https://www.lygyxh.cn/api.php/Class/getShopType";
     public final static String GET_REGION="https://www.lygyxh.cn/api.php/class/getArea";
+    public final static String GET_SERVICE_TYPE="https://www.lygyxh.cn/api.php/Class/getServiceType";
+    public final static String GET_SERVICE_LIST="https://www.lygyxh.cn/api.php/Service/servicelist";
     public final static String GET_SHOP_INFO="https://www.lygyxh.cn/api.php/Shop/info";
     /*登录*/
     public final static String LOGIN="https://www.lygyxh.cn/api.php/Public/login";
     /*注册*/
     public final static String Register="https://www.lygyxh.cn/api.php/Public/register";
+    /*服务下架*/
+    public final static String SERVICE_DELETE="https://www.lygyxh.cn/api.php/service/changestatus";
     /*发送短信验证码*/
     public final static String SENDSMSCODE="https://www.lygyxh.cn/api.php/Verifytel/sendsms";
     /**

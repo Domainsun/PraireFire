@@ -38,11 +38,19 @@
         <activity android:name=".GuidActivity">
 
 
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
+        </activity>
+        <activity android:name=".merchant.MerchantActivity1" />
+        <activity android:name=".SignAcitvity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+<<<<<<< HEAD
         <activity android:name=".merchant.MerchantActivity1">
             <!-- <intent-filter>
                  <action android:name="android.intent.action.MAIN" />
@@ -63,6 +71,8 @@
         <!-- </intent-filter> -->
 
 
+=======
+>>>>>>> 93f4472b0186344abf426f9860c4594fece06827
         <activity android:name=".RegisterActivity" />
         <activity android:name=".merchant.SettledActivity" />
         <activity android:name=".home.MainActivity" />
@@ -97,8 +107,17 @@
         <activity android:name=".map.WalkRouteDetailActivity" />
         <activity android:name=".map.BusRouteDetailActivity" />
         <activity android:name=".merchant.SettledActivity1" />
+<<<<<<< HEAD
         <activity android:name=".merchant.RegionChooseActivity" />
         <activity android:name=".map.GPSNaviActivity" />
+=======
+        <activity android:name=".merchant.RegionChooseActivity"/>
+
+        <activity android:name=".merchant.RegionChooseActivity" />
+        <activity android:name=".merchant.BusinessServiceActivity" />
+        <activity android:name=".merchant.ServiceManageActivity" />
+        <activity android:name=".merchant.AddServiceActivity"></activity>
+>>>>>>> 93f4472b0186344abf426f9860c4594fece06827
     </application>
 
 </manifest>

@@ -1,8 +1,5 @@
 package com.praire.fire.okhttp.JavaBean;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import java.io.Serializable;
 
 /**
@@ -11,28 +8,31 @@ import java.io.Serializable;
 
 public class ShopInfoBean implements  Serializable {
 
+
     /**
      * id : 17
      * user_id : 1473
-     * type : 59
-     * name : domain的2店
-     * door : http://lysh-upload.oss-cn-shanghai.aliyuncs.com/shop/door/201801/07d9704be80de1ab731ca52633f4829c.jpg?OSSAccessKeyId=LTAIjyidULA5tuIB&Expires=1515404888&Signature=NXmmkgehLCDC2DNLBEAFPS73UNY%3D
-     * licence : http://lysh-upload.oss-cn-shanghai.aliyuncs.com/shop/licence/201801/e1353842fd0bd535196cb2b014dab976.jpg?OSSAccessKeyId=LTAIjyidULA5tuIB&Expires=1515404888&Signature=LRSKiv%2Fobpo8kVQa5JNBGOzv0Yw%3D
-     * identify : http://lysh-upload.oss-cn-shanghai.aliyuncs.com/shop/identify/201801/14ec4cc5e5adf7e17792021732ae19f7.jpg?OSSAccessKeyId=LTAIjyidULA5tuIB&Expires=1515404888&Signature=Eoee7htW%2FuYFoREYKBu0RV90Kzs%3D
-     * contact : domain
-     * tel : 130973402782
-     * opentime : 18:35-15:35
+     * type : 57
+     * name : 3店
+     * door : http://lysh-upload.oss-cn-shanghai.aliyuncs.com/shop/door/201801/5fab827b963b70e762f68313d6adb07b.jpg?OSSAccessKeyId=LTAIjyidULA5tuIB&Expires=1515470680&Signature=wzNf%2FVUp0kOTmLkOa98kv4A%2FcWE%3D
+     * licence : http://lysh-upload.oss-cn-shanghai.aliyuncs.com/shop/licence/201801/f1ccbcdbeec1eea839c25a4b395cd3b4.jpg?OSSAccessKeyId=LTAIjyidULA5tuIB&Expires=1515470680&Signature=lWYNplqm1E78mKLRpV1fIXk3P4M%3D
+     * identify : http://lysh-upload.oss-cn-shanghai.aliyuncs.com/shop/identify/201801/6a294de9900625f6250c7c01831407f1.jpg?OSSAccessKeyId=LTAIjyidULA5tuIB&Expires=1515470680&Signature=aM796wQVXiCl1uOC9GQod8tVp7I%3D
+     * contact : 欧阳
+     * tel : 98089230932
+     * opentime : 08:58-13:58
      * address : 广州
      * lng : 32.111000
      * lat : 32.111100
-     * desc : 信用商家
-     * city_id : 124
+     * desc : 啊撒空间啊；
+     * city_id : 127
      * star : 5.00
-     * checked : 0
-     * check_time : 1515398225
+     * checked : 2
+     * check_time : 1515466707
      * create_time : 1515398159
-     * update_time : 1515400521
-     * check_desc : null
+     * update_time : 1515401899
+     * check_desc : 资料填写错误
+     * type_name : 茶庄
+     * city_name : 江西省-吉安市-吉安县
      */
 
     private String id;
@@ -56,6 +56,8 @@ public class ShopInfoBean implements  Serializable {
     private String create_time;
     private String update_time;
     private String check_desc;
+    private String type_name;
+    private String city_name;
 
     public String getId() {
         return id;
@@ -225,35 +227,19 @@ public class ShopInfoBean implements  Serializable {
         this.check_desc = check_desc;
     }
 
-//    @Override
-//    public int describeContents() {
-//        return 0;
-//    }
-//
-//    @Override
-//    public void writeToParcel(Parcel parcel, int i) {
-//
-//        parcel.writeString(id);
-//        parcel.writeString(user_id);
-//        parcel.writeString(type);
-//        parcel.writeString(name);
-//        parcel.writeString(door);
-//        parcel.writeString(licence);
-//        parcel.writeString(identify);
-//        parcel.writeString(contact);
-//        parcel.writeString(tel);
-//        parcel.writeString(opentime);
-//        parcel.writeString(address);
-//        parcel.writeString(lng);
-//        parcel.writeString(lat);
-//        parcel.writeString(desc);
-//        parcel.writeString(city_id);
-//        parcel.writeString(star);
-//        parcel.writeString(checked);
-//        parcel.writeString(check_time);
-//        parcel.writeString(create_time);
-//        parcel.writeString(update_time);
-//        parcel.writeString(check_desc);
-//
-//    }
+    public String getType_name() {
+        return type_name;
+    }
+
+    public void setType_name(String type_name) {
+        this.type_name = type_name;
+    }
+
+    public String getCity_name() {
+        return city_name;
+    }
+
+    public void setCity_name(String city_name) {
+        this.city_name = city_name;
+    }
 }
