@@ -52,6 +52,7 @@ import com.praire.fire.common.ConstanUrl;
 import com.praire.fire.common.Constants;
 import com.praire.fire.data.IntentDataForGPSNaviActivity;
 import com.praire.fire.data.IntentDataForRoutePlanningActivity;
+import com.praire.fire.home.MainActivity;
 import com.praire.fire.map.adapter.NearlyShopAdapter;
 import com.praire.fire.map.bean.NearlyShopBean;
 import com.praire.fire.utils.RecycleViewDivider;
@@ -112,10 +113,14 @@ public class MapFragment extends BaseFragment implements AMap.OnMarkerClickListe
      * 被点击的是列表中的第几个商家
      */
     private int bPersion = 0;
-
-    private LatLng CHONGQING;// 重庆市经纬度
+    /**
+     * 经纬度
+     */
+    private LatLng CHONGQING;
     private CameraPosition cameraPosition;
-    private String searchKey = "",statusType = "";
+    private String searchKey = "";
+    private boolean isMarkerClicked = false;
+    private boolean isSearch = false;
 
     protected CameraPosition getCameraPosition() {
         return cameraPosition;
@@ -166,8 +171,7 @@ public class MapFragment extends BaseFragment implements AMap.OnMarkerClickListe
     @Override
     public void initListener() {
         Eyes.setStatusBarColor(getActivity(), ContextCompat.getColor(getActivity(), R.color.status_bar));
-//        statusType = getArguments().getString(Constants.SEARCH_TYPE);
-//        searchKey = getArguments().getString(Constants.SEARCH_KEY);
+
 
         mapRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mapRecyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -224,10 +228,10 @@ public class MapFragment extends BaseFragment implements AMap.OnMarkerClickListe
     /**
      * 获取商家列表
      */
-    private void requestShopList(final double longitude, final double latitude,String statusType,String  searchKey) {
+    private void requestShopList(final double longitude, final double latitude, String searchKey) {
         OkHttpClient okHttpClient = new OkHttpClient();
         Request request = new Request.Builder()
-                .url(ConstanUrl.SEARCH_NEARSHOP + "?lng=" + longitude + "&lat=" + latitude+ "?name=" + searchKey + "&type=" + statusType)
+                .url(ConstanUrl.SEARCH_NEARSHOP + "?lng=" + longitude + "&lat=" + latitude + "&name=" + searchKey)
                 .build();
         Call call = okHttpClient.newCall(request);
         call.enqueue(new Callback() {
@@ -246,18 +250,24 @@ public class MapFragment extends BaseFragment implements AMap.OnMarkerClickListe
                 if (data != null) {
 //                    loadMore = false;
                     Gson gson = new Gson();
-                    evEntitys.clear();
-                    evEntitys = gson.fromJson(data, new TypeToken<List<NearlyShopBean>>() {
+
+                    List<NearlyShopBean> entitys = gson.fromJson(data, new TypeToken<List<NearlyShopBean>>() {
+
                     }.getType());
 
                     Message msg = new Message();
-                    msg.what = 1;
-//                    msg.obj = evEntitys;
+                    if (entitys.size() == 0) {
+                        msg.what = 2;
+                    } else {
+                        msg.what = 1;
+                        msg.obj = entitys;
+                    }
                     uiHandler.sendMessage(msg);
-
-
+                    return;
                 }
-
+                Message msg = new Message();
+                msg.what = 2;
+                uiHandler.sendMessage(msg);
             }
         });
 
@@ -270,8 +280,19 @@ public class MapFragment extends BaseFragment implements AMap.OnMarkerClickListe
                 Toast.makeText(getActivity(), "网络出错，请重试", Toast.LENGTH_SHORT).show();
                 break;
             case 1:
-                adapter.setEntities(evEntitys, longitude, latitude);
-                addMarkersToMap();// 往地图上添加marker
+                List<NearlyShopBean>   entitys = (List<NearlyShopBean>) msg.obj;
+                evEntitys = entitys;
+                if (isSearch) {
+                    mapRecyclerView.setVisibility(View.VISIBLE);
+                    checkMoreTv.setVisibility(View.GONE);
+                }
+                adapter.setEntities(entitys, longitude, latitude);
+                addMarkersToMap(evEntitys);// 往地图上添加marker
+                break;
+            case 2:
+                mapRecyclerView.setVisibility(View.GONE);
+                checkMoreTv.setVisibility(View.GONE);
+                Toast.makeText(getActivity(), "没有更多数据了", Toast.LENGTH_SHORT).show();
                 break;
             default:
                 break;
@@ -288,7 +309,7 @@ public class MapFragment extends BaseFragment implements AMap.OnMarkerClickListe
         MyLocationStyle myLocationStyle = new MyLocationStyle();
         myLocationStyle.myLocationIcon(BitmapDescriptorFactory.fromResource(R.mipmap.location_marker));
         //设置连续定位模式下的定位间隔，只在连续定位模式下生效，单次定位模式下不会生效。单位为毫秒。
-        myLocationStyle.interval(200000);
+        myLocationStyle.interval(20000000);
         // 设置定位的类型为 跟随模式
         myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_FOLLOW);//MyLocationStyle.LOCATION_TYPE_FOLLOW
         aMap.setMyLocationStyle(myLocationStyle);
@@ -329,7 +350,7 @@ public class MapFragment extends BaseFragment implements AMap.OnMarkerClickListe
         }
     }
 
-     @Override
+    @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mMapView = (TextureMapView) getView().findViewById(R.id.map);
@@ -370,6 +391,15 @@ public class MapFragment extends BaseFragment implements AMap.OnMarkerClickListe
             //在activity执行onResume时执行mMapView.onResume ()，重新绘制加载地图
             mMapView.onResume();
         }
+        searchKey = ((MainActivity) getActivity()).getSearchKey();
+
+        if (!"".equals(searchKey)) {
+            mapInputKey.setText(searchKey);
+            evEntitys.clear();
+            isSearch = true;
+            requestShopList(longitude, latitude, searchKey);
+            ((MainActivity) getActivity()).setSearchKey("");
+        }
     }
 
     /**
@@ -388,7 +418,8 @@ public class MapFragment extends BaseFragment implements AMap.OnMarkerClickListe
     /**
      * 在地图上添加marker
      */
-    private void addMarkersToMap() {
+    private void addMarkersToMap( List<NearlyShopBean> evEntitys ) {
+        aMap.clear();
         markerOption = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
                 .decodeResource(getResources(), R.mipmap.location_car)))
                 //设置Marker可拖动true
@@ -412,9 +443,13 @@ public class MapFragment extends BaseFragment implements AMap.OnMarkerClickListe
      */
     @Override
     public boolean onMarkerClick(Marker marker) {
+        if (evEntitys.size() == 0) {
+            return false;
+        }
         if (aMap != null) {
             jumpPoint(marker);
         }
+        isMarkerClicked = true;
         checkMoreTv.setVisibility(View.GONE);
         mapRecyclerView.setVisibility(View.GONE);
         mapBusinessInfoLl.setVisibility(View.VISIBLE);
@@ -473,13 +508,12 @@ public class MapFragment extends BaseFragment implements AMap.OnMarkerClickListe
                 int locationType = bundle.getInt(MyLocationStyle.LOCATION_TYPE);
                 longitude = location.getLongitude();
                 latitude = location.getLatitude();
-                CHONGQING = new LatLng(latitude, longitude);// 重庆市经纬度
-                requestShopList(longitude, latitude,statusType,searchKey);
+                CHONGQING = new LatLng(latitude, longitude);
+                requestShopList(longitude, latitude, searchKey);
 
                 Log.e("amap", "定位信息， code: " + errorCode + " errorInfo: " + errorInfo + " locationType: " + locationType);
             } else {
                 Log.e("amap", "定位信息， bundle is null ");
-
             }
 
         } else {
@@ -493,8 +527,11 @@ public class MapFragment extends BaseFragment implements AMap.OnMarkerClickListe
         switch (view.getId()) {
             case R.id.map_back:
                 mapRecyclerView.setVisibility(mapRecyclerView.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
-                mapBusinessInfoLl.setVisibility(mapBusinessInfoLl.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
-                mapBusinessInfoRound.setVisibility(mapBusinessInfoRound.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
+                if (isMarkerClicked) {
+                    mapBusinessInfoLl.setVisibility(mapBusinessInfoLl.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
+                    mapBusinessInfoRound.setVisibility(mapBusinessInfoRound.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
+                }
+
                 break;
             case R.id.map_clean:
                 mapInputKey.setText("");
@@ -528,19 +565,4 @@ public class MapFragment extends BaseFragment implements AMap.OnMarkerClickListe
     }
 
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.e("onActivityResult","onActivityResult");
-        if (requestCode == Constants.REQUEST_CODE_SEARCH && resultCode == RESULT_OK) {
-Log.e("onActivityResult","onActivityResult1");
-            if (data != null) {
-                statusType = data.getStringExtra(Constants.SEARCH_TYPE);
-                searchKey =  data.getStringExtra(Constants.SEARCH_KEY);
-                mapInputKey.setText(searchKey);
-                Log.e("searchKey",searchKey);
-                Log.e("statusType",statusType);
-                requestShopList(longitude,latitude,statusType,searchKey);
-            }
-        }
-    }
 }

@@ -39,6 +39,8 @@ import com.praire.fire.home.bean.ShopListBean;
 import com.praire.fire.home.bean.SwipeBean;
 import com.praire.fire.utils.RecycleViewDivider;
 import com.praire.fire.utils.SharePreferenceMgr;
+import com.yanzhenjie.recyclerview.swipe.SwipeItemClickListener;
+import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -80,7 +82,7 @@ public class HomeFragment extends BaseFragment implements BaseSliderView.OnSlide
     @BindView(R.id.home_clothes)
     TextView homeClothes;
     @BindView(R.id.home_ecyclerView)
-    RecyclerView homeEcyclerView;
+    SwipeMenuRecyclerView homeEcyclerView;
     private ShopListAdapter adapter;
     private int index = 1;
     private List<ShopListBean.PagelistBean> evEntitys = new ArrayList<>();
@@ -131,14 +133,16 @@ public class HomeFragment extends BaseFragment implements BaseSliderView.OnSlide
         //添加分割线
         homeEcyclerView.addItemDecoration(new RecycleViewDivider(
                 getActivity(), LinearLayoutManager.HORIZONTAL));
-        adapter = new ShopListAdapter(getActivity());
-        homeEcyclerView.setAdapter(adapter);
-        adapter.setOnItemClickListener(new ShopListAdapter.OnItemClickListener() {
+        homeEcyclerView.setSwipeItemClickListener(new SwipeItemClickListener() {
             @Override
-            public void onItemClick(View view, int position) {
+            public void onItemClick(View itemView, int position) {
                 ShopActivity.startActivity(getActivity(), evEntitys.get(position).getId(), false);
             }
         });
+        adapter = new ShopListAdapter(getActivity());
+
+
+        homeEcyclerView.setAdapter(adapter);
       /*  homeEcyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
 

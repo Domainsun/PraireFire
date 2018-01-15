@@ -45,7 +45,8 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
 
     private ArrayList<Fragment> fragments;
     private BottomNavigationBar bottomNavigationBar;
-    private MapFragment mapFragment;
+
+    private String  searchKey = "";
 
 
     public static void startActivity(Context context, int type, boolean forResult) {
@@ -151,11 +152,10 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
     }
 
     private ArrayList<Fragment> getFragments() {
-        mapFragment = new MapFragment();
-//        mapFragment.setArguments();
+
         ArrayList<Fragment> fragments = new ArrayList<>();
         fragments.add(new HomeFragment());
-        fragments.add(mapFragment);
+        fragments.add(new MapFragment());
         fragments.add(new OrderFragment());
         fragments.add(new MyFragment());
         return fragments;
@@ -165,26 +165,22 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == Constants.REQUEST_CODE_SEARCH && resultCode == RESULT_OK) {
-            Log.e("onActivityResult","onActivityResult1");
             if (data != null) {
-
-               String statusType = data.getStringExtra(Constants.SEARCH_TYPE);
-                String searchKey =  data.getStringExtra(Constants.SEARCH_KEY);
-                Bundle bundle = new Bundle();
-                bundle.putString(Constants.SEARCH_TYPE,statusType);
-                bundle.putString(Constants.SEARCH_KEY, searchKey);
-                mapFragment.setArguments( bundle);
+                setSearchKey(data.getStringExtra(Constants.SEARCH_KEY));
                 bottomNavigationBar.selectTab(1);
-//                mapInputKey.setText(searchKey);
-                Log.e("searchKey",searchKey);
-                Log.e("statusType",statusType);
-
-//                requestShopList(longitude,latitude,statusType,searchKey);
             }
         }
     }
 
 
 
+
+    public String getSearchKey() {
+        return searchKey;
+    }
+
+    public void setSearchKey(String searchKey) {
+        this.searchKey = searchKey;
+    }
 
 }

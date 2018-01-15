@@ -100,8 +100,11 @@ public class ConstanUrl {
      */
     public static final String COMMONINFO_createpay = "https://www.lygyxh.cn/api.php/Pay/createpay";
     /**
-     * 店铺信息
+     * 店铺详情
      */
-    public static final String Shop_Info = "https://www.lygyxh.cn/api.php/Shop/info";
-
+    public static final String Shop_Info = "https://www.lygyxh.cn/api.php/Commoninfo/shopinfo";
+    /**
+     * 阿里云图片地址头
+     */
+    public static final String OSS_ALIYUNCS = "http://lysh-upload.oss-cn-shanghai.aliyuncs.com/";
 }

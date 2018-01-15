@@ -36,13 +36,16 @@
                 android:id="@+id/item_shop_service_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:textColor="@color/orange"
+                android:tag="￥%s"
                 android:textSize="17sp" />
             <TextView
                 android:id="@+id/item_shop_service_sale"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="60dp"
+                android:layout_weight="2"
+                android:tag="已售%s"
                 android:textColor="@color/grey"
                 android:textSize="12sp" />
         </LinearLayout>
@@ -52,6 +55,7 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
+        android:visibility="gone"
         android:gravity="right|center_vertical"
         android:orientation="horizontal">
         <ImageView

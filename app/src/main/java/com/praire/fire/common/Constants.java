@@ -41,7 +41,6 @@ public class Constants {
      */
     public static String Latitude  = "Latitude";
 
-    public static String SEARCH_TYPE = "SEARCH_TYPE";
     /**
      * 搜索关键字
      */

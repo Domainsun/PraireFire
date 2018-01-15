@@ -2,8 +2,13 @@ package com.praire.fire.car;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Message;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -14,12 +19,22 @@ import android.widget.Toast;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
-import com.praire.fire.MyApplication;
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.interfaces.DraweeController;
+import com.facebook.drawee.view.SimpleDraweeView;
+import com.google.gson.Gson;
 import com.praire.fire.R;
 import com.praire.fire.base.BaseActivity;
+import com.praire.fire.car.adapter.ShopEvalauteAdapter;
+import com.praire.fire.car.adapter.ShopProductAdapter;
+import com.praire.fire.car.adapter.ShopServiceAdapter;
+import com.praire.fire.car.bean.BusinessInfoBean;
 import com.praire.fire.common.ConstanUrl;
 import com.praire.fire.common.Constants;
 import com.praire.fire.home.MainActivity;
+import com.praire.fire.map.adapter.NearlyShopAdapter;
+import com.praire.fire.utils.RecycleViewDivider;
+import com.yanzhenjie.recyclerview.swipe.SwipeItemClickListener;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
 
 import java.io.IOException;
@@ -42,7 +57,7 @@ public class ShopActivity extends BaseActivity implements BottomNavigationBar.On
 
 
     @BindView(R.id.shop_logo)
-    ImageView shopLogo;
+    SimpleDraweeView shopLogo;
     @BindView(R.id.shop_name)
     TextView shopName;
     @BindView(R.id.shop_star)
@@ -85,6 +100,10 @@ public class ShopActivity extends BaseActivity implements BottomNavigationBar.On
     SwipeMenuRecyclerView recyclerviewEvaluate;
 
     private String businessId;
+    private BusinessInfoBean businessInfoBean;
+    private ShopServiceAdapter adapterService;
+    private ShopProductAdapter adapterProduct;
+    private ShopEvalauteAdapter adapterEvaluate;
 
     public static void startActivity(Context context, String businessId, boolean forResult) {
         Intent intent = new Intent(context, ShopActivity.class);
@@ -132,7 +151,23 @@ public class ShopActivity extends BaseActivity implements BottomNavigationBar.On
 
     @Override
     protected void initAdapters() {
+        setRecyclerView(recyclerviewService);
+        setRecyclerView(recyclerviewProduct);
+        setRecyclerView(recyclerviewEvaluate);
+        adapterService = new ShopServiceAdapter(this);
+        adapterProduct = new ShopProductAdapter(this);
+        adapterEvaluate = new ShopEvalauteAdapter(this);
+        recyclerviewProduct.setAdapter(adapterProduct);
+        recyclerviewService.setAdapter(adapterService);
+        recyclerviewEvaluate.setAdapter(adapterEvaluate);
+    }
 
+    private void setRecyclerView(SwipeMenuRecyclerView recyclerview) {
+        recyclerview.setLayoutManager(new LinearLayoutManager(this));
+        recyclerview.setItemAnimator(new DefaultItemAnimator());
+        //添加分割线
+        recyclerview.addItemDecoration(new RecycleViewDivider(
+                this, LinearLayoutManager.HORIZONTAL));
     }
 
     @Override
@@ -143,19 +178,15 @@ public class ShopActivity extends BaseActivity implements BottomNavigationBar.On
     private void requestDatas() {
         OkHttpClient okHttpClient = new OkHttpClient();
         Request request = new Request.Builder()
-                .url(ConstanUrl.Shop_Info + "?PHPSESSID=" + new MyApplication().getSignCookie() + "&")  ////'''''''''''''''''''''''''''''''''''''''''''
+                .url(ConstanUrl.Shop_Info + "?id=" + businessId)
                 .build();
         Call call = okHttpClient.newCall(request);
         call.enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(ShopActivity.this, "网络出错，请重试", Toast.LENGTH_SHORT).show();
-//                        loadMore = false;
-                    }
-                });
+                Message msg = new Message();
+                msg.what = 0;
+                uiHandler.sendMessage(msg);
                 e.printStackTrace();
             }
 
@@ -163,23 +194,65 @@ public class ShopActivity extends BaseActivity implements BottomNavigationBar.On
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
 
                 String data = response.body().string();
-                if (data == null) {
-//                    loadMore = false;
-                    return;
-                }
-                Log.e("Shop_Info", data);
-               /* Gson gson = new Gson();
-                final ShopListBean evEntity = gson.fromJson(data, ShopListBean.class);
-                evEntitys = evEntity.getPagelist();
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        adapter.setEntities(evEntitys);
+                if (data != null) {
+                    Log.e("Shop_Info", data);
+                    Gson gson = new Gson();
+                    businessInfoBean = gson.fromJson(data, BusinessInfoBean.class);
+                    Message msg = new Message();
+                    if (businessInfoBean == null) {
+                        msg.what = 2;
+                    } else {
+                        msg.what = 1;
                     }
-                });
-*/
+                    uiHandler.sendMessage(msg);
+                }
+
             }
         });
+    }
+
+    @Override
+    protected void networkResponse(Message msg) {
+        switch (msg.what) {
+            case 0:
+                Toast.makeText(this, "网络出错，请重试", Toast.LENGTH_SHORT).show();
+                break;
+            case 1:
+                setBaseInfo();
+                adapterService.setEntities(businessInfoBean.getServicelist());
+                adapterProduct.setEntities(businessInfoBean.getProductlist());
+                adapterEvaluate.setEntities(businessInfoBean.getCommentlist());
+                break;
+            case 2:
+                Toast.makeText(this, "没有数据了", Toast.LENGTH_SHORT).show();
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void setBaseInfo() {
+        Uri uri = Uri.parse(businessInfoBean.getDoor());
+        DraweeController controller = Fresco.newDraweeControllerBuilder()
+                .setUri(uri)
+                .setAutoPlayAnimations(true)
+                .build();
+        shopLogo.setController(controller);
+
+        shopName.setText(businessInfoBean.getName());
+        shopStar.setRating(Float.valueOf(businessInfoBean.getStar()));
+        shopAddress.setText(businessInfoBean.getAddress());
+        shopBusinessInfo.setText(businessInfoBean.getDesc());
+        shopBusinessInfoTime.setText(businessInfoBean.getOpentime());
+        shopEvaluate.setText(String.format(shopEvaluate.getTag().toString(), businessInfoBean.getComment().getCommentallcount()));
+        shopMoreEvaluateNumber.setText(businessInfoBean.getComment().getCommentallcount());
+        shopScore.setText(businessInfoBean.getStar());
+        shopName2.setText(businessInfoBean.getName());
+        shopStar2.setRating(Float.valueOf(businessInfoBean.getStar()));
+        shopGoodNum.setText("好评率" + businessInfoBean.getComment().getHighcomment() + "%");
+        shopGoodMoreThan.setText("高于" + businessInfoBean.getComment().getHigherthan() + "%的同行");
+
+
     }
 
     @OnClick({R.id.shop_back, R.id.shop_more, R.id.shop_collect, R.id.shop_share, R.id.shop_tel,

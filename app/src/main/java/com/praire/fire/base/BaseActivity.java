@@ -1,16 +1,19 @@
 package com.praire.fire.base;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.os.Message;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 
+import com.praire.fire.okhttp.NetworkHandler;
 
 
 public abstract class BaseActivity extends AppCompatActivity {
 
     // Refer fragment class
     protected FragmentManager fm;
-
+    protected NetworkHandler uiHandler ;
 
 
     @Override
@@ -18,6 +21,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(getFragmentLayout());
         setupComponent();
+        uiHandler = createNetWorkHandler();
         init();
     }
     public void setupComponent() {
@@ -62,5 +66,15 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
 
-
+    @SuppressLint("HandlerLeak")
+    public NetworkHandler createNetWorkHandler() {
+        return new NetworkHandler(this) {
+            @Override
+            public void dispatchMessage(Message msg) {
+                networkResponse(msg);
+            }
+        };
+    }
+    protected void networkResponse(Message msg) {
+    }
 }

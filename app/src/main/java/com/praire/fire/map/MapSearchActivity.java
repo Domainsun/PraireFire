@@ -11,11 +11,13 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.nex3z.flowlayout.FlowLayout;
 import com.praire.fire.R;
 import com.praire.fire.base.BaseActivity;
 import com.praire.fire.common.Constants;
-import com.praire.fire.home.MainActivity;
+import com.praire.fire.merchant.bean.ShopTypeBeanList;
+import com.praire.fire.okhttp.UseAPIs;
 import com.praire.fire.utils.SaveArrayListUtil;
 import com.praire.fire.utils.ToastUtil;
 import com.praire.fire.utils.statusbarcolor.Eyes;
@@ -24,6 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * 地图上 搜索商家
  * Created by lyp on 2018/1/9.
  */
 
@@ -31,12 +34,12 @@ public class MapSearchActivity extends BaseActivity implements View.OnClickListe
 
     private FlowLayout mFlowLayout;
     private TextView clean;
-    private ArrayList<String> entities = new ArrayList<>();
+    private ArrayList<String> searchEntities = new ArrayList<>();
+    private ShopTypeBeanList typeEntities;
     SaveArrayListUtil save;
     private String searchKey;
     EditText edtSearch;
     TabLayout tabLayout;
-    private String statusType = "";
     ImageView back;
 
     public static void startActivity(Context context, String key, boolean forResult) {
@@ -62,24 +65,20 @@ public class MapSearchActivity extends BaseActivity implements View.OnClickListe
         edtSearch = findViewById(R.id.plug_search_edittext);
         tabLayout = findViewById(R.id.search_tabs);
         back = findViewById(R.id.search_bar2_back);
+        requestShopTypeList();
     }
 
     @Override
     protected void initListeners() {
         getIntentDatas();
         save = new SaveArrayListUtil();
-        entities = save.getSearchArrayList(this);
+        searchEntities = save.getSearchArrayList(this);
         if (!TextUtils.isEmpty(searchKey)) {
             edtSearch.setText(searchKey);
         }
         clean.setOnClickListener(this);
         back.setOnClickListener(this);
-        tabLayout.addTab(tabLayout.newTab().setText("汽车"));
-        tabLayout.addTab(tabLayout.newTab().setText("教育"));
-        tabLayout.addTab(tabLayout.newTab().setText("休闲"));
-        tabLayout.addTab(tabLayout.newTab().setText("旅游"));
-        tabLayout.addTab(tabLayout.newTab().setText("服饰"));
-        tabLayout.setOnTabSelectedListener(this);
+
     }
 
     @Override
@@ -97,7 +96,7 @@ public class MapSearchActivity extends BaseActivity implements View.OnClickListe
                         return false;
                     }
                     //保存
-                    save.saveArrayList(MapSearchActivity.this, entities, searchKey);
+                    save.saveArrayList(MapSearchActivity.this, searchEntities, searchKey);
                     goSearch();
                     return true;
 
@@ -109,6 +108,21 @@ public class MapSearchActivity extends BaseActivity implements View.OnClickListe
 
         });
     }
+    /**
+     * 获取商家类型列表
+     */
+    private void requestShopTypeList() {
+        String str=new UseAPIs().getShopType();
+        Gson gson = new Gson();
+        typeEntities = gson.fromJson(str, ShopTypeBeanList.class);
+        for(ShopTypeBeanList.ListBean bean :typeEntities.getList()){
+            tabLayout.addTab(tabLayout.newTab().setText(bean.getName()));
+        }
+        tabLayout.setOnTabSelectedListener(this);
+
+    }
+
+
 
     /**
      * 带了数据的
@@ -126,7 +140,7 @@ public class MapSearchActivity extends BaseActivity implements View.OnClickListe
 
     @Override
     protected void initData() {
-        getList(entities);
+        getList(searchEntities);
     }
 
     private void getList(List<String> list) {
@@ -154,7 +168,6 @@ public class MapSearchActivity extends BaseActivity implements View.OnClickListe
 
     private void goSearch() {
         Intent intent  = new Intent();
-        intent.putExtra(Constants.SEARCH_TYPE, statusType);
         intent.putExtra(Constants.SEARCH_KEY, searchKey);
         setResult(RESULT_OK, intent);
         finish();
@@ -165,7 +178,7 @@ public class MapSearchActivity extends BaseActivity implements View.OnClickListe
         switch (view.getId()) {
             case R.id.search_clear:
                 save.clear(this);
-                entities.clear();
+                searchEntities.clear();
                 mFlowLayout.removeAllViews();
                 break;
             case R.id.search_bar2_back:
@@ -177,30 +190,32 @@ public class MapSearchActivity extends BaseActivity implements View.OnClickListe
 
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
-        switch (tab.getPosition()) {
+//        statusType = tab.getText().toString();
+        searchKey = typeEntities.getList().get(tab.getPosition()).getName();
+        goSearch();
+       /* switch (tab.getPosition()) {
             case 0:
-                statusType = "0";
-
+                statusType = tab.getText().toString();
                 break;
             case 1:
-                statusType = "1";
+                statusType = "56";
 
                 break;
             case 2:
-                statusType = "2";
+                statusType = "57";
 
                 break;
             case 3:
-                statusType = "3";
+                statusType = "58";
 
                 break;
             case 4:
-                statusType = "4";
+                statusType = "59";
 
                 break;
             default:
                 break;
-        }
+        }*/
     }
 
     @Override

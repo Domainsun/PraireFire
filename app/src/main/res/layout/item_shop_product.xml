@@ -26,7 +26,7 @@
             android:textColor="@color/text_color"
             android:textSize="17sp" />
         <TextView
-            android:id="@+id/item_shop_product_count"
+            android:id="@+id/item_shop_product_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
@@ -46,6 +46,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/orange"
+                android:tag = "￥%s"
                 android:textSize="17sp" />
             <TextView
                 android:id="@+id/item_shop_product_sale"
@@ -53,6 +54,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="60dp"
                 android:textColor="@color/grey"
+                android:tag = "已售%s"
                 android:textSize="12sp" />
         </LinearLayout>
     </LinearLayout>
@@ -61,6 +63,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:gravity="center_vertical"
+        android:visibility="gone"
         android:orientation="horizontal">
         <ImageView
             android:id="@+id/item_shop_product_mine"

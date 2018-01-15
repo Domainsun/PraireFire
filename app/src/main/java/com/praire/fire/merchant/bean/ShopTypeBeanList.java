@@ -1,12 +1,16 @@
 package com.praire.fire.merchant.bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by sunlo on 2018/1/5.
  */
 
-public class ShopTypeBeanList {
+public class ShopTypeBeanList implements Parcelable{
 
 
     /**
@@ -58,4 +62,36 @@ public class ShopTypeBeanList {
             this.name = name;
         }
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.code);
+        dest.writeList(this.list);
+    }
+
+    public ShopTypeBeanList() {
+    }
+
+    protected ShopTypeBeanList(Parcel in) {
+        this.code = in.readInt();
+        this.list = new ArrayList<ListBean>();
+        in.readList(this.list, ListBean.class.getClassLoader());
+    }
+
+    public static final Creator<ShopTypeBeanList> CREATOR = new Creator<ShopTypeBeanList>() {
+        @Override
+        public ShopTypeBeanList createFromParcel(Parcel source) {
+            return new ShopTypeBeanList(source);
+        }
+
+        @Override
+        public ShopTypeBeanList[] newArray(int size) {
+            return new ShopTypeBeanList[size];
+        }
+    };
 }
