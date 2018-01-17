@@ -6,7 +6,10 @@ import android.os.Message;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 
+import com.praire.fire.R;
 import com.praire.fire.okhttp.NetworkHandler;
+import com.praire.fire.okhttp.OkhttpRequestUtil;
+import com.praire.fire.utils.ToastUtil;
 
 
 public abstract class BaseActivity extends AppCompatActivity {
@@ -71,10 +74,18 @@ public abstract class BaseActivity extends AppCompatActivity {
         return new NetworkHandler(this) {
             @Override
             public void dispatchMessage(Message msg) {
-                networkResponse(msg);
+                if(msg.what == OkhttpRequestUtil.NETWORK_ERROR){
+                    ToastUtil.show(BaseActivity.this,getString(R.string.error_network));
+                }else if(msg.what == OkhttpRequestUtil.NONE_DATA){
+                    ToastUtil.show(BaseActivity.this,getString(R.string.no_data));
+                }else {
+                    networkResponse(msg);
+                }
             }
         };
     }
+
+
     protected void networkResponse(Message msg) {
     }
 }

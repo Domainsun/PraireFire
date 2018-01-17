@@ -3,6 +3,7 @@ package com.praire.fire.map;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -24,6 +25,7 @@ import com.amap.api.services.route.BusRouteResult;
 import com.praire.fire.R;
 import com.praire.fire.map.adapter.BusSegmentListAdapter;
 import com.praire.fire.utils.map.AMapUtil;
+import com.praire.fire.utils.statusbarcolor.Eyes;
 
 public class BusRouteDetailActivity extends Activity implements OnMapLoadedListener,
         OnMapClickListener, InfoWindowAdapter, OnInfoWindowClickListener, OnMarkerClickListener {
@@ -40,6 +42,7 @@ public class BusRouteDetailActivity extends Activity implements OnMapLoadedListe
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_route_detail);
+		Eyes.setStatusBarColor(this, ContextCompat.getColor(this, R.color.status_bar));
 		mapView = (MapView) findViewById(R.id.route_map);
 		mapView.onCreate(savedInstanceState);// 此方法必须重写
 		Log.e("BUS====","BUSDETAil");

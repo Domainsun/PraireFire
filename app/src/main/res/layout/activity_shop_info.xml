@@ -83,7 +83,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
-                    android:drawableLeft="@mipmap/location"
+                    android:drawableLeft="@mipmap/map"
                     android:drawablePadding="5dp"
                     android:ellipsize="end"
                     android:maxLines="1"
@@ -94,7 +94,7 @@
                     android:layout_width="1dp"
                     android:layout_height="30dp"
                     android:layout_gravity="center_vertical"
-                    android:background="@color/grey" />
+                    android:background="@color/grey_background" />
 
                 <ImageView
                     android:id="@+id/shop_tel"
@@ -337,11 +337,47 @@
         </LinearLayout>
 
     </ScrollView>
-
-    <com.ashokvarma.bottomnavigation.BottomNavigationBar
-        android:id="@+id/shop_navigation_bar"
-        android:layout_width="match_parent"
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="2dp"
+    android:layout_alignParentBottom="true"
+    android:background="@color/white"
+    android:gravity="center_vertical">
+    <TextView
+        android:id="@+id/go_shop"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_gravity="bottom" />
+        android:drawableTop="@mipmap/home_page1"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:drawablePadding="5dp"
+        android:text="@string/index"
+        android:textSize="13sp"
+        />
+    <TextView
+        android:id="@+id/go_shoping_car"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableTop="@mipmap/shopping_cart"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:drawablePadding="5dp"
+        android:text="@string/shopping_car"
+        android:textSize="13sp"
+        />
+    <TextView
+        android:id="@+id/go_my"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableTop="@mipmap/my"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:drawablePadding="5dp"
+        android:text="@string/my"
+        android:textSize="13sp"
+        />
+</LinearLayout>
+
 </RelativeLayout>

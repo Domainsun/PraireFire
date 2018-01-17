@@ -2,12 +2,15 @@ package com.praire.fire.utils;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
+import android.support.v4.content.ContextCompat;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.TextAppearanceSpan;
 import android.widget.TextView;
+
+import com.praire.fire.R;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -90,5 +93,15 @@ public class TextViewUtils {
         //style 为0 即是正常的，还有Typeface.BOLD(粗体) Typeface.ITALIC(斜体)等
         spanBuilder.setSpan(new TextAppearanceSpan(null, 0, size, colors, null), start, end, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
         tv.setText(spanBuilder);
+    }
+
+    public static int px2dip(Context context, float pxValue) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (pxValue / scale + 0.5f);
+    }
+
+    public static int dip2px(Context context, float dipValue) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (dipValue * scale + 0.5f);
     }
 }

@@ -15,8 +15,8 @@
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:layout_marginRight="10dp"
-            fresco:placeholderImage="@mipmap/me"
-            android:src="@mipmap/me" />
+            fresco:placeholderImage="@mipmap/my"
+             />
 
         <TextView
             android:id="@+id/item_shop_ealuate_name"

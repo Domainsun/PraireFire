@@ -23,5 +23,9 @@
     <color name="f9e19">#FF9e19</color>
     <color name="ffb81e">#ffb81e</color>
     <color name="product_text">#101010</color>
+
+    <color name="dialog_background">#fffbfbfb</color>
+    <color name="dialog_background_pressed">#ffe2e1df</color>
+    <color name="dialog__separation_line">#ffd9d9d9</color>
 </resources>
 

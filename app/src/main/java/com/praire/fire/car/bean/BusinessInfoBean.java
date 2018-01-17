@@ -360,6 +360,10 @@ public class BusinessInfoBean {
         private String create_time;
         private String update_time;
         private String is_delete;
+        private String cover;
+
+
+
 
         public String getId() {
             return id;
@@ -463,6 +467,13 @@ public class BusinessInfoBean {
 
         public void setIs_delete(String is_delete) {
             this.is_delete = is_delete;
+        }
+        public String getCover() {
+            return cover;
+        }
+
+        public void setCover(String cover) {
+            this.cover = cover;
         }
     }
 

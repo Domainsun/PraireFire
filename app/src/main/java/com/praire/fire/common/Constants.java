@@ -1,5 +1,7 @@
 package com.praire.fire.common;
 
+import android.content.Context;
+
 /**
  * Created by Administrator on 2017/12/29.
  */
@@ -23,6 +25,10 @@ public class Constants {
     public static final int REFRESH_PINNED_TIME = 0;
     public static final String UI_TYPE = "UI_TYPE";
     public static final String INTENT_DATA = "INTENT_DATA";
+    /**
+     * 用户登录名
+     */
+    public static final String USER_ID = "userId";
 
     public static String photoCookie="";
     /**

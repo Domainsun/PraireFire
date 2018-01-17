@@ -3,6 +3,7 @@ package com.praire.fire.map;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 
 import com.amap.api.navi.AMapNaviView;
 import com.amap.api.navi.enums.NaviType;
@@ -13,6 +14,7 @@ import com.praire.fire.base.BaseNaviActivity;
 import com.praire.fire.common.Constants;
 import com.praire.fire.data.IntentDataForGPSNaviActivity;
 import com.praire.fire.data.IntentDataForRoutePlanningActivity;
+import com.praire.fire.utils.statusbarcolor.Eyes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +48,7 @@ public class GPSNaviActivity extends BaseNaviActivity {
         sList.add(data.mStartPoint);
         eList.add(data.mEndPoint);
         setContentView(R.layout.activity_map_navi);
+        Eyes.setStatusBarColor(this, ContextCompat.getColor(this, R.color.status_bar));
         mAMapNaviView = (AMapNaviView) findViewById(R.id.navi_view);
         mAMapNaviView.onCreate(savedInstanceState);
         mAMapNaviView.setAMapNaviViewListener(this);

@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
@@ -35,6 +36,7 @@ import com.praire.fire.data.IntentDataForRoutePlanningActivity;
 import com.praire.fire.map.adapter.BusResultListAdapter;
 import com.praire.fire.utils.map.AMapUtil;
 import com.praire.fire.utils.ToastUtil;
+import com.praire.fire.utils.statusbarcolor.Eyes;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -90,7 +92,7 @@ public class RoutePlanningActivity extends AppCompatActivity implements AMap.OnM
         super.onCreate(bundle);
         setContentView(R.layout.activity_map_route_planning);
         ButterKnife.bind(this);
-
+        Eyes.setStatusBarColor(this, ContextCompat.getColor(this, R.color.status_bar));
         mContext = this.getApplicationContext();
         mapView = (MapView) findViewById(R.id.route_map);
         // 此方法必须重写

@@ -10,6 +10,7 @@ import com.praire.fire.base.BaseApplication;
 public class MyApplication extends BaseApplication {
 
 
+    private static MyApplication gInstance;
     private String signCookie="";
 
 
@@ -24,6 +25,11 @@ public class MyApplication extends BaseApplication {
 
     @Override
     protected void create() {
+        gInstance = this;
         Fresco.initialize(this);
+    }
+
+    public static MyApplication getInstance() {
+        return gInstance;
     }
 }

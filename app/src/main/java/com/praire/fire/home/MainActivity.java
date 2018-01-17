@@ -73,10 +73,10 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         bottomNavigationBar
                 .setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC
                 );
-        bottomNavigationBar.addItem(new BottomNavigationItem(R.mipmap.home, getString(R.string.index)).setActiveColorResource(R.color.orange))
-                .addItem(new BottomNavigationItem(R.mipmap.location, getString(R.string.map)).setActiveColorResource(R.color.orange))
+        bottomNavigationBar.addItem(new BottomNavigationItem(R.mipmap.home_page1, getString(R.string.index)).setActiveColorResource(R.color.orange))
+                .addItem(new BottomNavigationItem(R.mipmap.map, getString(R.string.map)).setActiveColorResource(R.color.orange))
                 .addItem(new BottomNavigationItem(R.mipmap.order, getString(R.string.order)).setActiveColorResource(R.color.orange))
-                .addItem(new BottomNavigationItem(R.mipmap.me, getString(R.string.my)).setActiveColorResource(R.color.orange))
+                .addItem(new BottomNavigationItem(R.mipmap.my, getString(R.string.my)).setActiveColorResource(R.color.orange))
                 .setFirstSelectedPosition(0)
                 .initialise();
         fragments = getFragments();

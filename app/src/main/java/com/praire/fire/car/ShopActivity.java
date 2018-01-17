@@ -1,24 +1,22 @@
 package com.praire.fire.car;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.Bundle;
 import android.os.Message;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ashokvarma.bottomnavigation.BottomNavigationBar;
-import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -32,8 +30,9 @@ import com.praire.fire.car.bean.BusinessInfoBean;
 import com.praire.fire.common.ConstanUrl;
 import com.praire.fire.common.Constants;
 import com.praire.fire.home.MainActivity;
-import com.praire.fire.map.adapter.NearlyShopAdapter;
+import com.praire.fire.my.ShoppingCarActivity;
 import com.praire.fire.utils.RecycleViewDivider;
+import com.praire.fire.utils.statusbarcolor.Eyes;
 import com.yanzhenjie.recyclerview.swipe.SwipeItemClickListener;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
 
@@ -48,12 +47,14 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+import static android.content.Intent.ACTION_CALL;
+
 /**
  * 店铺
  * Created by lyp on 2018/1/3.
  */
 
-public class ShopActivity extends BaseActivity implements BottomNavigationBar.OnTabSelectedListener {
+public class ShopActivity extends BaseActivity {
 
 
     @BindView(R.id.shop_logo)
@@ -78,8 +79,7 @@ public class ShopActivity extends BaseActivity implements BottomNavigationBar.On
     TextView shopMoreEvaluateNumber;
     @BindView(R.id.shop_more_evaluate)
     RelativeLayout shopMoreEvaluate;
-    @BindView(R.id.shop_navigation_bar)
-    BottomNavigationBar shopNavigationBar;
+
     @BindView(R.id.shop_score)
     TextView shopScore;
     @BindView(R.id.shop_name_2)
@@ -124,17 +124,9 @@ public class ShopActivity extends BaseActivity implements BottomNavigationBar.On
     @Override
     protected void initViews() {
         ButterKnife.bind(this);
+        Eyes.setStatusBarColor(this, ContextCompat.getColor(this, R.color.status_bar));
         shopBack.setText(R.string.shop);
-        shopNavigationBar.setMode(BottomNavigationBar.MODE_FIXED);
-        shopNavigationBar
-                .setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC
-                );
-        shopNavigationBar.addItem(new BottomNavigationItem(R.mipmap.home, getString(R.string.index)).setActiveColorResource(R.color.orange))
-                .addItem(new BottomNavigationItem(R.mipmap.shop_car, getString(R.string.shopping_car)).setActiveColorResource(R.color.orange))
-                .addItem(new BottomNavigationItem(R.mipmap.me, getString(R.string.my)).setActiveColorResource(R.color.orange))
-                .setFirstSelectedPosition(0)
-                .initialise();
-        shopNavigationBar.setTabSelectedListener(this);
+
     }
 
     @Override
@@ -160,6 +152,24 @@ public class ShopActivity extends BaseActivity implements BottomNavigationBar.On
         recyclerviewProduct.setAdapter(adapterProduct);
         recyclerviewService.setAdapter(adapterService);
         recyclerviewEvaluate.setAdapter(adapterEvaluate);
+        recyclerviewService.setSwipeItemClickListener(new SwipeItemClickListener() {
+            @Override
+            public void onItemClick(View itemView, int position) {
+                ServiceInfoActivity.startActivity(ShopActivity.this, businessInfoBean.getServicelist().get(position).getId(), false);
+            }
+        });
+        recyclerviewProduct.setSwipeItemClickListener(new SwipeItemClickListener() {
+            @Override
+            public void onItemClick(View itemView, int position) {
+                ProductInfoActivity.startActivity(ShopActivity.this, businessInfoBean.getProductlist().get(position).getId(), false);
+            }
+        });
+        recyclerviewEvaluate.setSwipeItemClickListener(new SwipeItemClickListener() {
+            @Override
+            public void onItemClick(View itemView, int position) {
+                ProductEvalauteInfoActivity.startActivity(ShopActivity.this, businessInfoBean.getCommentlist().get(position).getId(), false);
+            }
+        });
     }
 
     private void setRecyclerView(SwipeMenuRecyclerView recyclerview) {
@@ -195,7 +205,6 @@ public class ShopActivity extends BaseActivity implements BottomNavigationBar.On
 
                 String data = response.body().string();
                 if (data != null) {
-                    Log.e("Shop_Info", data);
                     Gson gson = new Gson();
                     businessInfoBean = gson.fromJson(data, BusinessInfoBean.class);
                     Message msg = new Message();
@@ -215,7 +224,7 @@ public class ShopActivity extends BaseActivity implements BottomNavigationBar.On
     protected void networkResponse(Message msg) {
         switch (msg.what) {
             case 0:
-                Toast.makeText(this, "网络出错，请重试", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this,  R.string.error_network, Toast.LENGTH_SHORT).show();
                 break;
             case 1:
                 setBaseInfo();
@@ -224,7 +233,7 @@ public class ShopActivity extends BaseActivity implements BottomNavigationBar.On
                 adapterEvaluate.setEntities(businessInfoBean.getCommentlist());
                 break;
             case 2:
-                Toast.makeText(this, "没有数据了", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this,  R.string.no_data, Toast.LENGTH_SHORT).show();
                 break;
             default:
                 break;
@@ -256,7 +265,7 @@ public class ShopActivity extends BaseActivity implements BottomNavigationBar.On
     }
 
     @OnClick({R.id.shop_back, R.id.shop_more, R.id.shop_collect, R.id.shop_share, R.id.shop_tel,
-            R.id.shop_more_service, R.id.shop_more_products, R.id.shop_more_evaluate})
+            R.id.shop_more_service, R.id.shop_more_products, R.id.shop_more_evaluate, R.id.go_shop, R.id.go_shoping_car, R.id.go_my})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.shop_back:
@@ -269,30 +278,29 @@ public class ShopActivity extends BaseActivity implements BottomNavigationBar.On
             case R.id.shop_share:
                 break;
             case R.id.shop_tel:
+                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                    // TODO: Consider calling
+                    return;
+                }
+                startActivity(new Intent(ACTION_CALL, Uri.parse("tel:" + businessInfoBean.getTel())));
                 break;
             case R.id.shop_more_service:
+                ProductActivity.startActivity(this, businessId, 1,false);
                 break;
             case R.id.shop_more_products:
-
+                ProductActivity.startActivity(this, businessId, 0,false);
                 break;
             case R.id.shop_more_evaluate:
+                ProductAllEvalauteActivity.startActivity(ShopActivity.this, businessId, false);
                 break;
-            default:
-                break;
-        }
-    }
-
-    @Override
-    public void onTabSelected(int position) {
-        switch (position) {
-            case 0:
+            case R.id.go_shop:
                 MainActivity.startActivity(this, 0, false);
                 finish();
                 break;
-            case 1:
-
+            case R.id.go_shoping_car:
+                ShoppingCarActivity.startActivity(this, false);
                 break;
-            case 2:
+            case R.id.go_my:
                 MainActivity.startActivity(this, 3, false);
                 finish();
                 break;
@@ -301,21 +309,5 @@ public class ShopActivity extends BaseActivity implements BottomNavigationBar.On
         }
     }
 
-    @Override
-    public void onTabUnselected(int i) {
 
-    }
-
-    @Override
-    public void onTabReselected(int i) {
-
-    }
-
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
 }

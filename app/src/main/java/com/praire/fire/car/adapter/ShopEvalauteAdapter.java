@@ -19,10 +19,13 @@ import com.amap.api.services.core.LatLonPoint;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.iflytek.cloud.thirdparty.T;
 import com.praire.fire.R;
 import com.praire.fire.car.bean.BusinessInfoBean;
+import com.praire.fire.car.bean.ProductInfoBean;
 import com.praire.fire.data.IntentDataForRoutePlanningActivity;
 import com.praire.fire.map.RoutePlanningActivity;
+import com.praire.fire.utils.DateUtils;
 import com.praire.fire.utils.TextViewUtils;
 
 import java.util.ArrayList;
@@ -40,14 +43,16 @@ public class ShopEvalauteAdapter extends RecyclerView.Adapter<ShopEvalauteAdapte
 
 
     private Context context;
-    private List<BusinessInfoBean.CommentlistBean> entities = new ArrayList<>();
+    private List<?> entities = new ArrayList<>();
 
     public ShopEvalauteAdapter(Context context) {
         this.context = context;
 
     }
 
-    public void setEntities(List<BusinessInfoBean.CommentlistBean> entities ) {
+
+
+    public void setEntities(List<?> entities ) {
         this.entities = entities;
         notifyDataSetChanged();
     }
@@ -63,27 +68,49 @@ public class ShopEvalauteAdapter extends RecyclerView.Adapter<ShopEvalauteAdapte
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        final BusinessInfoBean.CommentlistBean item = entities.get(position);
+        if(entities.get(position) instanceof BusinessInfoBean.CommentlistBean ) {
+              BusinessInfoBean.CommentlistBean item = (BusinessInfoBean.CommentlistBean)entities.get(position);
+            fillInfoShop(holder,item);
+        }else if(entities.get(position) instanceof ProductInfoBean.CommentBean.ProductcommentBean){
+            ProductInfoBean.CommentBean.ProductcommentBean item = (ProductInfoBean.CommentBean.ProductcommentBean)entities.get(position);
+            fillInfo(holder,item);
+        }
+    }
+    private void fillInfoShop(MyViewHolder holder, BusinessInfoBean.CommentlistBean item) {
         holder.itemShopEaluateName.setText(item.getNickname());
         holder.itemShopEaluateStar.setRating(Float.valueOf(item.getStar()));
-        holder.itemShopEaluateDate.setText(item.getCreate_time());
+        holder.itemShopEaluateDate.setText(DateUtils.timedate(item.getCreate_time()));
         holder.itemQueryPayContent.setText(item.getComment());
 
 
-         Uri uri = Uri.parse(item.getPicurl());
+        Uri uri = Uri.parse(item.getPicurl());
         DraweeController controller = Fresco.newDraweeControllerBuilder()
                 .setUri(uri)
                 .setAutoPlayAnimations(true)
                 .build();
         holder.userIcon.setController(controller);
+    }
+    private void fillInfo(MyViewHolder holder, ProductInfoBean.CommentBean.ProductcommentBean item) {
+        holder.itemShopEaluateName.setText(item.getNickname());
+        holder.itemShopEaluateStar.setRating(Float.valueOf(item.getStar()));
+        holder.itemShopEaluateDate.setText(DateUtils.timedate(item.getCreate_time()));
+        holder.itemQueryPayContent.setText(item.getComment());
 
 
+        Uri uri = Uri.parse(item.getPicurl());
+        DraweeController controller = Fresco.newDraweeControllerBuilder()
+                .setUri(uri)
+                .setAutoPlayAnimations(true)
+                .build();
+        holder.userIcon.setController(controller);
     }
 
     @Override
     public int getItemCount() {
         return entities.size();
     }
+
+
 
     class MyViewHolder extends RecyclerView.ViewHolder {
 

@@ -13,7 +13,7 @@
         android:layout_marginLeft="15dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="15dp"
-        android:src="@mipmap/me" />
+        android:src="@mipmap/my" />
 
     <LinearLayout
         android:id="@+id/item_shop_ealuate_ll"

@@ -2,11 +2,13 @@ package com.praire.fire.car;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.content.ContextCompat;
 
 import com.praire.fire.R;
 import com.praire.fire.base.BaseActivity;
 import com.praire.fire.base.BaseTitleActivity;
 import com.praire.fire.common.Constants;
+import com.praire.fire.utils.statusbarcolor.Eyes;
 
 import butterknife.ButterKnife;
 
@@ -17,11 +19,11 @@ import butterknife.ButterKnife;
 
 public class ProductEvalauteInfoActivity extends BaseTitleActivity {
 
-    private String businessId;
+    private String productId;
 
-    public static void startActivity(Context context, String businessId, boolean forResult) {
+    public static void startActivity(Context context, String productId, boolean forResult) {
         Intent intent = new Intent(context, ProductEvalauteInfoActivity.class);
-        intent.putExtra(Constants.BUSSINESS_ID, businessId);
+        intent.putExtra(Constants.PRODUCT_ID, productId);
         if (!forResult) {
             context.startActivity(intent);
         } else if (context instanceof BaseActivity) {
@@ -37,11 +39,12 @@ public class ProductEvalauteInfoActivity extends BaseTitleActivity {
     @Override
     protected void initViews() {
         ButterKnife.bind(this);
+        Eyes.setStatusBarColor(this, ContextCompat.getColor(this, R.color.status_bar));
     }
 
     @Override
     protected void initListeners() {
-        businessId = getIntent().getStringExtra(Constants.BUSSINESS_ID);
+        productId = getIntent().getStringExtra(Constants.PRODUCT_ID);
     }
 
     @Override

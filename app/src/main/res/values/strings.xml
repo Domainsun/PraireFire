@@ -14,4 +14,12 @@
     <string name="user_evaluate">用户评价</string>
     <string name="education">教育</string>
     <string name="no_result">对不起，没有搜索到相关数据！</string>
+    <string name="product_info">产品详情</string>
+    <string name="error_network">网络出错，请重试</string>
+    <string name="no_data">返回数据为空</string>
+    <string name="commit_order">提交订单</string>
+    <string name="confirm">确定</string>
+    <string name="i_know">知道了</string>
+    <string name="cancel">取消</string>
+    <string name="donot_show_again">不再提醒</string>
 </resources>

@@ -3,6 +3,7 @@ package com.praire.fire.map;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -11,6 +12,7 @@ import com.amap.api.services.route.WalkPath;
 import com.praire.fire.R;
 import com.praire.fire.map.adapter.WalkSegmentListAdapter;
 import com.praire.fire.utils.map.AMapUtil;
+import com.praire.fire.utils.statusbarcolor.Eyes;
 
 public class WalkRouteDetailActivity extends Activity {
 	private WalkPath mWalkPath;
@@ -22,6 +24,7 @@ public class WalkRouteDetailActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_route_detail);
+		Eyes.setStatusBarColor(this, ContextCompat.getColor(this, R.color.status_bar));
 		getIntentData();
 		mTitle = (TextView) findViewById(R.id.title_center);
 		mTitle.setText("步行路线详情");

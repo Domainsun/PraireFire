@@ -107,4 +107,29 @@ public class ConstanUrl {
      * 阿里云图片地址头
      */
     public static final String OSS_ALIYUNCS = "http://lysh-upload.oss-cn-shanghai.aliyuncs.com/";
+    /**
+     * 产品详情
+     */
+    public static final String COMMONINFO_PRODUCTINFO = "https://www.lygyxh.cn/api.php/Commoninfo/productinfo";
+    /**
+     * 服务详情
+     */
+    public static final String COMMONINFO_SERVICEINFO = "https://www.lygyxh.cn/api.php/Commoninfo/serviceinfo";
+    /**
+     * 账户余额
+     */
+    public static final String CAPITAL_INDEX = "https://www.lygyxh.cn/api.php/Capital/index";
+    /**
+     * 购物车列表
+     */
+    public static final String CART_CARTLIST = "https://www.lygyxh.cn/api.php/Cart/cartlist";
+    /**
+     * 加入购物车
+     */
+    public static final String CART_ADD = "https://www.lygyxh.cn/api.php/Cart/add";
+    /**
+     * 删除购物车
+     */
+    public static final String CART_DELETE = "https://www.lygyxh.cn/api.php/Cart/delete";
+
 }

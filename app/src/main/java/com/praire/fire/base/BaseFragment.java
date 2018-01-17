@@ -12,7 +12,10 @@ import android.view.ViewGroup;
 
 import com.amap.api.maps.model.CameraPosition;
 import com.amap.api.maps.model.LatLng;
+import com.praire.fire.R;
 import com.praire.fire.okhttp.NetworkHandler;
+import com.praire.fire.okhttp.OkhttpRequestUtil;
+import com.praire.fire.utils.ToastUtil;
 
 
 public abstract class BaseFragment extends Fragment {
@@ -44,7 +47,14 @@ public abstract class BaseFragment extends Fragment {
         return new NetworkHandler(getActivity()) {
             @Override
             public void dispatchMessage(Message msg) {
-                networkResponse(msg);
+
+                if(msg.what == OkhttpRequestUtil.NETWORK_ERROR){
+                    ToastUtil.show(getActivity(),getString(R.string.error_network));
+                }else if(msg.what == OkhttpRequestUtil.NONE_DATA){
+                    ToastUtil.show(getActivity(),getString(R.string.no_data));
+                }else {
+                    networkResponse(msg);
+                }
             }
         };
     }

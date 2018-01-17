@@ -25,9 +25,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-
 public class ShopProductAdapter extends RecyclerView.Adapter<ShopProductAdapter.MyViewHolder> {
-
 
 
     private Context context;
@@ -57,20 +55,17 @@ public class ShopProductAdapter extends RecyclerView.Adapter<ShopProductAdapter.
     public void onBindViewHolder(MyViewHolder holder, int position) {
         final BusinessInfoBean.ProductlistBean item = entities.get(position);
         holder.itemShopProductName.setText(item.getName());
-        holder.itemShopProductSale.setText(String.format(holder.itemShopProductSale.getTag().toString(),item.getSalecount()));
-        holder.itemShopProductPrice.setText(String.format(holder.itemShopProductPrice.getTag().toString(),item.getNprice()));
+        holder.itemShopProductSale.setText(String.format(holder.itemShopProductSale.getTag().toString(), item.getSalecount()));
+        holder.itemShopProductPrice.setText(String.format(holder.itemShopProductPrice.getTag().toString(), item.getNprice()));
         holder.itemShopProductInfo.setText(item.getDesc());
-        if(!item.getPicurl().equals("")) {
-//            String[] picurl = item.getPicurl().split("\\|");
-//            Log.e("picurl" ,picurl[0]);
-            Uri uri = Uri.parse(item.getPicurl());
-            Log.e("Url" ,uri.toString());
-            DraweeController controller = Fresco.newDraweeControllerBuilder()
-                    .setUri(uri)
-                    .setAutoPlayAnimations(true)
-                    .build();
-            holder.itemShopListImg.setController(controller);
-        }
+
+        Uri uri = Uri.parse(item.getCover());
+        DraweeController controller = Fresco.newDraweeControllerBuilder()
+                .setUri(uri)
+                .setAutoPlayAnimations(true)
+                .build();
+        holder.itemShopListImg.setController(controller);
+
 
     }
 

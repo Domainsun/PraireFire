@@ -86,9 +86,11 @@ public class SignAcitvity extends Activity {
                 APIResultBean a= new J2O().getAPIResult(result);
                 Toast.makeText(this, a.getMsg()+"", Toast.LENGTH_SHORT).show();
                 if ("1".equals(a.getCode())) {
-
+                    //---------------考虑是否删除第一个
                     SharePreferenceMgr.put(this, Constants.LOGIN_COOKIE,myApplication.getSignCookie());
-
+                    SharePreferenceMgr.put(MyApplication.getInstance(), Constants.LOGIN_COOKIE,myApplication.getSignCookie());
+                    //---------------
+                    SharePreferenceMgr.put(this,Constants.USER_ID,phone);
                     Intent i=new Intent(this, MainActivity.class);
                     startActivity(i);
                 }

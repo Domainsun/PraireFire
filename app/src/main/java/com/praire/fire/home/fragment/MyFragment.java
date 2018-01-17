@@ -2,14 +2,12 @@ package com.praire.fire.home.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.praire.fire.R;
@@ -25,16 +23,11 @@ import com.praire.fire.my.MyEvaluateActivity;
 import com.praire.fire.my.MyWalletActivity;
 import com.praire.fire.my.NearbyActivity;
 import com.praire.fire.my.SetActivity;
-import com.praire.fire.car.ShoppingCarActivity;
+import com.praire.fire.my.ShoppingCarActivity;
 import com.praire.fire.okhttp.GsonUtils.J2O;
 import com.praire.fire.okhttp.JavaBean.ShopInfoBean;
 import com.praire.fire.okhttp.UseAPIs;
 import com.praire.fire.utils.SharePreferenceMgr;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
 
 import static com.praire.fire.common.Constants.LOGIN_COOKIE;
 
@@ -96,6 +89,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener{
         invitationIntegral.setOnClickListener(this);
         set.setOnClickListener(this);
         earphone.setOnClickListener(this);
+        shoppingcar.setOnClickListener(this);
     }
 
     @Override

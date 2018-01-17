@@ -37,9 +37,9 @@
 
         <activity android:name=".GuidActivity">
             <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-              <category android:name="android.intent.category.LAUNCHER" />
-             </intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".merchant.MerchantActivity1" />
 
@@ -77,8 +77,9 @@
         <activity android:name=".my.MyWalletActivity" />
         <activity android:name=".my.NearbyActivity" />
         <activity android:name=".my.SetActivity" />
-        <activity android:name=".car.ShoppingCarActivity" />
+        <activity android:name=".my.ShoppingCarActivity" />
         <activity android:name=".car.ShopActivity" />
+
         <activity android:name=".my.AccountManagementActivity" />
         <activity android:name=".my.ShippingAddressActivity" />
         <activity android:name=".my.CertificationActivity" />
@@ -86,6 +87,10 @@
         <activity android:name=".my.ChangLoginPswActivity" />
         <activity android:name=".my.PassWordManagementActivity" />
         <activity android:name=".my.VerifyPhoneActivity" />
+        <activity android:name=".my.BillActivity" />
+        <activity android:name=".my.WithdrawActivity" />
+        <activity android:name=".my.RechargeActivity" />
+
         <activity android:name=".merchant.MapChooseActivity" />
 
 
@@ -101,8 +106,13 @@
 
         <activity android:name=".merchant.BusinessServiceActivity" />
         <activity android:name=".merchant.ServiceManageActivity" />
-        <activity android:name=".merchant.AddServiceActivity"/>
-
+        <activity android:name=".merchant.AddServiceActivity" />
+        <activity android:name=".car.ProductEvalauteInfoActivity" />
+        <activity android:name=".car.ProductInfoActivity" />
+        <activity android:name=".car.ProductActivity" />
+        <activity android:name=".car.ProductAllEvalauteActivity" />
+        <activity android:name=".car.ServiceInfoActivity" />
+        <activity android:name=".car.CommitOrderActivity" />
     </application>
 
 </manifest>
