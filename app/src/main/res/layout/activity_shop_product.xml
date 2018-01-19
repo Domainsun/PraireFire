@@ -8,7 +8,14 @@
     <include
         android:id="@+id/product_search_bar"
         layout="@layout/layout_search_bar2" />
-
+<LinearLayout
+    android:id="@+id/product_tab_ll"
+    android:layout_width="match_parent"
+    android:layout_below="@id/product_search_bar"
+    android:paddingRight="40dp"
+    android:paddingLeft="40dp"
+    android:background="@color/white"
+    android:layout_height="wrap_content">
     <android.support.design.widget.TabLayout
         android:id="@+id/product_tab"
         android:layout_width="match_parent"
@@ -19,15 +26,19 @@
         app:tabTextColor="@color/text_color"
         app:tabGravity="fill"
         app:tabMode="fixed"
-        android:layout_below="@id/product_search_bar" />
+        app:tabMinWidth="100dp"
+        />
+</LinearLayout>
+
 
     <LinearLayout
         android:id="@+id/product_commodity_ll"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_below="@id/product_tab"
+        android:layout_below="@id/product_tab_ll"
         android:background="@color/white"
         android:layout_marginTop="1dp"
+        android:layout_marginBottom="1dp"
         android:orientation="horizontal">
 
         <ImageView
@@ -53,11 +64,13 @@
         android:id="@+id/product_recyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/product_commodity_ll" />
+        android:layout_below="@id/product_commodity_ll"
+        android:layout_above="@+id/product_pop_buying"/>
     <RelativeLayout
-        android:id="@+id/product_pop_buying"
+        android:id="@id/product_pop_buying"
         android:layout_width="match_parent"
         android:layout_height="45dp"
+        android:layout_marginTop="1dp"
         android:layout_alignParentBottom="true"
         android:background="@color/white"
         android:orientation="horizontal">

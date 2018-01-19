@@ -85,7 +85,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         };
     }
 
-
+    /**
+     *
+     * @param msg
+     */
     protected void networkResponse(Message msg) {
     }
 }

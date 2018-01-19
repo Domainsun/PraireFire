@@ -1,5 +1,9 @@
 package com.praire.fire.utils;
 
+import com.praire.fire.car.bean.CommitProduct;
+
+import java.util.List;
+
 /**
  * Created by lyp on 2018/1/2.
  */
@@ -49,5 +53,18 @@ public class CalculateUtils {
         return distances+"km";
     }
 
+    /**
+     * 计算购物车内的商品总价
+     * 数量*单价
+     * @param list
+     * @return
+     */
+    public static double totlePrice(List<CommitProduct> list) {
+        double total = 0;
+        for(CommitProduct product:list){
+            total += AppBigDecimal.multiply(Double.valueOf(product.getpPrice()),product.getNumber(),2);
+        }
+        return total;
+    }
 
 }

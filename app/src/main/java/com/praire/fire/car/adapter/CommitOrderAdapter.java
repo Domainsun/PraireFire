@@ -1,22 +1,15 @@
 package com.praire.fire.car.adapter;
 
 import android.content.Context;
-import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
-import com.facebook.drawee.backends.pipeline.Fresco;
-import com.facebook.drawee.interfaces.DraweeController;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.praire.fire.R;
-import com.praire.fire.car.bean.BusinessInfoBean;
-import com.praire.fire.car.bean.ProductInfoBean;
-import com.praire.fire.my.bean.ShoppingCarBean;
-import com.praire.fire.utils.DateUtils;
+import com.praire.fire.car.bean.CommitProduct;
+import com.praire.fire.utils.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +23,7 @@ public class CommitOrderAdapter extends RecyclerView.Adapter<CommitOrderAdapter.
 
 
     private Context context;
-    private List<ShoppingCarBean.PagelistBean> entities = new ArrayList<>();
+    private List<CommitProduct> entities = new ArrayList<>();
 
     public CommitOrderAdapter(Context context) {
         this.context = context;
@@ -38,8 +31,7 @@ public class CommitOrderAdapter extends RecyclerView.Adapter<CommitOrderAdapter.
     }
 
 
-
-    public void setEntities(List<ShoppingCarBean.PagelistBean> entities ) {
+    public void setEntities(List<CommitProduct> entities) {
         this.entities = entities;
         notifyDataSetChanged();
     }
@@ -54,9 +46,28 @@ public class CommitOrderAdapter extends RecyclerView.Adapter<CommitOrderAdapter.
 
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
-            ShoppingCarBean.PagelistBean item =  entities.get(position);
-
+    public void onBindViewHolder(final MyViewHolder holder, int position) {
+        final CommitProduct item = entities.get(position);
+        holder.itemCommitName.setText(item.getpName());
+        holder.itemCommitNum.setText(item.getNumber()+"");
+        holder.itemCommitAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                item.setNumber(item.getNumber()+1);
+                holder.itemCommitNum.setText(item.getNumber()+"");
+            }
+        });
+        holder.itemCommitMine.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(item.getNumber() >1) {
+                    item.setNumber(item.getNumber() - 1);
+                    holder.itemCommitNum.setText(item.getNumber()+"");
+                }else {
+                    ToastUtil.show(context,"不能再减了");
+                }
+            }
+        });
     }
 
 
@@ -66,21 +77,16 @@ public class CommitOrderAdapter extends RecyclerView.Adapter<CommitOrderAdapter.
     }
 
 
-
     class MyViewHolder extends RecyclerView.ViewHolder {
 
-
-        @BindView(R.id.user_icon)
-        SimpleDraweeView userIcon;
-        @BindView(R.id.item_shop_ealuate_name)
-        TextView itemShopEaluateName;
-        @BindView(R.id.item_shop_ealuate_star)
-        RatingBar itemShopEaluateStar;
-        @BindView(R.id.item_shop_ealuate_date)
-        TextView itemShopEaluateDate;
-        @BindView(R.id.item_query_pay_content)
-        TextView itemQueryPayContent;
-
+        @BindView(R.id.item_commit_name)
+        TextView itemCommitName;
+        @BindView(R.id.item_commit_mine)
+        TextView itemCommitMine;
+        @BindView(R.id.item_commit_num)
+        TextView itemCommitNum;
+        @BindView(R.id.item_commit_add)
+        TextView itemCommitAdd;
         public MyViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);

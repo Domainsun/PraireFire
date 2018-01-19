@@ -22,6 +22,7 @@ import com.praire.fire.common.CommonDialog;
 import com.praire.fire.my.adapter.ShopCarAdapter;
 import com.praire.fire.common.ConstanUrl;
 import com.praire.fire.common.Constants;
+import com.praire.fire.my.bean.CommentResultBean;
 import com.praire.fire.my.bean.ShoppingCarBean;
 import com.praire.fire.okhttp.OkhttpRequestUtil;
 import com.praire.fire.utils.RecycleViewDivider;
@@ -43,8 +44,10 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
@@ -66,6 +69,7 @@ public class ShoppingCarActivity extends BaseActivity {
      * 删除购物车商品
      */
     private static final int DELETE_SHOPPING_CAR_PRODUCT = 2;
+    public static final int EDIT_SHOPPING_CAR_NUM = 4;
     @BindView(R.id.shopping_car_back)
     TextView shoppingCarBack;
     @BindView(R.id.shopping_car_num)
@@ -152,14 +156,14 @@ public class ShoppingCarActivity extends BaseActivity {
 //            int menuPosition = menuBridge.getPosition();
 
             String id = bean.getPagelist().get(adapterPosition).getId();
-            OkhttpRequestUtil.get(ConstanUrl.CART_DELETE + "?id=" + id, DELETE_SHOPPING_CAR_PRODUCT, true, uiHandler);
+            deleteShoppingCar(id);
         }
     };
 
     @Override
     protected void initListeners() {
 
-        OkhttpRequestUtil.get(ConstanUrl.CART_CARTLIST + "?p=" + index, REQUEST_SHOPPING_CAR_LIST, true, uiHandler);
+        getShoppingCarList();
 //        点击 选中
         recyclerview.setSwipeItemClickListener(new SwipeItemClickListener() {
             @Override
@@ -185,6 +189,10 @@ public class ShoppingCarActivity extends BaseActivity {
                 return false;
             }
         });*/
+    }
+
+    private void getShoppingCarList() {
+        OkhttpRequestUtil.get(ConstanUrl.CART_CARTLIST + "?p=" + index, REQUEST_SHOPPING_CAR_LIST, true, uiHandler);
     }
 
 
@@ -223,23 +231,58 @@ public class ShoppingCarActivity extends BaseActivity {
             case REQUEST_SHOPPING_CAR_LIST:
                 Gson gson = new Gson();
                 bean = gson.fromJson((String) msg.obj, ShoppingCarBean.class);
-                shoppingCarNum.setText(String.format(shoppingCarNum.getTag().toString(), bean.getPagelist().size() + ""));
-                TextViewUtils.changeFontSize(shoppingCarNum, 3, shoppingCarNum.getText().toString().trim().length(), getResources().getColor(R.color.white), 28);
-//                setBaseInfo();
-                adapter.setEntities(bean.getPagelist());
+                if (bean.getCode() == 1) {
+                    shoppingCarNum.setText(String.format(shoppingCarNum.getTag().toString(), bean.getPagelist().size() + ""));
+                    TextViewUtils.changeFontSize(shoppingCarNum, 3, shoppingCarNum.getText().toString().trim().length(), getResources().getColor(R.color.white), 28);
+                    adapter.setEntities(bean.getPagelist());
+                }
                 break;
             case DELETE_SHOPPING_CAR_PRODUCT:
+                //删除购物车内某商品
+                Gson gson4 = new Gson();
+                CommentResultBean commitBean4 = gson4.fromJson((String) msg.obj, CommentResultBean.class);
+                if (commitBean4.getMsg() != null) {
+                    Toast.makeText(this, commitBean4.getMsg(), Toast.LENGTH_SHORT).show();
+                }
+                getShoppingCarList();
+                break;
+            case EDIT_SHOPPING_CAR_NUM:
+                //修改购物车内某商品数量
+                Gson gson5 = new Gson();
+                CommentResultBean commitBean5 = gson5.fromJson((String) msg.obj, CommentResultBean.class);
+                if (commitBean5.getMsg() != null) {
+                    Toast.makeText(this, commitBean5.getMsg(), Toast.LENGTH_SHORT).show();
+                }
 
-                /*Gson gson1 = new Gson();
-                bean = gson1.fromJson((String) msg.obj, ShoppingCarBean.class);
-                shoppingCarNum.setText(String.format(shoppingCarNum.getTag().toString(),bean.getPagelist().size()+""));
-                TextViewUtils.changeFontSize(shoppingCarNum,3,shoppingCarNum.getText().toString().trim().length(),getResources().getColor(R.color.white),28);
-//                setBaseInfo();
-                adapter.setEntities(bean.getPagelist());*/
                 break;
             default:
                 break;
         }
     }
 
+    /**
+     * 删除购物车内某商品
+     *
+     * @param id 商品id
+     */
+    public void deleteShoppingCar(String id) {
+        RequestBody requestBody = new FormBody.Builder()
+                .add("id", id)
+                .build();
+        OkhttpRequestUtil.post(ConstanUrl.CART_DELETE, requestBody, DELETE_SHOPPING_CAR_PRODUCT, uiHandler, true);
+    }
+
+    /**
+     * 修改购物车内某商品的数量
+     *
+     * @param id    商品id
+     * @param count
+     */
+    public void editNumShoppingCar(String id, int count) {
+        RequestBody requestBody = new FormBody.Builder()
+                .add("id", id)
+                .add("count", count + "")
+                .build();
+        OkhttpRequestUtil.post(ConstanUrl.CART_CHANGECOUNT, requestBody, EDIT_SHOPPING_CAR_NUM, uiHandler, true);
+    }
 }

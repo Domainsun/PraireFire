@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.praire.fire.MyApplication;
 import com.praire.fire.common.ConstanUrl;
 import com.praire.fire.my.bean.ShoppingCarBean;
@@ -84,11 +85,12 @@ public class OkhttpRequestUtil {
 
                         String data = response.body().string();
                         if (data != null) {
-                            Log.e("data", data);
                             Message msg = new Message();
                             msg.what = scussful;
                             msg.obj = data;
                             uiHandler.sendMessage(msg);
+
+
                             return;
                         }
                         //     返回数据为空

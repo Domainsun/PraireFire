@@ -5,9 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.Bundle;
 import android.os.Message;
-import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -24,39 +22,30 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.Gson;
-import com.praire.fire.MyApplication;
 import com.praire.fire.R;
 import com.praire.fire.base.BaseActivity;
 import com.praire.fire.car.adapter.ShopEvalauteAdapter;
+import com.praire.fire.car.bean.CommentlistBean;
+import com.praire.fire.car.bean.CommitProduct;
 import com.praire.fire.car.bean.ServiceInfoBean;
 import com.praire.fire.common.ConstanUrl;
 import com.praire.fire.common.Constants;
 import com.praire.fire.data.IntentDataForCommitOrderActivity;
+import com.praire.fire.my.bean.CommentResultBean;
 import com.praire.fire.okhttp.OkhttpRequestUtil;
-import com.praire.fire.order.adapter.CommitOrderBean;
 import com.praire.fire.utils.RecycleViewDivider;
-import com.praire.fire.utils.SharePreferenceMgr;
 import com.praire.fire.utils.statusbarcolor.Eyes;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import okhttp3.Call;
-import okhttp3.Callback;
 import okhttp3.FormBody;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
 import okhttp3.RequestBody;
-import okhttp3.Response;
 
 import static android.content.Intent.ACTION_CALL;
-import static com.praire.fire.common.Constants.LOGIN_COOKIE;
 
 /**
  * 服务详情
@@ -106,7 +95,7 @@ public class ServiceInfoActivity extends BaseActivity {
     private ServiceInfoBean serviceInfoBean;
     private ShopEvalauteAdapter adapterEvaluate;
     private int count = 1;
-    private CommitOrderBean commitBean;
+    private CommentResultBean commitBean;
 
     public static void startActivity(Context context, String productId, boolean forResult) {
         Intent intent = new Intent(context, ServiceInfoActivity.class);
@@ -152,74 +141,30 @@ public class ServiceInfoActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                requestDatas();
-            }
-        }).start();
+        OkhttpRequestUtil.get(ConstanUrl.COMMONINFO_SERVICEINFO + "?id=" + productId,1,false,uiHandler);
     }
 
-    private void requestDatas() {
-        OkHttpClient okHttpClient = new OkHttpClient();
-        Request request = new Request.Builder()
-                .url(ConstanUrl.COMMONINFO_SERVICEINFO + "?id=" + productId)
-                .build();
-        Call call = okHttpClient.newCall(request);
-        call.enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                Message msg = new Message();
-                msg.what = 0;
-                uiHandler.sendMessage(msg);
-                e.printStackTrace();
-            }
 
-            @Override
-            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-
-                String data = response.body().string();
-                if (data != null) {
-                    Log.e("Shop_Info", data);
-                    Gson gson = new Gson();
-                    serviceInfoBean = gson.fromJson(data, ServiceInfoBean.class);
-                    Message msg = new Message();
-                    if (serviceInfoBean.getCode() == 0) {
-                        msg.what = 2;
-                    } else {
-                        msg.what = 1;
-                    }
-                    uiHandler.sendMessage(msg);
-                }
-
-            }
-        });
-    }
 
     @Override
     protected void networkResponse(Message msg) {
+        String data = (String)msg.obj;
+        Log.e("serviceInfo=",(String)msg.obj);
         switch (msg.what) {
-            case 0:
-                Toast.makeText(this, R.string.error_network, Toast.LENGTH_SHORT).show();
-                break;
             case 1:
+                Gson gson = new Gson();
+                serviceInfoBean = gson.fromJson(data, ServiceInfoBean.class);
                 setBaseInfo();
-                adapterEvaluate.setEntities(serviceInfoBean.getComment().getServicecomment());
+                List<CommentlistBean> commentlistBeans = serviceInfoBean.getComment().getServicecomment();
+                adapterEvaluate.setEntities(commentlistBeans);
                 break;
             case 2:
-                Toast.makeText(this, R.string.no_data, Toast.LENGTH_SHORT).show();
-                break;
-            //提交订单成功
-            case 3:
-                Toast.makeText(this, commitBean.getMsg(), Toast.LENGTH_SHORT).show();
-
-                break;
-            case 4:
-                Toast.makeText(this, commitBean.getMsg(), Toast.LENGTH_SHORT).show();
-                break;
-//                成功添加到购物车
-            case 5:
-                Toast.makeText(this, commitBean.getMsg(), Toast.LENGTH_SHORT).show();
+                //                成功添加到购物车
+                Gson gson2 = new Gson();
+                commitBean = gson2.fromJson(data, CommentResultBean.class);
+                if(commitBean.getMsg() != null) {
+                    Toast.makeText(this, commitBean.getMsg(), Toast.LENGTH_SHORT).show();
+                }
                 break;
             default:
                 break;
@@ -279,11 +224,18 @@ public class ServiceInfoActivity extends BaseActivity {
                         .add("ps_id", productId)
                         .add("count", count + "")
                         .build();
-                OkhttpRequestUtil.post(ConstanUrl.CART_ADD,requestBody,5,uiHandler,true);
+                OkhttpRequestUtil.post(ConstanUrl.CART_ADD,requestBody,2,uiHandler,true);
                 break;
             case R.id.service_buy:
                 IntentDataForCommitOrderActivity data = new IntentDataForCommitOrderActivity();
-                data.serviceBean = serviceInfoBean;
+                CommitProduct commitProduct = new CommitProduct();
+                commitProduct.setNumber(1);
+                commitProduct.setPs_id(serviceInfoBean.getInfo().getId());
+                commitProduct.setType("2");
+                commitProduct.setpPrice(serviceInfoBean.getInfo().getNprice());
+                commitProduct.setpName(serviceInfoBean.getInfo().getName());
+                commitProduct.setShopId(serviceInfoBean.getInfo().getShop_id());
+                data.commitProductList.add(commitProduct);
                 data.count = 1;
                 data.type = "2";
                 CommitOrderActivity.startActivity(this, data, false);
@@ -294,55 +246,6 @@ public class ServiceInfoActivity extends BaseActivity {
         }
     }
 
-    /**
-     * 添加到购物车
-     */
-    private void addShoppingCar() {
-        OkHttpClient okHttpClient = new OkHttpClient();
-        RequestBody requestBody = new FormBody.Builder()
-                //（1：产品，2：服务）
-                .add("type", "2")
-                .add("ps_id", productId)
-                .add("count", count + "")
-                .build();
-        Request request = new Request.Builder()
-                .url(ConstanUrl.CART_ADD)
-                .post(requestBody)
-                .addHeader("cookie", (String) SharePreferenceMgr.get(this, LOGIN_COOKIE, ""))
-                .build();
-        Call call = okHttpClient.newCall(request);
-        call.enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                Message msg = new Message();
-                msg.what = 0;
-                uiHandler.sendMessage(msg);
-                e.printStackTrace();
-            }
-
-            @Override
-            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-
-                String data = response.body().string();
-                if (data != null) {
-                    Log.e("dataadd", data);
-                    Gson gson = new Gson();
-                    commitBean = gson.fromJson(data, CommitOrderBean.class);
-                    Message msg = new Message();
-
-                    if (commitBean.getCode() == 1) {
-                        //     成功
-                        msg.what = 5;
-                    } else {
-                        msg.what = 4;
-                    }
-                    uiHandler.sendMessage(msg);
-                }
-
-            }
-        });
-
-    }
 
 
 }

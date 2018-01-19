@@ -1,7 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:padding="10dp"
     android:orientation="horizontal">
+    <TextView
+        android:id="@+id/item_commit_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:layout_weight="1"
+        android:textSize="19sp"
+        android:textColor="@color/text_color"
+        />
+    <LinearLayout
+        android:id="@+id/item_commit_add_ll"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="horizontal"
+         >
 
+        <TextView
+            android:id="@+id/item_commit_mine"
+            android:layout_width="32dp"
+            android:layout_height="30dp"
+            android:background="@drawable/shape_btn_gray"
+            android:gravity="center"
+            android:text="一"
+            android:textColor="@color/grey"
+            android:textSize="25sp" />
+
+        <TextView
+            android:id="@+id/item_commit_num"
+            android:layout_width="73dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/shape_btn_gray"
+            android:gravity="center"
+            android:text="1"
+            android:textColor="@color/grey"
+            android:textSize="19sp" />
+
+        <TextView
+            android:id="@+id/item_commit_add"
+            android:layout_width="32dp"
+            android:layout_height="30dp"
+            android:background="@drawable/shape_btn_gray"
+            android:gravity="center"
+            android:text="+"
+            android:textColor="@color/grey"
+            android:textSize="25sp" />
+
+    </LinearLayout>
 </LinearLayout>

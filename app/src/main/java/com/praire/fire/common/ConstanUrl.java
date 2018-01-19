@@ -54,7 +54,7 @@ public class ConstanUrl {
     /**
      * 用户订单列表
      */
-    public static final String ORDER_orderlist = "https://www.lygyxh.cn/api.php/Order/orderlist";
+    public static final String ORDER_ORDERLIST = "https://www.lygyxh.cn/api.php/Order/orderlist";
     /**
      * 用户订单详情
      */
@@ -90,11 +90,11 @@ public class ConstanUrl {
     /**
      * 商家服务列表
      */
-    public static final String COMMONINFO_servicelist = "https://www.lygyxh.cn/api.php/Commoninfo/servicelist";
+    public static final String COMMONINFO_SERVICELIST = "https://www.lygyxh.cn/api.php/Commoninfo/servicelist";
     /**
      * 商家商品列表
      */
-    public static final String COMMONINFO_productlist = "https://www.lygyxh.cn/api.php/commoninfo/productlist";
+    public static final String COMMONINFO_PRODUCTLIST = "https://www.lygyxh.cn/api.php/commoninfo/productlist";
     /**
      * 支付创建
      */
@@ -127,9 +127,13 @@ public class ConstanUrl {
      * 加入购物车
      */
     public static final String CART_ADD = "https://www.lygyxh.cn/api.php/Cart/add";
+
     /**
      * 删除购物车
      */
     public static final String CART_DELETE = "https://www.lygyxh.cn/api.php/Cart/delete";
-
+    /**
+     * 购物车数量修改
+     */
+    public static final String CART_CHANGECOUNT = "https://www.lygyxh.cn/api.php/Cart/changecount";
 }

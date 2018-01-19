@@ -27,6 +27,9 @@ import com.praire.fire.car.adapter.ShopEvalauteAdapter;
 import com.praire.fire.car.adapter.ShopProductAdapter;
 import com.praire.fire.car.adapter.ShopServiceAdapter;
 import com.praire.fire.car.bean.BusinessInfoBean;
+import com.praire.fire.car.bean.CommentlistBean;
+import com.praire.fire.car.bean.ProductlistBean;
+import com.praire.fire.car.bean.ServicelistBean;
 import com.praire.fire.common.ConstanUrl;
 import com.praire.fire.common.Constants;
 import com.praire.fire.home.MainActivity;
@@ -37,6 +40,7 @@ import com.yanzhenjie.recyclerview.swipe.SwipeItemClickListener;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
 
 import java.io.IOException;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -228,9 +232,12 @@ public class ShopActivity extends BaseActivity {
                 break;
             case 1:
                 setBaseInfo();
-                adapterService.setEntities(businessInfoBean.getServicelist());
-                adapterProduct.setEntities(businessInfoBean.getProductlist());
-                adapterEvaluate.setEntities(businessInfoBean.getCommentlist());
+                List<ServicelistBean>  servicelistBeans = businessInfoBean.getServicelist();
+                List<ProductlistBean> productlistBeans = businessInfoBean.getProductlist();
+                List<CommentlistBean> commentlistBeans = businessInfoBean.getCommentlist();
+                adapterService.setEntities(servicelistBeans,false);
+                adapterProduct.setEntities(productlistBeans,false);
+                adapterEvaluate.setEntities(commentlistBeans);
                 break;
             case 2:
                 Toast.makeText(this,  R.string.no_data, Toast.LENGTH_SHORT).show();
@@ -285,10 +292,10 @@ public class ShopActivity extends BaseActivity {
                 startActivity(new Intent(ACTION_CALL, Uri.parse("tel:" + businessInfoBean.getTel())));
                 break;
             case R.id.shop_more_service:
-                ProductActivity.startActivity(this, businessId, 1,false);
+                MoreProductActivity.startActivity(this, businessId, 1,false);
                 break;
             case R.id.shop_more_products:
-                ProductActivity.startActivity(this, businessId, 0,false);
+                MoreProductActivity.startActivity(this, businessId, 0,false);
                 break;
             case R.id.shop_more_evaluate:
                 ProductAllEvalauteActivity.startActivity(ShopActivity.this, businessId, false);

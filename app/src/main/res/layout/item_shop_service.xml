@@ -44,7 +44,7 @@
                 android:id="@+id/item_shop_service_sale"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
+                android:layout_weight="1"
                 android:tag="已售%s"
                 android:textColor="@color/grey"
                 android:textSize="12sp" />

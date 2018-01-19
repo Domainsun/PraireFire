@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.Bundle;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -28,13 +27,13 @@ import com.google.gson.Gson;
 import com.praire.fire.R;
 import com.praire.fire.base.BaseActivity;
 import com.praire.fire.car.adapter.ShopEvalauteAdapter;
+import com.praire.fire.car.bean.CommitProduct;
 import com.praire.fire.car.bean.ProductInfoBean;
 import com.praire.fire.common.ConstanUrl;
 import com.praire.fire.common.Constants;
 import com.praire.fire.data.IntentDataForCommitOrderActivity;
-import com.praire.fire.my.bean.AddShoppingCarBean;
+import com.praire.fire.my.bean.CommentResultBean;
 import com.praire.fire.okhttp.OkhttpRequestUtil;
-import com.praire.fire.order.adapter.CommitOrderBean;
 import com.praire.fire.utils.RecycleViewDivider;
 import com.praire.fire.utils.statusbarcolor.Eyes;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
@@ -198,10 +197,11 @@ public class ProductInfoActivity extends BaseActivity implements BaseSliderView.
 
     @Override
     protected void networkResponse(Message msg) {
+        Log.e("product_Info", (String)msg.obj);
         switch (msg.what) {
             case 1:
                 Gson gson = new Gson();
-                Log.e("Shop_Info", (String)msg.obj);
+
                 productInfoBean = gson.fromJson((String)msg.obj, ProductInfoBean.class);
                 getAdSuccess(productInfoBean.getInfo().getOsspiclist());
                 setBaseInfo();
@@ -209,7 +209,7 @@ public class ProductInfoActivity extends BaseActivity implements BaseSliderView.
                 break;
             case 5:
                 Gson gson2 = new Gson();
-                AddShoppingCarBean  addBean = gson2.fromJson((String)msg.obj, AddShoppingCarBean.class);
+                CommentResultBean addBean = gson2.fromJson((String)msg.obj, CommentResultBean.class);
                 Toast.makeText(this, addBean.getMsg(), Toast.LENGTH_SHORT).show();
                 break;
             default:
@@ -290,7 +290,15 @@ public class ProductInfoActivity extends BaseActivity implements BaseSliderView.
                 break;
             case R.id.product_buy:
                 IntentDataForCommitOrderActivity data = new IntentDataForCommitOrderActivity();
-                data.productBean = productInfoBean;
+                CommitProduct commitProduct = new CommitProduct();
+                commitProduct.setNumber(1);
+                commitProduct.setPs_id(productInfoBean.getInfo().getId());
+                commitProduct.setType("1");
+                commitProduct.setpPrice(productInfoBean.getInfo().getNprice());
+                commitProduct.setpName(productInfoBean.getInfo().getName());
+                commitProduct.setShopId(productInfoBean.getInfo().getShop_id());
+
+                data.commitProductList.add(commitProduct);
                 data.count = 1;
                 data.type = "1";
                 CommitOrderActivity.startActivity(this, data, false);

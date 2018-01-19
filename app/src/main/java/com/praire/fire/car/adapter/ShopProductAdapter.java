@@ -3,7 +3,6 @@ package com.praire.fire.car.adapter;
 import android.content.Context;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +14,9 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.praire.fire.R;
-import com.praire.fire.car.bean.BusinessInfoBean;
-import com.praire.fire.common.ConstanUrl;
+import com.praire.fire.car.MoreProductActivity;
+import com.praire.fire.car.bean.CommitProduct;
+import com.praire.fire.car.bean.ProductlistBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,18 +27,20 @@ import butterknife.ButterKnife;
 
 public class ShopProductAdapter extends RecyclerView.Adapter<ShopProductAdapter.MyViewHolder> {
 
-
+    int[] chooseNum ;
     private Context context;
-    private List<BusinessInfoBean.ProductlistBean> entities = new ArrayList<>();
-
+    private List<ProductlistBean> entities = new ArrayList<>();
+    boolean isShowAdds = false;
 
     public ShopProductAdapter(Context context) {
         this.context = context;
 
     }
 
-    public void setEntities(List<BusinessInfoBean.ProductlistBean> entities) {
+    public void setEntities(List<ProductlistBean> entities,boolean isShowAdds) {
         this.entities = entities;
+        this.isShowAdds = isShowAdds;
+        chooseNum = new int[entities.size()];
         notifyDataSetChanged();
     }
 
@@ -52,8 +54,10 @@ public class ShopProductAdapter extends RecyclerView.Adapter<ShopProductAdapter.
 
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
-        final BusinessInfoBean.ProductlistBean item = entities.get(position);
+    public void onBindViewHolder(final MyViewHolder holder, final int position) {
+        final ProductlistBean item = entities.get(position);
+
+       chooseNum[position]=0;
         holder.itemShopProductName.setText(item.getName());
         holder.itemShopProductSale.setText(String.format(holder.itemShopProductSale.getTag().toString(), item.getSalecount()));
         holder.itemShopProductPrice.setText(String.format(holder.itemShopProductPrice.getTag().toString(), item.getNprice()));
@@ -65,6 +69,39 @@ public class ShopProductAdapter extends RecyclerView.Adapter<ShopProductAdapter.
                 .setAutoPlayAnimations(true)
                 .build();
         holder.itemShopListImg.setController(controller);
+        if(isShowAdds){
+
+            holder.itemShopProductAddLl.setVisibility(View.VISIBLE);
+            holder.itemShopProductAdd.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    holder.itemShopProductMine.setVisibility(View.VISIBLE);
+                    ++chooseNum[position];
+                    holder.itemShopProductNum.setText(chooseNum[position]+"");
+                    ((MoreProductActivity)context).addToShoppingCar("1",item.getId(),position);
+
+
+                }
+            });
+            holder.itemShopProductMine.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    if(chooseNum[position] > 1) {
+                        --chooseNum[position];
+                        holder.itemShopProductNum.setText(chooseNum[position] + "");
+                        ((MoreProductActivity)context).editNumShoppingCar(item.getId(),chooseNum[position],position);
+
+                    }else {
+                        holder.itemShopProductMine.setVisibility(View.GONE);
+                        holder.itemShopProductNum.setVisibility(View.GONE);
+                        ((MoreProductActivity)context).deleteShoppingCar(item.getId());
+
+                    }
+
+                }
+            });
+        }
 
 
     }

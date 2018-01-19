@@ -10,7 +10,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.praire.fire.R;
+import com.praire.fire.car.MoreProductActivity;
 import com.praire.fire.car.bean.BusinessInfoBean;
+import com.praire.fire.car.bean.ServicelistBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,18 +27,25 @@ import butterknife.ButterKnife;
  */
 public class ShopServiceAdapter extends RecyclerView.Adapter<ShopServiceAdapter.MyViewHolder> {
 
-
+    int[] chooseNum ;
 
     private Context context;
-    private List<BusinessInfoBean.ServicelistBean> entities = new ArrayList<>();
-
+    private List<ServicelistBean> entities = new ArrayList<>();
+    boolean isShowAdds = false;
     public ShopServiceAdapter(Context context) {
         this.context = context;
 
     }
 
-    public void setEntities(List<BusinessInfoBean.ServicelistBean> entities) {
+    /**
+     *
+     * @param entities
+     * @param isShowAdds 是否显示添加到购物车的视图
+     */
+    public void setEntities(List<ServicelistBean> entities,boolean isShowAdds) {
         this.entities = entities;
+        this.isShowAdds = isShowAdds;
+        chooseNum = new int[entities.size()];
         notifyDataSetChanged();
     }
 
@@ -50,13 +59,43 @@ public class ShopServiceAdapter extends RecyclerView.Adapter<ShopServiceAdapter.
 
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
-        final BusinessInfoBean.ServicelistBean item = entities.get(position);
+    public void onBindViewHolder(final MyViewHolder holder, final int position) {
+        final ServicelistBean item = entities.get(position);
+        chooseNum[position]=0;
         holder.itemShopServiceName.setText(item.getName());
         holder.itemShopServiceInfo.setText(item.getDesc());
         holder.itemShopServicePrice.setText(String.format(holder.itemShopServicePrice.getTag().toString(),item.getNprice()));
 //        TextViewUtils.changeFontColor(context, holder.itemMapNearlyPerson, 0, item.getOrdercount().length(), R.color.grey, R.color.orange);
         holder.itemShopServiceSale.setText(String.format(holder.itemShopServiceSale.getTag().toString(),item.getSalecount()));
+        if(isShowAdds){
+            holder.itemShopServiceAddLl.setVisibility(View.VISIBLE);
+            holder.itemShopServiceAdd.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    holder.itemShopServiceMine.setVisibility(View.VISIBLE);
+                    holder.itemShopServiceNum.setVisibility(View.VISIBLE);
+                    ++chooseNum[position];
+                    holder.itemShopServiceNum.setText(chooseNum[position]+"");
+                    ((MoreProductActivity)context).addToShoppingCar("2",item.getId(),position);
+                }
+            });
+            holder.itemShopServiceMine.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    if(chooseNum[position] > 1) {
+                        --chooseNum[position];
+                        holder.itemShopServiceNum.setText(chooseNum[position] + "");
+                        ((MoreProductActivity)context).editNumShoppingCar(item.getId(),chooseNum[position],position);
+                    }else {
+                        holder.itemShopServiceMine.setVisibility(View.GONE);
+                        holder.itemShopServiceNum.setVisibility(View.GONE);
+                        ((MoreProductActivity)context).deleteShoppingCar(item.getId());
+                    }
+
+                }
+            });
+        }
     }
 
     @Override

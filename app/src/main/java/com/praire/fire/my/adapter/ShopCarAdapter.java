@@ -15,7 +15,10 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.praire.fire.R;
+import com.praire.fire.car.MoreProductActivity;
+import com.praire.fire.my.ShoppingCarActivity;
 import com.praire.fire.my.bean.ShoppingCarBean;
+import com.praire.fire.utils.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,6 +61,7 @@ public class ShopCarAdapter extends RecyclerView.Adapter<ShopCarAdapter.MyViewHo
         holder.itemShoppingCarName.setText(item.getInfo().getName());
         holder.itemShoppingCarShop.setText(item.getInfo().getShop_name());
         holder.itemShoppingCarCount.setText(String.format(holder.itemShoppingCarCount.getTag().toString(), item.getCount()));
+        holder.itemShoppingCarNum.setText(item.getCount());
         holder.itemShoppingCarPrice.setText(String.format(holder.itemShoppingCarPrice.getTag().toString(), item.getInfo().getNprice()));
         //（1：产品，2：服务）
         if ("1".equals(item.getType())) {
@@ -82,13 +86,26 @@ public class ShopCarAdapter extends RecyclerView.Adapter<ShopCarAdapter.MyViewHo
         holder.itemShoppingCarMine.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                holder.itemShoppingCarNum.setText("--");
+                int count =Integer.valueOf(holder.itemShoppingCarNum.getText().toString().trim());
+                if(count>1) {
+                    count--;
+                    holder.itemShoppingCarNum.setText(count + "");
+                    item.setCount(count+"");
+                    ((ShoppingCarActivity) context).editNumShoppingCar(item.getId(), count);
+                }else {
+                    ToastUtil.show(context,"不能再减了，请左滑删除");
+                }
+
             }
         });
         holder.itemShoppingCarAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                holder.itemShoppingCarNum.setText("++");
+                int count =Integer.valueOf(holder.itemShoppingCarNum.getText().toString().trim());
+                count++;
+                holder.itemShoppingCarNum.setText(count +"");
+                item.setCount(count+"");
+                ((ShoppingCarActivity)context).editNumShoppingCar(item.getId(),count);
             }
         });
         holder.itemShoppingCarEdit.setOnClickListener(new View.OnClickListener() {
@@ -107,6 +124,7 @@ public class ShopCarAdapter extends RecyclerView.Adapter<ShopCarAdapter.MyViewHo
                 holder.itemShoppingCarInfo.setVisibility(View.VISIBLE);
                 holder.itemShoppingCarEdit.setVisibility(View.VISIBLE);
                 holder.itemShoppingCarDone.setVisibility(View.GONE);
+                holder.itemShoppingCarCount.setText(String.format(holder.itemShoppingCarCount.getTag().toString(), item.getCount()));
             }
         });
 
