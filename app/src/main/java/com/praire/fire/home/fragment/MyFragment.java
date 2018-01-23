@@ -2,12 +2,15 @@ package com.praire.fire.home.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.praire.fire.R;
@@ -36,7 +39,7 @@ import static com.praire.fire.common.Constants.LOGIN_COOKIE;
  * Created by lyp on 2017/12/27.
  */
 
-public class MyFragment extends BaseFragment implements View.OnClickListener{
+public class MyFragment extends BaseFragment implements View.OnClickListener {
     SimpleDraweeView fragmentMyImg;
     TextView fragmentMyPhone;
     TextView fragmentMyVip;
@@ -45,8 +48,9 @@ public class MyFragment extends BaseFragment implements View.OnClickListener{
     TextView fragmentMyInvitationIntegral;
     TextView fragmentMyOrder;
     TextView fragmentMyShoppingcar;
-    RelativeLayout nearby,merchantServices,myEvaluate,myOrder,shoppingcar,collect,wallet,myIntegral,invitationIntegral;
-    ImageView set,earphone;
+    RelativeLayout nearby, merchantServices, myEvaluate, myOrder, shoppingcar, collect, wallet, myIntegral, invitationIntegral;
+    ImageView set, earphone;
+
     @Override
     public View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my, container, false);
@@ -80,6 +84,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener{
         fragmentMyImg.setOnClickListener(this);
         nearby.setOnClickListener(this);
         myEvaluate.setOnClickListener(this);
+        merchantServices.setOnClickListener(this);
         fragmentMyPhone.setOnClickListener(this);
         fragmentMyVip.setOnClickListener(this);
         myOrder.setOnClickListener(this);
@@ -107,7 +112,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener{
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.fragment_my_phone:
-                AccountManagementActivity.startActivity(getActivity(),false);
+                AccountManagementActivity.startActivity(getActivity(), false);
                 break;
             case R.id.fragment_my_vip:
                 break;
@@ -140,30 +145,36 @@ public class MyFragment extends BaseFragment implements View.OnClickListener{
                 break;
             case R.id.fragment_my_evaluate_rl:
                 MyEvaluateActivity.startActivity(getActivity(), false);
+
+
                 break;
             case R.id.fragment_my_merchant_services_rl:
 
                 /*by domain*/
 
 
-                String cookie= (String) SharePreferenceMgr.get(getContext(),LOGIN_COOKIE,"");
-                String result=new UseAPIs().getShopInfo(cookie);
-                ShopInfoBean s=new J2O().getShopInfo(result);
+                String cookie = (String) SharePreferenceMgr.get(getContext(), LOGIN_COOKIE, "");
+                String result = "";
+                result = new UseAPIs().getShopInfo(cookie);
 
+                if (result.length() != 0) {
+                    ShopInfoBean s = new J2O().getShopInfo(result);
+                    Toast.makeText(getContext(), s.getChecked(), Toast.LENGTH_SHORT).show();
 
-                if (s.getChecked().equals("0") || s.getChecked().equals("2")) {  /*审核中*/
-                    Intent i=new Intent(getContext(),MerchantActivity1.class);
-                    Bundle b=new Bundle();
-//                    b.putParcelable("shopInfo",s);
-                    b.putSerializable("shopInfo",s);
-                    i.putExtras(b);
-                    startActivity(i);
+                    if (s.getChecked().equals("0") || s.getChecked().equals("2")) {  /*审核中*/
+                        Intent i = new Intent(getContext(), MerchantActivity1.class);
+                        Bundle b = new Bundle();
+                        b.putSerializable("shopInfo", s);
+                        i.putExtras(b);
+                        startActivity(i);
 
-                } else if (s.getChecked().equals("1")) {/*通过*/
+                    } else if (s.getChecked().equals("1")) {/*通过*/
                     /*跳到商家服务*/
-
-                    Intent i=new Intent(getContext(),BusinessServiceActivity.class);
-                    startActivity(i);
+                        Intent i = new Intent(getContext(), BusinessServiceActivity.class);
+                        startActivity(i);
+                    }
+                } else {
+                    Toast.makeText(getContext(), "网络错误！", Toast.LENGTH_SHORT).show();
                 }
 
                 break;

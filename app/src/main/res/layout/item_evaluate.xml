@@ -1,0 +1,171 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:layout_marginTop="1dp">
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="15dp">
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:layout_marginTop="12dp"
+        android:id="@+id/iv_head"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        fresco:roundAsCircle="true"/>
+
+    <TextView
+        android:id="@+id/tv_user_name"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_toRightOf="@id/iv_head"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="张三"
+        android:textSize="17sp"
+        android:textColor="@color/text_color"
+        />
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_marginTop="8dp"
+        android:layout_below="@id/iv_head"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="15dp"
+        android:text="11-11"
+        android:textSize="12sp"
+        android:textColor="@color/grey"
+        />
+
+    <TextView
+        android:id="@+id/tv_evaluate"
+        android:layout_marginTop="8dp"
+        android:layout_below="@id/iv_head"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="环境优美，服务态度好"
+        android:textSize="16sp"
+        android:textColor="@color/text_color"
+        />
+
+</RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="15dp"
+        android:background="@color/grey_background">
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/iv_product"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"/>
+
+        <TextView
+
+            android:id="@+id/tv_introduction"
+            android:layout_marginTop="25dp"
+            android:layout_marginLeft="16dp"
+            android:layout_toRightOf="@id/iv_product"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="汽车内外普洗"
+            android:textSize="16sp"
+            android:textColor="@color/text_color"
+            />
+
+        <TextView
+            android:id="@+id/tv_price"
+            android:layout_below="@id/tv_introduction"
+            android:layout_marginTop="22dp"
+            android:layout_marginLeft="16dp"
+            android:layout_toRightOf="@id/iv_product"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="¥ 22"
+            android:textSize="16sp"
+            android:textColor="@color/orange"
+            />
+
+        <TextView
+            android:id="@+id/tv_count"
+            android:layout_below="@id/tv_introduction"
+            android:layout_marginTop="22dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="数量:  1"
+            android:textSize="16sp"
+            android:textColor="@color/text_color"
+            />
+
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right">
+        <TextView
+            android:id="@+id/tv_business_answer"
+            android:layout_below="@id/tv_introduction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="回复"
+            android:textSize="12sp"
+            android:textColor="@color/grey"
+            android:background="@drawable/shape_btn_f5d"
+            android:drawableLeft="@mipmap/evaluate_comment"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="8dp"
+            android:drawablePadding="6dp"
+            android:layout_marginBottom="8dp"
+            />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp">
+
+        <TextView
+            android:id="@+id/business_answer"
+            android:layout_marginLeft="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="8dp"
+            android:drawableLeft="@mipmap/evaluate_comment"
+            android:drawablePadding="6dp"
+            android:text="商家回应:"
+            android:textColor="@color/orange"
+            android:textSize="12sp" />
+        <TextView
+            android:id="@+id/tv_show_business_answer"
+            android:layout_toRightOf="@id/business_answer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="亲，谢谢你的反馈。。。。kdasjfdjsalfjdsaf的撒范德萨发生 的撒范德萨的撒范德萨的撒范德萨范德萨发的撒打算的撒范德萨"
+            android:textSize="12sp"
+            android:textColor="@color/grey"
+            android:layout_marginTop="8dp"
+            />
+
+
+    </RelativeLayout>
+
+
+
+</LinearLayout>
+
+
+ 

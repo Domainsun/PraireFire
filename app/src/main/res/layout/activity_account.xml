@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+   >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@mipmap/background_business_head">
+
+        <TextView
+            android:id="@+id/tv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:gravity="center"
+            android:layout_marginLeft="8dp"
+            android:layout_centerVertical="true"
+            android:drawablePadding="10dp"
+            android:text="今日收益"
+            android:textSize="20sp"
+            android:textColor="@android:color/white"
+            android:drawableLeft="@mipmap/back" />
+
+
+        <TextView
+            android:id="@+id/tv_history_income"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:layout_alignParentRight="true"
+            android:text="历史收入"
+            android:textColor="@android:color/white"
+            android:textSize="15sp"
+            android:layout_marginRight="8dp"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/ll_income"
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:background="@mipmap/background_business_center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_centerHorizontal="true"
+            android:text="1月20日·全部收入"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+          />
+
+        <TextView
+            android:id="@+id/tv_show_total_income"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_date"
+            android:layout_marginTop="4dp"
+            android:layout_centerHorizontal="true"
+            android:text="0.00"
+            android:textColor="@android:color/white"
+            android:textSize="40sp"
+            />
+
+        <TextView
+            android:id="@+id/tv_income_count1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_show_total_income"
+            android:layout_marginTop="8dp"
+            android:layout_centerHorizontal="true"
+            android:text="共计2笔"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            />
+
+    </RelativeLayout>
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+</LinearLayout>

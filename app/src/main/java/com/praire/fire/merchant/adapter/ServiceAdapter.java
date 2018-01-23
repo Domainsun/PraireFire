@@ -18,7 +18,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * Created by sunlo on 2018/1/5.
@@ -40,7 +39,7 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.MyViewHo
     private OnItemClickListener mOnItemClickListener = null;
 
     public interface OnItemClickListener {
-        void onItemClick(View view, String id, String status);
+        void onItemClick(int position,View view, String id, String status);
     }
 
     public void setmOnItemClickListener(OnItemClickListener mOnItemClickListener) {
@@ -67,16 +66,17 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.MyViewHo
         holder.saled.setText("已售" + data.get(position).getSalecount());
 
 
-//        holder.iv.setVisibility(View.VISIBLE);
+        holder.iv.setVisibility(data.get(position).getStatus().equals("0") ? View.VISIBLE : View.INVISIBLE);
+        holder.tvDelete.setText(data.get(position).getStatus().equals("0") ?  "上架" : "下架");
 
-        if (data.get(position).getStatus().equals("0")) {
-            p = position;
-        }
-
-        if (p != null) {
-            holder.iv.setVisibility(position == p ? View.VISIBLE : View.INVISIBLE);
-            holder.tvDelete.setText(position == p ? "上架" : "下架");
-        }
+//        if (data.get(position).getStatus().equals("0")) {
+//            p = position;
+//        }
+//
+//        if (p != null) {
+//            holder.iv.setVisibility(position == p ? View.VISIBLE : View.INVISIBLE);
+//            holder.tvDelete.setText(position == p ? "上架" : "下架");
+//        }
 
 
         holder.tvDelete.setOnClickListener(new View.OnClickListener() {
@@ -87,7 +87,7 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.MyViewHo
                 if (data.get(position).getStatus().equals("0")) {
                     status = "1";
                 }
-                mOnItemClickListener.onItemClick(view, data.get(position).getId(), status);
+                mOnItemClickListener.onItemClick(position,view, data.get(position).getId(), status);
             }
         });
 

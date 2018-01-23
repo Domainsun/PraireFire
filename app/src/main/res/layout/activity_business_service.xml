@@ -10,18 +10,18 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/y96"
+        android:layout_height="50dp"
         android:background="@mipmap/background_business_head">
 
         <TextView
             android:id="@+id/tv_back"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/y60"
+            android:layout_height="30dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
             android:gravity="center"
             android:layout_centerVertical="true"
-            android:drawablePadding="@dimen/x20"
+            android:drawablePadding="10dp"
             android:drawableRight="@mipmap/back" />
 
 
@@ -38,7 +38,7 @@
 <LinearLayout
     android:id="@+id/ll_income"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/y280"
+    android:layout_height="140dp"
     android:background="@mipmap/background_business_center"
     android:orientation="vertical">
 
@@ -50,7 +50,7 @@
         android:layout_gravity="center_horizontal"
         android:textSize="14sp"
         android:textColor="@color/white"
-        android:paddingTop="@dimen/y30"/>
+        android:paddingTop="15dp"/>
 
     <TextView
         android:id="@+id/tv_money"
@@ -65,20 +65,20 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:gravity="center"
-    android:layout_marginBottom="@dimen/y20">
+    android:layout_marginBottom="10dp">
     <TextView
         android:id="@+id/tv_deal_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="共交易0笔"
-        android:layout_weight="1"
+        android:layout_marginRight="15dp"
         android:textSize="18sp"
         android:gravity="center"
         android:textColor="@color/white"/>
 
     <TextView
         android:id="@+id/tv_consume_count"
-        android:layout_weight="1"
+        android:layout_marginRight="15dp"
         android:gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -89,7 +89,7 @@
 
     <TextView
         android:id="@+id/tv_refund_count"
-        android:layout_weight="1"
+
         android:gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -105,7 +105,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/y100"
+        android:layout_height="50dp"
         android:background="@color/ffb81e"
         android:orientation="horizontal"
         >
@@ -114,16 +114,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignRight="@id/view"
-            android:layout_marginRight="@dimen/x122"
+            android:layout_marginRight="60dp"
             android:layout_centerVertical="true"
             android:drawableLeft="@mipmap/business_reconciliation"
-            android:drawablePadding="@dimen/x18"
+            android:drawablePadding="9dp"
             android:text="对账"
             android:textColor="@color/white"
             android:textSize="18sp" />
         <View
-            android:layout_width="@dimen/x2"
-            android:layout_height="@dimen/y50"
+            android:layout_width="2dp"
+            android:layout_height="25dp"
             android:background="@color/white"
             android:layout_centerInParent="true"
             android:id="@+id/view" />
@@ -132,10 +132,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignLeft="@id/view"
-            android:layout_marginLeft="@dimen/x122"
+            android:layout_marginLeft="60dp"
             android:layout_centerVertical="true"
             android:drawableLeft="@mipmap/business_withdrawals"
-            android:drawablePadding="@dimen/x18"
+            android:drawablePadding="9dp"
             android:text="提现"
             android:textColor="@color/white"
             android:textSize="18sp" />
@@ -145,17 +145,17 @@
     <RelativeLayout
         android:id="@+id/rl_service_manage"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/y100"
-        android:layout_marginTop="@dimen/y20"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
         android:background="@color/white">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/x30"
+            android:layout_marginLeft="15dp"
             android:drawableLeft="@mipmap/business_service"
-            android:drawablePadding="@dimen/x20"
+            android:drawablePadding="10dp"
             android:text="服务管理"
             android:textColor="@color/text_color"
             android:textSize="17sp"
@@ -168,8 +168,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/x30"
-            android:drawablePadding="@dimen/x18"
+            android:layout_marginRight="15dp"
+            android:drawablePadding="9dp"
             android:drawableRight="@mipmap/tail"
             android:gravity="center"
             android:text=""
@@ -180,8 +180,8 @@
     <RelativeLayout
         android:id="@+id/rl_commodity_manage"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/y100"
-        android:layout_marginTop="@dimen/y2"
+        android:layout_height="50dp"
+        android:layout_marginTop="2dp"
         android:background="@color/white">
         <TextView
             android:layout_width="wrap_content"
@@ -190,9 +190,9 @@
             android:layout_centerVertical="true"
             android:textSize="17sp"
             android:text="商品管理"
-            android:layout_marginLeft="@dimen/x30"
+            android:layout_marginLeft="15dp"
             android:drawableLeft="@mipmap/business_commodity"
-            android:drawablePadding="@dimen/x20"
+            android:drawablePadding="10dp"
 
             />
         <TextView
@@ -203,18 +203,18 @@
             android:layout_alignParentRight="true"
             android:gravity="center"
             android:textColor="@color/grey"
-            android:drawablePadding="@dimen/x18"
+            android:drawablePadding="9dp"
             android:layout_centerVertical="true"
             android:textSize="16sp"
-            android:layout_marginRight="@dimen/x30"
+            android:layout_marginRight="15dp"
             android:text=""/>
     </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/rl_order_manage"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/y100"
-        android:layout_marginTop="@dimen/y2"
+        android:layout_height="50dp"
+        android:layout_marginTop="2dp"
         android:background="@color/white">
         <TextView
             android:layout_width="wrap_content"
@@ -224,18 +224,19 @@
             android:layout_centerVertical="true"
             android:textSize="17sp"
             android:text="订单管理"
-            android:layout_marginLeft="@dimen/x30"
+            android:layout_marginLeft="15dp"
             android:drawableLeft="@mipmap/business_order"
-            android:drawablePadding="@dimen/x20"
+            android:drawablePadding="10dp"
 
             />
 
         <TextView
-            android:layout_width="@dimen/x40"
-            android:layout_height="@dimen/x40"
+            android:id="@+id/tv_order_count"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:background="@drawable/shape_msg_bg"
             android:layout_alignRight="@id/tv_order_manage_go"
-            android:layout_marginRight="@dimen/x50"
+            android:layout_marginRight="25dp"
             android:textColor="@color/white"
             android:gravity="center_horizontal"
             android:layout_centerVertical="true"
@@ -251,10 +252,10 @@
             android:layout_alignParentRight="true"
             android:gravity="center"
             android:textColor="@color/grey"
-            android:drawablePadding="@dimen/x18"
+            android:drawablePadding="9dp"
             android:layout_centerVertical="true"
             android:textSize="16sp"
-            android:layout_marginRight="@dimen/x30"
+            android:layout_marginRight="15dp"
             android:text=""/>
     </RelativeLayout>
 
@@ -262,8 +263,8 @@
     <RelativeLayout
         android:id="@+id/rl_member_manage"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/y100"
-        android:layout_marginTop="@dimen/y2"
+        android:layout_height="50dp"
+        android:layout_marginTop="2dp"
         android:background="@color/white">
         <TextView
             android:layout_width="wrap_content"
@@ -273,9 +274,9 @@
             android:layout_centerVertical="true"
             android:textSize="17sp"
             android:text="会员管理"
-            android:layout_marginLeft="@dimen/x30"
+            android:layout_marginLeft="15dp"
             android:drawableLeft="@mipmap/business_member"
-            android:drawablePadding="@dimen/x20"
+            android:drawablePadding="10dp"
 
             />
         <TextView
@@ -286,18 +287,18 @@
             android:layout_alignParentRight="true"
             android:gravity="center"
             android:textColor="@color/grey"
-            android:drawablePadding="@dimen/x18"
+            android:drawablePadding="9dp"
             android:layout_centerVertical="true"
             android:textSize="16sp"
-            android:layout_marginRight="@dimen/x30"
+            android:layout_marginRight="15dp"
             android:text=""/>
     </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/rl_evaluate_manage"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/y100"
-        android:layout_marginTop="@dimen/y2"
+        android:layout_height="50dp"
+        android:layout_marginTop="2dp"
         android:background="@color/white">
         <TextView
             android:layout_width="wrap_content"
@@ -306,17 +307,18 @@
             android:layout_centerVertical="true"
             android:textSize="17sp"
             android:text="评价管理"
-            android:layout_marginLeft="@dimen/x30"
+            android:layout_marginLeft="15dp"
             android:drawableLeft="@mipmap/business_evaluate"
-            android:drawablePadding="@dimen/x20"
+            android:drawablePadding="10dp"
             />
 
         <TextView
-            android:layout_width="@dimen/x40"
-            android:layout_height="@dimen/x40"
+            android:id="@+id/tv_evaluate_count"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:background="@drawable/shape_msg_bg"
             android:layout_alignRight="@id/tv_evaluate_manage_go"
-            android:layout_marginRight="@dimen/x50"
+            android:layout_marginRight="25dp"
             android:gravity="center_horizontal"
             android:textColor="@color/white"
             android:layout_centerVertical="true"
@@ -332,10 +334,10 @@
             android:layout_alignParentRight="true"
             android:gravity="center"
             android:textColor="@color/grey"
-            android:drawablePadding="@dimen/x18"
+            android:drawablePadding="9dp"
             android:layout_centerVertical="true"
             android:textSize="16sp"
-            android:layout_marginRight="@dimen/x30"
+            android:layout_marginRight="15dp"
             android:text=""/>
     </RelativeLayout>
 </LinearLayout>

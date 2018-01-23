@@ -4,8 +4,20 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 
 import com.praire.fire.MyApplication;
+import com.praire.fire.okhttp.APIThread.AddProductThread;
 import com.praire.fire.okhttp.APIThread.AddServiceThread;
-import com.praire.fire.okhttp.APIThread.GetIncomThread;
+import com.praire.fire.okhttp.APIThread.BusinessAgreeRefundThread;
+import com.praire.fire.okhttp.APIThread.BusinessEvaluateThread;
+import com.praire.fire.okhttp.APIThread.ChangeCommentStatusThread;
+import com.praire.fire.okhttp.APIThread.ChangeProductInfoThread;
+import com.praire.fire.okhttp.APIThread.ChangeProductStatusThread;
+import com.praire.fire.okhttp.APIThread.ChangeServiceInfoThread;
+import com.praire.fire.okhttp.APIThread.GetBusinessOrderListThread;
+import com.praire.fire.okhttp.APIThread.GetEvaluateListThread;
+import com.praire.fire.okhttp.APIThread.GetTodayIncomeThread;
+import com.praire.fire.okhttp.APIThread.GetProductInfoThread;
+import com.praire.fire.okhttp.APIThread.GetProductListThread;
+import com.praire.fire.okhttp.APIThread.GetProductTypeThread;
 import com.praire.fire.okhttp.APIThread.GetRegionThread;
 import com.praire.fire.okhttp.APIThread.GetServiceListThread;
 import com.praire.fire.okhttp.APIThread.GetServiceTypeThread;
@@ -27,6 +39,54 @@ public class UseAPIs {
     public String sendSmsCode(String tel, String checkcode, String cookie) {
         String result = "";
         SendSmsCodeThread tSign = new SendSmsCodeThread(tel, checkcode, cookie);
+        FutureTask<String> ft = new FutureTask<>(tSign);
+        Thread Thread = new Thread(ft);
+        Thread.start();
+        try {
+            result = ft.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public String changeEvaluateStatus( String cookie) {
+        String result = "";
+        ChangeCommentStatusThread tSign = new ChangeCommentStatusThread( cookie);
+        FutureTask<String> ft = new FutureTask<>(tSign);
+        Thread Thread = new Thread(ft);
+        Thread.start();
+        try {
+            result = ft.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+//    public String getTodayIncome( String cookie) {
+//        String result = "";
+//        ChangeCommentStatusThread tSign = new ChangeCommentStatusThread( cookie);
+//        FutureTask<String> ft = new FutureTask<>(tSign);
+//        Thread Thread = new Thread(ft);
+//        Thread.start();
+//        try {
+//            result = ft.get();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        } catch (ExecutionException e) {
+//            e.printStackTrace();
+//        }
+//        return result;
+//    }
+
+    public String agreeFund( String cookie,String id) {
+        String result = "";
+        BusinessAgreeRefundThread tSign = new BusinessAgreeRefundThread(cookie,id);
         FutureTask<String> ft = new FutureTask<>(tSign);
         Thread Thread = new Thread(ft);
         Thread.start();
@@ -72,6 +132,54 @@ public class UseAPIs {
         return result;
     }
 
+
+    public String addProduct(String name, String type, String desc, String price, String cookie, String photo1, String photo2, String photo3, String photo4) {
+        String result = "";
+        AddProductThread tSign = new AddProductThread(name, type, desc, price, cookie, photo1,  photo2,  photo3,  photo4);
+        FutureTask<String> ft = new FutureTask<>(tSign);
+        Thread Thread = new Thread(ft);
+        Thread.start();
+        try {
+            result = ft.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public String changeServiceInfo(String id,String name, String type, String desc, String price, String cookie) {
+        String result = "";
+        ChangeServiceInfoThread tSign = new ChangeServiceInfoThread(id,name, type, desc, price, cookie);
+        FutureTask<String> ft = new FutureTask<>(tSign);
+        Thread Thread = new Thread(ft);
+        Thread.start();
+        try {
+            result = ft.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+    public String changeProductInfo(String id,String name, String type, String desc, String price, String cookie,String photo1, String photo2, String photo3, String photo4) {
+        String result = "";
+        ChangeProductInfoThread tSign = new ChangeProductInfoThread( id,name, type, desc, price, cookie, photo1,  photo2,  photo3,  photo4);
+        FutureTask<String> ft = new FutureTask<>(tSign);
+        Thread Thread = new Thread(ft);
+        Thread.start();
+        try {
+            result = ft.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
     public String sign(String tel, String pwd, MyApplication application) {
         String result = "";
         SignThread tSign = new SignThread(tel, pwd, application);
@@ -91,6 +199,40 @@ public class UseAPIs {
     public String getShopType() {
         String result = "";
         GetShopTypeThread tSign = new GetShopTypeThread();
+        FutureTask<String> ft = new FutureTask<>(tSign);
+        Thread Thread = new Thread(ft);
+        Thread.start();
+        try {
+            result = ft.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+
+    public String getBusinessOrderList(String status, String cookie,String p) {
+        String result = "";
+        GetBusinessOrderListThread tSign = new GetBusinessOrderListThread( status, cookie,p);
+        FutureTask<String> ft = new FutureTask<>(tSign);
+        Thread Thread = new Thread(ft);
+        Thread.start();
+        try {
+            result = ft.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+
+    public String getProductType() {
+        String result = "";
+        GetProductTypeThread tSign = new GetProductTypeThread();
         FutureTask<String> ft = new FutureTask<>(tSign);
         Thread Thread = new Thread(ft);
         Thread.start();
@@ -170,9 +312,91 @@ public class UseAPIs {
     }
 
 
+    public String getEvaluateList(String cookie,String p) {
+        String result = "";
+        GetEvaluateListThread tSign = new GetEvaluateListThread(p,cookie);
+        FutureTask<String> ft = new FutureTask<>(tSign);
+        Thread Thread = new Thread(ft);
+        Thread.start();
+        try {
+            result = ft.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public String businessEvaluate(String id, String reply, String cookie) {
+        String result = "";
+        BusinessEvaluateThread tSign = new BusinessEvaluateThread( id,  reply,  cookie);
+        FutureTask<String> ft = new FutureTask<>(tSign);
+        Thread Thread = new Thread(ft);
+        Thread.start();
+        try {
+            result = ft.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public String getProductList(String cookie,String p) {
+        String result = "";
+        GetProductListThread tSign = new GetProductListThread(p,cookie);
+        FutureTask<String> ft = new FutureTask<>(tSign);
+        Thread Thread = new Thread(ft);
+        Thread.start();
+        try {
+            result = ft.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+
+    public String getProductInfo(String id,String cookie) {
+        String result = "";
+        GetProductInfoThread tSign = new GetProductInfoThread(id,cookie);
+        FutureTask<String> ft = new FutureTask<>(tSign);
+        Thread Thread = new Thread(ft);
+        Thread.start();
+        try {
+            result = ft.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+
     public String changeServiceStatus(String id, String cookie, String status) {
         String result = "";
         ChangeServiceStatusThread tSign = new ChangeServiceStatusThread(id,cookie,status);
+        FutureTask<String> ft = new FutureTask<>(tSign);
+        Thread Thread = new Thread(ft);
+        Thread.start();
+        try {
+            result = ft.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public String changeProductStatus(String id, String cookie, String status) {
+        String result = "";
+        ChangeProductStatusThread tSign = new ChangeProductStatusThread(id,cookie,status);
         FutureTask<String> ft = new FutureTask<>(tSign);
         Thread Thread = new Thread(ft);
         Thread.start();
@@ -203,9 +427,9 @@ public class UseAPIs {
     }
 
 
-    public String getBusinessIncome(String startdate, String enddate, String cookie) {
+    public String getTodayIncome(String cookie, String date,String p) {
         String result = "";
-        GetIncomThread tSign = new GetIncomThread(startdate, enddate, cookie);
+        GetTodayIncomeThread tSign = new GetTodayIncomeThread( cookie,  date,p);
         FutureTask<String> ft = new FutureTask<>(tSign);
         Thread Thread = new Thread(ft);
         Thread.start();

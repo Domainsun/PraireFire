@@ -51,22 +51,22 @@ public class SignAcitvity extends Activity {
         setContentView(R.layout.activity_sign);
         ButterKnife.bind(this);
 
-       initview();
+        initview();
 
     }
 
     @SuppressLint("HandlerLeak")
     private void initview() {
-       myApplication = (MyApplication) getApplication();
-        Intent i= getIntent();
-        phone=i.getStringExtra("phone");
+        myApplication = (MyApplication) getApplication();
+        Intent i = getIntent();
+        phone = i.getStringExtra("phone");
         etPhone.setText(phone);
-        handler_sign=new Handler(){
+        handler_sign = new Handler() {
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
                 if (msg.what == Hsign) {
-                    String signCookie= (String) msg.obj;
+                    String signCookie = (String) msg.obj;
                     myApplication.setSignCookie(signCookie);
                 }
             }
@@ -76,30 +76,35 @@ public class SignAcitvity extends Activity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_sign:
-            phone=etPhone.getText().toString();
-            pw=etPw.getText().toString();
+                phone = etPhone.getText().toString();
+                pw = etPw.getText().toString();
 
-            if ("".equals(phone) || "".equals(pw)) {
-                Toast.makeText(this, "请输入手机号或密码", Toast.LENGTH_SHORT).show();
-            } else {
-                String result=new UseAPIs().sign(phone,pw,myApplication);
-                APIResultBean a= new J2O().getAPIResult(result);
-                Toast.makeText(this, a.getMsg()+"", Toast.LENGTH_SHORT).show();
-                if ("1".equals(a.getCode())) {
-                    //---------------考虑是否删除第一个
-                    SharePreferenceMgr.put(this, Constants.LOGIN_COOKIE,myApplication.getSignCookie());
-                    SharePreferenceMgr.put(MyApplication.getInstance(), Constants.LOGIN_COOKIE,myApplication.getSignCookie());
-                    //---------------
-                    SharePreferenceMgr.put(this,Constants.USER_ID,phone);
-                    Intent i=new Intent(this, MainActivity.class);
-                    startActivity(i);
-                }
+                if ("".equals(phone) || "".equals(pw)) {
+                    Toast.makeText(this, "请输入手机号或密码", Toast.LENGTH_SHORT).show();
+                } else {
+                    String result = new UseAPIs().sign(phone, pw, myApplication);
+                    if (result.length() != 0) {
+                        APIResultBean a = new J2O().getAPIResult(result);
+                        Toast.makeText(this, a.getMsg() + "", Toast.LENGTH_SHORT).show();
+                        if ("1".equals(a.getCode())) {
+                            SharePreferenceMgr.put(this, Constants.LOGIN_COOKIE,myApplication.getSignCookie());
+                            SharePreferenceMgr.put(MyApplication.getInstance(), Constants.LOGIN_COOKIE,myApplication.getSignCookie());
+                            //---------------
+                            SharePreferenceMgr.put(this,Constants.USER_ID,phone);
+                            Intent i=new Intent(this, MainActivity.class);
+                            startActivity(i);
+                        }
+                    } else {
+                        Toast.makeText(SignAcitvity.this, "网络错误！", Toast.LENGTH_SHORT).show();
+                    }
+
+
 
             }
                 break;
 
             case R.id.tv_register:
-                Intent i=new Intent(this,RegisterActivity.class);
+                Intent i = new Intent(this, RegisterActivity.class);
                 startActivity(i);
 
                 break;

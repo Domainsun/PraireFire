@@ -127,15 +127,22 @@ public class RegisterActivity extends Activity {
                     Toast.makeText(this, "请输入手机号和图形验证码", Toast.LENGTH_SHORT).show();
                 } else {
                     String result="";
-                    result=new UseAPIs().sendSmsCode(phone,photoCode,photoCodeCookie);
-                    APIResultBean a=j2O.getAPIResult(result);
-                    if ("1".equals(a.getCode())) {
-                        Toast.makeText(this, "发送成功", Toast.LENGTH_SHORT).show();
+                    if (result .length()!=0) {
+                        result=new UseAPIs().sendSmsCode(phone,photoCode,photoCodeCookie);
+
+                        APIResultBean a=j2O.getAPIResult(result);
+                        if ("1".equals(a.getCode())) {
+                            Toast.makeText(this, "发送成功", Toast.LENGTH_SHORT).show();
                             timer.start();
-                    } else {
-                        Toast.makeText(this, a.getMsg(), Toast.LENGTH_SHORT).show();
-                        api.getPhotoCode();
+                        } else {
+                            Toast.makeText(this, a.getMsg(), Toast.LENGTH_SHORT).show();
+                            api.getPhotoCode();
+                        }
+                    }else{
+                        Toast.makeText(this, "网络错误！", Toast.LENGTH_SHORT).show();
                     }
+
+
                 }
                 break;
             case R.id.btn_register:
@@ -148,13 +155,19 @@ public class RegisterActivity extends Activity {
                     Toast.makeText(this, "请填写完整", Toast.LENGTH_SHORT).show();
                 } else {
                     String result="";
-                    result=new UseAPIs().register(phone,pw,smsCode,invitation,smsCodeCookie);
-                    APIResultBean a=j2O.getAPIResult(result);
-                    if ("1".equals(a.getCode())) {
-                        Intent i=new Intent(this,SignAcitvity.class);
-                        i.putExtra("phone",phone);
-                        startActivity(i);
+                    if (result.length() != 0) {
+                        result=new UseAPIs().register(phone,pw,smsCode,invitation,smsCodeCookie);
+                        APIResultBean a=j2O.getAPIResult(result);
+                        if ("1".equals(a.getCode())) {
+                            Intent i=new Intent(this,SignAcitvity.class);
+                            i.putExtra("phone",phone);
+                            startActivity(i);
+                        }
+                    } else {
+                        Toast.makeText(RegisterActivity.this, "网络错误！", Toast.LENGTH_SHORT).show();
                     }
+
+
                 }
 
                 break;
