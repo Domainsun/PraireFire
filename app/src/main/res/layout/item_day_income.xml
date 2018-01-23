@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:layout_marginTop="1dp"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/tv_order_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_name"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="15dp"
+            android:layout_toRightOf="@id/iv_head"
+            android:text="单号:201809040023832232"
+            android:textColor="@color/product_text"
+            android:textSize="12sp" />
+
+        <TextView
+            android:layout_marginLeft="15dp"
+            android:id="@+id/tv_service_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_order_id"
+            android:layout_marginTop="8dp"
+            android:text="服务名称"
+            android:textColor="@color/grey"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tv_income"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+15元"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="15dp"
+            />
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_order_id"
+            android:layout_marginTop="8dp"
+            android:text="10:13:10"
+            android:textColor="@color/grey"
+            android:textSize="12sp"
+            android:layout_marginRight="15dp"
+            android:layout_alignParentRight="true"/>
+    </RelativeLayout>
+</LinearLayout>

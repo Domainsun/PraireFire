@@ -5,15 +5,34 @@ package com.praire.fire.okhttp.JavaBean;
  */
 
 public class BusinessTodayCountBean {
-
     /**
+     * comment_count
+     * order_count
      * total_income : 0.00
      * pay_count : 0
      * use_count : 0
      * refund_count : 0
      */
-
+    private String comment_count;
+    private String order_count;
     private String total_income;
+
+    public String getComment_count() {
+        return comment_count;
+    }
+
+    public void setComment_count(String comment_count) {
+        this.comment_count = comment_count;
+    }
+
+    public String getOrder_count() {
+        return order_count;
+    }
+
+    public void setOrder_count(String order_count) {
+        this.order_count = order_count;
+    }
+
     private String pay_count;
     private String use_count;
     private String refund_count;

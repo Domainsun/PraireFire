@@ -181,6 +181,8 @@ public class HomeFragment extends BaseFragment implements BaseSliderView.OnSlide
     /**
      * 设置一些amap的属性
      */
+
+
     private void setUpMap() {
 //初始化定位
         mLocationClient = new AMapLocationClient(getActivity());

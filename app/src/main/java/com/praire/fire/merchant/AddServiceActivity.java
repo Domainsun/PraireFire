@@ -71,20 +71,19 @@ public class AddServiceActivity extends AppCompatActivity {
     String type = "";
     String price = "";
     String introdction = "";
-
-
+    String cookie;
+    ServiceListBean.PagelistBean s=new ServiceListBean.PagelistBean();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_service);
         ButterKnife.bind(this);
 
-        initdata();
 
+        cookie = (String) SharePreferenceMgr.get(this, LOGIN_COOKIE, "");
+        initdata();
         Bundle b = getIntent().getExtras();
         if (b!=null) {
-
-            ServiceListBean.PagelistBean s=new ServiceListBean.PagelistBean();
             s= (ServiceListBean.PagelistBean) b.getSerializable("data");
             String tab=b.getString("tab");
 
@@ -98,14 +97,27 @@ public class AddServiceActivity extends AppCompatActivity {
                 submit.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Toast.makeText(AddServiceActivity.this, "修改", Toast.LENGTH_SHORT).show();
+                        String id=s.getId();
+                        type=s.getClassX();
+                        getDate();
+                        if (name.length() == 0 || price.length() == 0 || introdction.length() == 0 || type.length() == 0) {
+                            Toast.makeText(AddServiceActivity.this, "请把信息填写完整！", Toast.LENGTH_SHORT).show();
+                        } else {
+                            String str = "";
+                            str=  new UseAPIs().changeServiceInfo(id,name,type,introdction,price,cookie);
+
+                            if (str.length() != 0) {
+                                APIResultBean a = new J2O().getAPIResult(str);
+                                Toast.makeText(AddServiceActivity.this, a.getMsg() + "", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(AddServiceActivity.this, "网络错误！", Toast.LENGTH_SHORT).show();
+                            }
+
+                        }
                     }
                 });
 //            }
-
         }
-
-
 
 
     }
@@ -121,34 +133,52 @@ public class AddServiceActivity extends AppCompatActivity {
                 show1();
                 break;
             case R.id.submit:
-                name = etServiceName.getText().toString();
-                price = etServicePrice.getText().toString();
-                introdction = etProductIntroduction.getText().toString();
-                String cookie = (String) SharePreferenceMgr.get(this, LOGIN_COOKIE, "");
+
+                getDate();
                 if (name.length() == 0 || price.length() == 0 || introdction.length() == 0 || type.length() == 0) {
                     Toast.makeText(this, "请把信息填写完整！", Toast.LENGTH_SHORT).show();
                 } else {
-                    String str = new UseAPIs().addService(name, type, introdction, price, cookie);
-                    Log.d("onViewClicked", "onViewClicked: " + str);
-                    APIResultBean a = new J2O().getAPIResult(str);
-                    Toast.makeText(this, a.getMsg() + "", Toast.LENGTH_SHORT).show();
+                    String str ="";
+                    str= new UseAPIs().addService(name, type, introdction, price, cookie);
+                    if (str.length() != 0) {
+
+                        Log.d("onViewClicked", "onViewClicked: " + str);
+                        APIResultBean a = new J2O().getAPIResult(str);
+                        Toast.makeText(this, a.getMsg() + "", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(this, "网络错误！", Toast.LENGTH_SHORT).show();
+                    }
+
                 }
 
                 break;
         }
     }
 
+    private void  getDate(){
+        name = etServiceName.getText().toString();
+        price = etServicePrice.getText().toString();
+        introdction = etProductIntroduction.getText().toString();
+    }
+
+
     private void initdata() {
 
-        String str = new UseAPIs().getServiceType();
-        ServiceTypeBean s = new J2O().getServiceType(str);
-        for (int i = 0; i < s.getList().size(); i++) {
-            String name = s.getList().get(i).getName();
-            String code = s.getList().get(i).getId();
-            servicelists.add(name);
-            map.put(name, code);
+        String str = "";
+        str=new UseAPIs().getServiceType();
+
+        if (str.length() != 0) {
+            ServiceTypeBean s = new J2O().getServiceType(str);
+            for (int i = 0; i < s.getList().size(); i++) {
+                String name = s.getList().get(i).getName();
+                String code = s.getList().get(i).getId();
+                servicelists.add(name);
+                map.put(name, code);
+            }
+        } else {
+            Toast.makeText(this, "网络错误！", Toast.LENGTH_SHORT).show();
         }
-        Log.d("initdata", "initdata: " + str);
+
     }
 
     private void show1() {
@@ -193,4 +223,6 @@ public class AddServiceActivity extends AppCompatActivity {
         });
 
     }
+
+
 }

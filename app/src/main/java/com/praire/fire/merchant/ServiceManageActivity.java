@@ -55,6 +55,8 @@ public class ServiceManageActivity extends AppCompatActivity {
     private List<ServiceListBean.PagelistBean> mDatas = new ArrayList<>();
     private ServiceAdapter adapter;
 
+    List<Integer> changelist = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,7 +89,7 @@ public class ServiceManageActivity extends AppCompatActivity {
 
     private void initview() {
 
-        LinearLayoutManager mLayoutManager =new LinearLayoutManager(this);
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
         mRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.refresh_layout);
         mRefreshLayout.setOnRefreshListener(mRefreshListener); // 刷新监听。
         recyclerView = findViewById(R.id.recycler_view);
@@ -101,8 +103,8 @@ public class ServiceManageActivity extends AppCompatActivity {
 
         adapter.setmOnItemClickListener(new ServiceAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(View view, String id, String status) {
-                showButtonDialogFragment(view, id, status);
+            public void onItemClick(int position, View view, String id, String status) {
+                showButtonDialogFragment(position, view, id, status);
                 Log.d("status: ", "status: " + status);
             }
         });
@@ -117,6 +119,9 @@ public class ServiceManageActivity extends AppCompatActivity {
         public void onRefresh() {
             loadData();
             adapter.notifyDataSetChanged();
+//            adapter.notifyItemChanged(0);
+
+
             mRefreshLayout.setRefreshing(false);
             index = 1;
             dataEmpty = false;
@@ -139,39 +144,28 @@ public class ServiceManageActivity extends AppCompatActivity {
                     ServiceManageActivity.this.index++;
                     String index = String.valueOf(ServiceManageActivity.this.index);
                     List<ServiceListBean.PagelistBean> data = new ArrayList<>();
-                    String str = u.getServiceList(cookie, index);
-                    ServiceListBean s = j.getServiceList(str);
+                    String str = "";
+                    str = u.getServiceList(cookie, index);
+                    if (str.length() != 0) {
+                        ServiceListBean s = j.getServiceList(str);
 
-                    for (int i = 0; i < s.getPagelist().size(); i++) {
-                        mDatas.add(s.getPagelist().get(i));
+                        for (int i = 0; i < s.getPagelist().size(); i++) {
+                            mDatas.add(s.getPagelist().get(i));
+                        }
+
+                        if (s.getPagelist().size() == 0) {
+                            dataEmpty = true;
+                        }
+                        if (s.getPagelist().size() < 10) {
+                            hasMore = false;
+                        }
+                        adapter.notifyDataSetChanged();
+                        adapter.notifyItemInserted(1);
+                        recyclerView.loadMoreFinish(dataEmpty, hasMore);
+                    } else {
+                        Toast.makeText(ServiceManageActivity.this, "网络错误！", Toast.LENGTH_SHORT).show();
                     }
 
-                    if (s.getPagelist().size() == 0) {
-                        dataEmpty = true;
-                    }
-                    if (s.getPagelist().size() < 10) {
-                        hasMore = false;
-                        Log.d("onLoadMore", "onLoadMore< 10: ");
-                    }
-//                    adapter.setData(mDatas);
-                    adapter.notifyDataSetChanged();
-                    adapter.notifyItemInserted(1);
-//             notifyItemRangeInserted()或者notifyDataSetChanged().
-//            adapter.notifyItemRangeInserted(mDatas.size() - data.size(), data.size());
-                    // 数据完更多数据，一定要掉用这个方法。
-                    // 第一个参数：表示此次数据是否为空。
-                    // 第二个参数：表示是否还有更多数据。
-
-                    recyclerView.loadMoreFinish(dataEmpty, hasMore);
-                    // 如果加载失败调用下面的方法，传入errorCode和errorMessage。
-                    // errorCode随便传，你自定义LoadMoreView时可以根据errorCode判断错误类型。
-                    // errorMessage是会显示到loadMoreView上的，用户可以看到。
-//            recyclerView.loadMoreError(0, "网络错误");
-
-                    Log.d("Pagelistsize", "Pagelistsize: " + s.getPagelist().size());
-                    Log.d("dataEmpty", "dataEmpty: " + dataEmpty);
-                    Log.d("hasMore", "hasMore: " + hasMore);
-                    Log.d("index", "index: " + index);
                 }
             }, 1000);
         }
@@ -180,21 +174,25 @@ public class ServiceManageActivity extends AppCompatActivity {
 
 
     private void loadData() {
-        String str = u.getServiceList(cookie, "1");
-        ServiceListBean s = j.getServiceList(str);
-        for (int i = 0; i < mDatas.size(); i++) {
-            mDatas.remove(i);
+        String str = "";
+        str = u.getServiceList(cookie, "1");
+
+        if (str.length() != 0) {
+            ServiceListBean s = j.getServiceList(str);
+            for (int i = 0; i < mDatas.size(); i++) {
+                mDatas.remove(i);
+            }
+            mDatas = s.getPagelist();
+            adapter.setData(mDatas);
+            recyclerView.loadMoreFinish(false, true);
+        } else {
+            Toast.makeText(this, "网络错误！", Toast.LENGTH_SHORT).show();
         }
-        mDatas = s.getPagelist();
-        adapter.setData(mDatas);
-        // 第一次加载数据：一定要调用这个方法，否则不会触发加载更多。
-        // 第一个参数：表示此次数据是否为空，假如你请求到的list为空(== null || list.size == 0)，那么这里就要true。
-        // 第二个参数：表示是否还有更多数据，根据服务器返回给你的page等信息判断是否还有更多，这样可以提供性能，如果不能判断则传true。
-        recyclerView.loadMoreFinish(false, true);
+
     }
 
 
-    public void showButtonDialogFragment(View view, final String id, final String status) {
+    public void showButtonDialogFragment(final int position, View view, final String id, final String status) {
         AlertDialog.Builder builder = new AlertDialog.Builder(
                 this);
         builder.setCancelable(false);
@@ -208,10 +206,24 @@ public class ServiceManageActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
 
-                String str = new UseAPIs().changeServiceStatus(id, cookie, status);
-                APIResultBean a = new J2O().getAPIResult(str);
-                Toast.makeText(ServiceManageActivity.this, a.getMsg() + "", Toast.LENGTH_SHORT).show();
-                adapter.notifyDataSetChanged();
+                String str = "";
+                str = new UseAPIs().changeServiceStatus(id, cookie, status);
+                if (str.length() != 0) {
+                    APIResultBean a = new J2O().getAPIResult(str);
+                    Toast.makeText(ServiceManageActivity.this, a.getMsg() + "", Toast.LENGTH_SHORT).show();
+
+                    if (a.getCode().equals("1")) {
+                        if (status.equals("0")) {
+                            mDatas.get(position).setStatus("0");
+                        } else {
+                            mDatas.get(position).setStatus("1");
+                        }
+                        adapter.notifyItemChanged(position);
+                    }
+                } else {
+                    Toast.makeText(ServiceManageActivity.this, "网络错误！", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 
@@ -235,5 +247,10 @@ public class ServiceManageActivity extends AppCompatActivity {
                 startActivity(i);
                 break;
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 }

@@ -20,8 +20,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                  >
+                android:layout_weight="1">
 
                 <ImageView
                     android:id="@+id/route_drive"
@@ -29,7 +28,7 @@
                     android:layout_height="22dp"
                     android:layout_centerInParent="true"
                     android:layout_gravity="center"
-                    android:src="@mipmap/route_drive_select"/>
+                    android:src="@mipmap/route_drive_select" />
             </RelativeLayout>
 
             <RelativeLayout

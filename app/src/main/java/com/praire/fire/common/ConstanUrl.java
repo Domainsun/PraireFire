@@ -16,15 +16,62 @@ public class ConstanUrl {
     public final static String settled="https://www.lygyxh.cn/api.php/Shop/in";
     public final static String ADD_SERVICE="https://www.lygyxh.cn/api.php/Service/in";
 
+    /*
+    * 添加产品*/
+    public final static String ADD_PRODUCT="https://www.lygyxh.cn/api.php/Product/in";
+    /*
+    * 商家服务评论未读变已读*/
+    public final static String CHANGE_EVALUATE_STATUS="https://www.lygyxh.cn/api.php/ShopComment/changeread";
+
+    /*
+    * 商家回复用户评论*/
+    public final static String BUSINESS_EVALUATE="https://www.lygyxh.cn/api.php/ShopComment/reply";
+
+    /*
+    *商家同意退款*/
+    public final static String AGREE_REFUND="https://www.lygyxh.cn/api.php/ShopOrder/agreerefund";
+
+    /*
+    * 改变服务信息*/
+    public final static String CHANGE_SERVICE_INFO="https://www.lygyxh.cn/api.php/service/save";
+
+    /*
+    * 改变产品信息*/
+    public final static String CHANGE_PRODUCT_INFO="https://www.lygyxh.cn/api.php/Product/save";
+
 
     /*得到商家收益数据*/
-    public final static String GET_BUSINESS_INCOME="https://www.lygyxh.cn/api.php/shopCount/countincomebydate";
+//    public final static String GET_BUSINESS_INCOME="https://www.lygyxh.cn/api.php/shopCount/countincomebydate";
+
+    /*商家单日收益*/
+    public final static String GET_TODAY_INCOME="https://www.lygyxh.cn/api.php/shopCount/incomebydate";
+
     public final static String GET_BUSINESS_TODAY_COUNT="https://www.lygyxh.cn/api.php/ShopCount/todaycount";
     /*得到店铺类型*/
     public final static String GET_SHOP_TYPE="https://www.lygyxh.cn/api.php/Class/getShopType";
     public final static String GET_REGION="https://www.lygyxh.cn/api.php/class/getArea";
     public final static String GET_SERVICE_TYPE="https://www.lygyxh.cn/api.php/Class/getServiceType";
+    /*得到产品类型
+    * */
+    public final static String GET_PRODUCT_TYPE="https://www.lygyxh.cn/api.php/Class/getProductType";
     public final static String GET_SERVICE_LIST="https://www.lygyxh.cn/api.php/Service/servicelist";
+    /*
+    * 商家获取评论
+    * */
+
+    public final static String GET_EVALUATE_LIST="https://www.lygyxh.cn/api.php/ShopComment/commentlist";
+
+    /*
+    * 得到产品信息*/
+    public final static String GET_PRODUCT_INFO="https://www.lygyxh.cn/api.php/Product/info";
+
+    /*
+    * 得到商家订单*/
+    public final static String GET_BUSINESS_ORDER_LIST="https://www.lygyxh.cn/api.php/ShopOrder/orderlist";
+    /*
+    * 得到产品列表*/
+    public final static String GET_PRODUCT_LIST="https://www.lygyxh.cn/api.php/Product/productlist";
+
     public final static String GET_SHOP_INFO="https://www.lygyxh.cn/api.php/Shop/info";
     /*登录*/
     public final static String LOGIN="https://www.lygyxh.cn/api.php/Public/login";
@@ -32,6 +79,12 @@ public class ConstanUrl {
     public final static String Register="https://www.lygyxh.cn/api.php/Public/register";
     /*服务下架*/
     public final static String SERVICE_DELETE="https://www.lygyxh.cn/api.php/service/changestatus";
+
+    /*
+    * 产品上下架*/
+    public final static String CHANGE_PRODUCT_STATUS="https://www.lygyxh.cn/api.php/product/changestatus";
+
+
     /*发送短信验证码*/
     public final static String SENDSMSCODE="https://www.lygyxh.cn/api.php/Verifytel/sendsms";
     /**

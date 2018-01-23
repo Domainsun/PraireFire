@@ -15,20 +15,16 @@ import okhttp3.Response;
  * Created by sunlo on 2017/12/29.
  */
 
-public class GetIncomThread implements Callable {
+public class ChangeProductStatusThread implements Callable {
     /**
      * Created by domain on 2017/12/29.
      */
+    String id,cookie,status;
 
-
-    String startdate="";
-    String enddate="";
-    String cookie="";
-
-    public GetIncomThread(String startdate, String enddate, String cookie) {
-        this.startdate = startdate;
-        this.enddate = enddate;
+    public ChangeProductStatusThread(String id, String cookie, String status) {
+        this.id = id;
         this.cookie = cookie;
+        this.status = status;
     }
 
     @Override
@@ -36,10 +32,12 @@ public class GetIncomThread implements Callable {
 
         final OkHttpClient client = new OkHttpClient();
         RequestBody formBody = new FormBody.Builder()
+                .add("id", id)
+                .add("status", status)
                 .build();
         Request request = new Request.Builder()
-                .url(ConstanUrl.GET_BUSINESS_INCOME+"?startdate="+startdate+"enddate="+enddate)
-                .get()
+                .url(ConstanUrl.CHANGE_PRODUCT_STATUS)
+                .post(formBody)
                 .addHeader("cookie",cookie)
                 .build();
         Response response = client.newCall(request).execute();
