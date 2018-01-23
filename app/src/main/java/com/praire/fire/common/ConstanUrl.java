@@ -58,35 +58,35 @@ public class ConstanUrl {
     /**
      * 用户订单详情
      */
-    public static final String ORDER_orderinfo = "https://www.lygyxh.cn/api.php/Order/orderinfo";
+    public static final String ORDER_ORDERINFO = "https://www.lygyxh.cn/api.php/Order/orderinfo";
     /**
      * 用户确认消费
      */
-    public static final String ORDER_checkuse = "https://www.lygyxh.cn/api.php/Order/checkuse";
+    public static final String ORDER_CHECKUSE = "https://www.lygyxh.cn/api.php/Order/checkuse";
     /**
      *退款
      */
-    public static final String ORDER_refund = "https://www.lygyxh.cn/api.php/Order/refund";
+    public static final String ORDER_REFUND = "https://www.lygyxh.cn/api.php/Order/refund";
     /**
      * 订单评价
      */
-    public static final String Comment_IN = "https://www.lygyxh.cn/api.php/Comment/in";
+    public static final String COMMENT_IN = "https://www.lygyxh.cn/api.php/Comment/in";
     /**
      * 我的评价
      */
-    public static final String Comment_commentlist = "https://www.lygyxh.cn/api.php/Comment/commentlist";
+    public static final String COMMENT_COMMENTLIST = "https://www.lygyxh.cn/api.php/Comment/commentlist";
     /**
      * 店铺评价
      */
-    public static final String COMMONINFO_shopcomment = "https://www.lygyxh.cn/api.php/Commoninfo/shopcomment";
+    public static final String COMMONINFO_SHOPCOMMENT = "https://www.lygyxh.cn/api.php/Commoninfo/shopcomment";
     /**
      * 银行列表
      */
-    public static final String COMMONINFO_banklist = "https://www.lygyxh.cn/api.php/Commoninfo/banklist";
+    public static final String COMMONINFO_BANKLIST = "https://www.lygyxh.cn/api.php/Commoninfo/banklist";
     /**
      * 地区列表
      */
-    public static final String COMMONINFO_getcity = "https://www.lygyxh.cn/api.php/Commoninfo/getcity";
+    public static final String COMMONINFO_GETCITY = "https://www.lygyxh.cn/api.php/Commoninfo/getcity";
     /**
      * 商家服务列表
      */
@@ -98,7 +98,7 @@ public class ConstanUrl {
     /**
      * 支付创建
      */
-    public static final String COMMONINFO_createpay = "https://www.lygyxh.cn/api.php/Pay/createpay";
+    public static final String COMMONINFO_CREATEPAY = "https://www.lygyxh.cn/api.php/Pay/createpay";
     /**
      * 店铺详情
      */
@@ -136,4 +136,10 @@ public class ConstanUrl {
      * 购物车数量修改
      */
     public static final String CART_CHANGECOUNT = "https://www.lygyxh.cn/api.php/Cart/changecount";
+
+    /**
+     * 取消订单
+     */
+    public static final String ORDER_CANCEL = "https://www.lygyxh.cn/api.php/Order/cancel";
+
 }

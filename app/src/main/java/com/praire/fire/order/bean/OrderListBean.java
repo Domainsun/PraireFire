@@ -1,12 +1,13 @@
 package com.praire.fire.order.bean;
 
+
 import java.util.List;
 
 /**
  * Created by lyp on 2018/1/19.
  */
 
-public class OrderListBean {
+public class OrderListBean  {
     /**
      * code : 1
      * p : 1
@@ -41,7 +42,7 @@ public class OrderListBean {
         this.pagelist = pagelist;
     }
 
-    public static class PagelistBean {
+    public static class PagelistBean  {
         /**
          * id : 193
          * shop_id : 0
@@ -77,7 +78,8 @@ public class OrderListBean {
         private String channel;
         private String buyeraccount;
         private String payprice;
-        private String status;
+//        (0:未支付 1:已支付 2:已消费 3:已退款 4:已评价 5:已取消)
+        protected String status;
         private String refund;
         private String refund_time;
         private String shoprefund_time;
@@ -390,6 +392,9 @@ public class OrderListBean {
             public void setUpdate_time(String update_time) {
                 this.update_time = update_time;
             }
+
+
+
         }
     }
 }

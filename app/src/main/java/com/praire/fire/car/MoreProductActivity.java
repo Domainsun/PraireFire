@@ -38,6 +38,7 @@ import com.praire.fire.map.bean.NearlyShopBean;
 import com.praire.fire.my.ShoppingCarActivity;
 import com.praire.fire.my.bean.CommentResultBean;
 import com.praire.fire.okhttp.OkhttpRequestUtil;
+import com.praire.fire.order.OrderUtils;
 import com.praire.fire.utils.AppBigDecimal;
 import com.praire.fire.utils.CalculateUtils;
 import com.praire.fire.utils.RecycleViewDivider;
@@ -251,7 +252,7 @@ public class MoreProductActivity extends BaseActivity implements TabLayout.OnTab
                     shoppingCarNumber.setText(shoppingCarCount + "");
                 }
                 Toast.makeText(this, commitBean.getMsg(), Toast.LENGTH_SHORT).show();
-                productTruePrice.setText(String.format(productTruePrice.getTag().toString(), CalculateUtils.totlePrice(commitProductList)));
+                productTruePrice.setText(String.format(productTruePrice.getTag().toString(), OrderUtils.totlePrice(commitProductList)));
                 break;
             case 4:
                 //修改购物车内某商品数量
@@ -269,7 +270,7 @@ public class MoreProductActivity extends BaseActivity implements TabLayout.OnTab
                         shoppingCarNumber.setText(shoppingCarCount + "");
                     }
                 }
-                productTruePrice.setText(String.format(productTruePrice.getTag().toString(),CalculateUtils.totlePrice(commitProductList)));
+                productTruePrice.setText(String.format(productTruePrice.getTag().toString(),OrderUtils.totlePrice(commitProductList)));
                 break;
             case 5:
                 //删除购物车内某商品
@@ -288,7 +289,7 @@ public class MoreProductActivity extends BaseActivity implements TabLayout.OnTab
                         shoppingCarNumber.setText(shoppingCarCount + "");
                     }
                 }
-                productTruePrice.setText(String.format(productTruePrice.getTag().toString(),CalculateUtils.totlePrice(commitProductList)));
+                productTruePrice.setText(String.format(productTruePrice.getTag().toString(), OrderUtils.totlePrice(commitProductList)));
                 break;
             default:
                 break;

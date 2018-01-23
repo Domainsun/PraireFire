@@ -29,6 +29,7 @@ public class Constants {
      * 用户登录名
      */
     public static final String USER_ID = "userId";
+    public static final java.lang.String PRODUCT_WEIXIN_APP_ID = "";
 
     public static String photoCookie="";
     /**

@@ -3,7 +3,9 @@ package com.praire.fire.home.fragment;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.design.widget.TabLayout;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,10 +16,17 @@ import com.praire.fire.R;
 import com.praire.fire.base.BaseFragment;
 import com.praire.fire.common.ConstanUrl;
 import com.praire.fire.okhttp.OkhttpRequestUtil;
+import com.praire.fire.order.EvaluateActivity;
+import com.praire.fire.order.OrderInfoActivity;
+import com.praire.fire.order.PayActivity;
 import com.praire.fire.order.adapter.OrderListAdapter;
 import com.praire.fire.order.bean.OrderListBean;
 import com.praire.fire.utils.RecycleViewDivider;
+import com.yanzhenjie.recyclerview.swipe.SwipeItemClickListener;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
+
+import okhttp3.FormBody;
+import okhttp3.RequestBody;
 
 /**
  * 订单
@@ -39,7 +48,7 @@ public class OrderFragment extends BaseFragment implements TabLayout.OnTabSelect
      */
     private static final int FOR_WAIT_EVALUATE = 3;
     /**
-     *退款  就是已退款
+     * 退款  就是已退款
      */
     private static final int FOR_IS_REFUND = 4;
     /**
@@ -54,7 +63,6 @@ public class OrderFragment extends BaseFragment implements TabLayout.OnTabSelect
     private boolean isFirst = true;
     private int orderType = 0;
     private int index = 1;
-    private long lastRequestTime = 0;
     private OrderListAdapter adapter;
     private boolean loadMore = true;
     /**
@@ -75,6 +83,7 @@ public class OrderFragment extends BaseFragment implements TabLayout.OnTabSelect
         tabLayout = view.findViewById(R.id.order_tabs);
         srecyclerView = view.findViewById(R.id.order_list_recyclerview);
 
+
     }
 
     @Override
@@ -90,7 +99,50 @@ public class OrderFragment extends BaseFragment implements TabLayout.OnTabSelect
         //添加分割线
         srecyclerView.addItemDecoration(new RecycleViewDivider(
                 getActivity(), LinearLayoutManager.HORIZONTAL));
+        srecyclerView.setItemAnimator(new DefaultItemAnimator());
         srecyclerView.setAdapter(adapter);
+        srecyclerView.setSwipeItemClickListener(new SwipeItemClickListener() {
+            @Override
+            public void onItemClick(View itemView, final int position) {
+                final OrderListBean.PagelistBean bean = orderlist.getPagelist().get(position);
+                itemView.findViewById(R.id.item_order_list_clean).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if("1".equals(bean.getRefund())){
+                            refundOrder(bean.getId());
+                        }else{
+                            cancelOrder(bean.getId());
+                        }
+
+                    }
+                });
+
+                itemView.findViewById(R.id.item_order_list_status_btn).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        switch (bean.getStatus()) {
+                            case "0":
+                                PayActivity.startActivity(getActivity(),bean.getId(),"0",false);
+                                break;
+                            case "1":
+                                checkOrder(bean.getId());
+                                break;
+                            case "2":
+//                                评价
+                                EvaluateActivity.startActivity(getActivity(),bean.getId(),false);
+                                break;
+                            case "3":
+
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                });
+
+                OrderInfoActivity.startActivity(getActivity(), bean.getId(), false);
+            }
+        });
     }
 
     @Override
@@ -98,11 +150,11 @@ public class OrderFragment extends BaseFragment implements TabLayout.OnTabSelect
         isFirst = true;
         index = 1;
 
-        getDates(index,"");
+        getDates(index, "");
     }
 
-    private void getDates(int index ,String status) {
-        OkhttpRequestUtil.get(ConstanUrl.ORDER_ORDERLIST + "?status=" +status+"&p="+ index,1,true,uiHandler);
+    private void getDates(int index, String status) {
+        OkhttpRequestUtil.get(ConstanUrl.ORDER_ORDERLIST + "?status=" + status + "&p=" + index, 1, true, uiHandler);
     }
 
 
@@ -110,11 +162,12 @@ public class OrderFragment extends BaseFragment implements TabLayout.OnTabSelect
     protected void networkResponse(Message msg) {
         switch (msg.what) {
             case 1:
-                Log.e("orderlist",(String)msg.obj);
+                Log.e("orderlist", (String) msg.obj);
                 Gson gson = new Gson();
-                orderlist = gson.fromJson((String)msg.obj, OrderListBean.class);
-                adapter.setEntities(orderlist.getPagelist());
-
+                orderlist = gson.fromJson((String) msg.obj, OrderListBean.class);
+                if (orderlist != null) {
+                    adapter.setEntities(orderlist.getPagelist());
+                }
                 break;
             default:
                 break;
@@ -161,11 +214,11 @@ public class OrderFragment extends BaseFragment implements TabLayout.OnTabSelect
                 break;
             case 4:
                 statusType = "3";
-                orderType =  FOR_IS_REFUND;
+                orderType = FOR_IS_REFUND;
             default:
                 break;
         }
-        getDates(1,statusType);
+        getDates(1, statusType);
     }
 
     @Override
@@ -176,5 +229,47 @@ public class OrderFragment extends BaseFragment implements TabLayout.OnTabSelect
     @Override
     public void onTabReselected(TabLayout.Tab tab) {
 
+    }
+
+    /**
+     * 取消订单
+     *
+     * @param orderId 订单id
+     */
+    private void cancelOrder(String orderId) {
+        RequestBody requestBody = new FormBody.Builder()
+                .add("id", orderId)
+                .build();
+        OkhttpRequestUtil.post(ConstanUrl.ORDER_CANCEL, requestBody, 2, uiHandler, true);
+    }
+
+    /**
+     * 申请退款
+     *
+     * @param orderId 订单id
+     */
+    private void refundOrder(String orderId) {
+        RequestBody requestBody = new FormBody.Builder()
+                .add("id", orderId)
+                .build();
+        OkhttpRequestUtil.post(ConstanUrl.ORDER_REFUND, requestBody, 3, uiHandler, true);
+    }
+
+    /**
+     * 用户确认消费
+     *
+     * @param orderId 订单id
+     */
+    private void checkOrder(String orderId) {
+        getPayPassword();
+        RequestBody requestBody = new FormBody.Builder()
+                .add("id", orderId)
+//                .add("paypassword", payPsd)
+                .build();
+        OkhttpRequestUtil.post(ConstanUrl.ORDER_CHECKUSE, requestBody, 4, uiHandler, true);
+    }
+
+    private void getPayPassword() {
+//        payPsd
     }
 }

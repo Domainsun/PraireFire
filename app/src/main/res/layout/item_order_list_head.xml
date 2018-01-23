@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical"
+     >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/item_order_list_businessname"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:drawableLeft="@mipmap/shop"
+            android:drawableRight="@mipmap/tail"
+            android:gravity="center"
+            android:text="商家名称"
+            android:layout_marginLeft="15dp"
+            android:drawablePadding="10dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/text_color"
+            android:textSize="16sp" />
+        <TextView
+            android:id="@+id/item_order_list_orderId"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:gravity="center_vertical"
+            android:text="订单编号："
+            android:layout_weight="1"
+            android:tag="订单编号：%s"
+            android:layout_marginLeft="10dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/grey"
+            android:textSize="14sp" />
+        <TextView
+            android:id="@+id/item_order_list_status0"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:text="待付款"
+            android:ellipsize="end"
+            android:layout_marginRight="10dp"
+            android:maxLines="1"
+            android:textColor="@color/orange"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/grey_background"/>
+
+</LinearLayout>

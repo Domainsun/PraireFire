@@ -29,6 +29,7 @@ import com.praire.fire.data.IntentDataForCommitOrderActivity;
 import com.praire.fire.my.adapter.ShopCarAdapter;
 import com.praire.fire.okhttp.OkhttpRequestUtil;
 import com.praire.fire.order.OrderInfoActivity;
+import com.praire.fire.order.OrderUtils;
 import com.praire.fire.order.adapter.CommitOrderBean;
 import com.praire.fire.utils.CalculateUtils;
 import com.praire.fire.utils.RecycleViewDivider;
@@ -125,8 +126,8 @@ public class CommitOrderActivity extends BaseTitleActivity {
 
     @Override
     protected void initListeners() {
-        commitOrderPrice.setText(String.format(commitOrderPrice.getTag().toString(), CalculateUtils.totlePrice(commitProductList)));
-        commitOrderTotlePrice.setText(String.format(commitOrderTotlePrice.getTag().toString(), CalculateUtils.totlePrice(commitProductList)));
+        commitOrderPrice.setText(String.format(commitOrderPrice.getTag().toString(), OrderUtils.totlePrice(commitProductList)));
+        commitOrderTotlePrice.setText(String.format(commitOrderTotlePrice.getTag().toString(), OrderUtils.totlePrice(commitProductList)));
     }
 
     @Override

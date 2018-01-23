@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/grey_background"
+   >
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:padding="25dp">
+
+        <TextView
+            android:id="@+id/pay_cost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="￥0.00"
+            android:textColor="@color/text_color"
+            android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/business_name_pay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_color"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/pay_balance_rl"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="1dp"
+        android:background="@color/white"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:drawableLeft="@mipmap/balance"
+            android:drawablePadding="10dp"
+            android:text="余额支付"
+            android:textColor="@color/text_color"
+            android:textSize="19sp" />
+
+        <TextView
+            android:id="@+id/pay_balance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:tag="(可用余额￥%s)"
+            android:text="(可用余额￥50)"
+            android:textColor="@color/text_color"
+            android:textSize="11sp" />
+
+        <CheckBox
+            android:id="@+id/pay_balance_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
+            android:button="@drawable/check_box_style"
+            android:checked="true"
+            android:clickable="true" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/pay_weixin_rl"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:drawableLeft="@mipmap/weixin_payment"
+            android:drawablePadding="10dp"
+            android:text="微信支付"
+            android:textColor="@color/text_color"
+            android:textSize="19sp" />
+
+        <CheckBox
+            android:id="@+id/pay_weixin_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
+            android:button="@drawable/check_box_style"
+            android:clickable="true" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/pay_alipay_rl"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="1dp"
+        android:background="@color/white"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:drawableLeft="@mipmap/ali_payment"
+            android:drawablePadding="10dp"
+            android:text="支付宝支付"
+            android:textColor="@color/text_color"
+            android:textSize="19sp" />
+
+        <CheckBox
+            android:id="@+id/pay_alipay_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
+            android:button="@drawable/check_box_style"
+            android:clickable="true" />
+    </RelativeLayout>
+</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <Button
+            android:id="@+id/btn_commit_pay"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/shape_btn_resgister"
+            android:text="确认支付"
+            android:textColor="@color/white"
+            android:textSize="19sp" />
+    </LinearLayout>
+</RelativeLayout>

@@ -24,4 +24,5 @@
     <string name="donot_show_again">不再提醒</string>
     <string name="product">商品</string>
     <string name="service">服务</string>
+    <string name="refund">退款</string>
 </resources>
