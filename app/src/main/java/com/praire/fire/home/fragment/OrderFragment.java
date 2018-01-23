@@ -55,6 +55,10 @@ public class OrderFragment extends BaseFragment implements TabLayout.OnTabSelect
      * 全部订单
      */
     private static final int FOR_ALL_ORDER = 0;
+    public static final int CANCEL_ORDER = 2;
+    public static final int REFUND_ORDER = 3;
+    public static final int CHECK_ORDER = 4;
+    public static final int ORDER_LIST = 1;
 
     TabLayout tabLayout;
     SwipeMenuRecyclerView srecyclerView;
@@ -101,47 +105,45 @@ public class OrderFragment extends BaseFragment implements TabLayout.OnTabSelect
                 getActivity(), LinearLayoutManager.HORIZONTAL));
         srecyclerView.setItemAnimator(new DefaultItemAnimator());
         srecyclerView.setAdapter(adapter);
+        srecyclerView.setItemViewSwipeEnabled(true);
+
         srecyclerView.setSwipeItemClickListener(new SwipeItemClickListener() {
             @Override
-            public void onItemClick(View itemView, final int position) {
-                final OrderListBean.PagelistBean bean = orderlist.getPagelist().get(position);
-                itemView.findViewById(R.id.item_order_list_clean).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if("1".equals(bean.getRefund())){
-                            refundOrder(bean.getId());
-                        }else{
-                            cancelOrder(bean.getId());
-                        }
-
-                    }
-                });
-
-                itemView.findViewById(R.id.item_order_list_status_btn).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        switch (bean.getStatus()) {
-                            case "0":
-                                PayActivity.startActivity(getActivity(),bean.getId(),"0",false);
-                                break;
-                            case "1":
-                                checkOrder(bean.getId());
-                                break;
-                            case "2":
-//                                评价
-                                EvaluateActivity.startActivity(getActivity(),bean.getId(),false);
-                                break;
-                            case "3":
-
-                                break;
-                            default:
-                                break;
-                        }
-                    }
-                });
-
+            public void onItemClick(View itemView, int position) {
+                OrderListBean.PagelistBean bean = orderlist.getPagelist().get(position);
                 OrderInfoActivity.startActivity(getActivity(), bean.getId(), false);
             }
+        });
+        adapter.setItemClickLister(new OrderListAdapter.ItemClickLister() {
+            @Override
+            public void cancel(String status, String orderId) {
+                if ("1".equals(status)) {
+                    refundOrder(orderId);
+                } else {
+                    cancelOrder(orderId);
+                }
+            }
+
+            @Override
+            public void btnStatus(String status, String orderno, String orderId) {
+                switch (status) {
+                    case "0":
+                        Log.e("onClick", "status_btnpay");
+                        PayActivity.startActivity(getActivity(), orderno, "0", false);
+                        break;
+                    case "1":
+                        checkOrder(orderId);
+                        break;
+                    case "2":
+//                                评价
+                        EvaluateActivity.startActivity(getActivity(), orderId, false);
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+
         });
     }
 
@@ -154,20 +156,29 @@ public class OrderFragment extends BaseFragment implements TabLayout.OnTabSelect
     }
 
     private void getDates(int index, String status) {
-        OkhttpRequestUtil.get(ConstanUrl.ORDER_ORDERLIST + "?status=" + status + "&p=" + index, 1, true, uiHandler);
+        OkhttpRequestUtil.get(ConstanUrl.ORDER_ORDERLIST + "?status=" + status + "&p=" + index, ORDER_LIST, true, uiHandler);
     }
 
 
     @Override
     protected void networkResponse(Message msg) {
         switch (msg.what) {
-            case 1:
+            case ORDER_LIST:
                 Log.e("orderlist", (String) msg.obj);
                 Gson gson = new Gson();
                 orderlist = gson.fromJson((String) msg.obj, OrderListBean.class);
                 if (orderlist != null) {
                     adapter.setEntities(orderlist.getPagelist());
                 }
+                break;
+            case CANCEL_ORDER:
+                Log.e("CANCEL_ORDER", (String) msg.obj);
+                break;
+            case REFUND_ORDER:
+                Log.e("REFUND_ORDER", (String) msg.obj);
+                break;
+            case CHECK_ORDER:
+                Log.e("CHECK_ORDER", (String) msg.obj);
                 break;
             default:
                 break;
@@ -240,7 +251,7 @@ public class OrderFragment extends BaseFragment implements TabLayout.OnTabSelect
         RequestBody requestBody = new FormBody.Builder()
                 .add("id", orderId)
                 .build();
-        OkhttpRequestUtil.post(ConstanUrl.ORDER_CANCEL, requestBody, 2, uiHandler, true);
+        OkhttpRequestUtil.post(ConstanUrl.ORDER_CANCEL, requestBody, CANCEL_ORDER, uiHandler, true);
     }
 
     /**
@@ -252,7 +263,7 @@ public class OrderFragment extends BaseFragment implements TabLayout.OnTabSelect
         RequestBody requestBody = new FormBody.Builder()
                 .add("id", orderId)
                 .build();
-        OkhttpRequestUtil.post(ConstanUrl.ORDER_REFUND, requestBody, 3, uiHandler, true);
+        OkhttpRequestUtil.post(ConstanUrl.ORDER_REFUND, requestBody, REFUND_ORDER, uiHandler, true);
     }
 
     /**
@@ -266,7 +277,7 @@ public class OrderFragment extends BaseFragment implements TabLayout.OnTabSelect
                 .add("id", orderId)
 //                .add("paypassword", payPsd)
                 .build();
-        OkhttpRequestUtil.post(ConstanUrl.ORDER_CHECKUSE, requestBody, 4, uiHandler, true);
+        OkhttpRequestUtil.post(ConstanUrl.ORDER_CHECKUSE, requestBody, CHECK_ORDER, uiHandler, true);
     }
 
     private void getPayPassword() {

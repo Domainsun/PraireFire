@@ -45,35 +45,46 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.MyVi
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        MyViewHolder holder = new MyViewHolder(LayoutInflater.from(
+        View view = LayoutInflater.from(
                 context).inflate(R.layout.item_order_list, parent,
-                false));
+                false);
+//        view.setOnClickListener();
+        MyViewHolder holder = new MyViewHolder(view);
         return holder;
     }
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         final OrderListBean.PagelistBean bean = entities.get(position);
-
+        holder.itemView.setTag(position);
         holder.itemOrderListBusinessname.setText(bean.getShopname());
         holder.itemOrderListOrderId.setText(bean.getOrderno());
 
-        if("1".equals(bean.getRefund())){
+        if ("1".equals(bean.getRefund())) {
             holder.itemOrderListClean.setText(R.string.refund);
-        }else if("0".equals(bean.getStatus())){
+        } else if ("0".equals(bean.getStatus())) {
             holder.itemOrderListClean.setText(R.string.cancel);
-        }else {
+        } else {
             holder.itemOrderListClean.setVisibility(View.GONE);
         }
-
-        holder.itemOrderListStatus0.setText(OrderUtils.statusCN(bean.getStatus()));
-        holder.itemOrderListStatusBtn.setText(OrderUtils.statusBtnCN(bean.getStatus()));
-       /* holder.itemOrderListStatusBtn.setOnClickListener(new View.OnClickListener() {
+        holder.itemOrderListClean.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PayActivity.startActivity(context,bean.getOrderno(),"0",false);
+                if(itemClickLister !=null) {
+                    itemClickLister.cancel(bean.getRefund(),bean.getId());
+                }
             }
-        });*/
+        });
+        holder.itemOrderListStatus0.setText(OrderUtils.statusCN(bean.getStatus()));
+        holder.itemOrderListStatusBtn.setText(OrderUtils.statusBtnCN(bean.getStatus()));
+        holder.itemOrderListStatusBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(itemClickLister !=null) {
+                    itemClickLister.btnStatus(bean.getStatus(),bean.getOrderno(),bean.getId());
+                }
+            }
+        });
         holder.itemOrderListPnumber.setText(String.format(holder.itemOrderListPnumber.getTag().toString(), bean.getPslist().size()));
         holder.itemOrderListTotlePrice.setText(String.format(holder.itemOrderListTotlePrice.getTag().toString(), bean.getPayprice()));
         //防止滑动的时候重复显示数据
@@ -134,11 +145,24 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.MyVi
         TextView itemOrderListTotlePrice;
 
         boolean isFrist = true;
+
         public MyViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
 
         }
 
+    }
+
+    ItemClickLister itemClickLister;
+
+    public void setItemClickLister(ItemClickLister itemClickLister) {
+        this.itemClickLister = itemClickLister;
+    }
+
+    public interface ItemClickLister {
+        void cancel(String status,String orderId);
+
+        void btnStatus(String status,String orderno,String orderId);
     }
 }

@@ -37,6 +37,7 @@ import com.praire.fire.home.MainActivity;
 import com.praire.fire.home.adapter.ShopListAdapter;
 import com.praire.fire.home.bean.ShopListBean;
 import com.praire.fire.home.bean.SwipeBean;
+import com.praire.fire.okhttp.OkhttpRequestUtil;
 import com.praire.fire.utils.RecycleViewDivider;
 import com.praire.fire.utils.SharePreferenceMgr;
 import com.yanzhenjie.recyclerview.swipe.SwipeItemClickListener;
@@ -89,8 +90,8 @@ public class HomeFragment extends BaseFragment implements BaseSliderView.OnSlide
     private int lastVisibleItem;
     private LinearLayoutManager linearLayoutManager;
     private boolean loadMore = true;
-    private double longitude;
-    private double latitude;
+    private double longitude = 0;
+    private double latitude = 0;
 
     //声明AMapLocationClient类对象
     public AMapLocationClient mLocationClient = null;
@@ -176,6 +177,7 @@ public class HomeFragment extends BaseFragment implements BaseSliderView.OnSlide
     public void initData() {
 
 
+        OkhttpRequestUtil.get(ConstanUrl.COMMONINFO_SHOPLIST + "?p=" + index,1,false,uiHandler);
     }
 
     /**
@@ -219,7 +221,8 @@ public class HomeFragment extends BaseFragment implements BaseSliderView.OnSlide
      * 获取商家列表
      */
     private void requestShopList(int index) {
-        OkHttpClient okHttpClient = new OkHttpClient();
+        OkhttpRequestUtil.get(ConstanUrl.COMMONINFO_SHOPLIST + "?p=" + index,1,false,uiHandler);
+       /* OkHttpClient okHttpClient = new OkHttpClient();
         Request request = new Request.Builder()
                 .url(ConstanUrl.COMMONINFO_SHOPLIST + "?p=" + index)
                 .build();
@@ -250,7 +253,7 @@ public class HomeFragment extends BaseFragment implements BaseSliderView.OnSlide
 
 
             }
-        });
+        });*/
 
     }
 
@@ -261,6 +264,9 @@ public class HomeFragment extends BaseFragment implements BaseSliderView.OnSlide
                 Toast.makeText(getActivity(), "网络出错，请重试", Toast.LENGTH_SHORT).show();
                 break;
             case 1:
+                Gson gson = new Gson();
+                final ShopListBean evEntity = gson.fromJson((String) msg.obj, ShopListBean.class);
+                evEntitys = evEntity.getPagelist();
                 adapter.setEntities(evEntitys, longitude, latitude);
                 break;
             case 2:
