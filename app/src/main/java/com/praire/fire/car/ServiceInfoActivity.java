@@ -230,7 +230,7 @@ public class ServiceInfoActivity extends BaseActivity {
                 IntentDataForCommitOrderActivity data = new IntentDataForCommitOrderActivity();
                 CommitProduct commitProduct = new CommitProduct();
                 commitProduct.setNumber(1);
-                commitProduct.setPs_id(serviceInfoBean.getInfo().getId());
+                commitProduct.setpsId(serviceInfoBean.getInfo().getId());
                 commitProduct.setType("2");
                 commitProduct.setpPrice(serviceInfoBean.getInfo().getNprice());
                 commitProduct.setpName(serviceInfoBean.getInfo().getName());

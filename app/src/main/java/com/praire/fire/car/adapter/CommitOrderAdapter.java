@@ -46,7 +46,7 @@ public class CommitOrderAdapter extends RecyclerView.Adapter<CommitOrderAdapter.
 
 
     @Override
-    public void onBindViewHolder(final MyViewHolder holder, int position) {
+    public void onBindViewHolder(final MyViewHolder holder, final int position) {
         final CommitProduct item = entities.get(position);
         holder.itemCommitName.setText(item.getpName());
         holder.itemCommitNum.setText(item.getNumber()+"");
@@ -55,6 +55,9 @@ public class CommitOrderAdapter extends RecyclerView.Adapter<CommitOrderAdapter.
             public void onClick(View view) {
                 item.setNumber(item.getNumber()+1);
                 holder.itemCommitNum.setText(item.getNumber()+"");
+                if(itemClickLister !=null){
+                    itemClickLister.add(position,item.getNumber());
+                }
             }
         });
         holder.itemCommitMine.setOnClickListener(new View.OnClickListener() {
@@ -63,6 +66,9 @@ public class CommitOrderAdapter extends RecyclerView.Adapter<CommitOrderAdapter.
                 if(item.getNumber() >1) {
                     item.setNumber(item.getNumber() - 1);
                     holder.itemCommitNum.setText(item.getNumber()+"");
+                    if(itemClickLister !=null){
+                        itemClickLister.mine(position,item.getNumber());
+                    }
                 }else {
                     ToastUtil.show(context,"不能再减了");
                 }
@@ -93,7 +99,17 @@ public class CommitOrderAdapter extends RecyclerView.Adapter<CommitOrderAdapter.
         }
 
     }
+ ItemClickLister itemClickLister;
 
+    public void setItemClickLister( ItemClickLister itemClickLister) {
+        this.itemClickLister = itemClickLister;
+    }
+
+    public interface ItemClickLister {
+        void mine(int position, int number);
+
+        void add(int position, int number);
+    }
 
 }
 

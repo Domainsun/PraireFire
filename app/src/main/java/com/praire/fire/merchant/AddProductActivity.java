@@ -5,7 +5,6 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
@@ -27,8 +26,6 @@ import com.praire.fire.okhttp.JavaBean.AddProductResultBean;
 import com.praire.fire.okhttp.JavaBean.ProductInfoBean;
 import com.praire.fire.okhttp.JavaBean.ProductListBean;
 import com.praire.fire.okhttp.JavaBean.ProductTypeBean;
-import com.praire.fire.okhttp.JavaBean.ServiceListBean;
-import com.praire.fire.okhttp.JavaBean.ServiceTypeBean;
 import com.praire.fire.okhttp.UseAPIs;
 import com.praire.fire.utils.SharePreferenceMgr;
 import com.wx.wheelview.adapter.ArrayWheelAdapter;
@@ -48,15 +45,10 @@ import butterknife.OnClick;
 import pub.devrel.easypermissions.EasyPermissions;
 
 import static com.praire.fire.common.Constants.LOGIN_COOKIE;
-import static com.praire.fire.common.Constants.REQUEST_CODE_CHOOSE_SHOP_TYPE;
-import static com.praire.fire.common.Constants.REQUEST_CODE_UPLOAD_ID_CARD;
 import static com.praire.fire.common.Constants.REQUEST_CODE_UPLOAD_PRODUCT1;
 import static com.praire.fire.common.Constants.REQUEST_CODE_UPLOAD_PRODUCT2;
 import static com.praire.fire.common.Constants.REQUEST_CODE_UPLOAD_PRODUCT3;
 import static com.praire.fire.common.Constants.REQUEST_CODE_UPLOAD_PRODUCT4;
-import static com.praire.fire.common.Constants.REQUEST_CODE_UPLOAD_SHOP_PHOTO;
-import static com.praire.fire.common.Constants.REQUEST_CODE_UPLOAD_bUSINESS_lICENSE;
-import static com.praire.fire.utils.map.ChString.type;
 
 public class AddProductActivity extends AppCompatActivity {
     @BindView(R.id.tv_back)

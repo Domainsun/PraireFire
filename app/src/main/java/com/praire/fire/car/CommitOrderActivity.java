@@ -2,11 +2,7 @@ package com.praire.fire.car;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.os.Message;
-import android.os.Parcelable;
-import android.support.annotation.AnimatorRes;
-import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,24 +11,18 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
-import com.praire.fire.MyApplication;
 import com.praire.fire.R;
 import com.praire.fire.base.BaseActivity;
 import com.praire.fire.base.BaseTitleActivity;
 import com.praire.fire.car.adapter.CommitOrderAdapter;
 import com.praire.fire.car.bean.CommitProduct;
-import com.praire.fire.car.bean.ProductInfoBean;
-import com.praire.fire.car.bean.ServiceInfoBean;
 import com.praire.fire.common.ConstanUrl;
 import com.praire.fire.common.Constants;
 import com.praire.fire.data.IntentDataForCommitOrderActivity;
-import com.praire.fire.my.adapter.ShopCarAdapter;
 import com.praire.fire.okhttp.OkhttpRequestUtil;
 import com.praire.fire.order.OrderInfoActivity;
 import com.praire.fire.order.OrderUtils;
 import com.praire.fire.order.adapter.CommitOrderBean;
-import com.praire.fire.utils.CalculateUtils;
-import com.praire.fire.utils.RecycleViewDivider;
 import com.praire.fire.utils.SharePreferenceMgr;
 import com.praire.fire.utils.ToastUtil;
 import com.praire.fire.utils.statusbarcolor.Eyes;
@@ -42,22 +32,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import okhttp3.Call;
-import okhttp3.Callback;
 import okhttp3.FormBody;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
 import okhttp3.RequestBody;
-import okhttp3.Response;
 
 import static com.praire.fire.common.Constants.INTENT_DATA;
-import static com.praire.fire.common.Constants.LOGIN_COOKIE;
 
 /**
  * 提交订单
@@ -120,8 +103,25 @@ public class CommitOrderActivity extends BaseTitleActivity {
 
         adapter = new CommitOrderAdapter(this);
         recyclerviewCommitOrder.setAdapter(adapter);
-        adapter.setEntities(commitProductList);
 
+        adapter.setEntities(commitProductList);
+        adapter.setItemClickLister(new CommitOrderAdapter.ItemClickLister() {
+            @Override
+            public void mine(int position, int number) {
+                commitProductList.get(position).setNumber(number);
+                commitOrderPrice.setText(String.format(commitOrderPrice.getTag().toString(), OrderUtils.totlePrice(commitProductList)));
+                commitOrderTotlePrice.setText(String.format(commitOrderTotlePrice.getTag().toString(), OrderUtils.totlePrice(commitProductList)));
+            }
+
+            @Override
+            public void add(int position, int number) {
+                commitProductList.get(position).setNumber(number);
+                commitOrderPrice.setText(String.format(commitOrderPrice.getTag().toString(), OrderUtils.totlePrice(commitProductList)));
+                commitOrderTotlePrice.setText(String.format(commitOrderTotlePrice.getTag().toString(), OrderUtils.totlePrice(commitProductList)));
+            }
+
+
+        });
     }
 
     @Override
@@ -152,47 +152,7 @@ public class CommitOrderActivity extends BaseTitleActivity {
 
     @OnClick(R.id.btn_commit)
     public void onViewClicked() {
-       /* String ps_id;
-        if ("2".equals(data.type)) {
-            ps_id = serviceBean.getInfo().getId();
-        } else if("1".equals(data.type)){
-            ps_id = productBean.getInfo().getId();
-        }*/
-
-        try {
-            commit();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    private void commit() throws JSONException {
-
-        JSONArray jsonArray = new JSONArray();
-        JSONObject tmpObj = null;
-
-        int count = commitProductList.size();
-
-        for (int i = 0; i < count; i++) {
-
-            tmpObj = new JSONObject();
-
-            tmpObj.put("type", commitProductList.get(i).getType());
-
-            tmpObj.put("ps_id", commitProductList.get(i).getPs_id());
-
-            tmpObj.put("number", commitProductList.get(i).getNumber());
-
-            jsonArray.put(tmpObj);
-
-            tmpObj = null;
-
-        }
-// 将JSONArray转换得到String
-        String personInfos = jsonArray.toString();
-        // 获得JSONObject的String
-        Log.e("orderstring",personInfos);
+        String personInfos = OrderUtils.setArguments(commitProductList);
         /**
          * 提交订单
          */
@@ -203,16 +163,20 @@ public class CommitOrderActivity extends BaseTitleActivity {
         OkhttpRequestUtil.post(ConstanUrl.ORDER_IN, requestBody, 1, uiHandler, true);
     }
 
+
+
+
+
     @Override
     protected void networkResponse(Message msg) {
-        Log.e("(String) msg.obj",(String) msg.obj);
+        Log.e("(String) msg.obj", (String) msg.obj);
         switch (msg.what) {
             case 1:
                 Gson gson = new Gson();
                 commitBean = gson.fromJson((String) msg.obj, CommitOrderBean.class);
-                ToastUtil.show(this,commitBean.getMsg());
-                if(commitBean.getCode() == 1){
-                    OrderInfoActivity.startActivity(this,commitBean.getOrderarr().get(0),false);
+                ToastUtil.show(this, commitBean.getMsg());
+                if (commitBean.getCode() == 1) {
+                    OrderInfoActivity.startActivity(this, commitBean.getOrderarr().get(0), false);
                     finish();
                 }
 

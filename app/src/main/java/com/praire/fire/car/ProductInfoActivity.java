@@ -292,7 +292,7 @@ public class ProductInfoActivity extends BaseActivity implements BaseSliderView.
                 IntentDataForCommitOrderActivity data = new IntentDataForCommitOrderActivity();
                 CommitProduct commitProduct = new CommitProduct();
                 commitProduct.setNumber(1);
-                commitProduct.setPs_id(productInfoBean.getInfo().getId());
+                commitProduct.setpsId(productInfoBean.getInfo().getId());
                 commitProduct.setType("1");
                 commitProduct.setpPrice(productInfoBean.getInfo().getNprice());
                 commitProduct.setpName(productInfoBean.getInfo().getName());

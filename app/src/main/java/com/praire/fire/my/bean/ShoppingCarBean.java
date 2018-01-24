@@ -62,6 +62,7 @@ public class ShoppingCarBean {
         private String update_time;
         private InfoBean info;
 
+
         public String getId() {
             return id;
         }
@@ -125,7 +126,15 @@ public class ShoppingCarBean {
         public void setInfo(InfoBean info) {
             this.info = info;
         }
+        public boolean isSelect() {
+            return isSelect;
+        }
 
+        public void setSelect(boolean select) {
+            isSelect = select;
+        }
+
+        private boolean isSelect;
         public static class InfoBean {
             /**
              * name : 汗蒸

@@ -4,7 +4,6 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -21,8 +20,6 @@ import android.widget.Toast;
 
 import com.bigkoo.pickerview.TimePickerView;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.lljjcoder.citypickerview.widget.CityPicker;
-import com.praire.fire.MyApplication;
 import com.praire.fire.R;
 import com.praire.fire.common.CommonMethod;
 import com.praire.fire.merchant.bean.RegionListBean;
@@ -39,7 +36,6 @@ import com.zhihu.matisse.engine.impl.PicassoEngine;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -51,12 +47,11 @@ import butterknife.OnClick;
 import pub.devrel.easypermissions.EasyPermissions;
 
 import static com.praire.fire.common.Constants.LOGIN_COOKIE;
-import static com.praire.fire.common.Constants.REQUEST_CODE_CHOOSE_REGION;
 import static com.praire.fire.common.Constants.REQUEST_CODE_CHOOSE_SHOP_TYPE;
 import static com.praire.fire.common.Constants.REQUEST_CODE_UPLOAD_ID_CARD;
 import static com.praire.fire.common.Constants.REQUEST_CODE_UPLOAD_SHOP_PHOTO;
 import static com.praire.fire.common.Constants.REQUEST_CODE_CHOOSE_MAP_ADDRESS;
-import static com.praire.fire.common.Constants.REQUEST_CODE_UPLOAD_bUSINESS_lICENSE;
+import static com.praire.fire.common.Constants.REQUEST_CODE_UPLOAD_BUSINESS_LICENSE;
 
 /**
  * Created by sunlo on 2018/1/4.
@@ -223,7 +218,7 @@ public class MerchantActivity1 extends Activity implements EasyPermissions.Permi
                 showChoosePic(REQUEST_CODE_UPLOAD_SHOP_PHOTO);
                 break;
             case R.id.upload_business_license:
-                showChoosePic(REQUEST_CODE_UPLOAD_bUSINESS_lICENSE);
+                showChoosePic(REQUEST_CODE_UPLOAD_BUSINESS_LICENSE);
                 break;
             case R.id.upload_id_card:
                 showChoosePic(REQUEST_CODE_UPLOAD_ID_CARD);
@@ -347,7 +342,7 @@ public class MerchantActivity1 extends Activity implements EasyPermissions.Permi
         }
 
 
-        if (requestCode == REQUEST_CODE_UPLOAD_bUSINESS_lICENSE && resultCode == RESULT_OK) {
+        if (requestCode == REQUEST_CODE_UPLOAD_BUSINESS_LICENSE && resultCode == RESULT_OK) {
               /*照片选择后的回调*/
             List<Uri> mSelected = Matisse.obtainResult(data);
             if (!(mSelected.size() == 0)) {

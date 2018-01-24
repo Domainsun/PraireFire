@@ -1,6 +1,7 @@
 package com.praire.fire.order.adapter;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -48,7 +49,6 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.MyVi
         View view = LayoutInflater.from(
                 context).inflate(R.layout.item_order_list, parent,
                 false);
-//        view.setOnClickListener();
         MyViewHolder holder = new MyViewHolder(view);
         return holder;
     }
@@ -77,16 +77,20 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.MyVi
         });
         holder.itemOrderListStatus0.setText(OrderUtils.statusCN(bean.getStatus()));
         holder.itemOrderListStatusBtn.setText(OrderUtils.statusBtnCN(bean.getStatus()));
+        if("3".equals(bean.getStatus()) || "4".equals(bean.getStatus()) ||"5".equals(bean.getStatus())) {
+            holder.itemOrderListStatusBtn.setVisibility(View.GONE);
+        }
+        final String totlePrice =  OrderUtils.totlePriceList(bean.getPslist());
         holder.itemOrderListStatusBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(itemClickLister !=null) {
-                    itemClickLister.btnStatus(bean.getStatus(),bean.getOrderno(),bean.getId());
+                    itemClickLister.btnStatus(bean.getStatus(),bean.getOrderno(),bean.getId(),totlePrice);
                 }
             }
         });
         holder.itemOrderListPnumber.setText(String.format(holder.itemOrderListPnumber.getTag().toString(), bean.getPslist().size()));
-        holder.itemOrderListTotlePrice.setText(String.format(holder.itemOrderListTotlePrice.getTag().toString(), bean.getPayprice()));
+        holder.itemOrderListTotlePrice.setText(String.format(holder.itemOrderListTotlePrice.getTag().toString(), totlePrice));
         //防止滑动的时候重复显示数据
         if (holder.isFrist) {
             for (int i = 0; i < bean.getPslist().size(); i++) {
@@ -99,11 +103,11 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.MyVi
                 TextView sprice = viewGroup.findViewById(R.id.item_order_list_sprice);
                 productName.setText(bean.getPslist().get(i).getName());
                 count.setText(String.format(count.getTag().toString(), bean.getPslist().get(i).getNumber()));
-                type.setText(bean.getPslist().get(i).getShopprice());
-
+                type.setText(String.format(type.getTag().toString(), bean.getPslist().get(i).getType()));
                 nprice.setText(String.format(nprice.getTag().toString(), bean.getPslist().get(i).getNprice()));
                 sprice.setText(String.format(sprice.getTag().toString(), bean.getPslist().get(i).getPrice()));
-
+                //添加删除线
+                nprice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
                 if ("1".equals(bean.getPslist().get(i).getType())) {
                     img.setVisibility(View.VISIBLE);
                     Uri uri = Uri.parse(bean.getPslist().get(i).getCover());
@@ -163,6 +167,6 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.MyVi
     public interface ItemClickLister {
         void cancel(String status,String orderId);
 
-        void btnStatus(String status,String orderno,String orderId);
+        void btnStatus(String status,String orderno,String orderId,String paycost);
     }
 }

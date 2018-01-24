@@ -1,6 +1,8 @@
 package com.praire.fire;
 
+import android.content.Context;
 import android.content.Intent;
+import android.support.multidex.MultiDex;
 import android.util.Log;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
@@ -61,6 +63,14 @@ public class MyApplication extends BaseApplication {
 
     public static MyApplication getInstance() {
         return gInstance;
+    }
+    /**
+     * 方法总数超过64K解决办法
+     */
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
     }
 }
 

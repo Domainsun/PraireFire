@@ -110,13 +110,14 @@ public class HomeFragment extends BaseFragment implements BaseSliderView.OnSlide
     public void initListener() {
         setUpMap();
         index = 1;
-        new Thread(new Runnable() {
+        OkhttpRequestUtil.get(ConstanUrl.COMMONINFO_GET_SWIPE,2,false,uiHandler);
+       /* new Thread(new Runnable() {
             @Override
             public void run() {
                 requestSwipe();
 //                requestShopList(index);
             }
-        }).start();
+        }).start();*/
 
 
         //设置指示器的位置
@@ -144,40 +145,15 @@ public class HomeFragment extends BaseFragment implements BaseSliderView.OnSlide
 
 
         homeEcyclerView.setAdapter(adapter);
-      /*  homeEcyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
-
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                if (newState == RecyclerView.SCROLL_STATE_IDLE && lastVisibleItem + 1 == adapter.getItemCount()) {
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (loadMore) {
-                                getNextPage();
-                            }
-                        }
-                    }, 1000);
-
-
-                }
-            }
-
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition();
-            }
-        });*/
     }
 
 
     @Override
     public void initData() {
 
+        requestShopList(1);
 
-        OkhttpRequestUtil.get(ConstanUrl.COMMONINFO_SHOPLIST + "?p=" + index,1,false,uiHandler);
     }
 
     /**
@@ -224,38 +200,6 @@ public class HomeFragment extends BaseFragment implements BaseSliderView.OnSlide
      */
     private void requestShopList(int index) {
         OkhttpRequestUtil.get(ConstanUrl.COMMONINFO_SHOPLIST + "?p=" + index,1,false,uiHandler);
-       /* OkHttpClient okHttpClient = new OkHttpClient();
-        Request request = new Request.Builder()
-                .url(ConstanUrl.COMMONINFO_SHOPLIST + "?p=" + index)
-                .build();
-        Call call = okHttpClient.newCall(request);
-        call.enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                Message msg = new Message();
-                msg.what = 0;
-                uiHandler.sendMessage(msg);
-                e.printStackTrace();
-            }
-
-            @Override
-            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-
-                String data = response.body().string();
-                if (data == null) {
-                    loadMore = false;
-                    return;
-                }
-                Gson gson = new Gson();
-                final ShopListBean evEntity = gson.fromJson(data, ShopListBean.class);
-                evEntitys = evEntity.getPagelist();
-                Message msg = new Message();
-                msg.what = 1;
-                uiHandler.sendMessage(msg);
-
-
-            }
-        });*/
 
     }
 
@@ -272,7 +216,9 @@ public class HomeFragment extends BaseFragment implements BaseSliderView.OnSlide
                 adapter.setEntities(evEntitys, longitude, latitude);
                 break;
             case 2:
-                getAdSuccess((List<SwipeBean.SwipelistBean>) msg.obj);
+                Gson gson2 = new Gson();
+                SwipeBean bean = gson2.fromJson((String) msg.obj, SwipeBean.class);
+                getAdSuccess(bean.getSwipelist());
                 break;
             default:
                 break;
@@ -280,48 +226,7 @@ public class HomeFragment extends BaseFragment implements BaseSliderView.OnSlide
     }
 
 
-    /**
-     * 获取轮播图片
-     */
-    private void requestSwipe() {
-        OkHttpClient okHttpClient = new OkHttpClient();
-        Request request = new Request.Builder()
-                .url(ConstanUrl.COMMONINFO_GET_SWIPE)
-                .build();
-        Call call = okHttpClient.newCall(request);
-        call.enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
 
-                Message msg = new Message();
-                msg.what = 0;
-                uiHandler.sendMessage(msg);
-
-                e.printStackTrace();
-            }
-
-            @Override
-            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                String data = response.body().string();
-
-                Gson gson = new Gson();
-                SwipeBean bean = gson.fromJson(data, SwipeBean.class);
-                final List<SwipeBean.SwipelistBean> swipelist = bean.getSwipelist();
-                Message msg = new Message();
-                msg.what = 2;
-                msg.obj = swipelist;
-                uiHandler.sendMessage(msg);
-               /* getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-
-                    }
-                });*/
-            }
-        });
-
-
-    }
 
     /**
      * 添加图片控件
@@ -449,17 +354,11 @@ public class HomeFragment extends BaseFragment implements BaseSliderView.OnSlide
                 longitude = amapLocation.getLongitude();
                 latitude = amapLocation.getLatitude();
 
-                Log.e("amapLocation", amapLocation.toString());
-//                SharePreferenceMgr.put(getActivity() ,Constants.Latitude,amapLocation.getLatitude());
-//                SharePreferenceMgr.put(getActivity() ,Constants.Longitude,amapLocation.getLongitude());
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        requestShopList(index);
-                    }
-                }).start();
+                SharePreferenceMgr.put(getActivity() ,Constants.Latitude,amapLocation.getLatitude()+"");
+                SharePreferenceMgr.put(getActivity() ,Constants.Longitude,amapLocation.getLongitude()+"");
+                SharePreferenceMgr.put(getActivity() ,Constants.CITY,amapLocation.getDistrict());
+                        requestShopList(1);
 //                SharePreferenceMgr.put(getContext(),Constants.District,amapLocation.getDistrict());
-                Log.e("amapLocation1", longitude + "");
             } else {
                 //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
                 Log.e("AmapError", "location Error, ErrCode:"

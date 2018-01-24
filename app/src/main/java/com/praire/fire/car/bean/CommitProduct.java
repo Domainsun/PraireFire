@@ -9,7 +9,7 @@ import android.os.Parcelable;
 
 public class CommitProduct implements Parcelable{
     private String type;
-    private String ps_id;
+    private String psId;
     private int number;
     private String pName;
     private String pPrice;
@@ -29,12 +29,12 @@ public class CommitProduct implements Parcelable{
         this.type = type;
     }
 
-    public String getPs_id() {
-        return ps_id;
+    public String getPsId() {
+        return psId;
     }
 
-    public void setPs_id(String ps_id) {
-        this.ps_id = ps_id;
+    public void setpsId(String ps_id) {
+        this.psId = ps_id;
     }
 
     public int getNumber() {
@@ -70,7 +70,7 @@ public class CommitProduct implements Parcelable{
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.type);
-        dest.writeString(this.ps_id);
+        dest.writeString(this.psId);
         dest.writeInt(this.number);
         dest.writeString(this.pName);
         dest.writeString(this.pPrice);
@@ -82,7 +82,7 @@ public class CommitProduct implements Parcelable{
 
     protected CommitProduct(Parcel in) {
         this.type = in.readString();
-        this.ps_id = in.readString();
+        this.psId = in.readString();
         this.number = in.readInt();
         this.pName = in.readString();
         this.pPrice = in.readString();

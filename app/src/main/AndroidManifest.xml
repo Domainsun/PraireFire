@@ -133,7 +133,8 @@
         <activity android:name=".merchant.OrderChangeActivity" />
         <activity android:name=".merchant.EvaluateManageActivity" />
         <activity android:name=".merchant.TodayIncomeActivity" />
-        <activity android:name=".merchant.HistoryIncomeActivity"></activity>
+        <activity android:name=".merchant.HistoryIncomeActivity"/>
+        <activity android:name=".order.ResultActivity"/>
     </application>
 
 </manifest>

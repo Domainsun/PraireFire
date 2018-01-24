@@ -195,4 +195,13 @@ public class ConstanUrl {
      */
     public static final String ORDER_CANCEL = "https://www.lygyxh.cn/api.php/Order/cancel";
 
+    /**
+     * 产品服务搜索类型列表
+     */
+    public static final String SEARCH_GET_PS_TYPE_LIST = "https://www.lygyxh.cn/api.php/Search/getPsTypeList";
+
+    /**
+     * 产品服务搜索类型列表
+     */
+    public static final String SEARCH_SEARCHSHOP = "https://www.lygyxh.cn/api.php/search/searchshop";
 }

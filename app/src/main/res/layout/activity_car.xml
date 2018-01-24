@@ -8,6 +8,7 @@
     <include layout="@layout/layout_search_bar2" />
 
     <LinearLayout
+        android:id="@+id/choose_type_ll"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:gravity="center_vertical"
@@ -16,6 +17,7 @@
         android:paddingRight="45dp">
 
         <TextView
+            android:id="@+id/car_type"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -26,6 +28,7 @@
             android:textSize="19sp" />
 
         <TextView
+            android:id="@+id/car_sort"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"

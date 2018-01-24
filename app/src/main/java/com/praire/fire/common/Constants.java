@@ -11,7 +11,7 @@ public class Constants {
     public static final  String PRODUCT_ID  = "PRODUCT_ID";
     public static final int REQUEST_CODE_COMMONT = 10;
     public static final int REQUEST_CODE_UPLOAD_SHOP_PHOTO = 2;
-    public static final int REQUEST_CODE_UPLOAD_bUSINESS_lICENSE = 3;
+    public static final int REQUEST_CODE_UPLOAD_BUSINESS_LICENSE = 3;
 
     public static final int REQUEST_CODE_UPLOAD_ID_CARD= 4;
     public static final int REQUEST_CODE_CHOOSE_MAP_ADDRESS = 1;
@@ -37,7 +37,11 @@ public class Constants {
      * 用户登录名
      */
     public static final String USER_ID = "userId";
-    public static final java.lang.String PRODUCT_WEIXIN_APP_ID = "";
+    public static final String PRODUCT_WEIXIN_APP_ID = "PRODUCT_WEIXIN_APP_ID";
+    public static final String CITY = "city";
+    public static final String TOTLE_PRICE = "TOTLE_PRICE";
+    public static final String THANKS_MSG = "THANKS_MSG";
+    public static final String TITLE = "title";
 
     public static String photoCookie="";
     /**

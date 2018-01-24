@@ -59,6 +59,7 @@ public abstract class BaseTitleActivity extends BaseActivity implements BaseLayo
 	public void setDefaultBack() {
 		ImageView left = new ImageView(this);
 		left.setImageResource(R.mipmap.back);
+		left.setPadding(20,10,20,10);
 		left.setDuplicateParentStateEnabled(true);
 		setTitleLeft(left);
 	}

@@ -27,7 +27,7 @@ import butterknife.ButterKnife;
 
 public class ShopProductAdapter extends RecyclerView.Adapter<ShopProductAdapter.MyViewHolder> {
 
-    int[] chooseNum ;
+    int[] chooseNum;
     private Context context;
     private List<ProductlistBean> entities = new ArrayList<>();
     boolean isShowAdds = false;
@@ -37,7 +37,7 @@ public class ShopProductAdapter extends RecyclerView.Adapter<ShopProductAdapter.
 
     }
 
-    public void setEntities(List<ProductlistBean> entities,boolean isShowAdds) {
+    public void setEntities(List<ProductlistBean> entities, boolean isShowAdds) {
         this.entities = entities;
         this.isShowAdds = isShowAdds;
         chooseNum = new int[entities.size()];
@@ -57,7 +57,7 @@ public class ShopProductAdapter extends RecyclerView.Adapter<ShopProductAdapter.
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
         final ProductlistBean item = entities.get(position);
 
-       chooseNum[position]=0;
+        chooseNum[position] = 0;
         holder.itemShopProductName.setText(item.getName());
         holder.itemShopProductSale.setText(String.format(holder.itemShopProductSale.getTag().toString(), item.getSalecount()));
         holder.itemShopProductPrice.setText(String.format(holder.itemShopProductPrice.getTag().toString(), item.getNprice()));
@@ -69,36 +69,42 @@ public class ShopProductAdapter extends RecyclerView.Adapter<ShopProductAdapter.
                 .setAutoPlayAnimations(true)
                 .build();
         holder.itemShopListImg.setController(controller);
-        if(isShowAdds){
+        if (isShowAdds) {
 
             holder.itemShopProductAddLl.setVisibility(View.VISIBLE);
             holder.itemShopProductAdd.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    holder.itemShopProductMine.setVisibility(View.VISIBLE);
-                    ++chooseNum[position];
-                    holder.itemShopProductNum.setText(chooseNum[position]+"");
-                    ((MoreProductActivity)context).addToShoppingCar("1",item.getId(),position);
-
-
-                }
-            });
-            holder.itemShopProductMine.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                    if(chooseNum[position] > 1) {
-                        --chooseNum[position];
+                    if (context instanceof MoreProductActivity) {
+                        holder.itemShopProductMine.setVisibility(View.VISIBLE);
+                        ++chooseNum[position];
                         holder.itemShopProductNum.setText(chooseNum[position] + "");
-                        ((MoreProductActivity)context).editNumShoppingCar(item.getId(),chooseNum[position],position);
 
-                    }else {
-                        holder.itemShopProductMine.setVisibility(View.GONE);
-                        holder.itemShopProductNum.setVisibility(View.GONE);
-                        ((MoreProductActivity)context).deleteShoppingCar(item.getId());
+                        ((MoreProductActivity) context).addToShoppingCar("1", item.getId(), position);
 
                     }
 
+                }
+            });
+
+            holder.itemShopProductMine.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (context instanceof MoreProductActivity) {
+                        if (chooseNum[position] > 1) {
+                            --chooseNum[position];
+                            holder.itemShopProductNum.setText(chooseNum[position] + "");
+                            ((MoreProductActivity) context).editNumShoppingCar(item.getId(), chooseNum[position], position);
+
+                        } else {
+                            holder.itemShopProductMine.setVisibility(View.GONE);
+                            holder.itemShopProductNum.setVisibility(View.GONE);
+
+                            ((MoreProductActivity) context).deleteShoppingCar(item.getId());
+
+
+                        }
+                    }
                 }
             });
         }

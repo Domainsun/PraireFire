@@ -18,29 +18,22 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
-import com.iflytek.cloud.thirdparty.B;
 import com.praire.fire.R;
 import com.praire.fire.base.BaseActivity;
 import com.praire.fire.car.adapter.ShopProductAdapter;
 import com.praire.fire.car.adapter.ShopServiceAdapter;
 import com.praire.fire.car.bean.CommitProduct;
-import com.praire.fire.car.bean.ProductInfoBean;
 import com.praire.fire.car.bean.ProductlistBean;
-import com.praire.fire.car.bean.ServiceInfoBean;
 import com.praire.fire.car.bean.ServicelistBean;
 import com.praire.fire.common.ConstanUrl;
 import com.praire.fire.common.Constants;
 import com.praire.fire.data.IntentDataForCommitOrderActivity;
 import com.praire.fire.map.MapSearchActivity;
-import com.praire.fire.map.bean.NearlyShopBean;
 import com.praire.fire.my.ShoppingCarActivity;
 import com.praire.fire.my.bean.CommentResultBean;
 import com.praire.fire.okhttp.OkhttpRequestUtil;
 import com.praire.fire.order.OrderUtils;
-import com.praire.fire.utils.AppBigDecimal;
-import com.praire.fire.utils.CalculateUtils;
 import com.praire.fire.utils.RecycleViewDivider;
 import com.praire.fire.utils.statusbarcolor.Eyes;
 import com.yanzhenjie.recyclerview.swipe.SwipeItemClickListener;
@@ -51,7 +44,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import butterknife.BindView;
@@ -270,7 +262,7 @@ public class MoreProductActivity extends BaseActivity implements TabLayout.OnTab
                         shoppingCarNumber.setText(shoppingCarCount + "");
                     }
                 }
-                productTruePrice.setText(String.format(productTruePrice.getTag().toString(),OrderUtils.totlePrice(commitProductList)));
+                productTruePrice.setText(String.format(productTruePrice.getTag().toString(), OrderUtils.totlePrice(commitProductList)));
                 break;
             case 5:
                 //删除购物车内某商品
@@ -337,28 +329,6 @@ public class MoreProductActivity extends BaseActivity implements TabLayout.OnTab
      * @param productId
      */
     public void addToShoppingCar(String type, String productId, int position) {
-        if (commitProductList != null && commitProductList.size() > 0) {
-            for (int i = 0; i < commitProductList.size(); i++) {
-                if (productId.equals(commitProductList.get(i).getPs_id())) {
-                    commitProductList.get(i).setNumber(commitProductList.get(i).getNumber() + 1);
-                } else {
-                    if (tabType == 0) {
-                        addCommitList(type, productbean.get(position).getNprice(), productbean.get(position).getName(), productbean.get(position).getShop_id(), productId);
-                    } else {
-                        addCommitList(type, serviceBean.get(position).getNprice(), serviceBean.get(position).getName(), serviceBean.get(position).getShop_id(), productId);
-                    }
-                }
-            }
-
-        } else {
-            if (tabType == 0) {
-                addCommitList(type, productbean.get(position).getNprice(), productbean.get(position).getName(), productbean.get(position).getShop_id(), productId);
-            } else {
-                addCommitList(type, serviceBean.get(position).getNprice(), serviceBean.get(position).getName(), serviceBean.get(position).getShop_id(), productId);
-
-            }
-        }
-
         RequestBody requestBody = new FormBody.Builder()
                 //（1：产品，2：服务）
                 .add("type", type)
@@ -367,6 +337,31 @@ public class MoreProductActivity extends BaseActivity implements TabLayout.OnTab
                 .build();
         OkhttpRequestUtil.post(ConstanUrl.CART_ADD, requestBody, 3, uiHandler, true);
 
+        chooseAdds(type, productId, position);
+    }
+
+    private void chooseAdds(String type, String productId, int position) {
+        if (commitProductList != null && commitProductList.size() > 0) {
+            for (int i = 0; i < commitProductList.size(); i++) {
+                if (productId.equals(commitProductList.get(i).getPsId())) {
+                    commitProductList.get(i).setNumber(commitProductList.get(i).getNumber() + 1);
+                    return;
+                }
+            }
+            if (tabType == 0) {
+                addCommitList(type, productbean.get(position).getNprice(), productbean.get(position).getName(), productId, productbean.get(position).getShop_id());
+            } else if (tabType == 1) {
+                addCommitList(type, serviceBean.get(position).getNprice(), serviceBean.get(position).getName(), productId, serviceBean.get(position).getShop_id());
+            }
+            return;
+        }
+
+        if (tabType == 0) {
+            addCommitList(type, productbean.get(position).getNprice(), productbean.get(position).getName(), productId, productbean.get(position).getShop_id());
+        } else if (tabType == 1) {
+            addCommitList(type, serviceBean.get(position).getNprice(), serviceBean.get(position).getName(), productId, serviceBean.get(position).getShop_id());
+
+        }
 
     }
 
@@ -384,7 +379,7 @@ public class MoreProductActivity extends BaseActivity implements TabLayout.OnTab
         OkhttpRequestUtil.post(ConstanUrl.CART_CHANGECOUNT, requestBody, 4, uiHandler, true);
 
         for (int i = 0; i < commitProductList.size(); i++) {
-            if (id.equals(commitProductList.get(i).getPs_id())) {
+            if (id.equals(commitProductList.get(i).getPsId())) {
                 commitProductList.get(i).setNumber(count);
             }
         }
@@ -402,7 +397,7 @@ public class MoreProductActivity extends BaseActivity implements TabLayout.OnTab
         OkhttpRequestUtil.post(ConstanUrl.CART_DELETE, requestBody, 5, uiHandler, true);
 
         for (CommitProduct com : commitProductList) {
-            if (id.equals(com.getPs_id())) {
+            if (id.equals(com.getPsId())) {
                 commitProductList.remove(com);
             }
         }
@@ -413,10 +408,11 @@ public class MoreProductActivity extends BaseActivity implements TabLayout.OnTab
         commitProduct.setType(type);
         commitProduct.setpPrice(price);
         commitProduct.setpName(pName);
-        commitProduct.setPs_id(pId);
+        commitProduct.setpsId(pId);
         commitProduct.setShopId(shopid);
         commitProduct.setNumber(1);
         commitProductList.add(commitProduct);
+        commitProduct = null;
     }
 
 

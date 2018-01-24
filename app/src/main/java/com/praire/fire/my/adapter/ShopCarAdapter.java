@@ -21,6 +21,7 @@ import com.praire.fire.my.bean.ShoppingCarBean;
 import com.praire.fire.utils.ToastUtil;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
@@ -44,6 +45,10 @@ public class ShopCarAdapter extends RecyclerView.Adapter<ShopCarAdapter.MyViewHo
     public void setEntities(List<ShoppingCarBean.PagelistBean> entities) {
         this.entities = entities;
         notifyDataSetChanged();
+        isSelected = new HashMap<Integer, Boolean>();
+        for (int i = 0; i < entities.size(); i++) {
+            getIsSelected().put(i, false);
+        }
     }
 
     @Override
@@ -56,8 +61,11 @@ public class ShopCarAdapter extends RecyclerView.Adapter<ShopCarAdapter.MyViewHo
 
 
     @Override
-    public void onBindViewHolder(final MyViewHolder holder, int position) {
+    public void onBindViewHolder(final MyViewHolder holder, final int position) {
         final ShoppingCarBean.PagelistBean item = entities.get(position);
+
+
+
         holder.itemShoppingCarName.setText(item.getInfo().getName());
         holder.itemShoppingCarShop.setText(item.getInfo().getShop_name());
         holder.itemShoppingCarCount.setText(String.format(holder.itemShoppingCarCount.getTag().toString(), item.getCount()));
@@ -77,10 +85,19 @@ public class ShopCarAdapter extends RecyclerView.Adapter<ShopCarAdapter.MyViewHo
             //服务
             holder.itemShopListImg.setVisibility(View.GONE);
         }
+        holder.shoppingCarCheckbox.setChecked(item.isSelect());
+        holder.shoppingCarCheckbox.setChecked(getIsSelected().get(position));
         holder.shoppingCarCheckbox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                if (isSelected.get(position)) {
+                    isSelected.put(position, false);
+                    setIsSelected(isSelected);
+                } else {
+                    isSelected.put(position, true);
+                    setIsSelected(isSelected);
+                }
+                listener.onCheck(isSelected);
             }
         });
         holder.itemShoppingCarMine.setOnClickListener(new View.OnClickListener() {
@@ -91,7 +108,7 @@ public class ShopCarAdapter extends RecyclerView.Adapter<ShopCarAdapter.MyViewHo
                     count--;
                     holder.itemShoppingCarNum.setText(count + "");
                     item.setCount(count+"");
-                    ((ShoppingCarActivity) context).editNumShoppingCar(item.getId(), count);
+
                 }else {
                     ToastUtil.show(context,"不能再减了，请左滑删除");
                 }
@@ -105,7 +122,7 @@ public class ShopCarAdapter extends RecyclerView.Adapter<ShopCarAdapter.MyViewHo
                 count++;
                 holder.itemShoppingCarNum.setText(count +"");
                 item.setCount(count+"");
-                ((ShoppingCarActivity)context).editNumShoppingCar(item.getId(),count);
+
             }
         });
         holder.itemShoppingCarEdit.setOnClickListener(new View.OnClickListener() {
@@ -125,6 +142,7 @@ public class ShopCarAdapter extends RecyclerView.Adapter<ShopCarAdapter.MyViewHo
                 holder.itemShoppingCarEdit.setVisibility(View.VISIBLE);
                 holder.itemShoppingCarDone.setVisibility(View.GONE);
                 holder.itemShoppingCarCount.setText(String.format(holder.itemShoppingCarCount.getTag().toString(), item.getCount()));
+                ((ShoppingCarActivity)context).editNumShoppingCar(item.getPs_id(),item.getType(),item.getCount());
             }
         });
 
@@ -169,7 +187,22 @@ public class ShopCarAdapter extends RecyclerView.Adapter<ShopCarAdapter.MyViewHo
         }
 
     }
+    private onCheckListener listener;
+    private static HashMap<Integer, Boolean> isSelected;
+    public static HashMap<Integer, Boolean> getIsSelected() {
+        return isSelected;
+    }
 
+    public static void setIsSelected(HashMap<Integer, Boolean> isSelected) {
+        ShopCarAdapter.isSelected = isSelected;
+    }
 
+    public void setListener(onCheckListener listener) {
+        this.listener = listener;
+    }
+
+    public interface onCheckListener {
+        void onCheck(HashMap<Integer, Boolean> map);
+    }
 }
 

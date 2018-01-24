@@ -97,7 +97,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="right|center_vertical"
-        android:padding="10dp"
         android:layout_gravity="center_vertical"
         android:orientation="horizontal">
         <TextView
@@ -106,17 +105,19 @@
             android:layout_height="25dp"
             android:textColor="@color/grey"
             android:gravity="center"
+            android:layout_margin="10dp"
             android:background="@drawable/shape_btn_gray"
             android:text="取消"
             android:textSize="13sp" />
         <TextView
             android:id="@+id/item_order_list_status_btn"
-            android:layout_width="wrap_content"
+            android:layout_width="60dp"
             android:layout_height="25dp"
             android:layout_marginLeft="15dp"
             android:gravity="center"
             android:background="@drawable/shape_btn_orange"
-            android:text="待付款"
+            android:text="付款"
+            android:layout_margin="10dp"
             android:textColor="@color/orange"
             android:textSize="12sp" />
     </LinearLayout>

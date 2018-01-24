@@ -3,6 +3,7 @@ package com.praire.fire.order;
 import android.content.Context;
 import android.content.Intent;
 
+import com.praire.fire.R;
 import com.praire.fire.base.BaseActivity;
 import com.praire.fire.base.BaseTitleActivity;
 import com.praire.fire.common.Constants;
@@ -27,7 +28,7 @@ public class EvaluateActivity extends BaseTitleActivity {
 
     @Override
     protected int getFragmentLayout() {
-        return 0;
+        return R.layout.activity_evaluate;
     }
 
     @Override

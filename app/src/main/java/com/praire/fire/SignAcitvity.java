@@ -60,6 +60,9 @@ public class SignAcitvity extends Activity {
         myApplication = (MyApplication) getApplication();
         Intent i = getIntent();
         phone = i.getStringExtra("phone");
+        //add by lyp
+        phone =(String) SharePreferenceMgr.get(this,Constants.USER_ID,"");
+
         etPhone.setText(phone);
         handler_sign = new Handler() {
             @Override
@@ -89,7 +92,7 @@ public class SignAcitvity extends Activity {
                         if ("1".equals(a.getCode())) {
                             SharePreferenceMgr.put(this, Constants.LOGIN_COOKIE,myApplication.getSignCookie());
                             SharePreferenceMgr.put(MyApplication.getInstance(), Constants.LOGIN_COOKIE,myApplication.getSignCookie());
-                            //---------------
+                            //-------//add by lyp --------
                             SharePreferenceMgr.put(this,Constants.USER_ID,phone);
                             Intent i=new Intent(this, MainActivity.class);
                             startActivity(i);

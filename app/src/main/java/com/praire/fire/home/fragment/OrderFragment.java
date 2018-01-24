@@ -14,10 +14,12 @@ import android.view.ViewGroup;
 import com.google.gson.Gson;
 import com.praire.fire.R;
 import com.praire.fire.base.BaseFragment;
+import com.praire.fire.common.CommonDialog;
 import com.praire.fire.common.ConstanUrl;
 import com.praire.fire.okhttp.OkhttpRequestUtil;
 import com.praire.fire.order.EvaluateActivity;
 import com.praire.fire.order.OrderInfoActivity;
+import com.praire.fire.order.OrderUtils;
 import com.praire.fire.order.PayActivity;
 import com.praire.fire.order.adapter.OrderListAdapter;
 import com.praire.fire.order.bean.OrderListBean;
@@ -102,7 +104,7 @@ public class OrderFragment extends BaseFragment implements TabLayout.OnTabSelect
         srecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         //添加分割线
         srecyclerView.addItemDecoration(new RecycleViewDivider(
-                getActivity(), LinearLayoutManager.HORIZONTAL));
+                getActivity(), LinearLayoutManager.HORIZONTAL,10,getActivity().getResources().getColor(R.color.grey_background)));
         srecyclerView.setItemAnimator(new DefaultItemAnimator());
         srecyclerView.setAdapter(adapter);
         srecyclerView.setItemViewSwipeEnabled(true);
@@ -111,25 +113,36 @@ public class OrderFragment extends BaseFragment implements TabLayout.OnTabSelect
             @Override
             public void onItemClick(View itemView, int position) {
                 OrderListBean.PagelistBean bean = orderlist.getPagelist().get(position);
-                OrderInfoActivity.startActivity(getActivity(), bean.getId(), false);
+                OrderInfoActivity.startActivity(getActivity(), bean.getOrderno(), false);
             }
         });
         adapter.setItemClickLister(new OrderListAdapter.ItemClickLister() {
             @Override
-            public void cancel(String status, String orderId) {
+            public void cancel(String status, final String orderId) {
                 if ("1".equals(status)) {
-                    refundOrder(orderId);
+                    CommonDialog.Build(getActivity()).setTitle("").setConfirm(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            refundOrder(orderId);
+                        }
+                    });
+
                 } else {
-                    cancelOrder(orderId);
+                    CommonDialog.Build(getActivity()).setTitle("").setConfirm(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            cancelOrder(orderId);
+                        }
+                    });
+
                 }
             }
 
             @Override
-            public void btnStatus(String status, String orderno, String orderId) {
+            public void btnStatus(String status, String orderno, String orderId,String paycost) {
                 switch (status) {
                     case "0":
-                        Log.e("onClick", "status_btnpay");
-                        PayActivity.startActivity(getActivity(), orderno, "0", false);
+                        PayActivity.startActivity(getActivity(), orderno, "0",paycost, false);
                         break;
                     case "1":
                         checkOrder(orderId);

@@ -2,9 +2,7 @@ package com.praire.fire.order;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.os.Message;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -23,19 +21,11 @@ import com.praire.fire.common.Constants;
 import com.praire.fire.okhttp.OkhttpRequestUtil;
 import com.praire.fire.order.bean.PayResult;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.util.Map;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import okhttp3.FormBody;
-import okhttp3.MediaType;
 import okhttp3.RequestBody;
-import okio.BufferedSink;
 
 import static com.praire.fire.common.Constants.INTENT_DATA;
 import static com.praire.fire.common.Constants.UI_TYPE;
@@ -71,6 +61,7 @@ public class PayActivity extends BaseTitleActivity {
     Button btnCommitPay;
     private String recharge;
     private String orderId;
+    private static final String PAY_COST = "PayCost";
 
     /**
      * @param context
@@ -78,10 +69,11 @@ public class PayActivity extends BaseTitleActivity {
      * @param recharge  是否充值(0付款，1充值)
      * @param forResult
      */
-    public static void startActivity(Context context, String orderId, String recharge, boolean forResult) {
+    public static void startActivity(Context context, String orderId, String recharge,String paycost, boolean forResult) {
         Intent intent = new Intent(context, PayActivity.class);
         intent.putExtra(INTENT_DATA, orderId);
         intent.putExtra(UI_TYPE, recharge);
+        intent.putExtra(PAY_COST,paycost);
         if (!forResult) {
             context.startActivity(intent);
         } else if (context instanceof BaseActivity) {
@@ -99,6 +91,7 @@ public class PayActivity extends BaseTitleActivity {
         ButterKnife.bind(this);
         recharge = getIntent().getStringExtra(UI_TYPE);
         orderId = getIntent().getStringExtra(INTENT_DATA);
+        payCost.setText(String.format(payCost.getTag().toString(),getIntent().getStringExtra(PAY_COST)));
     }
 
     @Override
@@ -157,7 +150,7 @@ public class PayActivity extends BaseTitleActivity {
                 payAlipayCheckbox.setChecked(true);
                 break;
             case R.id.btn_commit_pay:
-                if (payBalanceCheckbox.isChecked()) {
+                 if (payBalanceCheckbox.isChecked()) {
                     creatPay("0");
                 } else if (payWeixinCheckbox.isChecked()) {
                     creatPay("2");
@@ -193,7 +186,8 @@ public class PayActivity extends BaseTitleActivity {
                 // 判断resultStatus 为9000则代表支付成功
                 if (TextUtils.equals(resultStatus, "9000")) {
                     // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
-                    Toast.makeText(PayActivity.this, "支付成功", Toast.LENGTH_SHORT).show();
+                    ResultActivity.startActivity(PayActivity.this,"支付成功","感谢您的使用！",false);
+                    finish();
                 } else {
                     // 该笔订单真实的支付结果，需要依赖服务端的异步通知。
                     Toast.makeText(PayActivity.this, "支付失败", Toast.LENGTH_SHORT).show();
