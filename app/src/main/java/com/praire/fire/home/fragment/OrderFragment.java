@@ -13,9 +13,11 @@ import android.view.ViewGroup;
 
 import com.google.gson.Gson;
 import com.praire.fire.R;
+import com.praire.fire.base.BaseActivity;
 import com.praire.fire.base.BaseFragment;
 import com.praire.fire.common.CommonDialog;
 import com.praire.fire.common.ConstanUrl;
+import com.praire.fire.my.bean.CommentResultBean;
 import com.praire.fire.okhttp.OkhttpRequestUtil;
 import com.praire.fire.order.EvaluateActivity;
 import com.praire.fire.order.OrderInfoActivity;
@@ -24,6 +26,7 @@ import com.praire.fire.order.PayActivity;
 import com.praire.fire.order.adapter.OrderListAdapter;
 import com.praire.fire.order.bean.OrderListBean;
 import com.praire.fire.utils.RecycleViewDivider;
+import com.praire.fire.utils.ToastUtil;
 import com.yanzhenjie.recyclerview.swipe.SwipeItemClickListener;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
 
@@ -74,7 +77,7 @@ public class OrderFragment extends BaseFragment implements TabLayout.OnTabSelect
     /**
      * 订单状态(0:未支付 1:已支付 2:已消费 3:已退款 4:已评价)
      */
-    private String statusType = "0";
+    private String statusType = "";
     private OrderListBean orderlist;
 
 
@@ -120,36 +123,43 @@ public class OrderFragment extends BaseFragment implements TabLayout.OnTabSelect
             @Override
             public void cancel(String status, final String orderId) {
                 if ("1".equals(status)) {
-                    CommonDialog.Build(getActivity()).setTitle("").setConfirm(new View.OnClickListener() {
+                    CommonDialog.Build((BaseActivity)getActivity()).setTitle(false).setMessage("是否确认退款？").setConfirm(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             refundOrder(orderId);
                         }
-                    });
+                    }).showconfirm();
 
                 } else {
-                    CommonDialog.Build(getActivity()).setTitle("").setConfirm(new View.OnClickListener() {
+                    CommonDialog.Build((BaseActivity) getActivity()).setTitle(false).setMessage("是否确认取消订单？").setConfirm(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             cancelOrder(orderId);
                         }
-                    });
+                    }).showconfirm();
 
                 }
             }
 
             @Override
-            public void btnStatus(String status, String orderno, String orderId,String paycost) {
+            public void btnStatus(String status, String orderno, final int position, String paycost) {
+//                EvaluateActivity.startActivity(getActivity(), orderlist.getPagelist().get(position), false);
                 switch (status) {
                     case "0":
                         PayActivity.startActivity(getActivity(), orderno, "0",paycost, false);
                         break;
                     case "1":
-                        checkOrder(orderId);
+                        CommonDialog.Build((BaseActivity)getActivity()).setTitle(false).setMessage("是否确认消费？").setConfirm(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                checkOrder(orderlist.getPagelist().get(position).getId());
+                            }
+                        }).showconfirm();
+
                         break;
                     case "2":
 //                                评价
-                        EvaluateActivity.startActivity(getActivity(), orderId, false);
+                        EvaluateActivity.startActivity(getActivity(), orderlist.getPagelist().get(position), false);
                         break;
                     default:
                         break;
@@ -165,7 +175,7 @@ public class OrderFragment extends BaseFragment implements TabLayout.OnTabSelect
         isFirst = true;
         index = 1;
 
-        getDates(index, "");
+        getDates(index, statusType);
     }
 
     private void getDates(int index, String status) {
@@ -185,13 +195,25 @@ public class OrderFragment extends BaseFragment implements TabLayout.OnTabSelect
                 }
                 break;
             case CANCEL_ORDER:
-                Log.e("CANCEL_ORDER", (String) msg.obj);
+                Gson gson2 = new Gson();
+                CommentResultBean  resultBean = gson2.fromJson((String) msg.obj, CommentResultBean.class);
+                ToastUtil.show(getActivity(),resultBean.getMsg());
+                getDates(1,statusType);
                 break;
             case REFUND_ORDER:
                 Log.e("REFUND_ORDER", (String) msg.obj);
+                Gson gson3 = new Gson();
+                CommentResultBean  resultBean1 = gson3.fromJson((String) msg.obj, CommentResultBean.class);
+                ToastUtil.show(getActivity(),resultBean1.getMsg());
+                getDates(1,statusType);
                 break;
             case CHECK_ORDER:
                 Log.e("CHECK_ORDER", (String) msg.obj);
+                Gson gson4 = new Gson();
+                CommentResultBean  resultBean2 = gson4.fromJson((String) msg.obj, CommentResultBean.class);
+                ToastUtil.show(getActivity(),resultBean2.getMsg());
+                getDates(1,statusType);
+
                 break;
             default:
                 break;

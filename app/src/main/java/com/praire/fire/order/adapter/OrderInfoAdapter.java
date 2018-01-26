@@ -58,7 +58,7 @@ public class OrderInfoAdapter extends RecyclerView.Adapter<OrderInfoAdapter.MyVi
     public void onBindViewHolder(MyViewHolder holder, int position) {
         final OrderInfoBean.OrderlistBean bean = entities.get(position);
         holder.itemView.setTag(position);
-        holder.itemOrderListBusinessname.setText(bean.getShop_id());
+        holder.itemOrderListBusinessname.setText(bean.getShopname());
         holder.itemOrderListOrderId.setText(String.format(holder.itemOrderListOrderId.getTag().toString(),bean.getOrderno()));
 
 
@@ -80,7 +80,7 @@ public class OrderInfoAdapter extends RecyclerView.Adapter<OrderInfoAdapter.MyVi
                 TextView sprice = viewGroup.findViewById(R.id.item_order_list_sprice);
                 productName.setText(bean.getPslist().get(i).getName());
                 count.setText(String.format(count.getTag().toString(), bean.getPslist().get(i).getNumber()));
-                type.setText(String.format(type.getTag().toString(), bean.getPslist().get(i).getType()));
+                type.setText(String.format(type.getTag().toString(), bean.getPslist().get(i).getClasspath()));
                 nprice.setText(String.format(nprice.getTag().toString(), bean.getPslist().get(i).getNprice()));
                 sprice.setText(String.format(sprice.getTag().toString(), bean.getPslist().get(i).getPrice()));
                 //添加删除线

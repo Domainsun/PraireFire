@@ -1,4 +1,4 @@
-package com.praire.fire.map;
+package com.praire.fire.home.fragment;
 
 import android.content.Intent;
 import android.graphics.BitmapFactory;
@@ -53,6 +53,9 @@ import com.praire.fire.common.Constants;
 import com.praire.fire.data.IntentDataForGPSNaviActivity;
 import com.praire.fire.data.IntentDataForRoutePlanningActivity;
 import com.praire.fire.home.MainActivity;
+import com.praire.fire.map.GPSNaviActivity;
+import com.praire.fire.map.MapSearchActivity;
+import com.praire.fire.map.RoutePlanningActivity;
 import com.praire.fire.map.adapter.NearlyShopAdapter;
 import com.praire.fire.map.bean.NearlyShopBean;
 import com.praire.fire.utils.RecycleViewDivider;

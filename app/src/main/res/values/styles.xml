@@ -17,7 +17,15 @@
         <item name="android:maxHeight">13dp</item>
         <item name="android:minHeight">13dp</item>
     </style>
-
+    <!--自定义样式修改RatingBar的图标以及颜色-->
+    <style name="GlimmerRatingBarBig"
+        parent="Base.Widget.AppCompat.RatingBar">
+        <!--修改默认图片-->
+        <item name="android:progressDrawable">@drawable/glimmer_ratingbar</item>
+        <!--修改默认大小-->
+        <item name="android:maxHeight">20dp</item>
+        <item name="android:minHeight">20dp</item>
+    </style>
     <style name="BottomDialog" parent="@style/Base.V7.Theme.AppCompat.Light.Dialog">
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>

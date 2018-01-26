@@ -77,6 +77,9 @@ public class OrderInfoBean {
         private String create_time;
         private String update_time;
         private String use_time;
+
+
+        private String shopname;
         private String cancel_time;
         private List<PslistBean> pslist;
 
@@ -248,6 +251,13 @@ public class OrderInfoBean {
             this.cancel_time = cancel_time;
         }
 
+        public String getShopname() {
+            return shopname;
+        }
+
+        public void setShopname(String shopname) {
+            this.shopname = shopname;
+        }
         public List<PslistBean> getPslist() {
             return pslist;
         }
@@ -285,6 +295,7 @@ public class OrderInfoBean {
             private String create_time;
             private String update_time;
 
+            private String classpath;
             public String getId() {
                 return id;
             }
@@ -380,6 +391,15 @@ public class OrderInfoBean {
             public void setUpdate_time(String update_time) {
                 this.update_time = update_time;
             }
+
+            public String getClasspath() {
+                return classpath;
+            }
+
+            public void setClasspath(String classpath) {
+                this.classpath = classpath;
+            }
+
         }
     }
 }

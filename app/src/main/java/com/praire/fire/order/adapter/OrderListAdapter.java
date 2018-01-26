@@ -54,7 +54,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.MyVi
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(MyViewHolder holder, final int position) {
         final OrderListBean.PagelistBean bean = entities.get(position);
         holder.itemView.setTag(position);
         holder.itemOrderListBusinessname.setText(bean.getShopname());
@@ -85,7 +85,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.MyVi
             @Override
             public void onClick(View view) {
                 if(itemClickLister !=null) {
-                    itemClickLister.btnStatus(bean.getStatus(),bean.getOrderno(),bean.getId(),totlePrice);
+                    itemClickLister.btnStatus(bean.getStatus(),bean.getOrderno(),position,totlePrice);
                 }
             }
         });
@@ -103,7 +103,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.MyVi
                 TextView sprice = viewGroup.findViewById(R.id.item_order_list_sprice);
                 productName.setText(bean.getPslist().get(i).getName());
                 count.setText(String.format(count.getTag().toString(), bean.getPslist().get(i).getNumber()));
-                type.setText(String.format(type.getTag().toString(), bean.getPslist().get(i).getType()));
+                type.setText(String.format(type.getTag().toString(), bean.getPslist().get(i).getClasspath()));
                 nprice.setText(String.format(nprice.getTag().toString(), bean.getPslist().get(i).getNprice()));
                 sprice.setText(String.format(sprice.getTag().toString(), bean.getPslist().get(i).getPrice()));
                 //添加删除线
@@ -167,6 +167,6 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.MyVi
     public interface ItemClickLister {
         void cancel(String status,String orderId);
 
-        void btnStatus(String status,String orderno,String orderId,String paycost);
+        void btnStatus(String status,String orderno,int position,String paycost);
     }
 }

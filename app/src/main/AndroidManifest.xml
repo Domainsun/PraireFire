@@ -31,10 +31,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        <!--高德地图apikey-->
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="06f6ca96262f0dfb2907ed2e6decfa68" />
-
+            android:value="1773bbc6ba5191bf32f2c3cc7a5c4b6b" />
         <activity android:name=".GuidActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -135,6 +135,7 @@
         <activity android:name=".merchant.TodayIncomeActivity" />
         <activity android:name=".merchant.HistoryIncomeActivity"/>
         <activity android:name=".order.ResultActivity"/>
+        <activity android:name=".order.EvaluateActivity"/>
     </application>
 
 </manifest>
