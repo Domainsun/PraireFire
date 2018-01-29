@@ -204,4 +204,10 @@ public class ConstanUrl {
      * 产品服务搜索类型列表
      */
     public static final String SEARCH_SEARCHSHOP = "https://www.lygyxh.cn/api.php/search/searchshop";
+
+
+    /**
+     *  评论列表
+     */
+    public static final String COMMONINFO_COMMENTLIST = "https://www.lygyxh.cn/api.php/Commoninfo/commentlist";
 }

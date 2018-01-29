@@ -28,7 +28,7 @@ import butterknife.ButterKnife;
  * Created by lyp on 2018/1/2.
  */
 
-public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.MyViewHolder> {
+public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.MyViewHolder> implements View.OnClickListener{
 
 
     private Context context;
@@ -49,6 +49,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.MyVi
         View view = LayoutInflater.from(
                 context).inflate(R.layout.item_order_list, parent,
                 false);
+        view.setOnClickListener(this);
         MyViewHolder holder = new MyViewHolder(view);
         return holder;
     }
@@ -129,6 +130,13 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.MyVi
         return entities.size();
     }
 
+    @Override
+    public void onClick(View view) {
+        if(itemClickLister !=null) {
+            itemClickLister.itemClick(view,(int)view.getTag());
+        }
+    }
+
     class MyViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.item_order_list_businessname)
@@ -166,7 +174,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.MyVi
 
     public interface ItemClickLister {
         void cancel(String status,String orderId);
-
+        void itemClick(View itemView,int position);
         void btnStatus(String status,String orderno,int position,String paycost);
     }
 }

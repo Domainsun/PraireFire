@@ -60,9 +60,11 @@ public class SignAcitvity extends Activity {
         myApplication = (MyApplication) getApplication();
         Intent i = getIntent();
         phone = i.getStringExtra("phone");
-        //add by lyp
+        //--------add by lyp
         phone =(String) SharePreferenceMgr.get(this,Constants.USER_ID,"");
-
+        pw = (String)SharePreferenceMgr.get(this,Constants.PASSWORD,"");
+        etPw.setText(pw);
+        //--------add end
         etPhone.setText(phone);
         handler_sign = new Handler() {
             @Override
@@ -94,8 +96,10 @@ public class SignAcitvity extends Activity {
                             SharePreferenceMgr.put(MyApplication.getInstance(), Constants.LOGIN_COOKIE,myApplication.getSignCookie());
                             //-------//add by lyp --------
                             SharePreferenceMgr.put(this,Constants.USER_ID,phone);
+                            SharePreferenceMgr.put(this,Constants.PASSWORD,pw);
                             Intent i=new Intent(this, MainActivity.class);
                             startActivity(i);
+                            finish();
                         }
                     } else {
                         Toast.makeText(SignAcitvity.this, "网络错误！", Toast.LENGTH_SHORT).show();

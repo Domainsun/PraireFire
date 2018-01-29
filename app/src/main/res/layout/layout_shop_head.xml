@@ -11,6 +11,8 @@
         android:layout_centerVertical="true"
         android:drawableLeft="@mipmap/back"
         android:padding="8dp"
+        android:gravity="center_vertical"
+        android:drawablePadding="8dp"
         android:textColor="@color/white"
         android:textSize="19sp" />
 

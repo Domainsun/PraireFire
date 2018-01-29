@@ -40,37 +40,17 @@ import okhttp3.RequestBody;
 
 public class OrderFragment extends BaseFragment implements TabLayout.OnTabSelectedListener {
 
-    /**
-     * 待付款 未支付 就是待付款
-     */
-    private static final int FOR_WAIT_PAY = 1;
-    /**
-     * 待消费 已支付就是待消费
-     */
-    private static final int FOR_WAIT_SIGN = 2;
-    /**
-     * 待评价 已消费就是待评价
-     */
-    private static final int FOR_WAIT_EVALUATE = 3;
-    /**
-     * 退款  就是已退款
-     */
-    private static final int FOR_IS_REFUND = 4;
-    /**
-     * 全部订单
-     */
-    private static final int FOR_ALL_ORDER = 0;
+
     public static final int CANCEL_ORDER = 2;
     public static final int REFUND_ORDER = 3;
     public static final int CHECK_ORDER = 4;
     public static final int ORDER_LIST = 1;
 
     TabLayout tabLayout;
-    SwipeMenuRecyclerView srecyclerView;
+   RecyclerView srecyclerView;
 
 
     private boolean isFirst = true;
-    private int orderType = 0;
     private int index = 1;
     private OrderListAdapter adapter;
     private boolean loadMore = true;
@@ -103,22 +83,16 @@ public class OrderFragment extends BaseFragment implements TabLayout.OnTabSelect
         tabLayout.addTab(tabLayout.newTab().setText("待评价"));
         tabLayout.addTab(tabLayout.newTab().setText("退款/售后"));
         tabLayout.setOnTabSelectedListener(this);
-        adapter = new OrderListAdapter(getActivity());
+
         srecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         //添加分割线
         srecyclerView.addItemDecoration(new RecycleViewDivider(
                 getActivity(), LinearLayoutManager.HORIZONTAL,10,getActivity().getResources().getColor(R.color.grey_background)));
         srecyclerView.setItemAnimator(new DefaultItemAnimator());
-        srecyclerView.setAdapter(adapter);
-        srecyclerView.setItemViewSwipeEnabled(true);
 
-        srecyclerView.setSwipeItemClickListener(new SwipeItemClickListener() {
-            @Override
-            public void onItemClick(View itemView, int position) {
-                OrderListBean.PagelistBean bean = orderlist.getPagelist().get(position);
-                OrderInfoActivity.startActivity(getActivity(), bean.getOrderno(), false);
-            }
-        });
+
+        adapter = new OrderListAdapter(getActivity());
+        srecyclerView.setAdapter(adapter);
         adapter.setItemClickLister(new OrderListAdapter.ItemClickLister() {
             @Override
             public void cancel(String status, final String orderId) {
@@ -142,9 +116,15 @@ public class OrderFragment extends BaseFragment implements TabLayout.OnTabSelect
             }
 
             @Override
+            public void itemClick(View itemView, int position) {
+                OrderListBean.PagelistBean bean = orderlist.getPagelist().get(position);
+                OrderInfoActivity.startActivity(getActivity(), bean.getOrderno(), false);
+            }
+
+            @Override
             public void btnStatus(String status, String orderno, final int position, String paycost) {
-//                EvaluateActivity.startActivity(getActivity(), orderlist.getPagelist().get(position), false);
-                switch (status) {
+                EvaluateActivity.startActivity(getActivity(), orderlist.getPagelist().get(position), false);
+               /* switch (status) {
                     case "0":
                         PayActivity.startActivity(getActivity(), orderno, "0",paycost, false);
                         break;
@@ -163,7 +143,7 @@ public class OrderFragment extends BaseFragment implements TabLayout.OnTabSelect
                         break;
                     default:
                         break;
-                }
+                }*/
             }
 
 
@@ -230,37 +210,28 @@ public class OrderFragment extends BaseFragment implements TabLayout.OnTabSelect
 //        getDates(index);
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
 
-    }
 
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
         switch (tab.getPosition()) {
             case 0:
                 statusType = "";
-                orderType = FOR_ALL_ORDER;
 
                 break;
             case 1:
                 statusType = "0";
-                orderType = FOR_WAIT_PAY;
 
                 break;
             case 2:
                 statusType = "1";
-                orderType = FOR_WAIT_SIGN;
 
                 break;
             case 3:
                 statusType = "2";
-                orderType = FOR_WAIT_EVALUATE;
                 break;
             case 4:
                 statusType = "3";
-                orderType = FOR_IS_REFUND;
             default:
                 break;
         }

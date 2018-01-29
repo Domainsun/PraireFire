@@ -54,9 +54,11 @@ public class ShopListAdapter extends RecyclerView.Adapter<ShopListAdapter.MyView
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        MyViewHolder holder = new MyViewHolder(LayoutInflater.from(
+        View view = LayoutInflater.from(
                 context).inflate(R.layout.item_shop_list, parent,
-                false));
+                false);
+        view.setOnClickListener(this);
+        MyViewHolder holder = new MyViewHolder(view);
         return holder;
     }
 

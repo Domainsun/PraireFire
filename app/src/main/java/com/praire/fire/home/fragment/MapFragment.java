@@ -1,5 +1,6 @@
 package com.praire.fire.home.fragment;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
@@ -46,6 +47,7 @@ import com.amap.api.services.core.LatLonPoint;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.praire.fire.R;
+import com.praire.fire.base.BaseActivity;
 import com.praire.fire.base.BaseFragment;
 import com.praire.fire.car.ShopActivity;
 import com.praire.fire.common.ConstanUrl;
@@ -92,7 +94,7 @@ public class MapFragment extends BaseFragment implements AMap.OnMarkerClickListe
      */
     public static final String NEARLY_RADIUS = "30000";
     TextureMapView mMapView;
-    SwipeMenuRecyclerView mapRecyclerView;
+    RecyclerView mapRecyclerView;
     TextView checkMoreTv;
     EditText mapInputKey;
     TextView mapBusinessInfoName;
@@ -124,6 +126,7 @@ public class MapFragment extends BaseFragment implements AMap.OnMarkerClickListe
     private String searchKey = "";
     private boolean isMarkerClicked = false;
     private boolean isSearch = false;
+    private Activity activity;
 
     protected CameraPosition getCameraPosition() {
         return cameraPosition;
@@ -168,39 +171,37 @@ public class MapFragment extends BaseFragment implements AMap.OnMarkerClickListe
         mapBusinessInfoRound.setOnClickListener(this);
         back.setOnClickListener(this);
         clean.setOnClickListener(this);
-
+        activity = getActivity();
     }
 
     @Override
     public void initListener() {
-        Eyes.setStatusBarColor(getActivity(), ContextCompat.getColor(getActivity(), R.color.status_bar));
+        Eyes.setStatusBarColor(activity, ContextCompat.getColor(activity, R.color.status_bar));
 
 
-        mapRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mapRecyclerView.setLayoutManager(new LinearLayoutManager(activity));
         mapRecyclerView.setItemAnimator(new DefaultItemAnimator());
         //添加分割线
         mapRecyclerView.addItemDecoration(new RecycleViewDivider(
-                getActivity(), LinearLayoutManager.HORIZONTAL));
-        adapter = new NearlyShopAdapter(getActivity());
+                activity, LinearLayoutManager.HORIZONTAL));
+        adapter = new NearlyShopAdapter(activity);
 
-        adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+
+//        mapRecyclerView.setSwipeItemClickListener(new SwipeItemClickListener() {
+//            @Override
+//            public void onItemClick(View itemView, int position) {
+//                ShopActivity.startActivity(activity, evEntitys.get(position).getId(), false);
+//            }
+//        });
+
+        mapRecyclerView.setAdapter(adapter);
+        adapter.setDataBack(new NearlyShopAdapter.ItemClickLister() {
+
             @Override
-            public void onChanged() {
-                super.onChanged();
-                if (mapRecyclerView != null && mapRecyclerView.getAdapter() == null) {
-                    mapRecyclerView.setAdapter(adapter);
-                }
+            public void oncheckd(int position) {
+                ShopActivity.startActivity(activity, evEntitys.get(position).getId(), false);
             }
         });
-        mapRecyclerView.setSwipeItemClickListener(new SwipeItemClickListener() {
-            @Override
-            public void onItemClick(View itemView, int position) {
-                ShopActivity.startActivity(getActivity(), evEntitys.get(position).getId(), false);
-            }
-        });
-
-//        mapRecyclerView.setAdapter(adapter);
-
     }
 
     @Override
@@ -215,7 +216,7 @@ public class MapFragment extends BaseFragment implements AMap.OnMarkerClickListe
                 if (aBoolean) {
 
                     String key = mapInputKey.getText().toString();
-                    MapSearchActivity.startActivity(getActivity(), key, false);
+                    MapSearchActivity.startActivity(activity, key, false);
                     //写你要做的事情
                     return false;
                 }
@@ -280,10 +281,10 @@ public class MapFragment extends BaseFragment implements AMap.OnMarkerClickListe
     protected void networkResponse(Message msg) {
         switch (msg.what) {
             case 0:
-                Toast.makeText(getActivity(), "网络出错，请重试", Toast.LENGTH_SHORT).show();
+                Toast.makeText(activity, "网络出错，请重试", Toast.LENGTH_SHORT).show();
                 break;
             case 1:
-                List<NearlyShopBean>   entitys = (List<NearlyShopBean>) msg.obj;
+                List<NearlyShopBean> entitys = (List<NearlyShopBean>) msg.obj;
                 evEntitys = entitys;
                 if (isSearch) {
                     mapRecyclerView.setVisibility(View.VISIBLE);
@@ -295,7 +296,7 @@ public class MapFragment extends BaseFragment implements AMap.OnMarkerClickListe
             case 2:
                 mapRecyclerView.setVisibility(View.GONE);
                 checkMoreTv.setVisibility(View.GONE);
-                Toast.makeText(getActivity(), "没有更多数据了", Toast.LENGTH_SHORT).show();
+                Toast.makeText(activity, "没有更多数据了", Toast.LENGTH_SHORT).show();
                 break;
             default:
                 break;
@@ -394,14 +395,14 @@ public class MapFragment extends BaseFragment implements AMap.OnMarkerClickListe
             //在activity执行onResume时执行mMapView.onResume ()，重新绘制加载地图
             mMapView.onResume();
         }
-        searchKey = ((MainActivity) getActivity()).getSearchKey();
+        searchKey = ((MainActivity) activity).getSearchKey();
 
         if (!"".equals(searchKey)) {
             mapInputKey.setText(searchKey);
             evEntitys.clear();
             isSearch = true;
             requestShopList(longitude, latitude, searchKey);
-            ((MainActivity) getActivity()).setSearchKey("");
+            ((MainActivity) activity).setSearchKey("");
         }
     }
 
@@ -421,10 +422,10 @@ public class MapFragment extends BaseFragment implements AMap.OnMarkerClickListe
     /**
      * 在地图上添加marker
      */
-    private void addMarkersToMap( List<NearlyShopBean> evEntitys ) {
+    private void addMarkersToMap(List<NearlyShopBean> evEntitys) {
         aMap.clear();
         markerOption = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
-                .decodeResource(getResources(), R.mipmap.location_car)))
+                .decodeResource(activity.getResources(), R.mipmap.location_car)))
                 //设置Marker可拖动true
                 .draggable(false);
         for (int i = 0; i < evEntitys.size(); i++) {
@@ -544,22 +545,22 @@ public class MapFragment extends BaseFragment implements AMap.OnMarkerClickListe
                 mapRecyclerView.setVisibility(View.VISIBLE);
                 break;
             case R.id.map_business_info:
-                ShopActivity.startActivity(getActivity(), businessId, false);
+                ShopActivity.startActivity(activity, businessId, false);
                 break;
             case R.id.map_business_info_navigation:
                 IntentDataForGPSNaviActivity gdata = new IntentDataForGPSNaviActivity();
                 gdata.mStartPoint = new NaviLatLng(latitude, longitude);
                 gdata.mEndPoint = new NaviLatLng(Double.valueOf(evEntitys.get(bPersion).getLat()), Double.valueOf(evEntitys.get(bPersion).getLng()));
-                GPSNaviActivity.startActivity(getActivity(), gdata, false);
+                GPSNaviActivity.startActivity(activity, gdata, false);
                 break;
             case R.id.map_input_key:
-                MapSearchActivity.startActivity(getActivity(), mapInputKey.getText().toString(), true);
+                MapSearchActivity.startActivity(activity, mapInputKey.getText().toString(), true);
                 break;
             case R.id.map_business_info_round:
                 IntentDataForRoutePlanningActivity data = new IntentDataForRoutePlanningActivity();
                 data.mStartPoint = new LatLonPoint(latitude, longitude);
                 data.mEndPoint = new LatLonPoint(Double.valueOf(evEntitys.get(bPersion).getLat()), Double.valueOf(evEntitys.get(bPersion).getLng()));
-                RoutePlanningActivity.startActivity(getActivity(), data, false);
+                RoutePlanningActivity.startActivity(activity, data, false);
                 break;
             default:
                 break;

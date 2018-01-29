@@ -211,7 +211,7 @@ public class ServiceInfoActivity extends BaseActivity {
                 startActivity(new Intent(ACTION_CALL, Uri.parse("tel:" + serviceInfoBean.getInfo().getTel())));
                 break;
             case R.id.service_more_evaluate:
-                ProductAllEvalauteActivity.startActivity(this, productId, false);
+                ShopAllEvalauteActivity.startActivity(this, productId, serviceInfoBean.getComment().getCommentcount(),2,false);
                 break;
             case R.id.service_to_shop:
                 ShopActivity.startActivity(this, serviceInfoBean.getInfo().getShop_id(), false);

@@ -17,6 +17,7 @@
             android:layout_centerVertical="true"
             android:drawableLeft="@mipmap/back"
             android:padding="8dp"
+            android:drawablePadding="8dp"
             android:gravity="center_vertical"
             android:text="余额"
             android:textColor="@color/white"

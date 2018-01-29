@@ -106,7 +106,7 @@
         <activity android:name=".car.ProductEvalauteInfoActivity" />
         <activity android:name=".car.ProductInfoActivity" />
         <activity android:name=".car.MoreProductActivity" />
-        <activity android:name=".car.ProductAllEvalauteActivity" />
+        <activity android:name=".car.ShopAllEvalauteActivity" />
         <activity android:name=".car.ServiceInfoActivity" />
         <activity android:name=".car.CommitOrderActivity" />
         <activity android:name=".order.OrderInfoActivity"/>

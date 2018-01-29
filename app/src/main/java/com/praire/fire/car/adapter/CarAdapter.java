@@ -79,7 +79,7 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.MyViewHolder> {
                 productName.setText(bean.getProduct().get(i).getName());
                 price.setText(String.format(price.getTag().toString(), bean.getProduct().get(i).getNprice()));
                 saled.setText(String.format(saled.getTag().toString(),bean.getProduct().get(i).getSalecount()));
-
+//                viewGroup.setOnClickListener(new);
 
                 holder.addServiceLl.addView(viewGroup);
             }

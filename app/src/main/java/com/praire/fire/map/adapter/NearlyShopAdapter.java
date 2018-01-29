@@ -20,6 +20,7 @@ import com.praire.fire.R;
 import com.praire.fire.data.IntentDataForRoutePlanningActivity;
 import com.praire.fire.map.RoutePlanningActivity;
 import com.praire.fire.map.bean.NearlyShopBean;
+import com.praire.fire.order.adapter.OrderListAdapter;
 import com.praire.fire.utils.TextViewUtils;
 
 import java.util.ArrayList;
@@ -31,7 +32,7 @@ import butterknife.ButterKnife;
 import static android.content.Intent.ACTION_CALL;
 
 
-public class NearlyShopAdapter extends RecyclerView.Adapter<NearlyShopAdapter.MyViewHolder> {
+public class NearlyShopAdapter extends RecyclerView.Adapter<NearlyShopAdapter.MyViewHolder> implements View.OnClickListener{
 
 
     private Context context;
@@ -57,15 +58,18 @@ public class NearlyShopAdapter extends RecyclerView.Adapter<NearlyShopAdapter.My
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        MyViewHolder holder = new MyViewHolder(LayoutInflater.from(
+        View view = LayoutInflater.from(
                 context).inflate(R.layout.item_map_nearly_shop, parent,
-                false));
+                false);
+        view.setOnClickListener(this);
+        MyViewHolder holder = new MyViewHolder(view);
         return holder;
     }
 
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
+        holder.itemView.setTag(position);
         final NearlyShopBean item = entities.get(position);
         holder.itemMapNearlyName.setText(item.getName());
         holder.itemMapNearlyStar.setRating(Float.valueOf(item.getStar()));
@@ -109,6 +113,13 @@ public class NearlyShopAdapter extends RecyclerView.Adapter<NearlyShopAdapter.My
         return entities.size();
     }
 
+    @Override
+    public void onClick(View view) {
+        if(itemClickLister !=null){
+            itemClickLister.oncheckd((int)view.getTag());
+        }
+    }
+
     class MyViewHolder extends RecyclerView.ViewHolder {
 
 
@@ -135,7 +146,15 @@ public class NearlyShopAdapter extends RecyclerView.Adapter<NearlyShopAdapter.My
         }
 
     }
+    ItemClickLister itemClickLister;
 
+    public void setDataBack(ItemClickLister itemClickLister) {
+        this.itemClickLister = itemClickLister;
+    }
+
+    public interface ItemClickLister {
+        void oncheckd(int position);
+    }
 
 }
 

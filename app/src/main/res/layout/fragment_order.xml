@@ -51,7 +51,7 @@
         app:tabSelectedTextColor="@color/text_color"
         app:tabTextColor="@color/grey" />
 
-   <com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView
+   <android.support.v7.widget.RecyclerView
         android:id="@+id/order_list_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

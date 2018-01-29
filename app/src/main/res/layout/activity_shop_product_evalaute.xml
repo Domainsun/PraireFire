@@ -2,25 +2,25 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/grey_background"
     android:orientation="vertical">
 
     <TextView
+        android:id="@+id/all_evalaute_count"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/white"
         android:gravity="center_vertical"
         android:paddingLeft="15dp"
         android:text="全部评价（0）"
+        android:tag="全部评价（%s）"
         android:textColor="@color/orange"
         android:textSize="19sp" />
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/grey_background"/>
+
     <com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView
-        android:id="@+id/product_evalaute_recyclerView"
+        android:id="@+id/all_evalaute_recyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
          />
 </LinearLayout>

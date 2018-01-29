@@ -273,7 +273,7 @@ public class ProductInfoActivity extends BaseActivity implements BaseSliderView.
                 startActivity(new Intent(ACTION_CALL, Uri.parse("tel:" + productInfoBean.getInfo().getTel())));
                 break;
             case R.id.product_more_evaluate:
-                ProductAllEvalauteActivity.startActivity(this, productId, false);
+                ShopAllEvalauteActivity.startActivity(this, productId, productInfoBean.getComment().getCommentcount(),1, false);
                 break;
             case R.id.product_to_shop:
                 ShopActivity.startActivity(this, productInfoBean.getInfo().getShop_id(), false);

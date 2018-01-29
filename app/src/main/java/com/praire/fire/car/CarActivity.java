@@ -29,6 +29,7 @@ import com.praire.fire.okhttp.OkhttpRequestUtil;
 import com.praire.fire.utils.RecycleViewDivider;
 import com.praire.fire.utils.SharePreferenceMgr;
 import com.praire.fire.utils.statusbarcolor.Eyes;
+import com.yanzhenjie.recyclerview.swipe.SwipeItemClickListener;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
 
 import butterknife.BindView;
@@ -56,6 +57,8 @@ public class CarActivity extends BaseActivity {
     TextView carSort;
     @BindView(R.id.choose_type_ll)
     LinearLayout chooseTypeLl;
+    @BindView(R.id.choose_line)
+    View chooseLine;
     private String sonType;
     /**
      * 搜索类型(1产品类型 2服务类型)
@@ -104,25 +107,15 @@ public class CarActivity extends BaseActivity {
         carRecyclerView.addItemDecoration(new RecycleViewDivider(
                 this, LinearLayoutManager.HORIZONTAL));
         carAdapter = new CarAdapter(this);
+        carRecyclerView.setSwipeItemClickListener(new SwipeItemClickListener() {
+            @Override
+            public void onItemClick(View itemView, int position) {
+                ShopActivity.startActivity(CarActivity.this,carBean.getPagelist().get(position).getId(),false);
+            }
+        });
         carRecyclerView.setAdapter(carAdapter);
     }
 
-    private void setPop(int menuType, View tv, TypeMenuBean popentities) {
-        TypeMenuPopwindows medicinePop = new TypeMenuPopwindows(CarActivity.this, menuType, popentities);
-        medicinePop.showAsDropDown(tv, 0, 0);
-        medicinePop.setDataBack(new TypeMenuPopwindows.OnItemClickListener() {
-            @Override
-            public void onItemClick(int type, int position, String id) {
-//                index = 1;
-//                isFirst = true;
-                types = type;
-                sonType = id;
-                getShopList();
-            }
-
-
-        });
-    }
 
     @Override
     protected void initAdapters() {
@@ -173,12 +166,12 @@ public class CarActivity extends BaseActivity {
                 break;
             case R.id.car_type:
                 if (typeMenuBean != null) {
-                    setPop(0, chooseTypeLl, typeMenuBean);
+                    setPop(0, chooseLine, typeMenuBean);
                 }
                 break;
             case R.id.car_sort:
                 if (typeMenuBean != null) {
-                    setSortPop(chooseTypeLl);
+                    setSortPop(chooseLine);
                 }
                 break;
             default:
@@ -189,11 +182,26 @@ public class CarActivity extends BaseActivity {
     private void setSortPop(View tv) {
 
         SortMenuPopwindows medicinePop = new SortMenuPopwindows(CarActivity.this);
-        medicinePop.showAsDropDown(tv, 0, 50);
+        medicinePop.showAsDropDown(tv, 0, 0);
+        medicinePop.setOutsideTouchable(true);
         medicinePop.setDataBack(new SortMenuPopwindows.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
                 sortId = position;
+                getShopList();
+            }
+        });
+    }
+
+    private void setPop(int menuType, View tv, TypeMenuBean popentities) {
+        TypeMenuPopwindows medicinePop = new TypeMenuPopwindows(CarActivity.this, menuType, popentities);
+        medicinePop.showAsDropDown(tv, 0, 0);
+        medicinePop.setOutsideTouchable(true);
+        medicinePop.setDataBack(new TypeMenuPopwindows.OnItemClickListener() {
+            @Override
+            public void onItemClick(int type, int position, String id) {
+                types = type;
+                sonType = id;
                 getShopList();
             }
         });

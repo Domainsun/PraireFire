@@ -63,13 +63,13 @@ public class TypeMenuPopAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 String count = null;
                 if(type == 1) {
                       names = ((TypeMenuBean.ProductTypeListBean) entities.get(position)).getName();
-                    count = ((TypeMenuBean.ProductTypeListBean) entities.get(position)).getName();
+//                    count = ((TypeMenuBean.ProductTypeListBean) entities.get(position)).getName();
                 }else if (type == 2){
                     names = ((TypeMenuBean.ServiceTypeListBean) entities.get(position)).getName();
-                    count = ((TypeMenuBean.ProductTypeListBean) entities.get(position)).getName();
+//                    count = ((TypeMenuBean.ProductTypeListBean) entities.get(position)).getId();
                 }
                 ((ListHolder) holder).name.setText(names);
-                ((ListHolder) holder).count.setText(count);
+//                ((ListHolder) holder).count.setText(count);
             }
         }
 

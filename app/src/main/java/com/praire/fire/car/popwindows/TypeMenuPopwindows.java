@@ -57,8 +57,8 @@ public class TypeMenuPopwindows extends PopupWindow implements View.OnClickListe
         mainView = LayoutInflater.from(context).inflate(layoutid, null);
 
         this.setWidth(WindowManager.LayoutParams.MATCH_PARENT);
-        this.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
-        this.setBackgroundDrawable(new ColorDrawable(00000000));
+        this.setHeight(WindowManager.LayoutParams.MATCH_PARENT);
+        this.setBackgroundDrawable(context.getResources().getDrawable(R.mipmap.ban_tou_ming));
         this.setContentView(mainView);
         this.setFocusable(true);
 
@@ -121,19 +121,10 @@ public class TypeMenuPopwindows extends PopupWindow implements View.OnClickListe
                 Log.e("position=", position + "");
                 switch (type) {
                     case TYPE_SERVICE:
-                        if (position == -1) {
-                            mOnItemClickListener.onItemClick(TYPE_SERVICE, -1, "智能排序");
-                            dismiss();
-                            return;
-                        }
                         mOnItemClickListener.onItemClick(TYPE_SERVICE, position, entities.getServiceTypeList().get(position).getId());
                         break;
                     case TYPE_PRODUCT:
-                        if (position == -1) {
-                            mOnItemClickListener.onItemClick(TYPE_PRODUCT, -1, "全部分类");
-                            dismiss();
-                            return;
-                        }
+
                         mOnItemClickListener.onItemClick(TYPE_PRODUCT, position, entities.getProductTypeList().get(position).getId());
                         break;
 
@@ -158,15 +149,16 @@ public class TypeMenuPopwindows extends PopupWindow implements View.OnClickListe
                 break;
             case R.id.type_menu_pop_ll2:
                 recyclerView.setVisibility(View.VISIBLE);
-                menuAdapter.setEntities(entities.getProductTypeList(), TYPE_PRODUCT);
+                menuAdapter.setEntities(entities.getServiceTypeList(), TYPE_SERVICE);
                 break;
             case R.id.type_menu_pop_ll3:
                 recyclerView.setVisibility(View.VISIBLE);
-                menuAdapter.setEntities(entities.getServiceTypeList(), TYPE_SERVICE);
+                menuAdapter.setEntities(entities.getProductTypeList(), TYPE_PRODUCT);
                 break;
             default:
                 break;
         }
+
     }
 
     public interface OnItemClickListener {

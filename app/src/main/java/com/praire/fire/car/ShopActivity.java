@@ -171,7 +171,7 @@ public class ShopActivity extends BaseActivity {
         recyclerviewEvaluate.setSwipeItemClickListener(new SwipeItemClickListener() {
             @Override
             public void onItemClick(View itemView, int position) {
-                ProductEvalauteInfoActivity.startActivity(ShopActivity.this, businessInfoBean.getCommentlist().get(position).getId(), false);
+//                ProductEvalauteInfoActivity.startActivity(ShopActivity.this, businessInfoBean.getCommentlist().get(position).getId(), false);
             }
         });
     }
@@ -298,7 +298,7 @@ public class ShopActivity extends BaseActivity {
                 MoreProductActivity.startActivity(this, businessId, 0,false);
                 break;
             case R.id.shop_more_evaluate:
-                ProductAllEvalauteActivity.startActivity(ShopActivity.this, businessId, false);
+                ShopAllEvalauteActivity.startActivity(ShopActivity.this, businessId,businessInfoBean.getComment().getCommentallcount(),0, false);
                 break;
             case R.id.go_shop:
                 MainActivity.startActivity(this, 0, false);

@@ -19,11 +19,11 @@ import butterknife.ButterKnife;
 
 public class ProductEvalauteInfoActivity extends BaseTitleActivity {
 
-    private String productId;
+    private String id;
 
-    public static void startActivity(Context context, String productId, boolean forResult) {
+    public static void startActivity(Context context, String id, boolean forResult) {
         Intent intent = new Intent(context, ProductEvalauteInfoActivity.class);
-        intent.putExtra(Constants.PRODUCT_ID, productId);
+        intent.putExtra(Constants.PRODUCT_ID, id);
         if (!forResult) {
             context.startActivity(intent);
         } else if (context instanceof BaseActivity) {
@@ -44,7 +44,7 @@ public class ProductEvalauteInfoActivity extends BaseTitleActivity {
 
     @Override
     protected void initListeners() {
-        productId = getIntent().getStringExtra(Constants.PRODUCT_ID);
+        id = getIntent().getStringExtra(Constants.PRODUCT_ID);
     }
 
     @Override

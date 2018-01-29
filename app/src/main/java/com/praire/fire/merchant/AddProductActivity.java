@@ -371,7 +371,6 @@ public class AddProductActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         /*选择照片回调*/
-
         if (requestCode == REQUEST_CODE_UPLOAD_PRODUCT1 && resultCode == RESULT_OK) {
               /*照片选择后的回调*/
             List<Uri> mSelected = Matisse.obtainResult(data);

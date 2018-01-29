@@ -42,6 +42,8 @@ public class Constants {
     public static final String TOTLE_PRICE = "TOTLE_PRICE";
     public static final String THANKS_MSG = "THANKS_MSG";
     public static final String TITLE = "title";
+    public static final String COUNT = "count";
+    public static final String PASSWORD = "PASSWORD";
 
     public static String photoCookie="";
     /**

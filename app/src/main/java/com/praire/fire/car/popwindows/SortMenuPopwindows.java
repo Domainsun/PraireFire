@@ -1,5 +1,6 @@
 package com.praire.fire.car.popwindows;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
@@ -49,17 +50,16 @@ public class SortMenuPopwindows extends PopupWindow implements View.OnClickListe
         mainView = LayoutInflater.from(context).inflate(layoutid, null);
 
         this.setWidth(WindowManager.LayoutParams.MATCH_PARENT);
-        this.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
-//        this.setBackgroundDrawable(new ColorDrawable(00000000));
+        this.setHeight(WindowManager.LayoutParams.MATCH_PARENT);
+        this.setBackgroundDrawable(context.getResources().getDrawable(R.mipmap.ban_tou_ming));
         this.setContentView(mainView);
         this.setFocusable(true);
-        ButterKnife.bind(mainView);
+
         final View v = context.getWindow().peekDecorView();
         if (v != null && v.getWindowToken() != null) {
             InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
         }
-
         initView();
         initData();
     }
@@ -130,6 +130,7 @@ public class SortMenuPopwindows extends PopupWindow implements View.OnClickListe
             mOnItemClickListener.onItemClick(position);
             dismiss();
         }
+
     }
 
     public interface OnItemClickListener {

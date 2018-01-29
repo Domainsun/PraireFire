@@ -6,7 +6,7 @@
     android:paddingTop="15dp"
     >
 
-    <de.hdodenhof.circleimageview.CircleImageView
+    <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/user_icon"
         android:layout_width="45dp"
         android:layout_height="45dp"
@@ -20,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginRight="15dp"
-        android:layout_toRightOf="@+id/user_icon"
+        android:layout_toRightOf="@id/user_icon"
         android:paddingBottom="15dp"
         android:orientation="vertical">
 
@@ -34,13 +34,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/text_color"
+                android:layout_weight="1"
                 android:textSize="17sp" />
 
             <TextView
                 android:id="@+id/item_shop_ealuate_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
+                android:gravity="right"
                 android:textColor="@color/grey"
                 android:textSize="14sp" />
         </LinearLayout>
@@ -79,6 +80,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:text="浏览0"
+                android:tag="浏览%s"
                 android:textColor="@color/grey"
                 android:textSize="12sp" />
 
@@ -94,6 +96,7 @@
                 android:drawablePadding="5dp"
                 android:gravity="center"
                 android:text="赞"
+                android:tag="赞%s"
                 android:textColor="@color/grey"
                 android:textSize="12sp" />
 
@@ -121,10 +124,11 @@
         android:background="@color/grey_background" />
 
     <LinearLayout
+        android:id="@+id/bussiness_respond_ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/item_shop_ealuate_ll"
-        android:layout_below="@+id/item_shop_ealuate_line"
+        android:layout_below="@id/item_shop_ealuate_line"
         android:orientation="horizontal"
         android:layout_marginRight="15dp"
         android:paddingBottom="15dp"
@@ -133,14 +137,18 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:src="@mipmap/details_comment" />
 
         <TextView
+            android:id="@+id/bussiness_respond"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="12dp"
             android:text="商家回应："
-            android:textColor="@color/orange"
+            android:layout_gravity="center_vertical"
+            android:tag="商家回应：%s"
+            android:textColor="@color/grey"
             android:textSize="12sp" />
     </LinearLayout>
 

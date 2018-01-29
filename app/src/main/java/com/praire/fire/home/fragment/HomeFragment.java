@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.os.Message;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -71,7 +72,7 @@ public class HomeFragment extends BaseFragment implements BaseSliderView.OnSlide
     @BindView(R.id.home_clothes)
     TextView homeClothes;
     @BindView(R.id.home_ecyclerView)
-    SwipeMenuRecyclerView homeEcyclerView;
+    RecyclerView homeEcyclerView;
     private ShopListAdapter adapter;
     private int index = 1;
     private List<ShopListBean.PagelistBean> evEntitys = new ArrayList<>();
@@ -123,17 +124,15 @@ public class HomeFragment extends BaseFragment implements BaseSliderView.OnSlide
         //添加分割线
         homeEcyclerView.addItemDecoration(new RecycleViewDivider(
                 getActivity(), LinearLayoutManager.HORIZONTAL));
-        homeEcyclerView.setSwipeItemClickListener(new SwipeItemClickListener() {
+
+        adapter = new ShopListAdapter(getActivity());
+        homeEcyclerView.setAdapter(adapter);
+        adapter.setOnItemClickListener(new ShopListAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(View itemView, int position) {
+            public void onItemClick(View view, int position) {
                 ShopActivity.startActivity(getActivity(), evEntitys.get(position).getId(), false);
             }
         });
-        adapter = new ShopListAdapter(getActivity());
-
-
-        homeEcyclerView.setAdapter(adapter);
-
     }
 
 
