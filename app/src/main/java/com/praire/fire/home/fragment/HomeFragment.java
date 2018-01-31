@@ -33,6 +33,7 @@ import com.praire.fire.car.ShopActivity;
 import com.praire.fire.home.adapter.ShopListAdapter;
 import com.praire.fire.home.bean.ShopListBean;
 import com.praire.fire.home.bean.SwipeBean;
+import com.praire.fire.merchant.MapChooseActivity;
 import com.praire.fire.okhttp.OkhttpRequestUtil;
 import com.praire.fire.utils.RecycleViewDivider;
 import com.praire.fire.utils.SharePreferenceMgr;
@@ -257,6 +258,7 @@ public class HomeFragment extends BaseFragment implements BaseSliderView.OnSlide
 //                EducationActivity.startActivity(getActivity(), false);
                 break;
             case R.id.home_life:
+                MapChooseActivity.startActivity(getActivity(),false);
                 break;
             case R.id.home_trip:
                 break;

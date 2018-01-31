@@ -44,12 +44,17 @@ public class Constants {
     public static final String TITLE = "title";
     public static final String COUNT = "count";
     public static final String PASSWORD = "PASSWORD";
+    public static final String ADDRESS = "address";
 
     public static String photoCookie="";
     /**
+     * 区
+     */
+    public static String AREAS = "AREAS";
+    /**
      * 经纬度
      */
-    public static String ENDLATLNG = "endLATLNG";
+    public static String LATLNG = "endLATLNG";
     /** 经纬度
      */
     public static String STARTLATLNG = "startLATLNG";

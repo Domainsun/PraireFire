@@ -227,8 +227,7 @@ public class MerchantActivity1 extends Activity implements EasyPermissions.Permi
                 choseTime();
                 break;
             case R.id.tv_chose_shop_mapregion:
-                Intent i2 = new Intent(this, MapChooseActivity.class);
-                startActivityForResult(i2, REQUEST_CODE_CHOOSE_MAP_ADDRESS);
+                MapChooseActivity.startActivity(this,true);
                 break;
             case R.id.submit:
 
