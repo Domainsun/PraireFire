@@ -254,7 +254,7 @@ public class HomeFragment extends BaseFragment implements BaseSliderView.OnSlide
                 CarActivity.startActivity(getActivity(), false);
                 break;
             case R.id.home_edu:
-                EducationActivity.startActivity(getActivity(), false);
+//                EducationActivity.startActivity(getActivity(), false);
                 break;
             case R.id.home_life:
                 break;

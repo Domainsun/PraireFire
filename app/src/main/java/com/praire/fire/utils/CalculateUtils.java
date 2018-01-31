@@ -1,7 +1,13 @@
 package com.praire.fire.utils;
 
+import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+
 import com.praire.fire.car.bean.CommitProduct;
 
+import java.io.FileNotFoundException;
 import java.util.List;
 
 /**

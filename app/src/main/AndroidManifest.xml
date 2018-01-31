@@ -30,6 +30,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:hardwareAccelerated="false"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <!--高德地图apikey-->
         <meta-data
@@ -135,7 +136,9 @@
         <activity android:name=".merchant.TodayIncomeActivity" />
         <activity android:name=".merchant.HistoryIncomeActivity"/>
         <activity android:name=".order.ResultActivity"/>
-        <activity android:name=".order.EvaluateActivity"/>
+        <activity android:name=".order.EvaluateActivity"
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
+
     </application>
 
 </manifest>
