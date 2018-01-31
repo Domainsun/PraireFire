@@ -9,7 +9,17 @@ import java.util.List;
 public class OrderInfoBean {
     /**
      * code : 1
-     * orderlist : [{"id":"241","shop_id":"17","user_id":"1474","orderno":"2018012413384126547160","payno":"","tradeno":"","paytype":"0","channel":"","buyeraccount":"","payprice":"0.00","status":"0","refund":"0","refund_time":"0","shoprefund_time":"0","rejectmessage":"","pay_time":"0","isread":"0","create_time":"1516772321","update_time":"1516772321","use_time":"0","cancel_time":"0","pslist":[{"id":"167","order_id":"241","type":"2","ps_id":"32","name":"洗车4","cover":"","nprice":"111.00","price":"108.78","shopprice":"99.90","number":"5","create_time":"1516772321","update_time":"1516772321"},{"id":"168","order_id":"241","type":"1","ps_id":"28","name":"零件5修改后","cover":"http://lysh-upload.oss-cn-shanghai.aliyuncs.com/shop/product/201801/38f4f4a38709f338b90a376285639d58.jpg?OSSAccessKeyId=LTAIjyidULA5tuIB&Expires=1516778948&Signature=CH%2BN3DhYfqZOyQnHoNTiUhKHhQo%3D","nprice":"0.00","price":"0.00","shopprice":"0.00","number":"5","create_time":"1516772321","update_time":"1516772321"}]}]
+     * orderlist : [{"id":"241","shop_id":"17","user_id":"1474","orderno":"2018012
+     * 413384126547160","payno":"","tradeno":"","paytype":"0","channel":"","buye
+     * raccount":"","payprice":"0.00","status":"0","refund":"0","refund_time":"0","s
+     * hoprefund_time":"0","rejectmessage":"","pay_time":"0","isread":"0","create_time":
+     * "1516772321","update_time":"1516772321","use_time":"0","cancel_time":"0","pslist"
+     * :[{"id":"167","order_id":"241","type":"2","ps_id":"32","name":"洗车4","cover":"",
+     * "nprice":"111.00","price":"108.78","shopprice":"99.90","number":"5","create_time":"1516772321"
+     * ,"update_time":"1516772321"},{"id":"168","order_id":"241","type":"1","ps_id":"28","name":"零件5修改后",
+     * "cover":"http://lysh-upload.oss-cn-shanghai.aliyuncs.com/shop/product/201801/38f4f4a38709f338b90a376285639d58.
+     * jpg?OSSAccessKeyId=LTAIjyidULA5tuIB&Expires=1516778948&Signature=CH%2BN3DhYfqZOyQnHoNTiUhKHhQo%3D","nprice":"0
+     * .00","price":"0.00","shopprice":"0.00","number":"5","create_time":"1516772321","update_time":"1516772321"}]}]
      */
 
     private int code;

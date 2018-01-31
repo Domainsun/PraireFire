@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:layout_marginTop="1dp">
+
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="100dp">
+
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/product_photo"
+            android:layout_width="80dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            fresco:roundAsCircle="true"/>
+
+
+
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="产品名称"
+            android:textColor="@color/text_color"
+            android:textSize="16sp"
+            android:layout_toRightOf="@id/product_photo"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="20dp"
+
+            />
+
+
+
+        <TextView
+            android:id="@+id/tv_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="分类: 汽车用品"
+            android:textColor="@color/grey"
+            android:textSize="12sp"
+            android:layout_toRightOf="@id/product_photo"
+            android:layout_marginTop="2dp"
+            android:layout_marginLeft="20dp"
+            android:layout_below="@id/tv_name"
+
+            />
+
+        <TextView
+            android:id="@+id/tv_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="数量: 1"
+            android:textColor="@color/grey"
+            android:textSize="12sp"
+            android:layout_toRightOf="@id/product_photo"
+            android:layout_marginTop="2dp"
+            android:layout_marginLeft="20dp"
+            android:layout_below="@id/tv_type"
+            />
+
+        <TextView
+            android:id="@+id/tv_nprice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="¥ 24.5"
+            android:textColor="@color/text_color"
+            android:textSize="18sp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="15dp"
+            />
+
+        <TextView
+            android:id="@+id/oprice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="¥ 24.5"
+            android:textColor="@color/grey"
+            android:textSize="18sp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="30dp"
+            />
+
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="———"-->
+            <!--android:textColor="@color/grey"-->
+            <!--android:textSize="18sp"-->
+            <!--android:layout_alignParentBottom="true"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_marginTop="15dp"-->
+            <!--android:layout_marginRight="15dp"-->
+            <!--android:layout_marginBottom="30dp"-->
+            <!--/>-->
+
+    </RelativeLayout>
+
+
+
+</LinearLayout>

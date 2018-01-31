@@ -173,6 +173,9 @@ public class ShoppingCarActivity extends BaseActivity {
         }
     };
 
+
+
+
     @Override
     protected void initListeners() {
         getShoppingCarList();

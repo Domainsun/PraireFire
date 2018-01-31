@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.praire.fire.R;
+import com.praire.fire.base.BaseActivity;
 import com.praire.fire.merchant.adapter.TodayIncomeAdapter;
 import com.praire.fire.okhttp.GsonUtils.J2O;
 import com.praire.fire.okhttp.JavaBean.ServiceListBean;
@@ -30,7 +31,7 @@ import butterknife.OnClick;
 
 import static com.praire.fire.common.Constants.LOGIN_COOKIE;
 
-public class TodayIncomeActivity extends AppCompatActivity {
+public class TodayIncomeActivity extends BaseActivity {
 
     @BindView(R.id.tv_back)
     TextView tvBack;
@@ -71,6 +72,31 @@ public class TodayIncomeActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected int getFragmentLayout() {
+        return R.layout.activity_account;
+    }
+
+    @Override
+    protected void initViews() {
+
+    }
+
+    @Override
+    protected void initListeners() {
+
+    }
+
+    @Override
+    protected void initAdapters() {
+
+    }
+
+    @Override
+    protected void initData() {
+
+    }
+
     private void initview() {
         cookie = (String) SharePreferenceMgr.get(this, LOGIN_COOKIE, "");
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
@@ -89,8 +115,9 @@ public class TodayIncomeActivity extends AppCompatActivity {
 
         initdata(getTodayDate());
 
-
     }
+
+
 
 
     private void initdata(String date) {

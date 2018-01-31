@@ -59,7 +59,17 @@
             android:textColor="@android:color/black"
             android:textSize="20sp"
             android:layout_marginLeft="15dp"/>
-
+        <TextView
+            android:id="@+id/tv_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text=""
+            android:textColor="@color/grey"
+            android:textSize="12sp"
+            android:layout_toLeftOf="@id/iv_choose_date"
+            android:layout_marginRight="8dp"
+            />
         <ImageView
             android:id="@+id/iv_choose_date"
             android:layout_width="wrap_content"

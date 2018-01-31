@@ -29,8 +29,6 @@ android {
         }
     }
 
-
-
 //配置打包名称
     android.applicationVariants.all { variant ->
         variant.outputs.all {
@@ -100,9 +98,12 @@ dependencies {
 
     //ymlf圆形图片
     compile 'de.hdodenhof:circleimageview:2.1.0'
-
     /*仿ios城市三级联动选择*/
     compile 'liji.library.dev:citypickerview:1.1.0'
+
+    /*仿ios 时间滚轮选择*/
+
+    compile 'com.contrarywind:Android-PickerView:3.2.7'
 
     /*知乎图片选择*/
     compile 'com.zhihu.android:matisse:0.4.3'

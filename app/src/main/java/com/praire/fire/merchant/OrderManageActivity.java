@@ -3,7 +3,9 @@ package com.praire.fire.merchant;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
@@ -15,6 +17,7 @@ import android.widget.Toast;
 
 import com.praire.fire.R;
 import com.praire.fire.SignAcitvity;
+import com.praire.fire.base.BaseActivity;
 import com.praire.fire.merchant.adapter.OrderAdapter;
 import com.praire.fire.okhttp.GsonUtils.J2O;
 import com.praire.fire.okhttp.JavaBean.APIResultBean;
@@ -29,11 +32,12 @@ import java.util.List;
 import static com.praire.fire.common.Constants.LOGIN_COOKIE;
 
 
-public class OrderManageActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener {
+public class OrderManageActivity extends BaseActivity implements TabLayout.OnTabSelectedListener {
     private TabLayout myTabLayout;
     SwipeMenuRecyclerView recyclerView;
-
+    SwipeRefreshLayout mRefreshLayout;
     TextView tv_statu;
+    TextView tv_back;
     private OrderAdapter adapter;
 
     UseAPIs u=new UseAPIs();
@@ -49,10 +53,55 @@ public class OrderManageActivity extends AppCompatActivity implements TabLayout.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_manage);
+
+        cookie = (String) SharePreferenceMgr.get(this, LOGIN_COOKIE, "");
+
+        try {
+            Thread  thread=new Thread(){
+                @Override
+                public void run() {
+                    super.run();
+                    u.changeOrderReadStatus(cookie);
+                }
+            };
+
+            thread.start();
+
+
+
+        } catch (Exception e) {
+            Log.e("initData", "initData: "+e.toString() );
+        }
+        adapter = new OrderAdapter(this);
         initData("0");
         initView();
 
 
+
+    }
+
+    @Override
+    protected int getFragmentLayout() {
+        return R.layout.activity_order_manage;
+    }
+
+    @Override
+    protected void initViews() {
+
+    }
+
+    @Override
+    protected void initListeners() {
+
+    }
+
+    @Override
+    protected void initAdapters() {
+
+    }
+
+    @Override
+    protected void initData() {
 
     }
 
@@ -63,12 +112,21 @@ public class OrderManageActivity extends AppCompatActivity implements TabLayout.
         }
 
 
-        cookie = (String) SharePreferenceMgr.get(this, LOGIN_COOKIE, "");
+//        Datas.clear();
+
+
+
         String str="";
         str=u.getBusinessOrderList(statu,cookie,"1");
+
+        Log.d("statu", "statu: "+statu);
+
         if (str.length() != 0) {
+
+            Log.d("initData", "initData: "+str);
             BusinessOrderListBean b = j.getBusinessOrderList(str);
             Datas = b.getPagelist();
+            adapter.setData(Datas);
         } else {
             Toast.makeText(this, "网络错误！", Toast.LENGTH_SHORT).show();
         }
@@ -79,6 +137,15 @@ public class OrderManageActivity extends AppCompatActivity implements TabLayout.
 
     private void initView() {
         tv_statu=findViewById(R.id.tv_status);
+        tv_back=findViewById(R.id.tv_back);
+
+        tv_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                OrderManageActivity.this.finish();
+            }
+        });
+
         LinearLayoutManager mLayoutManager =new LinearLayoutManager(this);
 
         myTabLayout = (TabLayout) findViewById(R.id.myTab);
@@ -88,16 +155,19 @@ public class OrderManageActivity extends AppCompatActivity implements TabLayout.
         myTabLayout.addTab(myTabLayout.newTab().setText("已退款"));
         myTabLayout.setOnTabSelectedListener(this);
 
-
+        mRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.refresh_layout);
         recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.addItemDecoration(new DividerItemDecoration(this, 1));
+//        recyclerView.addItemDecoration(new DividerItemDecoration(this, 1));
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.useDefaultLoadMore(); // 使用默认的加载更多的View。
         recyclerView.setLoadMoreListener(mLoadMoreListener);
         recyclerView.loadMoreFinish(false, true);
-        adapter = new OrderAdapter(this);
 
-        adapter.setData(Datas);
+        mRefreshLayout.setOnRefreshListener(mRefreshListener); // 刷新监听。
+
+
+
+
 
         adapter.setmOnItemClickListener(new OrderAdapter.OnItemClickListener() {
             @Override
@@ -106,6 +176,13 @@ public class OrderManageActivity extends AppCompatActivity implements TabLayout.
                 if (status.equals("1")) {
                     showButtonDialogFragment(id,position);
                 } else if (status.equals("0")) {
+                    String orderId=Datas.get(position).getId();
+
+
+                    Intent i=new Intent(OrderManageActivity.this,OrderChangeActivity.class);
+                    i.putExtra("orderId",orderId);
+                    startActivity(i);
+
 
                 }
 
@@ -114,6 +191,36 @@ public class OrderManageActivity extends AppCompatActivity implements TabLayout.
         recyclerView.setAdapter(adapter);
 
     }
+
+
+
+    /*
+  * 下拉刷新*/
+    private SwipeRefreshLayout.OnRefreshListener mRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
+        @Override
+        public void onRefresh() {
+
+
+
+//            recyclerView.removeAllViews();
+//
+//            Datas.clear();
+
+            initData(statu);
+
+            adapter.notifyDataSetChanged();
+//            adapter.notify();
+
+
+
+            mRefreshLayout.setRefreshing(false);
+            index = 1;
+            dataEmpty = false;
+            hasMore = true;
+            recyclerView.loadMoreFinish(false, true);
+            Toast.makeText(OrderManageActivity.this, "刷新成功", Toast.LENGTH_SHORT).show();
+        }
+    };
 
 
     /**
@@ -133,8 +240,9 @@ public class OrderManageActivity extends AppCompatActivity implements TabLayout.
                     String str = u.getBusinessOrderList(statu,cookie,index);
                     BusinessOrderListBean b=j.getBusinessOrderList(str);
 
-                    Log.d("str", "run: "+str);
-                    Log.d("index", "run: "+index);
+
+                    Log.d("statu", "statu: "+statu);
+                    Log.d("index", "inex: "+index);
 
                     for (int i = 0; i < b.getPagelist().size(); i++) {
                         Datas.add(b.getPagelist().get(i));
@@ -143,7 +251,7 @@ public class OrderManageActivity extends AppCompatActivity implements TabLayout.
                     if (b.getPagelist().size() == 0) {
                         dataEmpty = true;
                     }
-                    if (b.getPagelist().size() < 10) {
+                    if (b.getPagelist().size() < 5) {
                         hasMore = false;
                     }
                     adapter.notifyDataSetChanged();
@@ -182,7 +290,7 @@ public class OrderManageActivity extends AppCompatActivity implements TabLayout.
                     APIResultBean a = new J2O().getAPIResult(str);
                     if (a.getCode().equals("1")) {
                         Datas.get(position).setRefund("3");
-
+                        adapter.notifyItemChanged(position);
                     }
                     Toast.makeText(OrderManageActivity.this, a.getMsg() + "", Toast.LENGTH_SHORT).show();
                 } else {
@@ -231,7 +339,6 @@ public class OrderManageActivity extends AppCompatActivity implements TabLayout.
         }
 
         initData(statu);
-        adapter.setData(Datas);
         adapter.notifyDataSetChanged();
 
 

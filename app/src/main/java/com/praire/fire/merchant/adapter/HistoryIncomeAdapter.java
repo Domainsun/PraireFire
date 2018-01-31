@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.praire.fire.R;
-import com.praire.fire.okhttp.JavaBean.BusinessEvaluateListBean;
+import com.praire.fire.okhttp.JavaBean.HistoryIncomeBean;
 
 import java.util.List;
 
@@ -23,15 +23,10 @@ public class HistoryIncomeAdapter extends RecyclerView.Adapter<HistoryIncomeAdap
 
 
     Context context;
-    @BindView(R.id.tv_income)
-    TextView tvIncome;
-    @BindView(R.id.tv_order_count)
-    TextView tvOrderCount;
-    @BindView(R.id.tv_time)
-    TextView tvTime;
 
 
-    private List<BusinessEvaluateListBean.PagelistBean> data;
+
+    private List<HistoryIncomeBean.PagelistBean> data;
     private LayoutInflater inflater;
 
     public HistoryIncomeAdapter(Context context) {
@@ -65,6 +60,9 @@ public class HistoryIncomeAdapter extends RecyclerView.Adapter<HistoryIncomeAdap
 
 //        holder.ivHead.setImageURI(data.get(position).getUserinfo().getHead());
 
+        holder.tvIncome.setText(data.get(position).getTotalincome());
+        holder.tvOrderCount.setText(data.get(position).getOrdercount()+"件订单,"+data.get(position).getOrdercount()+"件商品");
+        holder.tvTime.setText(data.get(position).getUse_date());
 
     }
 
@@ -74,14 +72,19 @@ public class HistoryIncomeAdapter extends RecyclerView.Adapter<HistoryIncomeAdap
         return data.size();
     }
 
-    public void setData(List<BusinessEvaluateListBean.PagelistBean> Datas) {
+    public void setData(List<HistoryIncomeBean.PagelistBean> Datas) {
         data = Datas;
     }
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-
+        @BindView(R.id.tv_income)
+        TextView tvIncome;
+        @BindView(R.id.tv_order_count)
+        TextView tvOrderCount;
+        @BindView(R.id.tv_time)
+        TextView tvTime;
         public MyViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);

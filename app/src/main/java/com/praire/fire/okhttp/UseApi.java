@@ -5,6 +5,8 @@ import android.graphics.BitmapFactory;
 import android.os.Message;
 import android.util.Log;
 
+import com.praire.fire.FindPasswordActivity;
+import com.praire.fire.FindPasswordNextActivity;
 import com.praire.fire.RegisterActivity;
 
 import java.io.IOException;
@@ -49,9 +51,9 @@ public class UseApi {
 
 
 
+    /*type: 0 是注册时用的，1是找回密码时用的*/
 
-
-    public void getPhotoCode() {
+    public void getPhotoCode(final String type) {
         OkHttpClient client = new OkHttpClient();
         //创建一个Request
         final Request request = new Request.Builder()
@@ -76,7 +78,14 @@ public class UseApi {
                     Message message=Message.obtain();
                     message.what=PhotoCode;
                     message.obj=bitmap;
-                    RegisterActivity.handler_register.sendMessage(message);
+
+                    if (type.equals("0")) {
+                        RegisterActivity.handler_register.sendMessage(message);
+                    } else if(type.equals("1")){
+                        FindPasswordActivity.handler_findPassword.sendMessage(message);
+                    }
+
+
                 }
             }
         });

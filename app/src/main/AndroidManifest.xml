@@ -4,9 +4,9 @@
 
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <!--允许程序设置内置sd卡的写权限-->
+    <!-- 允许程序设置内置sd卡的写权限 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <!--允许程序获取网络状态-->
+    <!-- 允许程序获取网络状态 -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name=" android.permission.READ_EXTERNAL_STORAGE" />
     <!-- 允许程序访问WiFi网络信息 -->
@@ -15,7 +15,7 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <!-- 允许程序访问CellID或WiFi热点来获取粗略的位置 -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <!-- 定位包、导航包需要的额外权限（注：基础权限也需要）-->
+    <!-- 定位包、导航包需要的额外权限（注：基础权限也需要） -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
@@ -32,7 +32,8 @@
         android:supportsRtl="true"
         android:hardwareAccelerated="false"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <!--高德地图apikey-->
+
+        <!-- 高德地图apikey -->
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="1773bbc6ba5191bf32f2c3cc7a5c4b6b" />
@@ -61,7 +62,6 @@
         <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
         <!-- </intent-filter> -->
 
-
         <activity android:name=".RegisterActivity" />
         <activity android:name=".merchant.SettledActivity" />
         <activity android:name=".home.MainActivity" />
@@ -89,8 +89,6 @@
         <activity android:name=".my.VerifyPhoneActivity" />
         <activity android:name=".my.BillActivity" />
         <activity android:name=".my.WithdrawActivity" />
-        <activity android:name=".my.RechargeActivity" />
-
         <activity android:name=".merchant.MapChooseActivity" />
         <activity android:name=".map.MapSearchActivity" />
         <activity android:name=".map.RoutePlanningActivity" />
@@ -98,7 +96,6 @@
         <activity android:name=".map.WalkRouteDetailActivity" />
         <activity android:name=".map.BusRouteDetailActivity" />
         <activity android:name=".merchant.SettledActivity1" />
-
         <activity android:name=".merchant.RegionChooseActivity" />
         <activity android:name=".map.GPSNaviActivity" />
         <activity android:name=".merchant.BusinessServiceActivity" />
@@ -110,33 +107,33 @@
         <activity android:name=".car.ShopAllEvalauteActivity" />
         <activity android:name=".car.ServiceInfoActivity" />
         <activity android:name=".car.CommitOrderActivity" />
-        <activity android:name=".order.OrderInfoActivity"/>
-        <activity android:name=".order.PayActivity"/>
-<!--支付宝支付相关-->
+        <activity android:name=".order.OrderInfoActivity" />
+        <activity android:name=".order.PayActivity" />
+        <!-- 支付宝支付相关 -->
         <activity
             android:name="com.alipay.sdk.app.H5PayActivity"
             android:configChanges="orientation|keyboardHidden|navigation|screenSize"
             android:exported="false"
             android:screenOrientation="behind"
-            android:windowSoftInputMode="adjustResize|stateHidden" >
-        </activity>
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name="com.alipay.sdk.app.H5AuthActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
             android:screenOrientation="behind"
-            android:windowSoftInputMode="adjustResize|stateHidden" >
-        </activity>
-
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity android:name=".merchant.ProductManageActivity" />
         <activity android:name=".merchant.AddProductActivity" />
         <activity android:name=".merchant.OrderManageActivity" />
         <activity android:name=".merchant.OrderChangeActivity" />
         <activity android:name=".merchant.EvaluateManageActivity" />
         <activity android:name=".merchant.TodayIncomeActivity" />
-        <activity android:name=".merchant.HistoryIncomeActivity"/>
-        <activity android:name=".order.ResultActivity"/>
-        <activity android:name=".order.EvaluateActivity"
+        <activity android:name=".merchant.WithdrawalActivity" />
+        <activity android:name=".merchant.HistoryIncomeActivity" />
+        <activity android:name=".order.ResultActivity" />
+        <activity android:name=".order.EvaluateActivity" />
+        <activity android:name=".FindPasswordActivity" />
+        <activity android:name=".FindPasswordNextActivity"></activity>
             android:windowSoftInputMode="stateHidden|adjustPan"/>
 
     </application>

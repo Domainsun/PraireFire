@@ -10,13 +10,14 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.praire.fire.common.Constants;
 import com.praire.fire.home.MainActivity;
-import com.praire.fire.okhttp.JavaBean.APIResultBean;
 import com.praire.fire.okhttp.GsonUtils.J2O;
+import com.praire.fire.okhttp.JavaBean.APIResultBean;
 import com.praire.fire.okhttp.UseAPIs;
 import com.praire.fire.utils.SharePreferenceMgr;
 
@@ -43,13 +44,19 @@ public class SignAcitvity extends Activity {
     TextView tvRegister;
     @BindView(R.id.tv_findPw)
     TextView tvFindPw;
-    public  static Handler handler_sign;
+    public static Handler handler_sign;
     MyApplication myApplication;
+    @BindView(R.id.imageView2)
+    ImageView imageView2;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign);
         ButterKnife.bind(this);
+
+
+
 
         initview();
 
@@ -57,6 +64,11 @@ public class SignAcitvity extends Activity {
 
     @SuppressLint("HandlerLeak")
     private void initview() {
+
+        //add by lyp
+        phone = (String) SharePreferenceMgr.get(this, Constants.USER_ID, "");
+
+
         myApplication = (MyApplication) getApplication();
         Intent i = getIntent();
         phone = i.getStringExtra("phone");
@@ -65,6 +77,7 @@ public class SignAcitvity extends Activity {
         pw = (String)SharePreferenceMgr.get(this,Constants.PASSWORD,"");
         etPw.setText(pw);
         //--------add end
+
         etPhone.setText(phone);
         handler_sign = new Handler() {
             @Override
@@ -77,7 +90,8 @@ public class SignAcitvity extends Activity {
             }
         };
     }
-    @OnClick({R.id.btn_sign, R.id.tv_register, R.id.tv_findPw})
+
+    @OnClick({R.id.btn_sign, R.id.tv_register, R.id.tv_findPw, R.id.imageView2})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_sign:
@@ -92,9 +106,11 @@ public class SignAcitvity extends Activity {
                         APIResultBean a = new J2O().getAPIResult(result);
                         Toast.makeText(this, a.getMsg() + "", Toast.LENGTH_SHORT).show();
                         if ("1".equals(a.getCode())) {
-                            SharePreferenceMgr.put(this, Constants.LOGIN_COOKIE,myApplication.getSignCookie());
-                            SharePreferenceMgr.put(MyApplication.getInstance(), Constants.LOGIN_COOKIE,myApplication.getSignCookie());
+                            SharePreferenceMgr.put(this, Constants.LOGIN_COOKIE, myApplication.getSignCookie());
+                            SharePreferenceMgr.put(MyApplication.getInstance(), Constants.LOGIN_COOKIE, myApplication.getSignCookie());
                             //-------//add by lyp --------
+                            SharePreferenceMgr.put(this, Constants.USER_ID, phone);
+                            Intent i = new Intent(this, MainActivity.class);
                             SharePreferenceMgr.put(this,Constants.USER_ID,phone);
                             SharePreferenceMgr.put(this,Constants.PASSWORD,pw);
                             Intent i=new Intent(this, MainActivity.class);
@@ -106,8 +122,7 @@ public class SignAcitvity extends Activity {
                     }
 
 
-
-            }
+                }
                 break;
 
             case R.id.tv_register:
@@ -116,7 +131,25 @@ public class SignAcitvity extends Activity {
 
                 break;
             case R.id.tv_findPw:
+
+                phone = etPhone.getText().toString();
+                if (phone.length() != 0) {
+                    Intent i_find=new Intent(this,FindPasswordActivity.class);
+                    i_find.putExtra("phone",phone);
+                    startActivity(i_find);
+
+                } else {
+                    Toast.makeText(this, "请输入用户后找回", Toast.LENGTH_SHORT).show();
+                }
+
+
                 break;
+            case R.id.imageView2:
+                finish();
+                break;
+
         }
     }
+
+
 }

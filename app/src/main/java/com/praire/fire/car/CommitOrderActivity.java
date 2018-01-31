@@ -143,6 +143,8 @@ public class CommitOrderActivity extends BaseTitleActivity {
         commitOrderPhone.setText((String) SharePreferenceMgr.get(this, Constants.USER_ID, ""));
     }
 
+
+
     @Override
     public void initiTile() {
         setDefaultBack();

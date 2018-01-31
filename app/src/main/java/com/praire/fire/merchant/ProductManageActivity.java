@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.praire.fire.R;
+import com.praire.fire.base.BaseActivity;
 import com.praire.fire.merchant.adapter.ProductAdapter;
 import com.praire.fire.merchant.adapter.ServiceAdapter;
 import com.praire.fire.okhttp.GsonUtils.J2O;
@@ -35,7 +36,7 @@ import butterknife.OnClick;
 
 import static com.praire.fire.common.Constants.LOGIN_COOKIE;
 
-public class ProductManageActivity extends AppCompatActivity {
+public class ProductManageActivity extends BaseActivity {
 
     @BindView(R.id.tv_back)
     TextView tvBack;
@@ -69,6 +70,31 @@ public class ProductManageActivity extends AppCompatActivity {
 
 //        initdata();
         initview();
+
+    }
+
+    @Override
+    protected int getFragmentLayout() {
+        return R.layout.activity_product_manage;
+    }
+
+    @Override
+    protected void initViews() {
+
+    }
+
+    @Override
+    protected void initListeners() {
+
+    }
+
+    @Override
+    protected void initAdapters() {
+
+    }
+
+    @Override
+    protected void initData() {
 
     }
 

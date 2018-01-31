@@ -23,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.praire.fire.R;
+import com.praire.fire.base.BaseActivity;
 import com.praire.fire.merchant.adapter.EvaluateAdapter;
 import com.praire.fire.merchant.adapter.ProductAdapter;
 import com.praire.fire.okhttp.GsonUtils.J2O;
@@ -44,7 +45,7 @@ import butterknife.OnClick;
 
 import static com.praire.fire.common.Constants.LOGIN_COOKIE;
 
-public class EvaluateManageActivity extends AppCompatActivity {
+public class EvaluateManageActivity extends BaseActivity {
 
     UseAPIs u = new UseAPIs();
     J2O j = new J2O();
@@ -74,10 +75,35 @@ public class EvaluateManageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_evaluate_manage);
         ButterKnife.bind(this);
-        init();
+        initview();
     }
 
-    private void init() {
+    @Override
+    protected int getFragmentLayout() {
+        return R.layout.activity_evaluate_manage;
+    }
+
+    @Override
+    protected void initViews() {
+
+    }
+
+    @Override
+    protected void initListeners() {
+
+    }
+
+    @Override
+    protected void initAdapters() {
+
+    }
+
+    @Override
+    protected void initData() {
+
+    }
+
+    public void initview() {
         cookie = (String) SharePreferenceMgr.get(this, LOGIN_COOKIE, "");
         imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         /*未读变已读*/

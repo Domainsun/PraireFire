@@ -1,5 +1,6 @@
 package com.praire.fire.merchant;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.praire.fire.R;
+import com.praire.fire.base.BaseActivity;
 import com.praire.fire.okhttp.GsonUtils.J2O;
 import com.praire.fire.okhttp.JavaBean.BusinessTodayCountBean;
 import com.praire.fire.okhttp.UseAPIs;
@@ -21,7 +23,7 @@ import butterknife.OnClick;
 
 import static com.praire.fire.common.Constants.LOGIN_COOKIE;
 
-public class BusinessServiceActivity extends AppCompatActivity {
+public class BusinessServiceActivity extends BaseActivity {
 
     @BindView(R.id.tv_back)
     TextView tvBack;
@@ -67,46 +69,89 @@ public class BusinessServiceActivity extends AppCompatActivity {
 
     String orderCount="";
     String evaluateCount="";
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_business_service);
-        ButterKnife.bind(this);
-        ininview();
+//        setContentView(R.layout.activity_business_service);
+
+
+
+
     }
 
-    private void ininview() {
+    @Override
+    protected int getFragmentLayout() {
+        super.context=this;
+        return R.layout.activity_business_service;
+    }
+
+    @Override
+    protected void initViews() {
+        ButterKnife.bind(this);
         String cookie = (String) SharePreferenceMgr.get(this, LOGIN_COOKIE, "");
         String result1 = "";
         result1 = new UseAPIs().getBusinessTodayCount(cookie);
         if (result1.length() != 0) {
-            BusinessTodayCountBean b = new J2O().getBusinessTodayCount(result1);
-            tvMoney.setText(b.getTotal_income());
-            tvDealCount.setText("共交易" + b.getPay_count() + "笔");
-            tvConsumeCount.setText("共消费" + b.getUse_count() + "笔");
-            tvRefundCount.setText("共退款" + b.getRefund_count() + "笔");
 
-            orderCount=b.getOrder_count();
-            evaluateCount=b.getComment_count();
+            try  {
+                BusinessTodayCountBean b = new J2O().getBusinessTodayCount(result1);
+                tvMoney.setText(b.getTotal_income());
+                tvDealCount.setText("共交易" + b.getPay_count() + "笔");
+                tvConsumeCount.setText("共消费" + b.getUse_count() + "笔");
+                tvRefundCount.setText("共退款" + b.getRefund_count() + "笔");
 
-            if (orderCount.equals("0")) {
-                tvOrderCount.setVisibility(View.INVISIBLE);
-            } else {
-                tvOrderCount.setVisibility(View.VISIBLE);
-                tvOrderCount.setText(b.getOrder_count());
+                orderCount=b.getOrder_count();
+                evaluateCount=b.getComment_count();
+
+                if (orderCount.equals("0")) {
+                    tvOrderCount.setVisibility(View.INVISIBLE);
+                } else {
+                    tvOrderCount.setVisibility(View.VISIBLE);
+                    tvOrderCount.setText(b.getOrder_count());
+                }
+
+                if (evaluateCount.equals("0")) {
+                    tvEvaluateCount.setVisibility(View.INVISIBLE);
+                } else {
+                    tvEvaluateCount.setVisibility(View.VISIBLE);
+                    tvEvaluateCount.setText((b.getComment_count()));
+                }
+            } catch (Exception e) {
+
             }
 
-            if (evaluateCount.equals("0")) {
-                tvEvaluateCount.setVisibility(View.INVISIBLE);
-            } else {
-                tvEvaluateCount.setVisibility(View.VISIBLE);
-                tvEvaluateCount.setText((b.getComment_count()));
-            }
+
+
 
 
         } else {
             Toast.makeText(this, "网络错误！", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    protected void initListeners() {
+
+    }
+
+    @Override
+    protected void initAdapters() {
+
+    }
+
+    @Override
+    protected void initData() {
+
+    }
+
+
+
+
+    private void ininview() {
+
 
 
 

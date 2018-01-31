@@ -12,12 +12,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.praire.fire.R;
+import com.praire.fire.base.BaseActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class SettledActivity1 extends AppCompatActivity {
+public class SettledActivity1 extends BaseActivity {
 
     @BindView(R.id.tv_back)
     TextView tvBack;
@@ -52,6 +53,31 @@ public class SettledActivity1 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settled1);
         ButterKnife.bind(this);
+    }
+
+    @Override
+    protected int getFragmentLayout() {
+        return R.layout.activity_settled1;
+    }
+
+    @Override
+    protected void initViews() {
+
+    }
+
+    @Override
+    protected void initListeners() {
+
+    }
+
+    @Override
+    protected void initAdapters() {
+
+    }
+
+    @Override
+    protected void initData() {
+
     }
 
     @OnClick({R.id.rl1, R.id.tv_back, R.id.rl2, R.id.rl3, R.id.rl4, R.id.rl5, R.id.rl6})

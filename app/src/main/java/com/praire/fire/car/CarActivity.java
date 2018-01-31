@@ -128,6 +128,7 @@ public class CarActivity extends BaseActivity {
         getShopList();
     }
 
+
     private void getShopList() {
         /*type	string	是	搜索类型(1产品类型 2服务类型)		1
         class	string	是	类品服务类型id		30

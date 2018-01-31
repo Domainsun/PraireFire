@@ -1,15 +1,27 @@
 package com.praire.fire.base;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.praire.fire.R;
+import com.praire.fire.SignAcitvity;
+import com.praire.fire.home.MainActivity;
+import com.praire.fire.okhttp.GsonUtils.J2O;
 import com.praire.fire.okhttp.NetworkHandler;
 import com.praire.fire.okhttp.OkhttpRequestUtil;
+import com.praire.fire.okhttp.UseAPIs;
+import com.praire.fire.utils.SharePreferenceMgr;
 import com.praire.fire.utils.ToastUtil;
+
+import static com.praire.fire.common.Constants.LOGIN_COOKIE;
 
 
 public abstract class BaseActivity extends AppCompatActivity {
@@ -17,6 +29,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     // Refer fragment class
     protected FragmentManager fm;
     protected NetworkHandler uiHandler ;
+    public Context context ;
 
 
     @Override
@@ -30,6 +43,9 @@ public abstract class BaseActivity extends AppCompatActivity {
     public void setupComponent() {
 
     }
+
+
+
     /**
      * Every fragment has to inflate a layout in the onCreateView method. We have added this method to
      * avoid duplicate all the inflate code in every fragment. You only have to return the layout to
@@ -57,13 +73,55 @@ public abstract class BaseActivity extends AppCompatActivity {
     /**
      * Init
      */
+
+//    protected abstract void isSign();
+
+
     protected void init() {
+        isSign();
         initReferFragment();
         initViews();
         initListeners();
         initData();
         initAdapters();
+
     }
+
+    public  void isSign(){
+//
+        Log.d("isSign", "isSign: 111111111111111111111111111111111");
+
+
+        String cookie = (String) SharePreferenceMgr.get(this, LOGIN_COOKIE, "");
+
+        String result = "";
+        String str = "\"code\":0";
+
+        if (cookie.length() != 0 && cookie != null) {
+            result = new UseAPIs().getShopInfo(cookie);
+
+
+            Log.d("isSign", "isSign: "+result);
+
+
+
+            if (result.length() != 0) {
+
+                if (result.indexOf(str)!= -1) {
+
+                    Toast.makeText(context, "登录已经失效，请重新登录", Toast.LENGTH_SHORT).show();
+
+                    Log.d("isSign222222", "isSign222222: "+result);
+                    Intent i = new Intent(context, SignAcitvity.class);
+                    context.startActivity(i);
+                }
+
+            }
+        }
+    }
+
+
+
     protected void initReferFragment() {
         fm = getSupportFragmentManager();
     }
@@ -90,5 +148,6 @@ public abstract class BaseActivity extends AppCompatActivity {
      * @param msg
      */
     protected void networkResponse(Message msg) {
+
     }
 }

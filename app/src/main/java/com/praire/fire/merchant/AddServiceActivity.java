@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.praire.fire.R;
+import com.praire.fire.base.BaseActivity;
 import com.praire.fire.okhttp.GsonUtils.J2O;
 import com.praire.fire.okhttp.JavaBean.APIResultBean;
 import com.praire.fire.okhttp.JavaBean.ServiceListBean;
@@ -36,7 +37,7 @@ import butterknife.OnClick;
 
 import static com.praire.fire.common.Constants.LOGIN_COOKIE;
 
-public class AddServiceActivity extends AppCompatActivity {
+public class AddServiceActivity extends BaseActivity {
 
     @BindView(R.id.tv_back)
     TextView tvBack;
@@ -119,6 +120,31 @@ public class AddServiceActivity extends AppCompatActivity {
 //            }
         }
 
+
+    }
+
+    @Override
+    protected int getFragmentLayout() {
+        return R.layout.activity_add_service;
+    }
+
+    @Override
+    protected void initViews() {
+
+    }
+
+    @Override
+    protected void initListeners() {
+
+    }
+
+    @Override
+    protected void initAdapters() {
+
+    }
+
+    @Override
+    protected void initData() {
 
     }
 

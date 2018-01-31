@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/tools"
 
     android:orientation="vertical">
 
@@ -20,12 +21,12 @@
             <TextView
                 android:id="@+id/tv_back"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/y60"
+                android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentLeft="true"
                 android:gravity="center"
                 android:layout_centerVertical="true"
-                android:drawablePadding="@dimen/x20"
+                android:drawablePadding="10dp"
                 android:drawableRight="@mipmap/back" />
 
 
@@ -34,65 +35,21 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:layout_gravity="center"
-                android:text="商家入驻申请"
+                android:text="详情"
                 android:textColor="@android:color/white"
                 android:textSize="20sp" />
         </RelativeLayout>
 
 
 
-
-     <RelativeLayout
-         android:layout_width="match_parent"
-         android:layout_height="100dp"
-         android:background="@color/white">
-
-         <com.facebook.drawee.view.SimpleDraweeView
-             android:id="@+id/iv"
-             android:layout_width="125dp"
-             android:layout_height="77dp"
-             android:layout_marginLeft="15dp"
-             android:layout_marginTop="12dp"/>
-        <TextView
-            android:id="@+id/tv_name"
-            android:layout_width="wrap_content"
+        <com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/text_color"
-            android:textSize="19sp"
-            android:text="洗车"
-            android:layout_toRightOf="@id/iv"
-            android:layout_marginLeft="12dp"
-            android:layout_marginTop="14dp"/>
-
-         <TextView
-             android:id="@+id/tv_decs"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:textColor="@color/grey"
-             android:textSize="16sp"
-             android:text="仅售25，节假日通用。"
-             android:layout_toRightOf="@id/iv"
-             android:layout_below="@id/tv_name"
-             android:layout_marginLeft="12dp"
-             android:layout_marginTop="4dp"
-             android:layout_marginBottom="4dp"/>
+            android:layout_marginTop="@dimen/y20"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 
-         <TextView
-             android:id="@+id/tv_price"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:text="¥ 25元"
-             android:textColor="@color/orange"
-             android:textSize="16sp"
-             android:layout_toRightOf="@id/iv"
-             android:layout_marginLeft="12dp"
-             android:layout_alignParentBottom="true"
-             android:layout_marginBottom="14dp"
-             android:layout_marginTop="4dp"
-             />
-
-     </RelativeLayout>
 
 
         <RelativeLayout
@@ -118,7 +75,7 @@
             android:background="@color/white">
 
             <TextView
-                android:id="@+id/tv_shop_name"
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -168,33 +125,7 @@
         </RelativeLayout>
 
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="@dimen/y2"
-            android:background="@color/white">
 
-            <TextView
-
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:text="订单信息"
-                android:layout_marginLeft="15dp"
-                android:textColor="@color/text_color"
-                android:textSize="19sp" />
-
-            <TextView
-                android:id="@+id/tv_info"
-                android:layout_alignParentLeft="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/grey"
-                android:layout_centerVertical="true"
-                android:textSize="16sp"
-                android:text="洗车"
-                android:layout_marginLeft="104dp"/>
-        </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -254,33 +185,7 @@
         </RelativeLayout>
 
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="@dimen/y2"
-            android:background="@color/white">
 
-            <TextView
-
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:text="数量"
-                android:layout_marginLeft="15dp"
-                android:textColor="@color/text_color"
-                android:textSize="19sp" />
-
-            <TextView
-                android:id="@+id/tv_count"
-                android:layout_alignParentLeft="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/grey"
-                android:layout_centerVertical="true"
-                android:textSize="16sp"
-                android:text="1"
-                android:layout_marginLeft="104dp"/>
-        </RelativeLayout>
 
 
         <RelativeLayout
@@ -294,12 +199,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:text="实付款"
+                android:text="用户付款"
                 android:layout_marginLeft="15dp"
                 android:textColor="@color/text_color"
                 android:textSize="19sp" />
-            <EditText
-                android:id="@+id/et_price"
+            <TextView
+                android:id="@+id/tv_price"
                 android:layout_alignParentLeft="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -307,22 +212,56 @@
                 android:layout_centerVertical="true"
                 android:textSize="16sp"
                 android:text="¥ 25"
-                android:background="@null"
-                android:layout_marginLeft="104dp"/>
+                android:layout_marginLeft="104dp"
+                android:maxLength="10"/>
 
 
             <TextView
                 android:id="@+id/tv_discount"
-                android:layout_toRightOf="@id/et_price"
+                android:layout_toRightOf="@id/tv_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/grey"
                 android:layout_centerVertical="true"
                 android:textSize="16sp"
                 android:text="(普通会员9.8折)"
-                android:layout_marginLeft="150dp"
+                android:layout_marginLeft="10dp"
               />
         </RelativeLayout>
+
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="@dimen/y2"
+            android:background="@color/white">
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="商家收款"
+                android:layout_marginLeft="15dp"
+                android:textColor="@color/text_color"
+                android:textSize="19sp" />
+            <TextView
+                android:id="@+id/tv_shop_price"
+                android:layout_alignParentLeft="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/orange"
+                android:layout_centerVertical="true"
+                android:textSize="16sp"
+                android:text="¥ 25"
+                android:layout_marginLeft="104dp"
+                android:maxLength="10"/>
+
+
+
+        </RelativeLayout>
+
 
 
         <RelativeLayout
@@ -335,7 +274,7 @@
             <Button
                 android:id="@+id/submit"
                 style="?android:attr/borderlessButtonStyle"
-                android:layout_width="@dimen/x690"
+                android:layout_width="345dp"
                 android:layout_height="50dp"
                 android:background="@color/orange"
                 android:gravity="center"
@@ -346,7 +285,32 @@
                 android:text="确认"/>
 
         </RelativeLayout>
+        <LinearLayout
+            android:id="@+id/item_shopping_car_edit_ll"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
 
+            <TextView
+                android:id="@+id/item_shopping_car_done"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/orange"
+                android:gravity="center"
+                android:text="完成"
+                android:textColor="@color/white"
+                android:textSize="19sp"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/item_shopping_car_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|top"
+                android:padding="20dp"
+                android:src="@mipmap/shopping_edit" />
+        </LinearLayout>
 
     </LinearLayout>
 </ScrollView>

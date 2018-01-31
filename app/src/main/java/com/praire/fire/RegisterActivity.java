@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,6 +19,7 @@ import com.praire.fire.okhttp.JavaBean.APIResultBean;
 import com.praire.fire.okhttp.GsonUtils.J2O;
 import com.praire.fire.okhttp.UseAPIs;
 import com.praire.fire.okhttp.UseApi;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -46,22 +48,21 @@ public class RegisterActivity extends Activity {
     @BindView(R.id.btn_register)
     Button btnRegister;
 
-    public  static Handler handler_register;
+    public static Handler handler_register;
 
-    UseApi api=new UseApi();
-    J2O j2O=new J2O();
+    UseApi api = new UseApi();
+    J2O j2O = new J2O();
 
 
-    private String phone="";
-    private String photoCode="";
-    private String smsCode="";
-    private String pw="";
-    private String invitation="";
-    String photoCodeCookie="";
-    String smsCodeCookie="";
+    private String phone = "";
+    private String photoCode = "";
+    private String smsCode = "";
+    private String pw = "";
+    private String invitation = "";
+    String photoCodeCookie = "";
+    String smsCodeCookie = "";
     CountDownTimer timer;
-    Application application=getApplication();
-
+    Application application = getApplication();
 
 
     @Override
@@ -92,19 +93,20 @@ public class RegisterActivity extends Activity {
         };
 
 
-        api.getPhotoCode();
-        handler_register=new Handler(){
+        api.getPhotoCode("0");
+
+        handler_register = new Handler() {
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
-                if (msg.what==PhotoCode) {
-                    Bitmap bitmap= (Bitmap) msg.obj;
+                if (msg.what == PhotoCode) {
+                    Bitmap bitmap = (Bitmap) msg.obj;
                     ivShowCode.setImageBitmap(bitmap);
-                    photoCodeCookie= api.getPhotocookie();
-                }else if (msg.what==HsmsCode) {
-                    smsCodeCookie= (String) msg.obj;
+                    photoCodeCookie = api.getPhotocookie();
+                } else if (msg.what == HsmsCode) {
+                    smsCodeCookie = (String) msg.obj;
                 }
-                }
+            }
 
 
         };
@@ -115,58 +117,68 @@ public class RegisterActivity extends Activity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_finsh:
+                finish();
                 break;
             case R.id.iv_show_code:
-                api.getPhotoCode();
+                api.getPhotoCode("0");
                 break;
             case R.id.btn_sendSmsCode:
 
-                phone=edInputPhone.getText().toString();
-                photoCode=edInputPhotoCode.getText().toString();
+                phone = edInputPhone.getText().toString();
+                photoCode = edInputPhotoCode.getText().toString();
                 if (phone.equals("") || photoCode.equals("")) {
                     Toast.makeText(this, "请输入手机号和图形验证码", Toast.LENGTH_SHORT).show();
                 } else {
-                    String result="";
-                    if (result .length()!=0) {
-                        result=new UseAPIs().sendSmsCode(phone,photoCode,photoCodeCookie);
+                    String result = "";
+                    try {
+                        result = new UseAPIs().sendSmsCode(phone, photoCode, photoCodeCookie, "0");
+                        if (result.length() != 0) {
 
-                        APIResultBean a=j2O.getAPIResult(result);
-                        if ("1".equals(a.getCode())) {
-                            Toast.makeText(this, "发送成功", Toast.LENGTH_SHORT).show();
-                            timer.start();
+
+                            APIResultBean a = j2O.getAPIResult(result);
+                            if ("1".equals(a.getCode())) {
+                                Toast.makeText(this, "发送成功", Toast.LENGTH_SHORT).show();
+                                timer.start();
+                            } else {
+                                Toast.makeText(this, a.getMsg(), Toast.LENGTH_SHORT).show();
+                                api.getPhotoCode("0");
+                            }
                         } else {
-                            Toast.makeText(this, a.getMsg(), Toast.LENGTH_SHORT).show();
-                            api.getPhotoCode();
+                            Toast.makeText(this, "网络错误！", Toast.LENGTH_SHORT).show();
                         }
-                    }else{
+
+                    } catch (Exception e) {
+                        Log.e("onViewClicked", "onViewClicked: " + e.toString());
                         Toast.makeText(this, "网络错误！", Toast.LENGTH_SHORT).show();
                     }
-
-
                 }
                 break;
             case R.id.btn_register:
-                phone=edInputPhone.getText().toString();
-                smsCode=etInputSmsCode.getText().toString();
-                pw=etInputPw.getText().toString();
-                invitation=etInputInvitationCode.getText().toString();
+                phone = edInputPhone.getText().toString();
+                smsCode = etInputSmsCode.getText().toString();
+                pw = etInputPw.getText().toString();
+                invitation = etInputInvitationCode.getText().toString();
 
-                if (phone.equals("") || pw.equals("")|| smsCode.equals("")) {
+                if (phone.equals("") || pw.equals("") || smsCode.equals("")) {
                     Toast.makeText(this, "请填写完整", Toast.LENGTH_SHORT).show();
                 } else {
-                    String result="";
+                    String result = "";
+                    try {
+                        result = new UseAPIs().register(phone, pw, smsCode, invitation, smsCodeCookie);
                     if (result.length() != 0) {
-                        result=new UseAPIs().register(phone,pw,smsCode,invitation,smsCodeCookie);
-                        APIResultBean a=j2O.getAPIResult(result);
+                        APIResultBean a = j2O.getAPIResult(result);
                         if ("1".equals(a.getCode())) {
-                            Intent i=new Intent(this,SignAcitvity.class);
-                            i.putExtra("phone",phone);
+                            Intent i = new Intent(this, SignAcitvity.class);
+                            i.putExtra("phone", phone);
                             startActivity(i);
                         }
                     } else {
                         Toast.makeText(RegisterActivity.this, "网络错误！", Toast.LENGTH_SHORT).show();
                     }
-
+                    } catch (Exception e) {
+                        Log.e("onViewClicked", "onViewClicked: " + e.toString());
+                        Toast.makeText(this, "网络错误！", Toast.LENGTH_SHORT).show();
+                    }
 
                 }
 

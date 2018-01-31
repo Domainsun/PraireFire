@@ -1,11 +1,14 @@
 package com.praire.fire.merchant.adapter;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -25,6 +28,7 @@ import butterknife.ButterKnife;
 public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder> {
 
     Context context;
+
 
 
     private List<BusinessOrderListBean.PagelistBean> data;
@@ -56,31 +60,32 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
     }
 
 
+    int count=0;
+    double price11=0.00;
+
     @Override
-    public void onBindViewHolder(final MyViewHolder holder, final int position) {
+    public void onBindViewHolder(MyViewHolder holder, final int position) {
+
+
+        holder.setIsRecyclable(false);
+
+
+
+
 
         holder.tvConfirmRefund.setVisibility(View.VISIBLE);
 
 //        holder.tvConfirmRefund.setVisibility( data.get(position).getStatus().equals("0") ||data.get(position).getStatus().equals("1") ? View.VISIBLE : View.INVISIBLE);
-//        holder.tvConfirmRefund.setText(data.get(position).getStatus().equals("0") ? );
+
 
         if (data.get(position).getStatus().equals("0")) {
+            holder.tvConfirmRefund.setVisibility(View.VISIBLE);
             holder.tvConfirmRefund.setText("修改");
         } else if (data.get(position).getRefund().equals("1")) {
+            holder.tvConfirmRefund.setVisibility(View.VISIBLE);
             holder.tvConfirmRefund.setText("确认退款");
         } else {
             holder.tvConfirmRefund.setVisibility(View.INVISIBLE);
-        }
-
-        holder.tvAmount.setText("金额:    ¥"+data.get(position).getNprice());
-        holder.tvCount.setText("数量:    "+data.get(position).getNumber());
-
-        holder.headPhoto.setImageURI(data.get(position).getUserinfo().getHead());
-        holder.tvName.setText(data.get(position).getUserinfo().getNickname());
-        holder.tvType.setText(data.get(position).getName());
-        holder.tvTime.setText( DateUtils.times1(data.get(position).getCreate_time()));
-        if (data.get(position).getUserinfo().getSex()!=null) {
-            holder.ivSex.setImageResource(data.get(position).getUserinfo().getSex().equals("0") ? R.mipmap.business_order_male : R.mipmap.business_order_female);
         }
 
 
@@ -97,6 +102,97 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
             }
         });
 
+
+        holder.headPhoto.setImageURI(data.get(position).getHead());
+
+
+        holder.ivSex.setImageResource(data.get(position).getSex().equals("0") ? R.mipmap.business_order_female : R.mipmap.business_order_male);
+        holder.tvName.setText(data.get(position).getNickname());
+        holder.tvOrderId.setText(data.get(position).getTel());
+
+
+
+
+
+        if (data.get(position).getStatus().equals("0")) {
+            holder.tvOrderStatus.setText("等待买家付款");
+        } else if (data.get(position).getStatus().equals("1")) {
+            holder.tvOrderStatus.setText("等待买家消费");
+        } else if (data.get(position).getStatus().equals("2")) {
+            holder.tvOrderStatus.setText("交易成功");
+        } else if (data.get(position).getStatus().equals("3")) {
+            holder.tvOrderStatus.setText("退款成功");
+        }
+
+
+        holder.tvTime.setText(DateUtils.times1(data.get(position).getCreate_time()));
+
+
+
+
+
+        /*添加 订单*/
+
+        //防止滑动的时候重复显示数据
+        if (holder.isFrist) {
+            count=0;
+            price11=0.00;
+            for (int i = 0; i < data.get(position).getPslist().size(); i++) {
+
+
+                Log.d("name:", "name: "+"position:"+position+"name:"+data.get(position).getPslist().get(i).getName());
+
+
+
+
+                count = count + Integer.parseInt( data.get(position).getPslist().get(i).getNumber()) ;
+
+                price11=price11 + Double.parseDouble(data.get(position).getPslist().get(i).getPrice());
+
+                ViewGroup viewGroup = (ViewGroup) LayoutInflater.from(context).inflate(R.layout.item_business_order_content, null);
+
+
+                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT); // , 1是可选写的
+
+
+                lp.setMargins(0, 1, 0, 0);
+                viewGroup.setLayoutParams(lp);
+
+
+                SimpleDraweeView product_photo = viewGroup.findViewById(R.id.product_photo);
+                TextView tv_name = viewGroup.findViewById(R.id.tv_name);
+                TextView type = viewGroup.findViewById(R.id.tv_type);
+                TextView tv_count = viewGroup.findViewById(R.id.tv_count);
+                TextView tv_nprice = viewGroup.findViewById(R.id.tv_nprice);
+                TextView oprice1 = viewGroup.findViewById(R.id.oprice);
+
+                String cover = data.get(position).getPslist().get(i).getCover();
+
+                if (cover.length() == 0) {
+                    product_photo.setVisibility(View.GONE);
+                } else {
+                    product_photo.setImageURI(cover);
+                }
+
+
+                tv_name.setText(data.get(position).getPslist().get(i).getName());
+                tv_count.setText("数量: " + data.get(position).getPslist().get(i).getNumber());
+                type.setText(data.get(position).getPslist().get(i).getClasspath());
+                tv_nprice.setText("¥ " + data.get(position).getPslist().get(i).getPrice());
+                oprice1.setText("¥ " + data.get(position).getPslist().get(i).getNprice());
+
+                //添加删除线
+                oprice1.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+                holder.addProducts.addView(viewGroup);
+            }
+            holder.isFrist = false;
+
+            holder.tvOrderid.setText("订单编号: "+data.get(position).getOrderno());
+            holder.tvTotalCount.setText("共"+count+"件商品  合计: ¥"+price11);
+        }
+
+
+
     }
 
 
@@ -111,23 +207,30 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.tv_amount)
-        TextView tvAmount;
+
+        @BindView(R.id.tv_orderid)
+        TextView tvOrderid;
+        @BindView(R.id.tv_total_count)
+        TextView tvTotalCount;
         @BindView(R.id.head_photo)
         SimpleDraweeView headPhoto;
+        @BindView(R.id.iv_sex)
+        ImageView ivSex;
         @BindView(R.id.tv_name)
         TextView tvName;
-        @BindView(R.id.tv_type)
-        TextView tvType;
+        @BindView(R.id.tv_order_id)
+        TextView tvOrderId;
+        @BindView(R.id.tv_order_status)
+        TextView tvOrderStatus;
         @BindView(R.id.tv_time)
         TextView tvTime;
         @BindView(R.id.tv_confirm_refund)
         TextView tvConfirmRefund;
-        @BindView(R.id.tv_count)
-        TextView tvCount;
-        @BindView(R.id.iv_sex)
-        ImageView ivSex;
+        @BindView(R.id.add_products)
 
+
+        LinearLayout addProducts;
+        boolean isFrist = true;
 
         public MyViewHolder(View itemView) {
             super(itemView);

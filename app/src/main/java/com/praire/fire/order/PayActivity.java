@@ -169,7 +169,7 @@ public class PayActivity extends BaseTitleActivity {
         switch (msg.what) {
             case 1:
                 Log.e("msgpay", (String) msg.obj);
-              String alipaystr0 = (String) msg.obj ;
+                String alipaystr0 = (String) msg.obj ;
                 String alipaystr=alipaystr0.replace("alipay_sdk=","app_id=");
                 aliPay((String) msg.obj);
                 break;
