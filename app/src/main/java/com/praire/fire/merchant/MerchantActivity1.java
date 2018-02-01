@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.bigkoo.pickerview.TimePickerView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.praire.fire.R;
+import com.praire.fire.base.BaseActivity;
 import com.praire.fire.common.CommonMethod;
 import com.praire.fire.merchant.bean.RegionListBean;
 import com.praire.fire.okhttp.GsonUtils.J2O;
@@ -57,7 +58,7 @@ import static com.praire.fire.common.Constants.REQUEST_CODE_UPLOAD_BUSINESS_LICE
  * Created by sunlo on 2018/1/4.
  */
 
-public class MerchantActivity1 extends Activity implements EasyPermissions.PermissionCallbacks {
+public class MerchantActivity1 extends BaseActivity implements EasyPermissions.PermissionCallbacks {
     @BindView(R.id.tv_back)
     TextView tvBack;
     @BindView(R.id.tv_chose_shop_region)
@@ -192,6 +193,31 @@ public class MerchantActivity1 extends Activity implements EasyPermissions.Permi
 
 
         initWheelViewdata();
+
+    }
+
+    @Override
+    protected int getFragmentLayout() {
+        return R.layout.activity_merchant;
+    }
+
+    @Override
+    protected void initViews() {
+
+    }
+
+    @Override
+    protected void initListeners() {
+
+    }
+
+    @Override
+    protected void initAdapters() {
+
+    }
+
+    @Override
+    protected void initData() {
 
     }
 

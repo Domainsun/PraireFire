@@ -1,36 +1,41 @@
 package com.praire.fire.merchant;
 
-import android.app.Dialog;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Gravity;
-import android.view.LayoutInflater;
+import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bigkoo.pickerview.TimePickerView;
 import com.praire.fire.R;
+import com.praire.fire.base.BaseActivity;
+import com.praire.fire.merchant.adapter.HistoryIncomeAdapter;
 import com.praire.fire.merchant.adapter.TodayIncomeAdapter;
 import com.praire.fire.okhttp.GsonUtils.J2O;
+import com.praire.fire.okhttp.JavaBean.HistoryIncomeBean;
 import com.praire.fire.okhttp.JavaBean.TodayIncomeBean;
 import com.praire.fire.okhttp.UseAPIs;
-import com.wx.wheelview.adapter.ArrayWheelAdapter;
-import com.wx.wheelview.widget.WheelView;
+import com.praire.fire.utils.SharePreferenceMgr;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class HistoryIncomeActivity extends AppCompatActivity {
+import static com.praire.fire.common.Constants.LOGIN_COOKIE;
+
+public class HistoryIncomeActivity extends BaseActivity {
 
     @BindView(R.id.tv_back)
     TextView tvBack;
@@ -48,42 +53,65 @@ public class HistoryIncomeActivity extends AppCompatActivity {
 
     SwipeMenuRecyclerView recyclerView;
     SwipeRefreshLayout mRefreshLayout;
-    TodayIncomeAdapter adapter;
+    HistoryIncomeAdapter adapter;
+    @BindView(R.id.tv_date)
+    TextView tvDate;
 
 
-    private List<TodayIncomeBean.PagelistBean> Datas;
+    private List<HistoryIncomeBean.PagelistBean> Datas=new ArrayList<>();
 
 
-    List<String> year=new ArrayList<>();
-    List<String> mon=new ArrayList<>();
-    List<String> day=new ArrayList<>();
+    TimePickerView pvTime;
+    Boolean choose=false;
 
-    HashMap<String, List<String>> monMap = new HashMap<String, List<String>>();
-    HashMap<String, List<String>> dayMap = new HashMap<String, List<String>>();
-
-    int currentYear=2018;
-    int currentMon=1;
-    int currentday=1;
-
-    WheelView yearWheelView, monWheelView,dayWheelView,year1WheelView, mon1WheelView,day1WheelView;
+    String startDate="";
+    String endDate="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history_income);
         ButterKnife.bind(this);
-        initdatedata();
+
+        initTimePicker();
+        initview();
+    }
+
+    @Override
+    protected int getFragmentLayout() {
+        return R.layout.activity_history_income;
+    }
+
+    @Override
+    protected void initViews() {
+
+    }
+
+    @Override
+    protected void initListeners() {
+
+    }
+
+    @Override
+    protected void initAdapters() {
+
+    }
+
+    @Override
+    protected void initData() {
+
     }
 
     @OnClick({R.id.tv_back, R.id.iv_choose_date})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_back:
-
+                finish();
                 break;
             case R.id.iv_choose_date:
 
-                show1();
+                pvTime.show(tvDate);
 
+                Log.d("onViewClicked", "onViewClicked: "+startDate+"\n"+endDate);
                 break;
         }
     }
@@ -91,107 +119,172 @@ public class HistoryIncomeActivity extends AppCompatActivity {
 
 
 
-    public void initdatedata(){
-        for (int i=0;i<31;i++) {
-            String day1=String.valueOf(currentday);
-            day.add(String.valueOf(currentday));
-            currentday++;
-        }
-        for (int i=0;i<12;i++) {
-            String mon1=String.valueOf(currentMon);
-            mon.add(String.valueOf(currentMon));
-            dayMap.put(mon1,day);
-            currentMon++;
-        }
-        for (int i=0;i<50;i++) {
-            String year1=String.valueOf(currentYear);
-            year.add(year1);
-            monMap.put(year1,mon);
-            currentYear++;
-        }
+
+
+
+
+    private void initview() {
+        cookie = (String) SharePreferenceMgr.get(this, LOGIN_COOKIE, "");
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
+        mRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.refresh_layout);
+        recyclerView = findViewById(R.id.recycler_view);
+        adapter = new HistoryIncomeAdapter(this);
+
+        recyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.useDefaultLoadMore(); // 使用默认的加载更多的View。
+        mRefreshLayout.setOnRefreshListener(mRefreshListener); // 刷新监听。
+        recyclerView.setLoadMoreListener(mLoadMoreListener); // 加载更多的监听。
+
+        initdata("","");
+
     }
 
-    private void show1() {
-        final Dialog bottomDialog = new Dialog(this, R.style.BottomDialog);
-        View contentView = LayoutInflater.from(this).inflate(R.layout.select_income_date_dialog, null);
-        WheelView.WheelViewStyle style = new WheelView.WheelViewStyle();
-        style.selectedTextSize = 20;
-        style.textSize = 16;
-        yearWheelView = (WheelView) contentView.findViewById(R.id.year_wheelview);
-        year1WheelView = (WheelView) contentView.findViewById(R.id.year1_wheelview);
-        monWheelView = (WheelView) contentView.findViewById(R.id.mon_wheelview);
-        mon1WheelView = (WheelView) contentView.findViewById(R.id.mon1_wheelview);
-//        dayWheelView = (WheelView) contentView.findViewById(R.id.day_wheelview);
-//        day1WheelView = (WheelView) contentView.findViewById(R.id.day1_wheelview);
 
+    private void initdata(String startDate,String endDate) {
+        recyclerView.loadMoreFinish(false, true);
+        for (int i=0;i<Datas.size();i++) {
+            Datas.remove(i);
+        }
 
+        String str = "";
+        str = u.getHistoryIncome(cookie, "1",startDate,endDate);
+        if (str.length() != 0) {
+            Log.d("initdata", "initdata: \n" + str);
+            HistoryIncomeBean s = j.getHistoryIncome(str);
+            Datas = s.getPagelist();
+            adapter.setData(Datas);
+            recyclerView.setAdapter(adapter);
 
-        yearWheelView.setWheelAdapter(new ArrayWheelAdapter(this));
-        yearWheelView.setSkin(WheelView.Skin.Holo);
-        yearWheelView.setWheelData(year);
-        yearWheelView.setStyle(style);
+        } else {
+            Toast.makeText(this, "网络错误", Toast.LENGTH_SHORT).show();
+        }
 
-
-        monWheelView.setWheelAdapter(new ArrayWheelAdapter(this));
-        monWheelView.setSkin(WheelView.Skin.Holo);
-        monWheelView.setWheelData(monMap.get(year.get(yearWheelView.getSelection())));
-        monWheelView.setStyle(style);
-        yearWheelView.join(monWheelView);
-        yearWheelView.joinDatas(monMap);
-
-//        dayWheelView.setWheelAdapter(new ArrayWheelAdapter(this));
-//        dayWheelView.setSkin(WheelView.Skin.Holo);
-//        dayWheelView.setWheelData(dayMap.get(mon.get(monWheelView.getSelection())));
-//        dayWheelView.setStyle(style);
-//        monWheelView.join(dayWheelView);
-//        monWheelView.joinDatas(dayMap);
-
-
-        year1WheelView.setWheelAdapter(new ArrayWheelAdapter(this));
-        year1WheelView.setSkin(WheelView.Skin.Holo);
-        year1WheelView.setWheelData(year);
-        year1WheelView.setStyle(style);
-
-
-        mon1WheelView.setWheelAdapter(new ArrayWheelAdapter(this));
-        mon1WheelView.setSkin(WheelView.Skin.Holo);
-        mon1WheelView.setWheelData(monMap.get(year.get(year1WheelView.getSelection())));
-        mon1WheelView.setStyle(style);
-        year1WheelView.join(mon1WheelView);
-        year1WheelView.joinDatas(monMap);
-
-//        day1WheelView.setWheelAdapter(new ArrayWheelAdapter(this));
-//        day1WheelView.setSkin(WheelView.Skin.Holo);
-//        day1WheelView.setWheelData(dayMap.get(mon.get(mon1WheelView.getSelection())));
-//        day1WheelView.setStyle(style);
-//        mon1WheelView.join(day1WheelView);
-//        mon1WheelView.joinDatas(dayMap);
-
-
-        bottomDialog.setContentView(contentView);
-        ViewGroup.LayoutParams layoutParams = contentView.getLayoutParams();
-        layoutParams.width = getResources().getDisplayMetrics().widthPixels;
-        contentView.setLayoutParams(layoutParams);
-        bottomDialog.getWindow().setGravity(Gravity.BOTTOM);
-        bottomDialog.getWindow().setWindowAnimations(R.style.BottomDialog_Animation);
-        bottomDialog.show();
-        TextView tv_confirm = contentView.findViewById(R.id.tv_ok);
-        TextView tv_cancle = contentView.findViewById(R.id.tv_cancel);
-        tv_confirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-
-
-                bottomDialog.dismiss();
-            }
-        });
-
-        tv_cancle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                bottomDialog.dismiss();
-            }
-        });
     }
+
+
+
+
+
+
+    /* 下拉刷新*/
+    private SwipeRefreshLayout.OnRefreshListener mRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
+        @Override
+        public void onRefresh() {
+            initdata("","");
+            adapter.notifyDataSetChanged();
+            mRefreshLayout.setRefreshing(false);
+            index = 1;
+            dataEmpty = false;
+            hasMore = true;
+            Toast.makeText(HistoryIncomeActivity.this, "刷新成功", Toast.LENGTH_SHORT).show();
+        }
+    };
+
+    /**
+     * 加载更多。
+     */
+    private SwipeMenuRecyclerView.LoadMoreListener mLoadMoreListener = new SwipeMenuRecyclerView.LoadMoreListener() {
+        @Override
+        public void onLoadMore() {
+
+            recyclerView.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+
+                    HistoryIncomeActivity.this.index++;
+                    String index = String.valueOf(HistoryIncomeActivity.this.index);
+                    List<HistoryIncomeBean.PagelistBean> data = new ArrayList<>();
+                    String str = "";
+                    str = u.getHistoryIncome(cookie,index,startDate,endDate);
+                    if (str.length() != 0) {
+                        HistoryIncomeBean s = j.getHistoryIncome(str);
+
+                        for (int i = 0; i < s.getPagelist().size(); i++) {
+                            Datas.add(s.getPagelist().get(i));
+                        }
+
+                        if (s.getPagelist().size() == 0) {
+                            dataEmpty = true;
+                        }
+                        if (s.getPagelist().size() < 10) {
+                            hasMore = false;
+                        }
+                        adapter.notifyDataSetChanged();
+                        recyclerView.loadMoreFinish(dataEmpty, hasMore);
+                    } else {
+                        Toast.makeText(HistoryIncomeActivity.this, "网络错误！", Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+            }, 1000);
+        }
+
+    };
+
+
+
+
+
+
+
+    String ftime = "";
+    private void initTimePicker() {
+        //控制时间范围(如果不设置范围，则使用默认时间1900-2100年，此段代码可注释)
+        //因为系统Calendar的月份是从0-11的,所以如果是调用Calendar的set方法来设置时间,月份的范围也要是从0-11
+        Calendar selectedDate = Calendar.getInstance();
+        final Calendar startDate = Calendar.getInstance();
+        startDate.set(2018, 0, 0);
+        final Calendar endDate = Calendar.getInstance();
+        endDate.set(2050, 11, 31);
+        //时间选择器
+        pvTime = new TimePickerView.Builder(this, new TimePickerView.OnTimeSelectListener() {
+            @Override
+            public void onTimeSelect(Date date, View v) {//选中事件回调
+                // 这里回调过来的v,就是show()方法里面所添加的 View 参数，如果show的时候没有添加参数，v则为null
+                /*btn_Time.setText(getTime(date));*/
+                String str=getTime(date);
+
+
+                TextView tv = (TextView) v;
+                if (!choose) {
+                    tv.setText(str + "-");
+                    ftime = str;
+                    choose = true;
+                    HistoryIncomeActivity.this.startDate=str;
+                    Toast.makeText(HistoryIncomeActivity.this, "请选择结束时间", Toast.LENGTH_SHORT).show();
+                } else {
+                    tv.setText(ftime + " 至 " + str);
+                    choose = false;
+                    HistoryIncomeActivity.this.endDate=str;
+
+
+                    initdata(HistoryIncomeActivity.this.startDate,HistoryIncomeActivity.this.endDate);
+                    adapter.notifyDataSetChanged();
+                    mRefreshLayout.setRefreshing(false);
+                    index = 1;
+                    dataEmpty = false;
+                    hasMore = true;
+//                    u.getHistoryIncome();
+                }
+            }
+        })
+
+                //年月日时分秒 的显示与否，不设置则默认全部显示
+                .setType(new boolean[]{true, true, true, false, false, false})
+                .setLabel("年", "月", "日", "", "", "")
+                .isCenterLabel(false)
+                .setDividerColor(Color.DKGRAY)
+                .setContentSize(21)
+                .setDate(selectedDate)
+                .setRangDate(startDate, endDate)
+//                .setBackgroundId(0x00FFFFFF) //设置外部遮罩颜色
+                .setDecorView(null)
+                .build();
+    }
+
+    private String getTime(Date date) {//可根据需要自行截取数据显示
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        return format.format(date);
+    }
+
 }

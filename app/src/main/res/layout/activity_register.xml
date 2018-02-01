@@ -1,65 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/constraintLayout"
+    android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
-    <android.support.constraint.ConstraintLayout
+    <RelativeLayout
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/constraintLayout1"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
-        android:layout_marginTop="@dimen/y48">
+        android:layout_marginTop="24dp"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toTopOf="parent">
         <ImageView
             android:id="@+id/iv_finsh"
-            android:layout_width="@dimen/x44"
-            android:layout_height="@dimen/y44"
-            android:layout_marginStart="@dimen/x30"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_marginLeft="15dp"
             android:src="@mipmap/sign_close"
-            app:layout_constraintStart_toStartOf="parent" />
+            android:layout_alignParentLeft="true" />
+
         <TextView
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/x16"
-            android:layout_marginStart="@dimen/x16"
             android:text="注册"
-            android:textColor="@color/black"
+            android:textColor="@color/text_color"
             android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-    </android.support.constraint.ConstraintLayout>
+            android:layout_centerHorizontal="true" />
+
+    </RelativeLayout>
 
 
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/constraintLayout2"
-        android:layout_width="@dimen/x267"
-        android:layout_height="@dimen/y132"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout1"
-        android:layout_marginTop="@dimen/y74"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginEnd="@dimen/x16"
-        android:layout_marginStart="@dimen/x16"
-        >
+    <ImageView
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/sign_liaoyuan" />
-    </android.support.constraint.ConstraintLayout>
+        android:layout_width="140dp"
+        android:layout_height="66dp"
+        android:src="@mipmap/sign_liaoyuan"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="15dp"/>
 
 
-    <android.support.constraint.ConstraintLayout
+    <RelativeLayout
+
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/constraintLayout3"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2"
-        android:layout_marginTop="@dimen/y140"
-        android:orientation="horizontal">
+        android:layout_height="50dp"
+        android:layout_marginTop="30dp"
+        android:orientation="horizontal"
+        >
 
         <TextView
             android:layout_width="wrap_content"
@@ -68,9 +58,8 @@
             android:text="手     机   号:"
             android:textColor="@color/black"
             android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_centerVertical="true"
+          />
 
         <EditText
             android:id="@+id/ed_input_phone"
@@ -81,23 +70,16 @@
             android:hint="请输入手机号"
             android:inputType="phone"
             android:textSize="13sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </android.support.constraint.ConstraintLayout>
+            android:layout_centerVertical="true"
+           />
 
-
-    <android.support.constraint.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@id/constraintLayout4"
-        android:layout_marginTop="@dimen/y24"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout3">
         <View
             android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:background="@color/viewcolor" />
-    </android.support.constraint.ConstraintLayout>
+            android:layout_height="1dp"
+            android:background="@color/viewcolor"
+            android:layout_alignParentBottom="true"/>
+
+    </RelativeLayout>
 
 
 
@@ -105,24 +87,26 @@
 
 
 
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/constraintLayout5"
+
+
+
+    <RelativeLayout
+
         android:layout_width="match_parent"
-        android:layout_height="32dp"
-        android:layout_marginTop="@dimen/x16"
+        android:layout_height="50dp"
+        android:layout_marginTop="0dp"
         android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout4">
+        >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/x30"
             android:text="图形验证码:"
             android:textColor="@color/black"
             android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            />
 
         <EditText
             android:id="@+id/ed_input_photoCode"
@@ -133,51 +117,35 @@
             android:hint="请输入右侧验证码"
             android:inputType="phone"
             android:textSize="13sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.47" />
+            android:layout_centerVertical="true" />
 
 
-
-        <!--<com.facebook.drawee.view.DraweeView-->
-            <!--android:layout_width="100dp"-->
-            <!--android:layout_height="35dp"-->
-            <!--android:layout_marginEnd="15dp"-->
-            <!--app:layout_constraintEnd_toEndOf="parent"/>-->
         <ImageView
             android:id="@+id/iv_show_code"
             android:layout_width="100dp"
             android:layout_height="35dp"
-            android:layout_marginEnd="15dp"
+
             android:gravity="center"
             android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="parent" />
-    </android.support.constraint.ConstraintLayout>
-
-
-    <android.support.constraint.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@id/constraintLayout6"
-        android:layout_marginTop="@dimen/y24"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout5">
-
-
+            android:layout_alignParentRight="true" />
         <View
             android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:background="@color/viewcolor" />
-    </android.support.constraint.ConstraintLayout>
+            android:layout_height="1dp"
+            android:background="@color/viewcolor"
+            android:layout_alignParentBottom="true"/>
+    </RelativeLayout>
 
 
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/constraintLayout7"
+
+
+
+    <RelativeLayout
+
         android:layout_width="match_parent"
-        android:layout_height="32dp"
-        android:layout_marginTop="@dimen/x16"
+        android:layout_height="50dp"
+        android:layout_marginTop="0dp"
         android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout6">
+        >
 
         <TextView
             android:layout_width="wrap_content"
@@ -186,9 +154,7 @@
             android:text="短信验证码:"
             android:textColor="@color/black"
             android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_centerVertical="true"/>
 
         <EditText
             android:id="@+id/et_input_smsCode"
@@ -199,10 +165,7 @@
             android:hint="请输入短信验证码"
             android:inputType="phone"
             android:textSize="13sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.47" />
+            android:layout_centerVertical="true" />
 
 
         <Button
@@ -215,34 +178,24 @@
             android:text="发送验证码"
             android:textColor="#fff"
             android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="parent" />
-    </android.support.constraint.ConstraintLayout>
-
-
-    <android.support.constraint.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/constraintLayout8"
-        android:layout_marginTop="@dimen/y28"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout7">
-
-
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"/>
         <View
             android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:background="@color/viewcolor" />
-    </android.support.constraint.ConstraintLayout>
+            android:layout_height="1dp"
+            android:background="@color/viewcolor"
+            android:layout_alignParentBottom="true"/>
+
+    </RelativeLayout>
 
 
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/constraintLayout9"
+    <RelativeLayout
+
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginTop="0dp"
         android:orientation="horizontal"
-        android:layout_marginTop="@dimen/y28"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout8">
+        >
 
         <TextView
             android:layout_width="wrap_content"
@@ -251,9 +204,7 @@
             android:text="密             码:"
             android:textColor="@color/black"
             android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+           android:layout_centerVertical="true" />
 
         <EditText
             android:id="@+id/et_input_pw"
@@ -264,33 +215,26 @@
             android:hint="输入6-20位数字或者字母密码"
             android:inputType="phone"
             android:textSize="13sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </android.support.constraint.ConstraintLayout>
-
-
-    <android.support.constraint.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/constraintLayout10"
-        android:layout_marginTop="@dimen/y28"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout9">
+            android:layout_centerVertical="true" />
         <View
             android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:background="@color/viewcolor" />
-    </android.support.constraint.ConstraintLayout>
+            android:layout_height="1dp"
+            android:background="@color/viewcolor"
+            android:layout_alignParentBottom="true"/>
+
+    </RelativeLayout>
 
 
 
-    <android.support.constraint.ConstraintLayout
+
+
+    <RelativeLayout
+
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/constraintLayout11"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout10"
-        android:layout_marginTop="@dimen/x16"
-        android:orientation="horizontal">
+        android:layout_height="50dp"
+        android:layout_marginTop="0dp"
+        android:orientation="horizontal"
+        >
 
         <TextView
             android:layout_width="wrap_content"
@@ -299,9 +243,7 @@
             android:text="邀     请   码:"
             android:textColor="@color/black"
             android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_centerVertical="true" />
 
         <EditText
             android:id="@+id/et_input_invitationCode"
@@ -312,47 +254,37 @@
             android:hint="请填写推荐人号码(选填)"
             android:textSize="13sp"
             android:inputType="phone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </android.support.constraint.ConstraintLayout>
-
-
-    <android.support.constraint.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/constraintLayout12"
-        android:layout_marginTop="@dimen/y28"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout11">
+            android:layout_centerVertical="true" />
         <View
             android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:background="@color/viewcolor" />
-    </android.support.constraint.ConstraintLayout>
+            android:layout_height="1dp"
+            android:background="@color/viewcolor"
+            android:layout_alignParentBottom="true"/>
+
+    </RelativeLayout>
 
 
 
-<android.support.constraint.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:layout_constraintTop_toBottomOf="@id/constraintLayout12"
-    android:layout_marginTop="@dimen/y120">
+    <RelativeLayout
 
-    <Button
-        android:id="@+id/btn_register"
-        android:layout_width="@dimen/x630"
-        android:layout_height="@dimen/y100"
-        android:text="确认注册"
-        android:textSize="18sp"
-        android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginEnd="@dimen/x30"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="@dimen/x30"
-        android:background="@drawable/shape_btn_resgister"
-        />
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal"
+        >
+        <Button
+            android:id="@+id/btn_register"
+            android:layout_width="315dp"
+            android:layout_height="50dp"
+            android:text="确认注册"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/shape_btn_resgister"
+            />
 
-</android.support.constraint.ConstraintLayout>
+    </RelativeLayout>
 
 
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>

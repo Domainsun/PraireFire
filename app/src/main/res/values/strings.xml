@@ -26,4 +26,10 @@
     <string name="service">服务</string>
     <string name="refund">退款</string>
     <string name="evaluate">效果如何，服务是否周到，环境怎么样？（写给更多人参考~）</string>
+
+
+    <string name="withdraw_explain"><Data><![CDATA[1、提现到的账号必须是本人实名认证身份证所办理的银行账号<br> 2、工作日16:00前申请提现，当天到账；16:00之后申请提现，下个工作日到账；周末或国家节假日申请的提现，统一在上班后 第一个工作日处理<br>
+                3、提现收取 2元/笔 手续费<br>4、如有任何疑问，请联系客服电话0797-8330000<br>
+
+    </font>]]></Data></string>
 </resources>

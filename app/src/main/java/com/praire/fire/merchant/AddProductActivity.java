@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.praire.fire.R;
+import com.praire.fire.base.BaseActivity;
 import com.praire.fire.common.CommonMethod;
 import com.praire.fire.okhttp.GsonUtils.J2O;
 import com.praire.fire.okhttp.JavaBean.APIResultBean;
@@ -50,7 +51,7 @@ import static com.praire.fire.common.Constants.REQUEST_CODE_UPLOAD_PRODUCT2;
 import static com.praire.fire.common.Constants.REQUEST_CODE_UPLOAD_PRODUCT3;
 import static com.praire.fire.common.Constants.REQUEST_CODE_UPLOAD_PRODUCT4;
 
-public class AddProductActivity extends AppCompatActivity {
+public class AddProductActivity extends BaseActivity{
     @BindView(R.id.tv_back)
     TextView tvBack;
     @BindView(R.id.tv_product_name)
@@ -122,7 +123,7 @@ public class AddProductActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_product);
+//        setContentView(R.layout.activity_add_product);
         ButterKnife.bind(this);
 
         initdata();
@@ -204,6 +205,31 @@ public class AddProductActivity extends AppCompatActivity {
 //
         }
 
+
+    }
+
+    @Override
+    protected int getFragmentLayout() {
+        return R.layout.activity_add_product;
+    }
+
+    @Override
+    protected void initViews() {
+
+    }
+
+    @Override
+    protected void initListeners() {
+
+    }
+
+    @Override
+    protected void initAdapters() {
+
+    }
+
+    @Override
+    protected void initData() {
 
     }
 

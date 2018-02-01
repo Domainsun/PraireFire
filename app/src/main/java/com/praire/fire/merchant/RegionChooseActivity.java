@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.praire.fire.R;
+import com.praire.fire.base.BaseActivity;
 import com.praire.fire.merchant.adapter.RegionAdapter;
 import com.praire.fire.merchant.adapter.SetledAdapter;
 import com.praire.fire.merchant.bean.RegionListBean;
@@ -24,7 +25,7 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 
-public class RegionChooseActivity extends AppCompatActivity {
+public class RegionChooseActivity extends BaseActivity {
 
     private RecyclerView mRecyclerView;
     private List<RegionListBean.ListBean.SonBeanX.SonBean> mDatas;
@@ -40,6 +41,31 @@ public class RegionChooseActivity extends AppCompatActivity {
         mRecyclerView = findViewById(R.id.recyclerview);
 
         initView();
+    }
+
+    @Override
+    protected int getFragmentLayout() {
+        return R.layout.activity_region_choose;
+    }
+
+    @Override
+    protected void initViews() {
+
+    }
+
+    @Override
+    protected void initListeners() {
+
+    }
+
+    @Override
+    protected void initAdapters() {
+
+    }
+
+    @Override
+    protected void initData() {
+
     }
 
     private void initView() {

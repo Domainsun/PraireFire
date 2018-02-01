@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.praire.fire.R;
+import com.praire.fire.base.BaseActivity;
 import com.praire.fire.merchant.adapter.ServiceAdapter;
 import com.praire.fire.okhttp.GsonUtils.J2O;
 import com.praire.fire.okhttp.JavaBean.APIResultBean;
@@ -34,7 +35,7 @@ import butterknife.OnClick;
 
 import static com.praire.fire.common.Constants.LOGIN_COOKIE;
 
-public class ServiceManageActivity extends AppCompatActivity {
+public class ServiceManageActivity extends BaseActivity {
 
     @BindView(R.id.tv_back)
     TextView tvBack;
@@ -65,6 +66,31 @@ public class ServiceManageActivity extends AppCompatActivity {
         cookie = (String) SharePreferenceMgr.get(this, LOGIN_COOKIE, "");
 //        initdata();
         initview();
+    }
+
+    @Override
+    protected int getFragmentLayout() {
+        return R.layout.activity_service_manage;
+    }
+
+    @Override
+    protected void initViews() {
+
+    }
+
+    @Override
+    protected void initListeners() {
+
+    }
+
+    @Override
+    protected void initAdapters() {
+
+    }
+
+    @Override
+    protected void initData() {
+
     }
 
 //    private void initdata() {

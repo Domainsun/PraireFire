@@ -19,9 +19,24 @@ public class ConstanUrl {
     /*
     * 添加产品*/
     public final static String ADD_PRODUCT="https://www.lygyxh.cn/api.php/Product/in";
+
+    /*
+    * 验证验证码*/
+    public final static String VERIFY_SMS="https://www.lygyxh.cn/api.php/Verifytel/checksmscode";
+
+    /*
+    * 修改登录密码*/
+    public final static String CHANGE_SIGN_PASSWORD="https://www.lygyxh.cn/api.php/Public/setpassword";
+    /*
+    * 改变订单商品价格*/
+    public final static String CHANGE_ORDER_PRICE="https://www.lygyxh.cn/api.php/ShopOrder/changeorderprice";
     /*
     * 商家服务评论未读变已读*/
     public final static String CHANGE_EVALUATE_STATUS="https://www.lygyxh.cn/api.php/ShopComment/changeread";
+
+    /*
+    * 商家订单未读变已读*/
+    public final static String CHANGE_ORDER_READ_STATUS="https://www.lygyxh.cn/api.php/ShopOrder/changeread";
 
     /*
     * 商家回复用户评论*/
@@ -46,6 +61,10 @@ public class ConstanUrl {
     /*商家单日收益*/
     public final static String GET_TODAY_INCOME="https://www.lygyxh.cn/api.php/shopCount/incomebydate";
 
+    /*
+    * 商家历史收益*/
+    public final static String GET_HISTORY_INCOME="https://www.lygyxh.cn/api.php/shopCount/incomebetweendate";
+
     public final static String GET_BUSINESS_TODAY_COUNT="https://www.lygyxh.cn/api.php/ShopCount/todaycount";
     /*得到店铺类型*/
     public final static String GET_SHOP_TYPE="https://www.lygyxh.cn/api.php/Class/getShopType";
@@ -64,6 +83,9 @@ public class ConstanUrl {
     /*
     * 得到产品信息*/
     public final static String GET_PRODUCT_INFO="https://www.lygyxh.cn/api.php/Product/info";
+
+    /*得到订单详情信息*/
+    public final static String GET_ORDER_INFO="https://www.lygyxh.cn/api.php/ShopOrder/orderinfo";
 
     /*
     * 得到商家订单*/

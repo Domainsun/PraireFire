@@ -31,6 +31,8 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
 		Eyes.setStatusBarColor(this, ContextCompat.getColor(this, R.color.status_bar));
     	api = WXAPIFactory.createWXAPI(this, Constants.PRODUCT_WEIXIN_APP_ID);
         api.handleIntent(getIntent(), this);
+
+
     }
 
 	@Override

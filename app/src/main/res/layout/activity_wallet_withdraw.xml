@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@mipmap/background_business_head">
+
+        <TextView
+            android:id="@+id/tv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:gravity="center"
+            android:layout_centerVertical="true"
+            android:drawablePadding="10dp"
+            android:drawableRight="@mipmap/back" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:text="提现"
+            android:textColor="@android:color/white"
+            android:textSize="20sp" />
+    </RelativeLayout>
+
+
+
+
+
+    <TextView
+        android:layout_marginTop="10dp"
+        android:textColor="@color/text_4c"
+        android:textSize="20sp"
+        android:text="提现说明"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"/>
+
+    <TextView
+        android:id="@+id/tv_explain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:textColor="@color/text_4c"
+      />
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        >
+
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/iv_bank"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="15dp"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/pay_icon"/>
+
+        <TextView
+            android:id="@+id/tv_bank_card_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/iv_bank"
+
+            android:text="尾号(****)"
+            android:textSize="16sp"
+            android:textColor="@color/text_4c"
+           />
+
+
+        <TextView
+            android:layout_marginLeft="30dp"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/tv_bank_card_number"
+            android:id="@+id/tv_bind_bank_card"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="点击绑定银行卡"
+            android:textColor="@color/grey"
+            android:textSize="12sp" />
+
+        <View
+            android:layout_marginTop="10dp"
+            android:background="@color/grey"
+            android:layout_alignParentBottom="true"
+            android:layout_width="wrap_content"
+            android:layout_height="1dp">
+
+        </View>
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="25dp"
+
+
+        android:text="提 现 金 额"
+        android:textSize="16sp"
+        android:textColor="@color/text_4c"
+        />
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        >
+
+
+        <ImageView
+            android:id="@+id/iv_withdraw"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignBottom="@+id/et_withdraw_count"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="15dp"
+            android:src="@mipmap/pay_icon" />
+
+        <EditText
+            android:layout_toRightOf="@id/iv_withdraw"
+            android:id="@+id/et_withdraw_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_centerVertical="true"
+            android:hint="请输入提现金额 (元)"
+            android:textSize="12sp"
+            android:background="@null"
+            android:textColor="@color/text_4c"
+            />
+
+
+
+
+        <View
+            android:layout_marginTop="10dp"
+            android:background="@color/grey"
+            android:layout_alignParentBottom="true"
+            android:layout_width="wrap_content"
+            android:layout_height="1dp">
+
+        </View>
+
+    </RelativeLayout>
+
+
+    <TextView
+        android:id="@+id/tv_balance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
+
+
+        android:text="可提现余额0.00元"
+        android:textSize="16sp"
+        android:textColor="@color/text_4c"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="25dp"
+        >
+
+
+        <ImageView
+            android:id="@+id/iv_password"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="15dp"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/password"/>
+
+        <EditText
+            android:layout_toRightOf="@id/iv_password"
+            android:id="@+id/et_pay_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_centerVertical="true"
+            android:hint="请输入支付密码"
+            android:textSize="12sp"
+            android:background="@null"
+            android:textColor="@color/text_4c"
+            />
+
+
+
+
+        <View
+            android:layout_marginTop="10dp"
+            android:background="@color/grey"
+            android:layout_alignParentBottom="true"
+            android:layout_width="wrap_content"
+            android:layout_height="1dp">
+
+        </View>
+
+    </RelativeLayout>
+    <!--<ImageView-->
+            <!--android:id="@+id/iv_select1"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:src="@mipmap/selected_circle"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_marginRight="15dp"/>-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="bottom">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginTop="25dp"
+            android:background="@color/white"
+            >
+            <Button
+                android:id="@+id/submit"
+                android:layout_width="345dp"
+                android:layout_height="50dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:background="@color/orange"
+                android:text="提交"
+                android:textColor="@color/white"
+                android:textSize="19sp" />
+        </RelativeLayout>
+</LinearLayout>
+</LinearLayout>
+    </ScrollView>

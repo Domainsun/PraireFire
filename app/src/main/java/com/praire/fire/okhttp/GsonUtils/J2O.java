@@ -9,6 +9,8 @@ import com.praire.fire.okhttp.JavaBean.AddProductResultBean;
 import com.praire.fire.okhttp.JavaBean.BusinessEvaluateListBean;
 import com.praire.fire.okhttp.JavaBean.BusinessOrderListBean;
 import com.praire.fire.okhttp.JavaBean.BusinessTodayCountBean;
+import com.praire.fire.okhttp.JavaBean.HistoryIncomeBean;
+import com.praire.fire.okhttp.JavaBean.OrderDetailsInfoBean;
 import com.praire.fire.okhttp.JavaBean.ProductInfoBean;
 import com.praire.fire.okhttp.JavaBean.ProductListBean;
 import com.praire.fire.okhttp.JavaBean.ProductTypeBean;
@@ -16,6 +18,7 @@ import com.praire.fire.okhttp.JavaBean.ServiceListBean;
 import com.praire.fire.okhttp.JavaBean.ServiceTypeBean;
 import com.praire.fire.okhttp.JavaBean.ShopInfoBean;
 import com.praire.fire.okhttp.JavaBean.TodayIncomeBean;
+import com.praire.fire.order.bean.OrderInfoBean;
 
 /**
  * Created by sunlo on 2017/12/29.
@@ -50,6 +53,22 @@ public class J2O {
         TodayIncomeBean o = new TodayIncomeBean();
         Gson gson = new Gson();
         o = gson.fromJson(str_json, TodayIncomeBean.class);
+        return o;
+    }
+
+    public OrderDetailsInfoBean getOrderInfo(String str_json) {
+        OrderDetailsInfoBean o = new OrderDetailsInfoBean();
+        Gson gson = new Gson();
+        o = gson.fromJson(str_json, OrderDetailsInfoBean.class);
+        return o;
+    }
+
+
+
+    public HistoryIncomeBean getHistoryIncome(String str_json) {
+        HistoryIncomeBean o = new HistoryIncomeBean();
+        Gson gson = new Gson();
+        o = gson.fromJson(str_json, HistoryIncomeBean.class);
         return o;
     }
 

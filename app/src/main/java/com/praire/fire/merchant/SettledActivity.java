@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.praire.fire.R;
+import com.praire.fire.base.BaseActivity;
 import com.praire.fire.merchant.adapter.SetledAdapter;
 import com.praire.fire.merchant.bean.ShopTypeBeanList;
 import com.praire.fire.okhttp.GsonUtils.J2O;
@@ -24,7 +25,7 @@ import java.util.Map;
 
 import butterknife.ButterKnife;
 
-public class SettledActivity extends AppCompatActivity {
+public class SettledActivity extends BaseActivity {
 
 
     private RecyclerView mRecyclerView;
@@ -44,6 +45,31 @@ public class SettledActivity extends AppCompatActivity {
         mRecyclerView = findViewById(R.id.recyclerview);
 
         initView();
+    }
+
+    @Override
+    protected int getFragmentLayout() {
+        return R.layout.activity_settled;
+    }
+
+    @Override
+    protected void initViews() {
+
+    }
+
+    @Override
+    protected void initListeners() {
+
+    }
+
+    @Override
+    protected void initAdapters() {
+
+    }
+
+    @Override
+    protected void initData() {
+
     }
 
     private void initView() {

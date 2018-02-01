@@ -12,7 +12,7 @@ public class BusinessOrderListBean {
     /**
      * code : 1
      * p : 1
-     * pagelist : [{"id":"64","type":"2","shop_id":"17","ps_id":"7","user_id":"1472","orderno":"2018011609381238125766","tradeno":"","paytype":"0","channel":"","buyeraccount":"","number":"5","name":"1","picurl":"","nprice":"2.00","price":"1.96","sprice":"0.00","totalprice":"9.80","payprice":"0.00","shopprice":"1.80","totalshopprice":"9.00","status":"0","refund":"0","refund_time":"0","shoprefund_time":"0","rejectmessage":"","pay_time":"0","create_time":"1516066692","update_time":"0","use_time":"0","userinfo":{"nickname":"amazing...","head":"http://lysh-upload.oss-cn-shanghai.aliyuncs.com/user/head/201801/504044818276974c5d2d7fdb0915d2ea.jpg?OSSAccessKeyId=LTAIjyidULA5tuIB&Expires=1516076893&Signature=%2FnKZpaneyG7MiMmrpl2JGKQwVnw%3D","tel":"15727756171","sex":""}},{"id":"63","type":"2","shop_id":"17","ps_id":"7","user_id":"1472","orderno":"2018011609380690433139","tradeno":"","paytype":"0","channel":"","buyeraccount":"","number":"1","name":"1","picurl":"","nprice":"2.00","price":"1.96","sprice":"0.00","totalprice":"1.96","payprice":"0.00","shopprice":"1.80","totalshopprice":"1.80","status":"0","refund":"0","refund_time":"0","shoprefund_time":"0","rejectmessage":"","pay_time":"0","create_time":"1516066686","update_time":"0","use_time":"0","userinfo":{"nickname":"amazing...","head":"http://lysh-upload.oss-cn-shanghai.aliyuncs.com/user/head/201801/504044818276974c5d2d7fdb0915d2ea.jpg?OSSAccessKeyId=LTAIjyidULA5tuIB&Expires=1516076893&Signature=%2FnKZpaneyG7MiMmrpl2JGKQwVnw%3D","tel":"15727756171","sex":""}},{"id":"62","type":"2","shop_id":"17","ps_id":"7","user_id":"1472","orderno":"2018011609290273915980","tradeno":"","paytype":"0","channel":"","buyeraccount":"","number":"5","name":"1","picurl":"","nprice":"2.00","price":"1.96","sprice":"0.00","totalprice":"9.80","payprice":"0.00","shopprice":"1.80","totalshopprice":"9.00","status":"0","refund":"0","refund_time":"0","shoprefund_time":"0","rejectmessage":"","pay_time":"0","create_time":"1516066142","update_time":"0","use_time":"0","userinfo":{"nickname":"amazing...","head":"http://lysh-upload.oss-cn-shanghai.aliyuncs.com/user/head/201801/504044818276974c5d2d7fdb0915d2ea.jpg?OSSAccessKeyId=LTAIjyidULA5tuIB&Expires=1516076893&Signature=%2FnKZpaneyG7MiMmrpl2JGKQwVnw%3D","tel":"15727756171","sex":""}},{"id":"61","type":"2","shop_id":"17","ps_id":"7","user_id":"1472","orderno":"2018011609285430144705","tradeno":"","paytype":"0","channel":"","buyeraccount":"","number":"1","name":"1","picurl":"","nprice":"2.00","price":"1.96","sprice":"0.00","totalprice":"1.96","payprice":"0.00","shopprice":"1.80","totalshopprice":"1.80","status":"0","refund":"0","refund_time":"0","shoprefund_time":"0","rejectmessage":"","pay_time":"0","create_time":"1516066134","update_time":"0","use_time":"0","userinfo":{"nickname":"amazing...","head":"http://lysh-upload.oss-cn-shanghai.aliyuncs.com/user/head/201801/504044818276974c5d2d7fdb0915d2ea.jpg?OSSAccessKeyId=LTAIjyidULA5tuIB&Expires=1516076893&Signature=%2FnKZpaneyG7MiMmrpl2JGKQwVnw%3D","tel":"15727756171","sex":""}}]
+     * pagelist : [{"id":"215","shop_id":"17","user_id":"1467","orderno":"2018012218081779436599","payno":"2018012411444017705232","tradeno":"2018012421001004020595912971","paytype":"1","channel":"ALIPAYACCOUNT","buyeraccount":"liu***@163.com","payprice":"0.01","status":"1","refund":"0","refund_time":"0","shoprefund_time":"0","rejectmessage":"","pay_time":"1516765487","isread":"0","create_time":"1516615697","update_time":"1516615697","use_time":"0","cancel_time":"0","nickname":"xxx","head":"http://lysh-upload.oss-cn-shanghai.aliyuncs.com/user/head/201712/a25f9fbd52461b8e273f6fa5c5bc221f.jpg?OSSAccessKeyId=LTAIjyidULA5tuIB&Expires=1516782318&Signature=UNgQAav2%2FFMVOoXJoaZlzWijzc4%3D","sex":"","tel":"18070107008","pslist":[{"id":"135","order_id":"215","type":"1","ps_id":"41","name":"汽水","cover":"http://lysh-upload.oss-cn-shanghai.aliyuncs.com/shop/product/201801/8afc0a95e23e72f543e7877953b438ef.jpg?OSSAccessKeyId=LTAIjyidULA5tuIB&Expires=1516782318&Signature=qX3Jw8%2FDBOfAmBsgCDbxDahv9l0%3D","nprice":"12.00","price":"11.64","shopprice":"10.80","number":"2","create_time":"1516615697","update_time":"1516615697"}]},{"id":"170","shop_id":"17","user_id":"1467","orderno":"2018011717484295601463","payno":"","tradeno":"","paytype":"0","channel":"","buyeraccount":"","payprice":"100.00","status":"1","refund":"0","refund_time":"0","shoprefund_time":"0","rejectmessage":"","pay_time":"0","isread":"1","create_time":"1516182522","update_time":"1516182522","use_time":"0","cancel_time":"0","nickname":"xxx","head":"http://lysh-upload.oss-cn-shanghai.aliyuncs.com/user/head/201712/a25f9fbd52461b8e273f6fa5c5bc221f.jpg?OSSAccessKeyId=LTAIjyidULA5tuIB&Expires=1516782318&Signature=UNgQAav2%2FFMVOoXJoaZlzWijzc4%3D","sex":"","tel":"18070107008","pslist":[{"id":"75","order_id":"170","type":"1","ps_id":"31","name":"零件8","cover":"http://lysh-upload.oss-cn-shanghai.aliyuncs.com/shop/product/201801/53571422f80dfd97efb355f20c93ef8a.jpg?OSSAccessKeyId=LTAIjyidULA5tuIB&Expires=1516782318&Signature=2LuLuipT669p4x%2B7HOgtQxnuD8o%3D","nprice":"80.00","price":"77.60","shopprice":"72.00","number":"1","create_time":"1516182522","update_time":"1516245339"},{"id":"76","order_id":"170","type":"2","ps_id":"37","name":"洗车6修改名称后","cover":"","nprice":"555.00","price":"538.35","shopprice":"499.50","number":"1","create_time":"1516182522","update_time":"1516182522"}]}]
      */
 
     private int code;
@@ -45,68 +45,60 @@ public class BusinessOrderListBean {
 
     public static class PagelistBean {
         /**
-         * id : 64
-         * type : 2
+         * id : 215
          * shop_id : 17
-         * ps_id : 7
-         * user_id : 1472
-         * orderno : 2018011609381238125766
-         * tradeno :
-         * paytype : 0
-         * channel :
-         * buyeraccount :
-         * number : 5
-         * name : 1
-         * picurl :
-         * nprice : 2.00
-         * price : 1.96
-         * sprice : 0.00
-         * totalprice : 9.80
-         * payprice : 0.00
-         * shopprice : 1.80
-         * totalshopprice : 9.00
-         * status : 0
+         * user_id : 1467
+         * orderno : 2018012218081779436599
+         * payno : 2018012411444017705232
+         * tradeno : 2018012421001004020595912971
+         * paytype : 1
+         * channel : ALIPAYACCOUNT
+         * buyeraccount : liu***@163.com
+         * payprice : 0.01
+         * status : 1
          * refund : 0
          * refund_time : 0
          * shoprefund_time : 0
          * rejectmessage :
-         * pay_time : 0
-         * create_time : 1516066692
-         * update_time : 0
+         * pay_time : 1516765487
+         * isread : 0
+         * create_time : 1516615697
+         * update_time : 1516615697
          * use_time : 0
-         * userinfo : {"nickname":"amazing...","head":"http://lysh-upload.oss-cn-shanghai.aliyuncs.com/user/head/201801/504044818276974c5d2d7fdb0915d2ea.jpg?OSSAccessKeyId=LTAIjyidULA5tuIB&Expires=1516076893&Signature=%2FnKZpaneyG7MiMmrpl2JGKQwVnw%3D","tel":"15727756171","sex":""}
+         * cancel_time : 0
+         * nickname : xxx
+         * head : http://lysh-upload.oss-cn-shanghai.aliyuncs.com/user/head/201712/a25f9fbd52461b8e273f6fa5c5bc221f.jpg?OSSAccessKeyId=LTAIjyidULA5tuIB&Expires=1516782318&Signature=UNgQAav2%2FFMVOoXJoaZlzWijzc4%3D
+         * sex :
+         * tel : 18070107008
+         * pslist : [{"id":"135","order_id":"215","type":"1","ps_id":"41","name":"汽水","cover":"http://lysh-upload.oss-cn-shanghai.aliyuncs.com/shop/product/201801/8afc0a95e23e72f543e7877953b438ef.jpg?OSSAccessKeyId=LTAIjyidULA5tuIB&Expires=1516782318&Signature=qX3Jw8%2FDBOfAmBsgCDbxDahv9l0%3D","nprice":"12.00","price":"11.64","shopprice":"10.80","number":"2","create_time":"1516615697","update_time":"1516615697"}]
          */
 
         private String id;
-        private String type;
         private String shop_id;
-        private String ps_id;
         private String user_id;
         private String orderno;
+        private String payno;
         private String tradeno;
         private String paytype;
         private String channel;
         private String buyeraccount;
-        private String number;
-        private String name;
-        private String picurl;
-        private String nprice;
-        private String price;
-        private String sprice;
-        private String totalprice;
         private String payprice;
-        private String shopprice;
-        private String totalshopprice;
         private String status;
         private String refund;
         private String refund_time;
         private String shoprefund_time;
         private String rejectmessage;
         private String pay_time;
+        private String isread;
         private String create_time;
         private String update_time;
         private String use_time;
-        private UserinfoBean userinfo;
+        private String cancel_time;
+        private String nickname;
+        private String head;
+        private String sex;
+        private String tel;
+        private List<PslistBean> pslist;
 
         public String getId() {
             return id;
@@ -116,28 +108,12 @@ public class BusinessOrderListBean {
             this.id = id;
         }
 
-        public String getType() {
-            return type;
-        }
-
-        public void setType(String type) {
-            this.type = type;
-        }
-
         public String getShop_id() {
             return shop_id;
         }
 
         public void setShop_id(String shop_id) {
             this.shop_id = shop_id;
-        }
-
-        public String getPs_id() {
-            return ps_id;
-        }
-
-        public void setPs_id(String ps_id) {
-            this.ps_id = ps_id;
         }
 
         public String getUser_id() {
@@ -154,6 +130,14 @@ public class BusinessOrderListBean {
 
         public void setOrderno(String orderno) {
             this.orderno = orderno;
+        }
+
+        public String getPayno() {
+            return payno;
+        }
+
+        public void setPayno(String payno) {
+            this.payno = payno;
         }
 
         public String getTradeno() {
@@ -188,84 +172,12 @@ public class BusinessOrderListBean {
             this.buyeraccount = buyeraccount;
         }
 
-        public String getNumber() {
-            return number;
-        }
-
-        public void setNumber(String number) {
-            this.number = number;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public String getPicurl() {
-            return picurl;
-        }
-
-        public void setPicurl(String picurl) {
-            this.picurl = picurl;
-        }
-
-        public String getNprice() {
-            return nprice;
-        }
-
-        public void setNprice(String nprice) {
-            this.nprice = nprice;
-        }
-
-        public String getPrice() {
-            return price;
-        }
-
-        public void setPrice(String price) {
-            this.price = price;
-        }
-
-        public String getSprice() {
-            return sprice;
-        }
-
-        public void setSprice(String sprice) {
-            this.sprice = sprice;
-        }
-
-        public String getTotalprice() {
-            return totalprice;
-        }
-
-        public void setTotalprice(String totalprice) {
-            this.totalprice = totalprice;
-        }
-
         public String getPayprice() {
             return payprice;
         }
 
         public void setPayprice(String payprice) {
             this.payprice = payprice;
-        }
-
-        public String getShopprice() {
-            return shopprice;
-        }
-
-        public void setShopprice(String shopprice) {
-            this.shopprice = shopprice;
-        }
-
-        public String getTotalshopprice() {
-            return totalshopprice;
-        }
-
-        public void setTotalshopprice(String totalshopprice) {
-            this.totalshopprice = totalshopprice;
         }
 
         public String getStatus() {
@@ -316,6 +228,14 @@ public class BusinessOrderListBean {
             this.pay_time = pay_time;
         }
 
+        public String getIsread() {
+            return isread;
+        }
+
+        public void setIsread(String isread) {
+            this.isread = isread;
+        }
+
         public String getCreate_time() {
             return create_time;
         }
@@ -340,57 +260,186 @@ public class BusinessOrderListBean {
             this.use_time = use_time;
         }
 
-        public UserinfoBean getUserinfo() {
-            return userinfo;
+        public String getCancel_time() {
+            return cancel_time;
         }
 
-        public void setUserinfo(UserinfoBean userinfo) {
-            this.userinfo = userinfo;
+        public void setCancel_time(String cancel_time) {
+            this.cancel_time = cancel_time;
         }
 
-        public static class UserinfoBean {
+        public String getNickname() {
+            return nickname;
+        }
+
+        public void setNickname(String nickname) {
+            this.nickname = nickname;
+        }
+
+        public String getHead() {
+            return head;
+        }
+
+        public void setHead(String head) {
+            this.head = head;
+        }
+
+        public String getSex() {
+            return sex;
+        }
+
+        public void setSex(String sex) {
+            this.sex = sex;
+        }
+
+        public String getTel() {
+            return tel;
+        }
+
+        public void setTel(String tel) {
+            this.tel = tel;
+        }
+
+        public List<PslistBean> getPslist() {
+            return pslist;
+        }
+
+        public void setPslist(List<PslistBean> pslist) {
+            this.pslist = pslist;
+        }
+
+        public static class PslistBean {
             /**
-             * nickname : amazing...
-             * head : http://lysh-upload.oss-cn-shanghai.aliyuncs.com/user/head/201801/504044818276974c5d2d7fdb0915d2ea.jpg?OSSAccessKeyId=LTAIjyidULA5tuIB&Expires=1516076893&Signature=%2FnKZpaneyG7MiMmrpl2JGKQwVnw%3D
-             * tel : 15727756171
-             * sex :
+             * id : 135
+             * order_id : 215
+             * type : 1
+             * ps_id : 41
+             * name : 汽水
+             * cover : http://lysh-upload.oss-cn-shanghai.aliyuncs.com/shop/product/201801/8afc0a95e23e72f543e7877953b438ef.jpg?OSSAccessKeyId=LTAIjyidULA5tuIB&Expires=1516782318&Signature=qX3Jw8%2FDBOfAmBsgCDbxDahv9l0%3D
+             * nprice : 12.00
+             * price : 11.64
+             * shopprice : 10.80
+             * number : 2
+             * create_time : 1516615697
+             * update_time : 1516615697
              */
 
-            private String nickname;
-            private String head;
-            private String tel;
-            private String sex;
+            private String id;
+            private String order_id;
+            private String type;
+            private String ps_id;
+            private String name;
+            private String cover;
+            private String nprice;
+            private String price;
+            private String shopprice;
+            private String number;
+            private String create_time;
+            private String update_time;
+            private String classpath;
 
-            public String getNickname() {
-                return nickname;
+            public String getClasspath() {
+                return classpath;
             }
 
-            public void setNickname(String nickname) {
-                this.nickname = nickname;
+            public void setClasspath(String classpath) {
+                this.classpath = classpath;
             }
 
-            public String getHead() {
-                return head;
+            public String getId() {
+                return id;
             }
 
-            public void setHead(String head) {
-                this.head = head;
+            public void setId(String id) {
+                this.id = id;
             }
 
-            public String getTel() {
-                return tel;
+            public String getOrder_id() {
+                return order_id;
             }
 
-            public void setTel(String tel) {
-                this.tel = tel;
+            public void setOrder_id(String order_id) {
+                this.order_id = order_id;
             }
 
-            public String getSex() {
-                return sex;
+            public String getType() {
+                return type;
             }
 
-            public void setSex(String sex) {
-                this.sex = sex;
+            public void setType(String type) {
+                this.type = type;
+            }
+
+            public String getPs_id() {
+                return ps_id;
+            }
+
+            public void setPs_id(String ps_id) {
+                this.ps_id = ps_id;
+            }
+
+            public String getName() {
+                return name;
+            }
+
+            public void setName(String name) {
+                this.name = name;
+            }
+
+            public String getCover() {
+                return cover;
+            }
+
+            public void setCover(String cover) {
+                this.cover = cover;
+            }
+
+            public String getNprice() {
+                return nprice;
+            }
+
+            public void setNprice(String nprice) {
+                this.nprice = nprice;
+            }
+
+            public String getPrice() {
+                return price;
+            }
+
+            public void setPrice(String price) {
+                this.price = price;
+            }
+
+            public String getShopprice() {
+                return shopprice;
+            }
+
+            public void setShopprice(String shopprice) {
+                this.shopprice = shopprice;
+            }
+
+            public String getNumber() {
+                return number;
+            }
+
+            public void setNumber(String number) {
+                this.number = number;
+            }
+
+            public String getCreate_time() {
+                return create_time;
+            }
+
+            public void setCreate_time(String create_time) {
+                this.create_time = create_time;
+            }
+
+            public String getUpdate_time() {
+                return update_time;
+            }
+
+            public void setUpdate_time(String update_time) {
+                this.update_time = update_time;
             }
         }
     }
