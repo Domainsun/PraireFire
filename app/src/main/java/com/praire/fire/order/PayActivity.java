@@ -182,7 +182,7 @@ public class PayActivity extends BaseTitleActivity {
         switch (msg.what) {
             case 1:
                 Log.e("msgpay", (String) msg.obj);
-<<<<<<< HEAD
+
               String paystr = (String) msg.obj ;
 
                 if(PAY_TYPE_ALIPAY.equals(payType)) {
@@ -192,11 +192,11 @@ public class PayActivity extends BaseTitleActivity {
                 }else if(PAY_TYPE_YU_E.equals(payType)){
 
                 }
-=======
+
                 String alipaystr0 = (String) msg.obj ;
                 String alipaystr=alipaystr0.replace("alipay_sdk=","app_id=");
                 aliPay((String) msg.obj);
->>>>>>> 3c3f93b5dcbe028d3eaa6120c468cdf40f49dfac
+
                 break;
             case SDK_PAY_FLAG:
                 //ailipay
