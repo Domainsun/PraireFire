@@ -285,11 +285,13 @@ public class ShopActivity extends BaseActivity {
             case R.id.shop_share:
                 break;
             case R.id.shop_tel:
-                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-                    // TODO: Consider calling
-                    return;
+                if(businessInfoBean != null && !"".equals(businessInfoBean.getTel())) {
+                    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                        // TODO: Consider calling
+                        return;
+                    }
+                    startActivity(new Intent(ACTION_CALL, Uri.parse("tel:" + businessInfoBean.getTel())));
                 }
-                startActivity(new Intent(ACTION_CALL, Uri.parse("tel:" + businessInfoBean.getTel())));
                 break;
             case R.id.shop_more_service:
                 MoreProductActivity.startActivity(this, businessId, 1,false);

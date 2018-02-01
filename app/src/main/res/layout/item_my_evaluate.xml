@@ -1,0 +1,193 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="horizontal"
+    android:padding="15dp"
+    >
+
+    <LinearLayout
+        android:id="@+id/item_my_ealuate_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="15dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/user_icon"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                fresco:placeholderImage="@mipmap/my"
+                  />
+            <TextView
+                android:id="@+id/item_my_ealuate_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_color"
+                android:layout_marginLeft="10dp"
+                android:textSize="17sp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/item_my_ealuate_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:textColor="@color/grey"
+            android:textSize="14sp" />
+        <RatingBar
+            android:id="@+id/item_my_ealuate_star"
+            style="@style/GlimmerRatingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:isIndicator="true"
+            android:max="5"
+            android:numStars="5"
+            android:rating="5" />
+
+        <TextView
+            android:id="@+id/item_all_evaluate_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="@string/no_evaluate"
+            android:textColor="@color/text_color"
+            android:textSize="16sp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/item_all_evaluate_read"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="浏览0"
+                android:tag="浏览%s"
+                android:textColor="@color/grey"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/item_all_evaluate_zan"
+                android:layout_width="40dp"
+                android:layout_height="18dp"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dp"
+                android:layout_toLeftOf="@+id/item_all_evaluate_evaluate"
+                android:background="@drawable/shape_btn_gray"
+                android:drawableLeft="@mipmap/heart"
+                android:drawablePadding="5dp"
+                android:gravity="center"
+                android:text="赞"
+                android:tag="赞%s"
+                android:textColor="@color/grey"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@id/item_all_evaluate_evaluate"
+                android:layout_width="40dp"
+                android:layout_height="18dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/shape_btn_gray"
+                android:drawableLeft="@mipmap/small_comment"
+                android:drawablePadding="5dp"
+                android:gravity="center"
+                android:text="0"
+                android:textColor="@color/grey"
+                android:textSize="12sp" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@color/grey_background"
+            android:padding="10dp"
+            android:orientation="horizontal">
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/product_icon"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:visibility="gone"
+                  />
+            <TextView
+                android:id="@+id/item_my_ealuate_product_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/product_icon"
+                android:textColor="@color/text_color"
+                android:layout_marginLeft="10dp"
+                android:textSize="19sp" />
+            <TextView
+                android:id="@+id/item_my_ealuate_product_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/orange"
+                android:layout_marginTop="5dp"
+                android:layout_below="@id/item_my_ealuate_product_name"
+                android:layout_toRightOf="@id/product_icon"
+                android:layout_marginLeft="10dp"
+                android:tag="￥%s"
+                android:textSize="19sp" />
+            <TextView
+                android:id="@+id/item_my_ealuate_product_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_color"
+                android:layout_marginTop="5dp"
+                android:layout_below="@id/item_my_ealuate_product_price"
+                android:layout_toRightOf="@id/product_icon"
+                android:layout_marginLeft="10dp"
+                android:tag="数量%s"
+                android:textSize="16sp" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <View
+        android:id="@+id/item_my_ealuate_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/item_my_ealuate_ll"
+        android:background="@color/grey_background" />
+
+    <LinearLayout
+        android:id="@+id/bussiness_respond_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/item_my_ealuate_ll"
+        android:layout_below="@id/item_my_ealuate_line"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        android:layout_marginRight="15dp"
+        android:paddingBottom="15dp"
+        android:paddingTop="15dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:src="@mipmap/details_comment" />
+
+        <TextView
+            android:id="@+id/bussiness_respond"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:text="商家回应："
+            android:layout_gravity="center_vertical"
+            android:tag="商家回应：%s"
+            android:textColor="@color/grey"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+</RelativeLayout>

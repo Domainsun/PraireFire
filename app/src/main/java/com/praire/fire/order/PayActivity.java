@@ -20,6 +20,13 @@ import com.praire.fire.common.ConstanUrl;
 import com.praire.fire.common.Constants;
 import com.praire.fire.okhttp.OkhttpRequestUtil;
 import com.praire.fire.order.bean.PayResult;
+import com.praire.fire.utils.ToastUtil;
+import com.tencent.mm.opensdk.modelpay.PayReq;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,6 +46,9 @@ public class PayActivity extends BaseTitleActivity {
 
 
     private static final int SDK_PAY_FLAG = 100;
+    public static final String PAY_TYPE_WEIXIN = "2";
+    public static final String PAY_TYPE_ALIPAY = "1";
+    public static final String PAY_TYPE_YU_E = "0";
     @BindView(R.id.pay_cost)
     TextView payCost;
     @BindView(R.id.business_name_pay)
@@ -62,6 +72,7 @@ public class PayActivity extends BaseTitleActivity {
     private String recharge;
     private String orderId;
     private static final String PAY_COST = "PayCost";
+    private String payType = PAY_TYPE_YU_E;
 
     /**
      * @param context
@@ -151,12 +162,14 @@ public class PayActivity extends BaseTitleActivity {
                 break;
             case R.id.btn_commit_pay:
                  if (payBalanceCheckbox.isChecked()) {
-                    creatPay("0");
+                     payType = PAY_TYPE_YU_E;
                 } else if (payWeixinCheckbox.isChecked()) {
-                    creatPay("2");
+                     payType = PAY_TYPE_WEIXIN;
                 } else if (payAlipayCheckbox.isChecked()) {
-                    creatPay("1");
+                     payType = PAY_TYPE_ALIPAY;
                 }
+                creatPay(payType);
+
                 break;
             default:
                 break;
@@ -169,9 +182,21 @@ public class PayActivity extends BaseTitleActivity {
         switch (msg.what) {
             case 1:
                 Log.e("msgpay", (String) msg.obj);
+<<<<<<< HEAD
+              String paystr = (String) msg.obj ;
+
+                if(PAY_TYPE_ALIPAY.equals(payType)) {
+                    aliPay(paystr);
+                }else if(PAY_TYPE_WEIXIN.equals(payType)){
+//                    weixinPay(paystr);
+                }else if(PAY_TYPE_YU_E.equals(payType)){
+
+                }
+=======
                 String alipaystr0 = (String) msg.obj ;
                 String alipaystr=alipaystr0.replace("alipay_sdk=","app_id=");
                 aliPay((String) msg.obj);
+>>>>>>> 3c3f93b5dcbe028d3eaa6120c468cdf40f49dfac
                 break;
             case SDK_PAY_FLAG:
                 //ailipay
@@ -201,6 +226,8 @@ public class PayActivity extends BaseTitleActivity {
         }
     }
 
+
+
     /**
      * @param type 支付类型(1支付宝，2微信 0余额)
      *             recharge  是否充值(0付款，1充值)
@@ -215,8 +242,36 @@ public class PayActivity extends BaseTitleActivity {
 
     }
 
-    private void weixinPay() {
+    private void weixinPay(String paystr) {
 
+        IWXAPI  api = WXAPIFactory.createWXAPI(this, Constants.PRODUCT_WEIXIN_APP_ID);
+        api.registerApp(Constants.PRODUCT_WEIXIN_APP_ID);
+        PayReq req = new PayReq();
+        try {
+            JSONObject json = new JSONObject(paystr);
+
+            //req.appId = "wx5895e8ea9a3542a1";  //  appId
+            req.appId = json.getString("appid");
+            req.partnerId = json.getString("partnerid");
+            req.prepayId = json.getString("prepayid");
+            req.nonceStr = json.getString("noncestr");
+            req.timeStamp = json.getString("timestamp");
+            req.packageValue = json.getString("package");
+            req.sign = json.getString("sign");
+//                req.extData = "app data"; // optional
+            if (isWXAppInstalledAndSupported()) {
+                ToastUtil.show(this,"正常调起支付");
+                // 在支付之前，如果应用没有注册到微信，应该先调用IWXMsg.registerApp将应用注册到微信
+                api.sendReq(req);
+                return;
+            }
+            Toast.makeText(this, "请先安装微信客户端方可使用微信支付", Toast.LENGTH_LONG).show();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+    ToastUtil.show(this,paystr);
     }
 
     private void aliPay(final String orderInfo) {
@@ -239,41 +294,11 @@ public class PayActivity extends BaseTitleActivity {
         payThread.start();
     }
 
-   /* private void wxpayReslut(WxPayReslutEntity infoentity) {
-        if (!"FAIL".equals(infoentity.RequestStr)) {
-            api = WXAPIFactory.createWXAPI(this, Constants.PRODUCT_WEIXIN_APP_ID);
-            api.registerApp(Constants.PRODUCT_WEIXIN_APP_ID);
-            PayReq req = new PayReq();
-            try {
-                JSONObject json = new JSONObject(infoentity.RequestStr);
 
-                //req.appId = "wx5895e8ea9a3542a1";  // ������appId
-                req.appId = json.getString("appid");
-                req.partnerId = json.getString("partnerid");
-                req.prepayId = json.getString("prepayid");
-                req.nonceStr = json.getString("noncestr");
-                req.timeStamp = json.getString("timestamp");
-                req.packageValue = json.getString("package");
-                req.sign = json.getString("sign");
-//                req.extData = "app data"; // optional
-                if (isWXAppInstalledAndSupported()) {
-                    showMessage("正常调起支付");
-                    // 在支付之前，如果应用没有注册到微信，应该先调用IWXMsg.registerApp将应用注册到微信
-                    api.sendReq(req);
-                    return;
-                }
-                Toast.makeText(this, "请先安装微信客户端方可使用微信支付", Toast.LENGTH_LONG).show();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            return;
-        }
-        showMessage(infoentity.Msg);
-    }
 
-    *//**
+     /**
      * 判断用户手机是否安装微信客户端
-     *//*
+     */
     private boolean isWXAppInstalledAndSupported() {
         IWXAPI msgApi = WXAPIFactory.createWXAPI(this, null);
         msgApi.registerApp(Constants.PRODUCT_WEIXIN_APP_ID);
@@ -282,5 +307,5 @@ public class PayActivity extends BaseTitleActivity {
                 && msgApi.isWXAppSupportAPI();
 
         return sIsWXAppInstalledAndSupported;
-    }*/
+    }
 }

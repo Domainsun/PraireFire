@@ -37,7 +37,7 @@
             android:maxLines="1"
             android:textColor="@color/grey"
             android:textSize="14sp" />
-         
+
     </LinearLayout>
 
     <View

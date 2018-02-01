@@ -69,7 +69,7 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.MyViewHolder> {
         holder.itemCarTimes.setText(bean.getOpentime());
         holder.itemCarDistance.setText((String)SharePreferenceMgr.get(context , Constants.CITY,"")+bean.getDistance()+"km");
         //防止滑动的时候重复显示数据
-        if (holder.isFrist) {
+        if (holder.isFrist ) {
             for (int i = 0; i < bean.getProduct().size(); i++) {
                 ViewGroup viewGroup = (ViewGroup) LayoutInflater.from(context).inflate(R.layout.item_car_item, null);
 //                SimpleDraweeView img = viewGroup.findViewById(R.id.item_shop_list_img);

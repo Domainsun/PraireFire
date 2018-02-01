@@ -20,6 +20,7 @@ import com.praire.fire.common.ConstanUrl;
 import com.praire.fire.my.bean.CommentResultBean;
 import com.praire.fire.okhttp.OkhttpRequestUtil;
 import com.praire.fire.order.EvaluateActivity;
+import com.praire.fire.order.OrderFinishInfoActivity;
 import com.praire.fire.order.OrderInfoActivity;
 import com.praire.fire.order.OrderUtils;
 import com.praire.fire.order.PayActivity;
@@ -118,13 +119,17 @@ public class OrderFragment extends BaseFragment implements TabLayout.OnTabSelect
             @Override
             public void itemClick(View itemView, int position) {
                 OrderListBean.PagelistBean bean = orderlist.getPagelist().get(position);
-                OrderInfoActivity.startActivity(getActivity(), bean.getOrderno(), false);
+                 if("0".equals(bean.getStatus())){
+                     OrderInfoActivity.startActivity(getActivity(), bean.getOrderno(), false);
+
+                }else {
+                     OrderFinishInfoActivity.startActivity(getActivity(), bean.getOrderno(), false);
+                }
             }
 
             @Override
             public void btnStatus(String status, String orderno, final int position, String paycost) {
-                EvaluateActivity.startActivity(getActivity(), orderlist.getPagelist().get(position), false);
-               /* switch (status) {
+                switch (status) {
                     case "0":
                         PayActivity.startActivity(getActivity(), orderno, "0",paycost, false);
                         break;
@@ -143,7 +148,7 @@ public class OrderFragment extends BaseFragment implements TabLayout.OnTabSelect
                         break;
                     default:
                         break;
-                }*/
+                }
             }
 
 
@@ -167,7 +172,6 @@ public class OrderFragment extends BaseFragment implements TabLayout.OnTabSelect
     protected void networkResponse(Message msg) {
         switch (msg.what) {
             case ORDER_LIST:
-                Log.e("orderlist", (String) msg.obj);
                 Gson gson = new Gson();
                 orderlist = gson.fromJson((String) msg.obj, OrderListBean.class);
                 if (orderlist != null) {
@@ -198,6 +202,12 @@ public class OrderFragment extends BaseFragment implements TabLayout.OnTabSelect
             default:
                 break;
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getDates(1, statusType);
     }
 
     public void getNextPage() {

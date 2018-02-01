@@ -137,7 +137,7 @@
         <activity android:name=".FindPasswordNextActivity"></activity>
         <activity android:name=".my.RechargeActivity"></activity>
             android:windowSoftInputMode="stateHidden|adjustPan"/>
-
+        <activity android:name=".order.OrderFinishInfoActivity"/>
     </application>
 
 </manifest>
