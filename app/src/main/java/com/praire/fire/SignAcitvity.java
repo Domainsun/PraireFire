@@ -7,8 +7,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -48,14 +52,14 @@ public class SignAcitvity extends Activity {
     MyApplication myApplication;
     @BindView(R.id.imageView2)
     ImageView imageView2;
+    @BindView(R.id.check_password)
+    CheckBox checkPassword;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign);
         ButterKnife.bind(this);
-
-
 
 
         initview();
@@ -73,8 +77,8 @@ public class SignAcitvity extends Activity {
         Intent i = getIntent();
         phone = i.getStringExtra("phone");
         //--------add by lyp
-        phone =(String) SharePreferenceMgr.get(this,Constants.USER_ID,"");
-        pw = (String)SharePreferenceMgr.get(this,Constants.PASSWORD,"");
+        phone = (String) SharePreferenceMgr.get(this, Constants.USER_ID, "");
+        pw = (String) SharePreferenceMgr.get(this, Constants.PASSWORD, "");
         etPw.setText(pw);
         //--------add end
 
@@ -89,9 +93,22 @@ public class SignAcitvity extends Activity {
                 }
             }
         };
+
+        checkPassword.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
+//                    checkPassword.setChecked(false);
+                    etPw.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                } else {
+//                    checkPassword.setChecked(true);
+                    etPw.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                }
+            }
+        });
     }
 
-    @OnClick({R.id.btn_sign, R.id.tv_register, R.id.tv_findPw, R.id.imageView2})
+    @OnClick({R.id.btn_sign, R.id.tv_register, R.id.tv_findPw, R.id.imageView2,R.id.check_password})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_sign:
@@ -111,9 +128,9 @@ public class SignAcitvity extends Activity {
                             //-------//add by lyp --------
                             SharePreferenceMgr.put(this, Constants.USER_ID, phone);
                             Intent i = new Intent(this, MainActivity.class);
-                            SharePreferenceMgr.put(this,Constants.USER_ID,phone);
-                            SharePreferenceMgr.put(this,Constants.PASSWORD,pw);
-                            Intent i=new Intent(this, MainActivity.class);
+                            SharePreferenceMgr.put(this, Constants.USER_ID, phone);
+                            SharePreferenceMgr.put(this, Constants.PASSWORD, pw);
+
                             startActivity(i);
                             finish();
                         }
@@ -134,8 +151,8 @@ public class SignAcitvity extends Activity {
 
                 phone = etPhone.getText().toString();
                 if (phone.length() != 0) {
-                    Intent i_find=new Intent(this,FindPasswordActivity.class);
-                    i_find.putExtra("phone",phone);
+                    Intent i_find = new Intent(this, FindPasswordActivity.class);
+                    i_find.putExtra("phone", phone);
                     startActivity(i_find);
 
                 } else {
@@ -147,9 +164,17 @@ public class SignAcitvity extends Activity {
             case R.id.imageView2:
                 finish();
                 break;
+            case R.id.check_password:
+
+
+
+                break;
 
         }
     }
 
 
+    @OnClick(R.id.check_password)
+    public void onViewClicked() {
+    }
 }

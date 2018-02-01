@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.praire.fire.R;
 import com.praire.fire.base.BaseActivity;
+import com.praire.fire.my.WithdrawActivity;
 import com.praire.fire.okhttp.GsonUtils.J2O;
 import com.praire.fire.okhttp.JavaBean.BusinessTodayCountBean;
 import com.praire.fire.okhttp.UseAPIs;
@@ -70,7 +71,7 @@ public class BusinessServiceActivity extends BaseActivity {
     String orderCount="";
     String evaluateCount="";
 
-
+    String cookie;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,7 +92,13 @@ public class BusinessServiceActivity extends BaseActivity {
     @Override
     protected void initViews() {
         ButterKnife.bind(this);
-        String cookie = (String) SharePreferenceMgr.get(this, LOGIN_COOKIE, "");
+        cookie= (String) SharePreferenceMgr.get(this, LOGIN_COOKIE, "");
+
+        showTodayInfo();
+
+    }
+
+    public void showTodayInfo(){
         String result1 = "";
         result1 = new UseAPIs().getBusinessTodayCount(cookie);
         if (result1.length() != 0) {
@@ -150,12 +157,7 @@ public class BusinessServiceActivity extends BaseActivity {
 
 
 
-    private void ininview() {
 
-
-
-
-    }
 
     Intent iReconciliation= new Intent();
     @OnClick({R.id.tv_back, R.id.ll_income, R.id.tv_reconciliation, R.id.tv_withdrawal, R.id.rl_service_manage, R.id.rl_commodity_manage, R.id.rl_order_manage, R.id.rl_member_manage, R.id.rl_evaluate_manage})
@@ -173,8 +175,7 @@ public class BusinessServiceActivity extends BaseActivity {
                 startActivity(iReconciliation);
                 break;
             case R.id.tv_withdrawal:
-                Intent iWithdrawal = new Intent(this, WithdrawalActivity.class);
-                startActivity(iWithdrawal);
+                WithdrawActivity.startActivity(this,false);
                 break;
             case R.id.rl_service_manage:
                 Intent i = new Intent(this, ServiceManageActivity.class);
@@ -202,6 +203,6 @@ public class BusinessServiceActivity extends BaseActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
-        ininview();
+        showTodayInfo();
     }
 }
