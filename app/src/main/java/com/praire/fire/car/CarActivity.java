@@ -28,9 +28,13 @@ import com.praire.fire.common.Constants;
 import com.praire.fire.okhttp.OkhttpRequestUtil;
 import com.praire.fire.utils.RecycleViewDivider;
 import com.praire.fire.utils.SharePreferenceMgr;
+import com.praire.fire.utils.ToastUtil;
 import com.praire.fire.utils.statusbarcolor.Eyes;
 import com.yanzhenjie.recyclerview.swipe.SwipeItemClickListener;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -72,6 +76,9 @@ public class CarActivity extends BaseActivity {
     private String lat, lng;
     private CarBean carBean;
     private CarAdapter carAdapter;
+    private int index = 1;
+    private boolean isFrist = true;
+    private List<CarBean.PagelistBean> carBeanlist = new ArrayList<>();
 
     public static void startActivity(Context context, boolean forResult) {
         Intent intent = new Intent(context, CarActivity.class);
@@ -106,11 +113,24 @@ public class CarActivity extends BaseActivity {
         //添加分割线
         carRecyclerView.addItemDecoration(new RecycleViewDivider(
                 this, LinearLayoutManager.HORIZONTAL));
+        carRecyclerView.useDefaultLoadMore();
+        carRecyclerView.setLoadMoreListener(new SwipeMenuRecyclerView.LoadMoreListener() {
+            @Override
+            public void onLoadMore() {
+                if (carBeanlist == null || carBeanlist.isEmpty() || carBean.getPagelist().size() == 0) {
+                    ToastUtil.show(CarActivity.this,"暂无更多数据");
+                    return;
+                }
+                ++index;
+                isFrist = false;
+                getShopList();
+            }
+        });
         carAdapter = new CarAdapter(this);
         carRecyclerView.setSwipeItemClickListener(new SwipeItemClickListener() {
             @Override
             public void onItemClick(View itemView, int position) {
-                ShopActivity.startActivity(CarActivity.this,carBean.getPagelist().get(position).getId(),false);
+                ShopActivity.startActivity(CarActivity.this,carBeanlist.get(position).getId(),false);
             }
         });
         carRecyclerView.setAdapter(carAdapter);
@@ -125,6 +145,7 @@ public class CarActivity extends BaseActivity {
     @Override
     protected void initData() {
         OkhttpRequestUtil.get(ConstanUrl.SEARCH_GET_PS_TYPE_LIST, 1, false, uiHandler);
+        isFrist = true;
         getShopList();
     }
 
@@ -134,7 +155,7 @@ public class CarActivity extends BaseActivity {
         ordertype	string	是	排序类型(1智能排序 2好评优先 3离我最近 4人均最低 5人均最高)		1
         lng	string	是	经度(按距离排序需用)
                 lat	string	是	纬度(按距离排序需用)*/
-        String str = "?type=" + types + "&class=" + sonType + "&ordertype=" + sortId + "&lng=" + lng + "&lat=" + lat;
+        String str = "?type=" + types + "&class=" + sonType + "&ordertype=" + sortId + "&lng=" + lng + "&lat=" + lat+"&p=" + index;
         OkhttpRequestUtil.get(ConstanUrl.SEARCH_SEARCHSHOP + str, 2, false, uiHandler);
     }
 
@@ -147,9 +168,15 @@ public class CarActivity extends BaseActivity {
                 typeMenuBean = gson2.fromJson((String) msg.obj, TypeMenuBean.class);
                 break;
             case 2:
+                carRecyclerView.loadMoreFinish(false, true);
+                if(isFrist){
+                    carBeanlist.clear();
+                }
                 Gson gson = new Gson();
                 carBean = gson.fromJson((String) msg.obj, CarBean.class);
-                carAdapter.setEntities(carBean.getPagelist());
+
+                carBeanlist.addAll(carBean.getPagelist());
+                carAdapter.setEntities(carBeanlist);
                 break;
             default:
                 break;
@@ -188,6 +215,8 @@ public class CarActivity extends BaseActivity {
             @Override
             public void onItemClick(int position) {
                 sortId = position;
+                index = 1;
+                isFrist = true;
                 getShopList();
             }
         });
@@ -202,6 +231,8 @@ public class CarActivity extends BaseActivity {
             public void onItemClick(int type, int position, String id) {
                 types = type;
                 sonType = id;
+                index = 1;
+                isFrist = true;
                 getShopList();
             }
         });

@@ -117,10 +117,10 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
             case R.id.fragment_my_vip:
                 break;
             case R.id.fragment_my_earphone:
-                CustomerServiceActivity.startActivity(getActivity(), false);
+//                CustomerServiceActivity.startActivity(getActivity(), false);
                 break;
             case R.id.fragment_my_set:
-                SetActivity.startActivity(getActivity(), false);
+//                SetActivity.startActivity(getActivity(), false);
                 break;
             case R.id.fragment_my_img:
 
@@ -129,10 +129,10 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                 MyWalletActivity.startActivity(getActivity(), false);
                 break;
             case R.id.fragment_my_integral_rl:
-                IntegralActivity.startActivity(getActivity(), false);
+//                IntegralActivity.startActivity(getActivity(), false);
                 break;
             case R.id.fragment_my_invitation_integral_rl:
-                InvitationIntegralActivity.startActivity(getActivity(), false);
+//                InvitationIntegralActivity.startActivity(getActivity(), false);
                 break;
             case R.id.fragment_my_order_rl:
 //                CustomerServiceActivity.startActivity(getActivity(),false);
@@ -141,7 +141,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                 ShoppingCarActivity.startActivity(getActivity(), false);
                 break;
             case R.id.fragment_my_collect_rl:
-                MyCollectActivity.startActivity(getActivity(), false);
+//                MyCollectActivity.startActivity(getActivity(), false);
                 break;
             case R.id.fragment_my_evaluate_rl:
                 MyEvaluateActivity.startActivity(getActivity(), false);

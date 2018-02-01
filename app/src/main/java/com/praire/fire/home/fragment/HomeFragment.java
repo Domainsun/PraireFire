@@ -101,13 +101,7 @@ public class HomeFragment extends BaseFragment implements BaseSliderView.OnSlide
         setUpMap();
         index = 1;
         OkhttpRequestUtil.get(ConstanUrl.COMMONINFO_GET_SWIPE,2,false,uiHandler);
-       /* new Thread(new Runnable() {
-            @Override
-            public void run() {
-                requestSwipe();
-//                requestShopList(index);
-            }
-        }).start();*/
+
 
 
         //设置指示器的位置
@@ -258,7 +252,7 @@ public class HomeFragment extends BaseFragment implements BaseSliderView.OnSlide
 //                EducationActivity.startActivity(getActivity(), false);
                 break;
             case R.id.home_life:
-                MapChooseActivity.startActivity(getActivity(),false);
+
                 break;
             case R.id.home_trip:
                 break;

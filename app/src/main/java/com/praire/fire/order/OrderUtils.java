@@ -144,6 +144,20 @@ public class OrderUtils {
         // format 返回的是字符串
         return decimalFormat.format(total);
     }
+    public static String totleNPriceInfo(List<OrderInfoBean.OrderlistBean> pslist) {
+        double total = 0;
+        double total1 = 0;
+        for (OrderInfoBean.OrderlistBean products : pslist) {
+            for(OrderInfoBean.OrderlistBean.PslistBean ps: products.getPslist()){
+                total1 += AppBigDecimal.multiply(Double.valueOf(ps.getNprice()), Double.valueOf(ps.getNumber()), 2);
+            }
+            total += total1;
+        }
+        // 构造方法的字符格式这里如果小数不足2位,会以0补足.
+        DecimalFormat decimalFormat = new DecimalFormat(".##");
+        // format 返回的是字符串
+        return decimalFormat.format(total);
+    }
     public static String totlePrice1(List<OrderInfoBean.OrderlistBean.PslistBean> pslist) {
         double total = 0;
             for(OrderInfoBean.OrderlistBean.PslistBean ps: pslist){
@@ -159,6 +173,17 @@ public class OrderUtils {
         float total = 0;
         for(OrderListBean.PagelistBean.PslistBean ps: pslist){
             total += AppBigDecimal.multiply(Float.valueOf(ps.getPrice()), Float.valueOf(ps.getNumber()), 2);
+        }
+        // 构造方法的字符格式这里如果小数不足2位,会以0补足.
+        DecimalFormat decimalFormat = new DecimalFormat();
+        // format 返回的是字符串
+        return decimalFormat.format(total);
+    }
+
+    public static String totlePriceInfo2(List<OrderInfoBean.OrderlistBean> orderlist) {
+        double total = 0;
+        for (OrderInfoBean.OrderlistBean products : orderlist) {
+            total +=  Double.valueOf(products.getPayprice());
         }
         // 构造方法的字符格式这里如果小数不足2位,会以0补足.
         DecimalFormat decimalFormat = new DecimalFormat();

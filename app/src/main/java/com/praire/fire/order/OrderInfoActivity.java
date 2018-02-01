@@ -99,12 +99,9 @@ public class OrderInfoActivity extends BaseTitleActivity {
     protected void networkResponse(Message msg) {
         switch (msg.what) {
             case 1:
-                Log.e("dataINfo", (String) msg.obj);
                 Gson gson = new Gson();
-
                 infoBean = gson.fromJson((String) msg.obj,OrderInfoBean.class);
                 adapter.setEntities(infoBean.getOrderlist());
-
                 totlePrice = OrderUtils.totlePriceInfo(infoBean.getOrderlist());
                 orderInfoPrice.setText(String.format(orderInfoPrice.getTag().toString(),totlePrice));
                 break;

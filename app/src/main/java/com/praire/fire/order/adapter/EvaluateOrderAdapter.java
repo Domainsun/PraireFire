@@ -60,7 +60,7 @@ public class EvaluateOrderAdapter extends RecyclerView.Adapter<EvaluateOrderAdap
         holder.itemView.setTag(position);
         final EvaluateCommitInfo.OrderpsListBean item = new EvaluateCommitInfo.OrderpsListBean();
         OrderListBean.PagelistBean.PslistBean entity = entities.get(position);
-        item.setOrderps_id(entity.getPs_id());
+        item.setOrderps_id(entity.getId());
         item.setStar("5");
         item.setComment("默认好评！");
         item.setPiclist("");

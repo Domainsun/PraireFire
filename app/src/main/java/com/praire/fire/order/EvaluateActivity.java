@@ -156,15 +156,13 @@ public class EvaluateActivity extends BaseTitleActivity {
 
         EvaluateCommitInfo commitInfo = new EvaluateCommitInfo();
         commitInfo.setOrder_id(orderInfo.getId());
-
-
         commitInfo.setOrderps_list(sList);
         // 转换得到String
         Gson gson = new Gson();
         String strins = gson.toJson(commitInfo);
         Log.e("commentstr",strins);
         RequestBody requestBody = new FormBody.Builder()
-                .add("orderid", orderInfo.getId())
+                .add("orderid", orderInfo.getOrderno())
                 .add("commentstr", strins)
                 .build();
         OkhttpRequestUtil.post(ConstanUrl.COMMENT_IN, requestBody, 1, uiHandler, true);
@@ -251,11 +249,13 @@ public class EvaluateActivity extends BaseTitleActivity {
             Log.e("Message", (String) msg.obj);
             Gson gson = new Gson();
             CommentResultBean bean = gson.fromJson((String) msg.obj, CommentResultBean.class);
-            ToastUtil.show(this, bean.getMsg());
-            if (bean.getCode() == 1) {
-                finish();
-            }
 
+            if (bean.getCode() == 1) {
+                ResultActivity.startActivity(this,"评价成功","感谢您的评价！",false);
+                finish();
+                return;
+            }
+            ToastUtil.show(this, bean.getMsg());
         }
     }
 

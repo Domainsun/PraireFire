@@ -77,10 +77,9 @@ public class OrderInfoBean {
         private String create_time;
         private String update_time;
         private String use_time;
-
-
-        private String shopname;
         private String cancel_time;
+        private String shopname;
+        private String shoptel;
         private List<PslistBean> pslist;
 
         public String getId() {
@@ -258,6 +257,15 @@ public class OrderInfoBean {
         public void setShopname(String shopname) {
             this.shopname = shopname;
         }
+
+        public String getShoptel() {
+            return shoptel;
+        }
+
+        public void setShoptel(String shoptel) {
+            this.shoptel = shoptel;
+        }
+
         public List<PslistBean> getPslist() {
             return pslist;
         }

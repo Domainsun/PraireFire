@@ -24,8 +24,8 @@ public abstract class BaseTitleActivity extends BaseActivity implements BaseLayo
 		super.setContentView(mBaseLayout);
 
 		// setTranslucentStatus(true);
-		setBackgroundResource(R.mipmap.head_backgroud);
-
+//		setBackgroundResource(R.mipmap.head_backgroud);
+		setBackgroundColor(getResources().getColor(R.color.grey_background));
 		initiTile();
 		contentInit();
 	}
@@ -37,8 +37,8 @@ public abstract class BaseTitleActivity extends BaseActivity implements BaseLayo
 		super.setContentView(mBaseLayout);
 
 		// setTranslucentStatus(true);
-		setBackgroundResource(R.mipmap.head_backgroud);
-
+//		setBackgroundResource(R.mipmap.head_backgroud);
+		setBackgroundColor(getResources().getColor(R.color.grey_background));
 		initiTile();
 		contentInit();
 	}

@@ -1,5 +1,6 @@
 package com.praire.fire.utils;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -513,6 +514,23 @@ public class DateUtils {
             week = "星期六";
         }
         return week;
+    }
+
+    /**
+     * 字符转日期
+     *
+     * @param date
+     * @return
+     */
+    public static String stringToDate(String date) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+        try {
+            Date dat = format.parse(date);
+            String dateString = format.format(dat);
+            return dateString;
+        } catch (ParseException e) {
+            return null;
+        }
     }
 }
 
