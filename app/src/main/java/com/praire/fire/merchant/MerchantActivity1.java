@@ -18,11 +18,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.amap.api.maps2d.model.LatLng;
 import com.bigkoo.pickerview.TimePickerView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.praire.fire.R;
 import com.praire.fire.base.BaseActivity;
 import com.praire.fire.common.CommonMethod;
+import com.praire.fire.common.Constants;
 import com.praire.fire.merchant.bean.RegionListBean;
 import com.praire.fire.okhttp.GsonUtils.J2O;
 import com.praire.fire.okhttp.JavaBean.APIResultBean;
@@ -133,64 +135,71 @@ public class MerchantActivity1 extends BaseActivity implements EasyPermissions.P
 
         Bundle b = getIntent().getExtras();
         ShopInfoBean s = new ShopInfoBean();
-        s = (ShopInfoBean) b.getSerializable("shopInfo");
 
-        if (s.getChecked().equals("0")) {
-            tvChoseShopRegion.setText(s.getCity_name());
-            tvChoseShopType.setText(s.getType_name());
-            etShopName.setText(s.getName());
-            etShopDetails.setText(s.getDesc());
-            uploadShopPhoto.setImageURI(s.getDoor());
-            uploadBusinessLicense.setImageURI(s.getLicence());
-            uploadIdCard.setImageURI(s.getIdentify());
-            etContactPerson.setText(s.getContact());
-            etContactPhone.setText(s.getTel());
-            tvChoseShopOpenTime.setText(s.getOpentime());
-            tvChoseShopMapregion.setText(s.getLat() + "," + s.getLng());
-            tvAddress.setText(s.getAddress());
-            submit.setText("审核中");
-            submit.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Toast.makeText(MerchantActivity1.this, "审核中，请耐心等待", Toast.LENGTH_SHORT).show();
+        try{
+            s = (ShopInfoBean) b.getSerializable("shopInfo");
+            if (s!=null) {
+                if (s.getChecked().equals("0")) {
+                    tvChoseShopRegion.setText(s.getCity_name());
+                    tvChoseShopType.setText(s.getType_name());
+                    etShopName.setText(s.getName());
+                    etShopDetails.setText(s.getDesc());
+                    uploadShopPhoto.setImageURI(s.getDoor());
+                    uploadBusinessLicense.setImageURI(s.getLicence());
+                    uploadIdCard.setImageURI(s.getIdentify());
+                    etContactPerson.setText(s.getContact());
+                    etContactPhone.setText(s.getTel());
+                    tvChoseShopOpenTime.setText(s.getOpentime());
+                    tvChoseShopMapregion.setText(s.getLat() + "," + s.getLng());
+                    tvAddress.setText(s.getAddress());
+                    submit.setText("审核中");
+                    submit.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Toast.makeText(MerchantActivity1.this, "审核中，请耐心等待", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    submit.setEnabled(false);
+
+                } else if (s.getChecked().equals("2")) {
+                    shop_region = s.getCity_id();
+                    shop_type = s.getType();
+                    shop_name = s.getName();
+                    shop_details = s.getDesc();
+                    base64_shop_photo = s.getDoor();
+                    base64_business_license = s.getLicence();
+                    getBase64_identity_card = s.getIdentify();
+                    contacts = s.getContact();
+                    contact_phone = s.getTel();
+                    shop_opentime = s.getOpentime();
+                    shop_lat = s.getLat();
+                    shop_lng = s.getLng();
+                    shop_details_address = s.getAddress();
+                    Log.d("getAddress", shop_details_address);
+
+                    tvChoseShopRegion.setText(s.getCity_name());
+                    tvChoseShopType.setText(s.getType_name());
+                    etShopName.setText(s.getName());
+                    etShopDetails.setText(s.getDesc());
+                    uploadShopPhoto.setImageURI(s.getDoor());
+                    uploadBusinessLicense.setImageURI(s.getLicence());
+                    uploadIdCard.setImageURI(s.getIdentify());
+                    etContactPerson.setText(s.getContact());
+                    etContactPhone.setText(s.getTel());
+                    tvChoseShopOpenTime.setText(s.getOpentime());
+                    tvChoseShopMapregion.setText(s.getLat() + "," + s.getLng());
+                    etDetailsAdress.setText(s.getAddress());
+                    submit.setText("重新提交");
+
+                    Toast.makeText(this, "您的申请被拒绝，原因:" + s.getCheck_desc(), Toast.LENGTH_SHORT).show();
+
                 }
-            });
-            submit.setEnabled(false);
+            }
 
-        } else if (s.getChecked().equals("2")) {
-            shop_region = s.getCity_id();
-            shop_type = s.getType();
-            shop_name = s.getName();
-            shop_details = s.getDesc();
-            base64_shop_photo = s.getDoor();
-            base64_business_license = s.getLicence();
-            getBase64_identity_card = s.getIdentify();
-            contacts = s.getContact();
-            contact_phone = s.getTel();
-            shop_opentime = s.getOpentime();
-            shop_lat = s.getLat();
-            shop_lng = s.getLng();
-            shop_details_address = s.getAddress();
-            Log.d("getAddress", shop_details_address);
-
-            tvChoseShopRegion.setText(s.getCity_name());
-            tvChoseShopType.setText(s.getType_name());
-            etShopName.setText(s.getName());
-            etShopDetails.setText(s.getDesc());
-            uploadShopPhoto.setImageURI(s.getDoor());
-            uploadBusinessLicense.setImageURI(s.getLicence());
-            uploadIdCard.setImageURI(s.getIdentify());
-            etContactPerson.setText(s.getContact());
-            etContactPhone.setText(s.getTel());
-            tvChoseShopOpenTime.setText(s.getOpentime());
-            tvChoseShopMapregion.setText(s.getLat() + "," + s.getLng());
-            etDetailsAdress.setText(s.getAddress());
-            submit.setText("重新提交");
-
-            Toast.makeText(this, "您的申请被拒绝，原因:" + s.getCheck_desc(), Toast.LENGTH_SHORT).show();
+        }catch (Exception e){
+            Log.e("onCreate", "onCreate: "+e.toString() );
 
         }
-
 
         initWheelViewdata();
 
@@ -261,8 +270,12 @@ public class MerchantActivity1 extends BaseActivity implements EasyPermissions.P
                 shop_details = etShopDetails.getText().toString();
                 contacts = etContactPerson.getText().toString();
                 contact_phone = etContactPhone.getText().toString();
-                shop_lng = "32.111";
-                shop_lat = "32.1111";
+
+
+
+
+
+
 
                 shop_details_address = etDetailsAdress.getText().toString();
                 cookie = (String) SharePreferenceMgr.get(this, LOGIN_COOKIE, "");
@@ -345,6 +358,8 @@ public class MerchantActivity1 extends BaseActivity implements EasyPermissions.P
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
+
         if (requestCode == REQUEST_CODE_CHOOSE_SHOP_TYPE && resultCode == RESULT_OK) {
             Bundle bundle = data.getExtras();
             String typeText = bundle.getString("typeText");
@@ -352,6 +367,23 @@ public class MerchantActivity1 extends BaseActivity implements EasyPermissions.P
             shop_type = typeId;
             tvChoseShopType.setText(typeText);
         }
+
+        /*地图返回值*/
+        if (requestCode ==  Constants.REQUEST_CODE_CHOOSE_MAP_ADDRESS && resultCode == RESULT_OK) {
+            LatLng latLon;
+
+            latLon= data.getParcelableExtra(Constants.LATLNG);
+            shop_lng=latLon.longitude+"";
+            shop_lat=latLon.latitude+"";
+
+
+            Log.d("onActivityResult", "onActivityResult: "+latLon.latitude+"   "+ latLon.longitude);
+
+
+        }
+
+
+
 
         /*选择照片回调*/
         Uri uri;

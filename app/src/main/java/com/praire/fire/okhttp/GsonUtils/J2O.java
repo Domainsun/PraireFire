@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import com.praire.fire.merchant.bean.RegionListBean;
 import com.praire.fire.merchant.bean.ShopTypeBeanList;
 import com.praire.fire.okhttp.JavaBean.APIResultBean;
+import com.praire.fire.okhttp.JavaBean.AccountBillBean;
 import com.praire.fire.okhttp.JavaBean.AddProductResultBean;
 import com.praire.fire.okhttp.JavaBean.BusinessEvaluateListBean;
 import com.praire.fire.okhttp.JavaBean.BusinessOrderListBean;
@@ -39,6 +40,14 @@ public class J2O {
         APIResultBean o = new APIResultBean();
         Gson gson = new Gson();
         o = gson.fromJson(str_json, APIResultBean.class);
+        return o;
+    }
+
+
+    public AccountBillBean getAccountBill(String str_json) {
+        AccountBillBean o = new AccountBillBean();
+        Gson gson = new Gson();
+        o = gson.fromJson(str_json, AccountBillBean.class);
         return o;
     }
 

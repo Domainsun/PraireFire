@@ -8,15 +8,19 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.praire.fire.okhttp.JavaBean.APIResultBean;
 import com.praire.fire.okhttp.GsonUtils.J2O;
+import com.praire.fire.okhttp.JavaBean.APIResultBean;
 import com.praire.fire.okhttp.UseAPIs;
 import com.praire.fire.okhttp.UseApi;
 
@@ -52,6 +56,8 @@ public class RegisterActivity extends Activity {
 
     UseApi api = new UseApi();
     J2O j2O = new J2O();
+    @BindView(R.id.check_password)
+    CheckBox checkPassword;
 
 
     private String phone = "";
@@ -110,6 +116,19 @@ public class RegisterActivity extends Activity {
 
 
         };
+
+        checkPassword.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
+//                    checkPassword.setChecked(false);
+                    etInputPw.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                } else {
+//                    checkPassword.setChecked(true);
+                    etInputPw.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                }
+            }
+        });
     }
 
 
@@ -165,16 +184,16 @@ public class RegisterActivity extends Activity {
                     String result = "";
                     try {
                         result = new UseAPIs().register(phone, pw, smsCode, invitation, smsCodeCookie);
-                    if (result.length() != 0) {
-                        APIResultBean a = j2O.getAPIResult(result);
-                        if ("1".equals(a.getCode())) {
-                            Intent i = new Intent(this, SignAcitvity.class);
-                            i.putExtra("phone", phone);
-                            startActivity(i);
+                        if (result.length() != 0) {
+                            APIResultBean a = j2O.getAPIResult(result);
+                            if ("1".equals(a.getCode())) {
+                                Intent i = new Intent(this, SignAcitvity.class);
+                                i.putExtra("phone", phone);
+                                startActivity(i);
+                            }
+                        } else {
+                            Toast.makeText(RegisterActivity.this, "网络错误！", Toast.LENGTH_SHORT).show();
                         }
-                    } else {
-                        Toast.makeText(RegisterActivity.this, "网络错误！", Toast.LENGTH_SHORT).show();
-                    }
                     } catch (Exception e) {
                         Log.e("onViewClicked", "onViewClicked: " + e.toString());
                         Toast.makeText(this, "网络错误！", Toast.LENGTH_SHORT).show();

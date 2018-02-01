@@ -73,6 +73,10 @@ public class ConstanUrl {
     /*得到产品类型
     * */
     public final static String GET_PRODUCT_TYPE="https://www.lygyxh.cn/api.php/Class/getProductType";
+    /*
+    * 得到钱包账户明细
+    * */
+    public final static String GET_ACCOUNT_BILL="https://www.lygyxh.cn/api.php/Capital/capitallog";
     public final static String GET_SERVICE_LIST="https://www.lygyxh.cn/api.php/Service/servicelist";
     /*
     * 商家获取评论

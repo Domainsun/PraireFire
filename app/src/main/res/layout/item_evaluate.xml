@@ -49,9 +49,11 @@
         android:layout_below="@id/iv_head"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="环境优美，服务态度好"
+        android:text="环境优美，服务态度好环境优美，服务态度好环境优美，服务态度好环境优美，服务态度好环境优美，服务态度好环境优美，服务态度好"
         android:textSize="16sp"
         android:textColor="@color/text_color"
+
+        android:maxWidth="250dp"
         />
 
 </RelativeLayout>

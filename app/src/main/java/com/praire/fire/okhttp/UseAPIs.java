@@ -16,6 +16,7 @@ import com.praire.fire.okhttp.APIThread.ChangeProductStatusThread;
 import com.praire.fire.okhttp.APIThread.ChangeServiceInfoThread;
 import com.praire.fire.okhttp.APIThread.ChangeSignPasswordThread;
 import com.praire.fire.okhttp.APIThread.CreatPayThread;
+import com.praire.fire.okhttp.APIThread.GetAccountBillThread;
 import com.praire.fire.okhttp.APIThread.GetBusinessOrderListThread;
 import com.praire.fire.okhttp.APIThread.GetEvaluateListThread;
 import com.praire.fire.okhttp.APIThread.GetHistoryIncomeThread;
@@ -545,6 +546,24 @@ public class UseAPIs {
     public String getTodayIncome(String cookie, String date,String p) {
         String result = "";
         GetTodayIncomeThread tSign = new GetTodayIncomeThread( cookie,  date,p);
+        FutureTask<String> ft = new FutureTask<>(tSign);
+        Thread Thread = new Thread(ft);
+        Thread.start();
+        try {
+            result = ft.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+
+
+    public String getAccountBill(String cookie, String startdate, String enddate,String p,String type) {
+        String result = "";
+        GetAccountBillThread tSign = new GetAccountBillThread(  cookie,  startdate,  enddate,p,type);
         FutureTask<String> ft = new FutureTask<>(tSign);
         Thread Thread = new Thread(ft);
         Thread.start();

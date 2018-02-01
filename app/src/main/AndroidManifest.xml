@@ -133,7 +133,9 @@
         <activity android:name=".order.ResultActivity" />
         <activity android:name=".order.EvaluateActivity" />
         <activity android:name=".FindPasswordActivity" />
+        <activity android:name=".RechargeActivity" />
         <activity android:name=".FindPasswordNextActivity"></activity>
+        <activity android:name=".my.RechargeActivity"></activity>
             android:windowSoftInputMode="stateHidden|adjustPan"/>
         <activity android:name=".order.OrderFinishInfoActivity"/>
     </application>

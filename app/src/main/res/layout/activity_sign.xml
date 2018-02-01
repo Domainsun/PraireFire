@@ -80,8 +80,8 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/viewcolor"
+            android:layout_height="1px"
+            android:background="@color/viewcolor1"
             android:layout_alignParentBottom="true"/>
 
 
@@ -108,6 +108,7 @@
 
         <EditText
             android:id="@+id/et_pw"
+            android:inputType="textPassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@null"
@@ -116,10 +117,25 @@
             android:layout_toRightOf="@id/password"
             android:layout_centerVertical="true"
             android:layout_marginLeft="15dp" />
+
+
+        <CheckBox
+            android:id="@+id/check_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
+            android:button="@drawable/check_box_style3"
+            android:checked="false"
+            android:clickable="true"
+            android:layout_marginRight="30dp"/>
+
+
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/viewcolor"
+            android:layout_height="1px"
+            android:background="@color/viewcolor1"
             android:layout_alignParentBottom="true"/>
 </RelativeLayout>
 
