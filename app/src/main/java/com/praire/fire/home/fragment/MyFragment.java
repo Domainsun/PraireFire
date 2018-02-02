@@ -120,7 +120,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
 //                CustomerServiceActivity.startActivity(getActivity(), false);
                 break;
             case R.id.fragment_my_set:
-//                SetActivity.startActivity(getActivity(), false);
+                SetActivity.startActivity(getActivity(), false);
                 break;
             case R.id.fragment_my_img:
 

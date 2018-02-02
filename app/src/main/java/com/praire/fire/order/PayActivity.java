@@ -193,6 +193,10 @@ public class PayActivity extends BaseTitleActivity {
 
                 }
 
+                String alipaystr0 = (String) msg.obj ;
+                String alipaystr=alipaystr0.replace("alipay_sdk=","app_id=");
+                aliPay((String) msg.obj);
+
                 break;
             case SDK_PAY_FLAG:
                 //ailipay
