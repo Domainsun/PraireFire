@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,9 +14,14 @@ import android.view.ViewGroup;
 import com.amap.api.maps.model.CameraPosition;
 import com.amap.api.maps.model.LatLng;
 import com.praire.fire.R;
+import com.praire.fire.home.MainActivity;
 import com.praire.fire.okhttp.NetworkHandler;
 import com.praire.fire.okhttp.OkhttpRequestUtil;
+import com.praire.fire.okhttp.UseAPIs;
+import com.praire.fire.utils.SharePreferenceMgr;
 import com.praire.fire.utils.ToastUtil;
+
+import static com.praire.fire.common.Constants.LOGIN_COOKIE;
 
 
 public abstract class BaseFragment extends Fragment {
@@ -60,5 +66,27 @@ public abstract class BaseFragment extends Fragment {
     }
     protected void networkResponse(Message msg) {
     }
+    private void hasLogin() {
+        String cookie = (String) SharePreferenceMgr.get(getActivity(), LOGIN_COOKIE, "");
 
+        /*如果登录过，自动跳转到主页*/
+
+        String result = "";
+        String str = "\"code\":0";
+
+        if (cookie != null && cookie.length() != 0) {
+            result = new UseAPIs().getShopInfo(cookie);
+            if (result.length() != 0) {
+                if (!result.contains(str)) {
+                    Intent i = new Intent(getActivity(), MainActivity.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                   getActivity().startActivity(i);
+                }
+
+            }
+        }
+
+        Log.d("create", "create: " + str.length() + "\n" + result.length());
+        Log.d("create", "create: " + str + "\n" + result+"\n"+cookie);
+    }
 }
