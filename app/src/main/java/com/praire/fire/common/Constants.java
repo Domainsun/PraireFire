@@ -20,12 +20,19 @@ public class Constants {
     public static final String LOGIN_COOKIE = "loginCookie";
     public static final int REQUEST_CODE_SEARCH =  11;
 
+
+
+
+
     /*
     * 上传产品图片*/
     public static final int REQUEST_CODE_UPLOAD_PRODUCT1 = 12;
     public static final int REQUEST_CODE_UPLOAD_PRODUCT2= 13;
     public static final int REQUEST_CODE_UPLOAD_PRODUCT3 = 14;
     public static final int REQUEST_CODE_UPLOAD_PRODUCT4 = 15;
+
+        /*用户修改头像*/
+    public static final int REQUEST_CHANGE_USER_HEAD =  16;
 
     /**
      * 刷新后头部固定时间,毫秒
