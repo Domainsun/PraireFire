@@ -19,6 +19,7 @@ import com.praire.fire.merchant.AddProductActivity;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.engine.impl.PicassoEngine;
+import com.zhihu.matisse.internal.entity.CaptureStrategy;
 
 import java.util.List;
 
@@ -130,6 +131,8 @@ public class SetActivity extends BaseActivity {
                     .choose(MimeType.allOf()) // 选择 mime 的类型
                     .countable(true)
                     .capture(true)
+                    .captureStrategy(
+                            new CaptureStrategy(true, "com.zhihu.matisse.sample.fileprovider"))
                     .maxSelectable(1) // 图片选择的最多数量
                     .gridExpectedSize(getResources().getDimensionPixelSize(R.dimen.grid_expected_size))
                     .restrictOrientation(android.content.pm.ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
