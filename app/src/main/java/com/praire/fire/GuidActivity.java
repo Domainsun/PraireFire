@@ -25,10 +25,8 @@ public class GuidActivity extends Activity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(GuidActivity.this, WelcomeActivity1.class);
-                startActivity(intent);
-                GuidActivity.this.finish();
-              /*  Boolean isfrist = (Boolean) SharePreferenceMgr.get(GuidActivity.this, IS_FRIST_OPEN, true);
+
+               Boolean isfrist = (Boolean) SharePreferenceMgr.get(GuidActivity.this, IS_FRIST_OPEN, true);
                 if(isfrist) {
                     SharePreferenceMgr.put(GuidActivity.this, IS_FRIST_OPEN, false);
                     Intent intent = new Intent(GuidActivity.this, WelcomeActivity1.class);
@@ -38,7 +36,7 @@ public class GuidActivity extends Activity {
                     Intent intent = new Intent(GuidActivity.this, MainActivity.class);
                     startActivity(intent);
                     GuidActivity.this.finish();
-                }*/
+                }
             }
         }, 3000);
     }

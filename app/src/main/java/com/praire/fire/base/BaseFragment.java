@@ -73,7 +73,6 @@ public abstract class BaseFragment extends Fragment {
 
         String result = "";
         String str = "\"code\":0";
-
         if (cookie != null && cookie.length() != 0) {
             result = new UseAPIs().getShopInfo(cookie);
             if (result.length() != 0) {
@@ -86,7 +85,5 @@ public abstract class BaseFragment extends Fragment {
             }
         }
 
-        Log.d("create", "create: " + str.length() + "\n" + result.length());
-        Log.d("create", "create: " + str + "\n" + result+"\n"+cookie);
     }
 }
