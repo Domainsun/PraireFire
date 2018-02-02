@@ -68,28 +68,5 @@ public abstract class BaseFragment extends Fragment {
     protected void networkResponse(Message msg) {
     }
 
-    protected void hasLogin() {
-        String cookie = (String) SharePreferenceMgr.get(getActivity(), LOGIN_COOKIE, "");
 
-        /*如果登录过，自动跳转到主页*/
-
-        String str = "\"code\":0";
-        if (cookie != null && cookie.length() != 0) {
-            String result = new UseAPIs().getShopInfo(cookie);
-            if (result.length() != 0) {
-                if (result.contains(str)) {
-                    Intent i = new Intent(getActivity(), SignAcitvity.class);
-                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    getActivity().startActivity(i);
-
-                }
-
-            }
-        }else {
-            Intent i = new Intent(getActivity(), SignAcitvity.class);
-            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            getActivity().startActivity(i);
-        }
-
-    }
 }

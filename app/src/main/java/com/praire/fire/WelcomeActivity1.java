@@ -24,15 +24,13 @@ public class WelcomeActivity1 extends Activity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome1);
          Handler handler = new Handler();
-        //当计时结束,跳转至主界面
+      /*  //当计时结束,跳转至主界面
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(WelcomeActivity1.this, WelcomeActivity2.class);
-                startActivity(intent);
-                WelcomeActivity1.this.finish();
+                swipeLeft();
             }
-        }, 3000);
+        }, 3000);*/
     }
     private float startX,offSetX;
     @Override
@@ -62,7 +60,7 @@ public class WelcomeActivity1 extends Activity  {
     }
 
     private void swipeLeft() {
-        Intent intent = new Intent(WelcomeActivity1.this, GuidActivity.class);
+        Intent intent = new Intent(WelcomeActivity1.this, WelcomeActivity2.class);
         startActivity(intent);
         WelcomeActivity1.this.finish();
     }

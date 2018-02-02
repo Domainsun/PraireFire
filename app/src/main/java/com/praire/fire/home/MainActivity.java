@@ -10,14 +10,19 @@ import android.support.v4.app.FragmentTransaction;
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.praire.fire.R;
+import com.praire.fire.SignAcitvity;
 import com.praire.fire.base.BaseActivity;
 import com.praire.fire.common.Constants;
 import com.praire.fire.home.fragment.HomeFragment;
 import com.praire.fire.home.fragment.MyFragment;
 import com.praire.fire.home.fragment.OrderFragment;
 import com.praire.fire.home.fragment.MapFragment;
+import com.praire.fire.okhttp.UseAPIs;
+import com.praire.fire.utils.SharePreferenceMgr;
 
 import java.util.ArrayList;
+
+import static com.praire.fire.common.Constants.LOGIN_COOKIE;
 
 
 /**
@@ -31,7 +36,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
     private ArrayList<Fragment> fragments;
     private BottomNavigationBar bottomNavigationBar;
 
-    private String  searchKey = "";
+    private String searchKey = "";
 
 
     public static void startActivity(Context context, int type, boolean forResult) {
@@ -89,10 +94,11 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
     }
 
 
-
-
     @Override
     public void onTabSelected(int position) {
+        if (position == 2 && !hasLogin()) {
+             return;
+        }
         if (fragments != null) {
             if (position < fragments.size()) {
                 FragmentManager fm = getSupportFragmentManager();
@@ -106,6 +112,32 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
                 ft.commitAllowingStateLoss();
             }
         }
+    }
+
+    protected boolean hasLogin() {
+        String cookie = (String) SharePreferenceMgr.get(this, LOGIN_COOKIE, "");
+        /*如果未登录过，自动跳转到登录页*/
+        String str = "\"code\":0";
+        if (cookie != null && cookie.length() != 0) {
+            String result = new UseAPIs().getShopInfo(cookie);
+            if (result.length() != 0) {
+                if (result.contains(str)) {
+                    toLogin();
+                    return false;
+                }
+                return true;
+            }
+        } else {
+            toLogin();
+            return false;
+        }
+        return true;
+    }
+
+    private void toLogin() {
+        Intent i = new Intent(this, SignAcitvity.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(i);
     }
 
     @Override
@@ -156,8 +188,6 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
             }
         }
     }
-
-
 
 
     public String getSearchKey() {

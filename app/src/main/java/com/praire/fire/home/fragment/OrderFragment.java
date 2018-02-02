@@ -65,7 +65,6 @@ public class OrderFragment extends BaseFragment implements TabLayout.OnTabSelect
     @Override
     public View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_order, container, false);
-        super.hasLogin();
         initFindView(view);
         return view;
     }

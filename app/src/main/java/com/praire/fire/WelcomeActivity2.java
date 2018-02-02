@@ -15,14 +15,14 @@ public class WelcomeActivity2 extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome2);
-        Handler handler = new Handler();
+       /* Handler handler = new Handler();
         //当计时结束,跳转至主界面
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 swipeLeft();
             }
-        }, 3000);
+        }, 3000);*/
     }
     private float startX,offSetX;
     @Override

@@ -23,13 +23,13 @@ public class GuidActivity extends Activity {
         setContentView(R.layout.activity_guid);
         Handler handler = new Handler();
         //当计时结束,跳转至主界面
-        handler.postDelayed(new Runnable() {
+       /* handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 swipeLeft();
 
             }
-        }, 3000);
+        }, 3000);*/
     }
 
     private float startX,offSetX;
@@ -60,7 +60,7 @@ public class GuidActivity extends Activity {
     }
 
     private void swipeLeft() {
-        Boolean isfrist = (Boolean) SharePreferenceMgr.get(GuidActivity.this, IS_FRIST_OPEN, true);
+        boolean isfrist = (Boolean) SharePreferenceMgr.get(GuidActivity.this, IS_FRIST_OPEN, true);
         if(isfrist) {
             SharePreferenceMgr.put(GuidActivity.this, IS_FRIST_OPEN, false);
             Intent intent = new Intent(GuidActivity.this, WelcomeActivity1.class);
