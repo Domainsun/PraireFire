@@ -189,24 +189,25 @@ public class ProductManageActivity extends BaseActivity {
 
     private void loadData() {
 
-
-
-        String str = "";
-        str=u.getProductList(cookie, "1");
-        if (str.length() != 0) {
-            ProductListBean s = j.getProductList(str);
-            for (int i = 0; i < mDatas.size(); i++) {
-                mDatas.remove(i);
+        try {
+            String str = "";
+            str=u.getProductList(cookie, "1");
+            if (str.length() != 0) {
+                ProductListBean s = j.getProductList(str);
+                for (int i = 0; i < mDatas.size(); i++) {
+                    mDatas.remove(i);
+                }
+                mDatas = s.getPagelist();
+                adapter.setData(mDatas);
+                recyclerView.loadMoreFinish(false, true);
+            } else {
+                Toast.makeText(this, "网络错误！", Toast.LENGTH_SHORT).show();
             }
 
-
-            Log.d("loadData", "loadData: "+s.getPagelist().get(0).getName());
-            mDatas = s.getPagelist();
-            adapter.setData(mDatas);
-            recyclerView.loadMoreFinish(false, true);
-        } else {
-            Toast.makeText(this, "网络错误！", Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Log.e("loadData", "loadData: "+e.toString() );
         }
+
 
 
 

@@ -129,7 +129,8 @@ public class MerchantActivity1 extends BaseActivity implements EasyPermissions.P
     List<String> privince = new ArrayList<>();
     List<String> city = new ArrayList<>();
     List<String> countylist = new ArrayList<>();
-
+    String starttime="";
+    String endtime="";
 
     HashMap<String, List<String>> cityMap = new HashMap<String, List<String>>();
     HashMap<String, List<String>> countyMap = new HashMap<String, List<String>>();
@@ -162,6 +163,17 @@ public class MerchantActivity1 extends BaseActivity implements EasyPermissions.P
 //                    tvChoseShopOpenTime.setText(s.getOpentime());
                     tvChoseShopMapregion.setText(s.getLat() + "," + s.getLng());
                     tvAddress.setText(s.getAddress());
+
+                    String time=s.getOpentime();
+
+
+
+                    String times[]=time.split("-");
+                    tvStartTime.setText(times[0]);
+                    tvEndTime.setText(times[1]);
+                    Log.d("time", "onCreate: "+time);
+
+
                     submit.setText("审核中");
                     submit.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -169,6 +181,20 @@ public class MerchantActivity1 extends BaseActivity implements EasyPermissions.P
                             Toast.makeText(MerchantActivity1.this, "审核中，请耐心等待", Toast.LENGTH_SHORT).show();
                         }
                     });
+
+                    rlChoseShopType.setEnabled(false);
+                    rlChoseShopRegion.setEnabled(false);
+                    etShopName.setEnabled(false);
+                    etShopDetails.setEnabled(false);
+                    uploadShopPhoto.setEnabled(false);
+                    uploadIdCard.setEnabled(false);
+                    uploadBusinessLicense.setEnabled(false);
+                    etContactPerson.setEnabled(false);
+                    etContactPhone.setEnabled(false);
+                    tvStartTime.setEnabled(false);
+                    tvEndTime.setEnabled(false);
+                    rlChoseShopMapregion.setEnabled(false);
+                    etDetailsAdress.setEnabled(false);
                     submit.setEnabled(false);
 
                 } else if (s.getChecked().equals("2")) {
@@ -306,10 +332,8 @@ public class MerchantActivity1 extends BaseActivity implements EasyPermissions.P
                 cookie = (String) SharePreferenceMgr.get(this, LOGIN_COOKIE, "");
 
 
-                String starttime="";
-                starttime= tvStartTime.getText().toString();
-                String endtime="";
-                endtime=tvEndTime.getText().toString();
+
+
 
 
                 if (starttime.length()!=0 && endtime.length()!=0) {
@@ -355,11 +379,14 @@ public class MerchantActivity1 extends BaseActivity implements EasyPermissions.P
                 String str = sdf.format(date);
 
                 if (type.equals("0")) {
+                    starttime= str;
+
 
                     tvStartTime.setText(str+"  -");
 
                 } else if(type.equals("1")){
                     tvEndTime.setText(str);
+                    endtime=str;
                 }
 
 
@@ -527,7 +554,7 @@ public class MerchantActivity1 extends BaseActivity implements EasyPermissions.P
             public void onClick(View view) {
                 tvChoseShopRegion.setText(mainWheelView.getSelectionItem() + " " + subWheelView.getSelectionItem() + " " + childWheelView.getSelectionItem());
                 shop_region = countyMap1.get(childWheelView.getSelectionItem());
-                Toast.makeText(MerchantActivity1.this, shop_region, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(MerchantActivity1.this, shop_region, Toast.LENGTH_SHORT).show();
                 bottomDialog.dismiss();
             }
         });

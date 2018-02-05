@@ -164,6 +164,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                 case R.id.fragment_my_earphone:
 //                CustomerServiceActivity.startActivity(getActivity(), false);
 
+
                     break;
                 case R.id.fragment_my_set:
                     SetActivity.startActivity(getActivity(), false);
@@ -178,6 +179,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
  //                IntegralActivity.startActivity(getActivity(), false);
                     break;
                 case R.id.fragment_my_invitation_integral_rl:
+
 //                InvitationIntegralActivity.startActivity(getActivity(), false);
                     break;
                 case R.id.fragment_my_order_rl:
