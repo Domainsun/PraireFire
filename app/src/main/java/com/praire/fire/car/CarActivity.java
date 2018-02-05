@@ -7,7 +7,11 @@ import android.os.Message;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -25,6 +29,7 @@ import com.praire.fire.car.popwindows.SortMenuPopwindows;
 import com.praire.fire.car.popwindows.TypeMenuPopwindows;
 import com.praire.fire.common.ConstanUrl;
 import com.praire.fire.common.Constants;
+import com.praire.fire.map.MapSearchActivity;
 import com.praire.fire.okhttp.OkhttpRequestUtil;
 import com.praire.fire.utils.RecycleViewDivider;
 import com.praire.fire.utils.SharePreferenceMgr;
@@ -79,6 +84,7 @@ public class CarActivity extends BaseActivity {
     private int index = 1;
     private boolean isFrist = true;
     private List<CarBean.PagelistBean> carBeanlist = new ArrayList<>();
+    private String searchKey = "";
 
     public static void startActivity(Context context, boolean forResult) {
         Intent intent = new Intent(context, CarActivity.class);
@@ -99,11 +105,46 @@ public class CarActivity extends BaseActivity {
     protected void initViews() {
         Eyes.setStatusBarColor(this, ContextCompat.getColor(this, R.color.status_bar));
         ButterKnife.bind(this);
-        plugSearchEdittext.setFocusable(false);
+
         lat = (String) SharePreferenceMgr.get(this, Constants.Latitude, "");
         lng = (String) SharePreferenceMgr.get(this, Constants.Longitude, "");
-        Log.e("lat+lng", lat + "+" + lng);
+        plugSearchEdittext.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (editable.toString().length() == 0) {
+                    searchKey = "";
+                    getShopList();
+                }
+            }
+        });
+        plugSearchEdittext.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                boolean aBoolean = (actionId == 0 || actionId == 3) && event != null;
+                if (aBoolean) {
+                    searchKey = plugSearchEdittext.getText().toString();
+                    if (TextUtils.isEmpty(searchKey)) {
+                        searchKey = "";
+                    }
+                    getShopList();
+                    return true;
+                }
+                return false;
+
+            }
+
+        });
     }
 
     @Override
@@ -156,7 +197,7 @@ public class CarActivity extends BaseActivity {
         ordertype	string	是	排序类型(1智能排序 2好评优先 3离我最近 4人均最低 5人均最高)		1
         lng	string	是	经度(按距离排序需用)
                 lat	string	是	纬度(按距离排序需用)*/
-        String str = "?type=" + types + "&class=" + sonType + "&ordertype=" + sortId + "&lng=" + lng + "&lat=" + lat + "&p=" + index;
+        String str = "?type=" + types + "&class=" + sonType + "&ordertype=" + sortId + "&lng=" + lng + "&lat=" + lat +"&keywords="+searchKey+ "&p=" + index;
         OkhttpRequestUtil.get(ConstanUrl.SEARCH_SEARCHSHOP + str, 2, false, uiHandler);
     }
 

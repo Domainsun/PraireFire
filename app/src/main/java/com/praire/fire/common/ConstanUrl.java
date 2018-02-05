@@ -296,4 +296,8 @@ public class ConstanUrl {
      *  评论列表
      */
     public static final String COMMONINFO_COMMENTLIST = "https://www.lygyxh.cn/api.php/Commoninfo/commentlist";
+    /**
+     *  我的数据接口
+     */
+    public static final String USER_INDEX = "https://www.lygyxh.cn/api.php/User/index";
 }

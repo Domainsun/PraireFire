@@ -37,7 +37,7 @@
             android:layout_height="65dp"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
-            android:src="@mipmap/upload_image"
+            android:src="@mipmap/avatar2"
             android:layout_marginTop="48dp"
              />
         <!--fresco:placeholderImage="@mipmap/ic_launcher"-->

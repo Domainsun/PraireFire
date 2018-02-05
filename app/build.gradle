@@ -88,12 +88,12 @@ dependencies {
     /*黄油刀*/
     compile 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
-
-    //    compile 'com.huxq17.xrefreshview:xrefreshview:3.6.9'
+//刷新  加载更多
+    compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.4-7'
 
     //    //xrefreshview依赖下面的库
 
-    //    compile 'com.android.support:support-v4:26.0.0'
+        compile 'com.android.support:support-v4:26.0.0'
     compile 'com.android.support:design:26.0.0-alpha1'
 
     //ymlf圆形图片
@@ -142,6 +142,11 @@ dependencies {
     compile files('libs/wechat-sdk-android-with-mta-1.0.2.jar')
 //方法总数超过64K解决办法
     compile 'com.android.support:multidex:1.0.0'
+
+    //选择图片可裁剪
+    compile 'me.iwf.photopicker:PhotoPicker:0.9.12@aar'
+    compile 'com.github.bumptech.glide:glide:4.1.1'
+
 
 }
 
