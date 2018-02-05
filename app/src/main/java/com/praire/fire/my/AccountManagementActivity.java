@@ -8,8 +8,13 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.lzy.imagepicker.ImagePicker;
+import com.lzy.imagepicker.bean.ImageItem;
+import com.lzy.imagepicker.ui.ImageGridActivity;
+import com.lzy.imagepicker.view.CropImageView;
 import com.praire.fire.MyApplication;
 import com.praire.fire.R;
 import com.praire.fire.SignAcitvity;
@@ -58,10 +63,23 @@ public class AccountManagementActivity extends BaseTitleActivity {
     @Override
     protected void initViews() {
         ButterKnife.bind(this);
+
     }
 
     @Override
     protected void initListeners() {
+     /*   //配置图片选择器，一般在Application初始化配置一次就可以,这里就需要将上面的图片加载器设置进来,其余的配置根据需要设置
+        ImagePicker imagePicker = ImagePicker.getInstance();
+        imagePicker.setImageLoader(new PicassoImageLoader());   //设置图片加载器
+        imagePicker.setShowCamera(true);  //显示拍照按钮
+        imagePicker.setCrop(true);        //允许裁剪（单选才有效）
+        imagePicker.setSaveRectangle(true); //是否按矩形区域保存
+        imagePicker.setSelectLimit(9);    //选中数量限制
+        imagePicker.setStyle(CropImageView.Style.RECTANGLE);  //裁剪框的形状
+        imagePicker.setFocusWidth(800);   //裁剪框的宽度。单位像素（圆形自动取宽高最小值）
+        imagePicker.setFocusHeight(800);  //裁剪框的高度。单位像素（圆形自动取宽高最小值）
+        imagePicker.setOutPutX(1000);//保存文件的宽度。单位像素
+        imagePicker.setOutPutY(1000);//保存文件的高度。单位像素*/
 
     }
 
@@ -119,64 +137,43 @@ public class AccountManagementActivity extends BaseTitleActivity {
                 break;
         }
     }
-
+/*
     private void choosePhoto() {
         //点击修改商家图片
-        /*ChoosePhotoPopWindow poop = new ChoosePhotoPopWindow(this);
+         ChoosePhotoPopWindow poop = new ChoosePhotoPopWindow(this);
         poop.showAtLocation(getTitleBar(), Gravity.BOTTOM, 0, 0);
         poop.setOnItemClickListener(new ChoosePhotoPopWindow.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
                 if (position == 1) {
-                    PhotoPicker.builder()
-                            .setPhotoCount(1)
-                            .setShowCamera(true)
-                            .setShowGif(true)
-                            .setPreviewEnabled(false)
-                            .start(AccountManagementActivity.this, PhotoPicker.REQUEST_CODE);
+                    Intent intent = new Intent(AccountManagementActivity.this, ImageGridActivity.class);
+                    // 是否是直接打开相机
+                    intent.putExtra(ImageGridActivity.EXTRAS_TAKE_PICKERS,true);
+                    startActivityForResult(intent, REQUEST_CODE_SELECT);
 
                 } else if (position == 2) {
-                    PhotoPicker.builder()
-                            //设置图片选择数量
-                            .setPhotoCount(1)
-                            //取消选择时点击图片浏览
-                            .setPreviewEnabled(false)
-                            //开启裁剪
-                            .setCrop(true)
-                            //设置裁剪比例(X,Y)
-                            .setCropXY(13, 10)
-                            //设置裁剪界面标题栏颜色，设置裁剪界面状态栏颜色
-                            .setCropColors(R.color.orange, R.color.orange)
-                            .start(AccountManagementActivity.this);
+                    Intent intent = new Intent(AccountManagementActivity.this, ImageGridActivity.class);
+                    startActivityForResult(intent, IMAGE_PICKER);
                 }
             }
-        });*/
+        });
     }
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         super.onActivityResult(requestCode, resultCode, data);
 
         //拍照功能或者裁剪后返回
-        if (resultCode == RESULT_OK && requestCode == PhotoPicker.REQUEST_CODE) {
-//            Uri uri = Uri.fromFile(new File(data.getStringExtra(PhotoPicker.KEY_SELECTED_PHOTOS)));
-            /*Bitmap bitmap = SystemPhotoUtil.decodeUriBitmap(uri, AccountManagementActivity.this);
-            if (bitmap != null) {//这里必须判空
-                imagedatas = SystemPhotoUtil.Bitmap2StrByBase64(bitmap);
-                Command_UpdateImgByBase64 request = new Command_UpdateImgByBase64(imagedatas, "jpg");//（jpg、bmp）
-                SoapNetworkRequest.sendReuqest(request, networkHanlder, 0);
-            }*/
-        }
-    }
+        if (resultCode == RESULT_OK  ) {
+            if (resultCode == ImagePicker.RESULT_CODE_ITEMS) {
+                if (data != null && requestCode == IMAGE_PICKER) {
+                    ArrayList<ImageItem> images = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS);
 
-  /*  @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (resultCode == RESULT_OK && requestCode == PhotoPicker.REQUEST_CODE) {
-            if (data != null) {
-                ArrayList<String> photos =
-                        data.getStringArrayListExtra(PhotoPicker.KEY_SELECTED_PHOTOS);
+                } else {
+                    Toast.makeText(this, "没有数据", Toast.LENGTH_SHORT).show();
+                }
             }
         }
     }*/
+
+
 }
