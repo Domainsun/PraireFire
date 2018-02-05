@@ -3,19 +3,40 @@ package com.praire.fire.my;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.praire.fire.MyApplication;
 import com.praire.fire.R;
+import com.praire.fire.SignAcitvity;
 import com.praire.fire.base.BaseActivity;
 import com.praire.fire.common.CommonMethod;
 import com.praire.fire.common.Constants;
-import com.praire.fire.merchant.AddProductActivity;
+import com.praire.fire.my.setActivitys.AddressActivity;
+import com.praire.fire.my.setActivitys.BindCardActivity;
+import com.praire.fire.my.setActivitys.ChangeNameActivity;
+import com.praire.fire.my.setActivitys.PasswordMangeActivity;
+import com.praire.fire.my.setActivitys.RealVerifyActivity;
+import com.praire.fire.okhttp.GsonUtils.J2O;
+import com.praire.fire.okhttp.JavaBean.APIResultBean;
+import com.praire.fire.okhttp.JavaBean.UserHeadBean;
+import com.praire.fire.okhttp.JavaBean.UserInfoBean;
+import com.praire.fire.okhttp.UseAPIs;
+import com.praire.fire.utils.SharePreferenceMgr;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.engine.impl.PicassoEngine;
@@ -28,7 +49,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import pub.devrel.easypermissions.EasyPermissions;
 
-import static com.praire.fire.common.Constants.REQUEST_CODE_UPLOAD_PRODUCT1;
+import static com.praire.fire.common.Constants.LOGIN_COOKIE;
+import static com.praire.fire.common.Constants.REQUEST_CODE_COMMONT;
 
 /**
  * 设置
@@ -54,10 +76,30 @@ public class SetActivity extends BaseActivity {
     TextView tvBindBankCard;
     @BindView(R.id.submit)
     Button submit;
+    @BindView(R.id.rl_name)
+    RelativeLayout rlName;
+    @BindView(R.id.rl_sex)
+    RelativeLayout rlSex;
+    @BindView(R.id.rl_phone)
+    RelativeLayout rlPhone;
+    @BindView(R.id.rl_password_manage)
+    RelativeLayout rlPasswordManage;
+    @BindView(R.id.rl_real_name_verify)
+    RelativeLayout rlRealNameVerify;
+    @BindView(R.id.rl_bind_bank_card)
+    RelativeLayout rlBindBankCard;
+    @BindView(R.id.rl_address)
+    RelativeLayout rlAddress;
+    private PopupWindow mPopWindow;
+    UseAPIs u = new UseAPIs();
+    J2O j = new J2O();
+    String cookie = "";
+    String name = "";
+    String sex = "";
+    String phone = "";
 
 
-
-    CommonMethod commonMethod=new CommonMethod();
+    CommonMethod commonMethod = new CommonMethod();
 
     public static void startActivity(Context context, boolean forResult) {
         Intent intent = new Intent(context, SetActivity.class);
@@ -65,7 +107,7 @@ public class SetActivity extends BaseActivity {
         if (!forResult) {
             context.startActivity(intent);
         } else if (context instanceof BaseActivity) {
-            ((BaseActivity) context).startActivityForResult(intent, Constants.REQUEST_CODE_COMMONT);
+            ((BaseActivity) context).startActivityForResult(intent, REQUEST_CODE_COMMONT);
         }
     }
 
@@ -91,12 +133,50 @@ public class SetActivity extends BaseActivity {
 
     @Override
     protected void initData() {
+        cookie = (String) SharePreferenceMgr.get(this, LOGIN_COOKIE, "");
+
+        getUserInfo(cookie);
+
+    }
+
+    public void getUserInfo(String cookie) {
+
+        try {
+
+
+            String str1 = u.getUserHead(cookie);
+            UserHeadBean h = j.getUserHead(str1);
+            ivHead.setImageURI(h.getOssheadurl());
+
+
+            String str = u.getUserInfo(cookie);
+            UserInfoBean o = j.getUserInfo(str);
+
+            Log.d("getNickname", "getNickname: "+o.getNickname());
+
+            tvName.setText(o.getNickname());
+
+            if (o.getSex().equals("0")) {
+                tvSex.setText("男");
+            }
+
+
+            if (o.getSex().equals("1")) {
+                tvSex.setText("女");
+            }
+            tvPhone.setText(o.getTel());
+
+
+        } catch (Exception e) {
+
+
+        }
+
 
     }
 
 
-
-    @OnClick({R.id.tv_back, R.id.iv_head, R.id.tv_name, R.id.tv_sex, R.id.tv_phone, R.id.tv_password_manage, R.id.tv_real_name_verify, R.id.tv_bind_bank_card, R.id.submit})
+    @OnClick({R.id.submit,R.id.rl_address,R.id.tv_back, R.id.iv_head, R.id.rl_name, R.id.rl_sex, R.id.rl_phone, R.id.rl_password_manage, R.id.rl_real_name_verify, R.id.rl_bind_bank_card})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_back:
@@ -107,22 +187,129 @@ public class SetActivity extends BaseActivity {
                 showChoosePic(Constants.REQUEST_CHANGE_USER_HEAD);
 
                 break;
-            case R.id.tv_name:
+            case R.id.rl_name:
+                ChangeNameActivity.startActivity(this, true);
                 break;
-            case R.id.tv_sex:
+            case R.id.rl_sex:
+                showPopupWindow();
                 break;
-            case R.id.tv_phone:
+            case R.id.rl_phone:
                 break;
-            case R.id.tv_password_manage:
+            case R.id.rl_password_manage:
+                PasswordMangeActivity.startActivity(this, false);
                 break;
-            case R.id.tv_real_name_verify:
+            case R.id.rl_real_name_verify:
+                RealVerifyActivity.startActivity(this, false);
+
                 break;
-            case R.id.tv_bind_bank_card:
+            case R.id.rl_bind_bank_card:
+
+                BindCardActivity.startActivity(this, false);
+                break;
+
+            case R.id.rl_address:
+
+                AddressActivity.startActivity(this, false);
                 break;
             case R.id.submit:
+
+                SharePreferenceMgr.put(MyApplication.getInstance(), Constants.LOGIN_COOKIE, "");
+                startActivity(new Intent(this, SignAcitvity.class));
                 break;
         }
     }
+
+
+    private void darkenBackground(Float bgcolor) {
+        WindowManager.LayoutParams lp = getWindow().getAttributes();
+        lp.alpha = bgcolor;
+
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        getWindow().setAttributes(lp);
+
+    }
+
+
+    private void showPopupWindow() {
+
+        View contentView = LayoutInflater.from(SetActivity.this).inflate(R.layout.pop_choose_sex, null);
+        mPopWindow = new PopupWindow(contentView,
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+        darkenBackground(0.2f);
+        mPopWindow.setContentView(contentView);
+
+
+        mPopWindow.setFocusable(true);
+        mPopWindow.setOutsideTouchable(true); // 设置允许在外点击消失
+        mPopWindow.setBackgroundDrawable(new BitmapDrawable());// 设置背景，这个是为了点击“返回Back”也能使其消失，并且并不会影响你的背景
+
+//        mPopWindow.showAsDropDown(view); // PopupWindow的显示及位置设置
+
+        mPopWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+
+            @Override
+            public void onDismiss() {
+                darkenBackground(1f);
+            }
+        });
+
+        View rootview = LayoutInflater.from(this).inflate(R.layout.activity_bill, null);
+        mPopWindow.showAtLocation(rootview, Gravity.BOTTOM, 0, 0);
+
+
+        //设置各个控件的点击响应
+        TextView tv_confirm = contentView.findViewById(R.id.tv_confirm);
+        TextView tv_male = contentView.findViewById(R.id.tv_male);
+        TextView tv_female = contentView.findViewById(R.id.tv_female);
+
+
+        tv_confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mPopWindow.dismiss();
+            }
+        });
+
+        tv_male.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    String str = "";
+                    str = u.changeUserInfo(cookie, "", "", "", "", "", "0");
+                    APIResultBean a = j.getAPIResult(str);
+                    Toast.makeText(SetActivity.this, a.getMsg(), Toast.LENGTH_SHORT).show();
+                    if (a.getCode().equals("1")) {
+                        tvSex.setText("男");
+                    }
+                    mPopWindow.dismiss();
+                    Log.d("str", "str: " + str);
+                } catch (Exception e) {
+                }
+            }
+        });
+
+        tv_female.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    String str = "";
+                    str = u.changeUserInfo(cookie, "", "", "", "", "", "1");
+                    APIResultBean a = j.getAPIResult(str);
+                    Toast.makeText(SetActivity.this, a.getMsg(), Toast.LENGTH_SHORT).show();
+                    if (a.getCode().equals("1")) {
+                        tvSex.setText("女");
+                    }
+                    mPopWindow.dismiss();
+                    Log.d("str", "str: " + str);
+                } catch (Exception e) {
+                }
+            }
+        });
+        //显示PopupWindow
+
+
+    }
+
 
     private void showChoosePic(int request_code) {
         String[] perms = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
@@ -132,10 +319,10 @@ public class SetActivity extends BaseActivity {
                     .countable(true)
                     .capture(true)
                     .captureStrategy(
-                            new CaptureStrategy(true, "com.zhihu.matisse.sample.fileprovider"))
+                            new CaptureStrategy(true, "com.praire.fire.MyFileProvider"))
                     .maxSelectable(1) // 图片选择的最多数量
                     .gridExpectedSize(getResources().getDimensionPixelSize(R.dimen.grid_expected_size))
-                    .restrictOrientation(android.content.pm.ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
+                    .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
                     .thumbnailScale(0.85f) // 缩略图的比例
                     .imageEngine(new PicassoEngine()) // 使用的图片加载引擎
                     .forResult(request_code); // 设置作为标记的请求码
@@ -158,12 +345,36 @@ public class SetActivity extends BaseActivity {
 
             if (!(mSelected.size() == 0)) {
 
-                String base64 = "data:image/jpeg;base64," + commonMethod.uriToBase64(mSelected.get(0), this);
+                try {
+                    String base64 = "data:image/jpeg;base64," + commonMethod.uriToBase64(mSelected.get(0), this);
 
-                ivHead.setImageURI(mSelected.get(0));
-                Log.d("ivHead", "ivHead: "+base64);
+                    String str = u.uploadUserHead(cookie, base64);
+                    APIResultBean o = j.getAPIResult(str);
+                    Toast.makeText(this, o.getMsg() + "", Toast.LENGTH_SHORT).show();
+                    ivHead.setImageURI(mSelected.get(0));
+
+
+                    Log.d("ivHead", "ivHead: " + base64);
+                } catch (Exception e) {
+
+
+                }
+
+
             }
         }
+
+
+        if (requestCode == REQUEST_CODE_COMMONT && resultCode == RESULT_OK) {
+
+
+            String name = data.getStringExtra("name");
+            Log.d("name", "name: " + name);
+            tvName.setText(name + "");
+
+        }
+
+
     }
 
 

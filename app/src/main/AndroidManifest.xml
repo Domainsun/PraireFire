@@ -135,17 +135,40 @@
         <activity android:name=".order.ResultActivity" />
         <activity android:name=".order.EvaluateActivity" />
         <activity android:name=".FindPasswordActivity" />
-
-        <activity android:name=".FindPasswordNextActivity"/>
+        <activity android:name=".FindPasswordNextActivity" />
         <activity android:name=".my.RechargeActivity"
-            android:windowSoftInputMode="stateHidden|adjustPan"/>
-        <activity android:name=".order.OrderFinishInfoActivity"/>
+        android:windowSoftInputMode="stateHidden|adjustPan"/>
+        <activity android:name=".order.OrderFinishInfoActivity" />
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.praire.fire.MyFileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/filepath" />
+        </provider>
+
+        <activity android:name=".my.setActivitys.ChangeNameActivity" />
+        <activity android:name=".my.setActivitys.PasswordMangeActivity" />
+        <activity android:name=".my.setActivitys.FindPayPasswordActivity" />
+        <activity android:name=".my.setActivitys.FindPayPasswordNextActivity" />
+        <activity android:name=".my.setActivitys.ChangeSignPasswordActivity" />
+        <activity android:name=".my.setActivitys.RealVerifyActivity" />
+        <activity android:name=".my.setActivitys.BindCardActivity" />
+        <activity android:name=".my.setActivitys.ChooseBankActivity" />
+        <activity android:name=".my.setActivitys.AddressActivity" />
+        <activity android:name=".my.setActivitys.SetPayPasswrodActivity"></activity>
+
+
         <activity android:name=".WelcomeActivity0"/>
         <activity android:name="me.iwf.photopicker.PhotoPickerActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar"
             />
         <activity android:name="me.iwf.photopicker.PhotoPagerActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar"/>
+
     </application>
 
 </manifest>

@@ -94,6 +94,9 @@ public class AddProductActivity extends BaseActivity{
 
     List<String> mainList = new ArrayList<>();
     List<String> subList = new ArrayList<>();
+    HashMap<String, List<String>> map = new HashMap<String, List<String>>();
+    Map<String, String> subMap = new HashMap<>();
+
     CommonMethod commonMethod = new CommonMethod();
 
     String product_name = "";
@@ -115,8 +118,7 @@ public class AddProductActivity extends BaseActivity{
     String cookie;
     J2O j = new J2O();
 
-    HashMap<String, List<String>> map = new HashMap<String, List<String>>();
-    Map<String, String> subMap = new HashMap<>();
+
     Map<String, String> typeMap = new HashMap<>();
     ProductListBean.PagelistBean s = new ProductListBean.PagelistBean();
 

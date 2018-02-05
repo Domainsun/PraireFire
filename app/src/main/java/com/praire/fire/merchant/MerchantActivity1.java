@@ -1,9 +1,9 @@
 package com.praire.fire.merchant;
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,10 +52,9 @@ import pub.devrel.easypermissions.EasyPermissions;
 
 import static com.praire.fire.common.Constants.LOGIN_COOKIE;
 import static com.praire.fire.common.Constants.REQUEST_CODE_CHOOSE_SHOP_TYPE;
+import static com.praire.fire.common.Constants.REQUEST_CODE_UPLOAD_BUSINESS_LICENSE;
 import static com.praire.fire.common.Constants.REQUEST_CODE_UPLOAD_ID_CARD;
 import static com.praire.fire.common.Constants.REQUEST_CODE_UPLOAD_SHOP_PHOTO;
-import static com.praire.fire.common.Constants.REQUEST_CODE_CHOOSE_MAP_ADDRESS;
-import static com.praire.fire.common.Constants.REQUEST_CODE_UPLOAD_BUSINESS_LICENSE;
 
 /**
  * Created by sunlo on 2018/1/4.
@@ -87,8 +87,6 @@ public class MerchantActivity1 extends BaseActivity implements EasyPermissions.P
     TextView tvContactPhone;
     @BindView(R.id.et_Contact_phone)
     EditText etContactPhone;
-    @BindView(R.id.tv_chose_shop_open_time)
-    TextView tvChoseShopOpenTime;
     @BindView(R.id.tv_chose_shop_mapregion)
     TextView tvChoseShopMapregion;
     @BindView(R.id.tv_address)
@@ -97,6 +95,18 @@ public class MerchantActivity1 extends BaseActivity implements EasyPermissions.P
     EditText etDetailsAdress;
     @BindView(R.id.submit)
     Button submit;
+    @BindView(R.id.rl_chose_shop_region)
+    RelativeLayout rlChoseShopRegion;
+    @BindView(R.id.rl_chose_shop_type)
+    RelativeLayout rlChoseShopType;
+    @BindView(R.id.tv3)
+    TextView tv3;
+    @BindView(R.id.tv_start_time)
+    TextView tvStartTime;
+    @BindView(R.id.tv_end_time)
+    TextView tvEndTime;
+    @BindView(R.id.rl_chose_shop_mapregion)
+    RelativeLayout rlChoseShopMapregion;
     private WheelView mainWheelView, subWheelView, childWheelView;
     CommonMethod commonMethod = new CommonMethod();
     String base64_shop_photo = "";
@@ -136,9 +146,9 @@ public class MerchantActivity1 extends BaseActivity implements EasyPermissions.P
         Bundle b = getIntent().getExtras();
         ShopInfoBean s = new ShopInfoBean();
 
-        try{
+        try {
             s = (ShopInfoBean) b.getSerializable("shopInfo");
-            if (s!=null) {
+            if (s != null) {
                 if (s.getChecked().equals("0")) {
                     tvChoseShopRegion.setText(s.getCity_name());
                     tvChoseShopType.setText(s.getType_name());
@@ -149,7 +159,7 @@ public class MerchantActivity1 extends BaseActivity implements EasyPermissions.P
                     uploadIdCard.setImageURI(s.getIdentify());
                     etContactPerson.setText(s.getContact());
                     etContactPhone.setText(s.getTel());
-                    tvChoseShopOpenTime.setText(s.getOpentime());
+//                    tvChoseShopOpenTime.setText(s.getOpentime());
                     tvChoseShopMapregion.setText(s.getLat() + "," + s.getLng());
                     tvAddress.setText(s.getAddress());
                     submit.setText("审核中");
@@ -186,7 +196,7 @@ public class MerchantActivity1 extends BaseActivity implements EasyPermissions.P
                     uploadIdCard.setImageURI(s.getIdentify());
                     etContactPerson.setText(s.getContact());
                     etContactPhone.setText(s.getTel());
-                    tvChoseShopOpenTime.setText(s.getOpentime());
+//                    tvChoseShopOpenTime.setText(s.getOpentime());
                     tvChoseShopMapregion.setText(s.getLat() + "," + s.getLng());
                     etDetailsAdress.setText(s.getAddress());
                     submit.setText("重新提交");
@@ -196,8 +206,8 @@ public class MerchantActivity1 extends BaseActivity implements EasyPermissions.P
                 }
             }
 
-        }catch (Exception e){
-            Log.e("onCreate", "onCreate: "+e.toString() );
+        } catch (Exception e) {
+            Log.e("onCreate", "onCreate: " + e.toString());
 
         }
 
@@ -231,21 +241,17 @@ public class MerchantActivity1 extends BaseActivity implements EasyPermissions.P
     }
 
 
-    @OnClick({R.id.tv_back, R.id.tv_chose_shop_region, R.id.tv_chose_shop_type, R.id.tv_shop_name, R.id.et_shop_name, R.id.et_shop_details, R.id.upload_shop_photo, R.id.upload_business_license, R.id.upload_id_card, R.id.et_Contact_person, R.id.et_Contact_phone, R.id.tv_chose_shop_open_time, R.id.tv_chose_shop_mapregion, R.id.et_details_adress, R.id.submit})
+    @OnClick({R.id.rl_chose_shop_region, R.id.rl_chose_shop_type, R.id.tv_start_time, R.id.tv_end_time, R.id.rl_chose_shop_mapregion,R.id.tv_back, R.id.tv_chose_shop_region, R.id.tv_chose_shop_type, R.id.tv_shop_name, R.id.et_shop_name, R.id.et_shop_details, R.id.upload_shop_photo, R.id.upload_business_license, R.id.upload_id_card, R.id.et_Contact_person, R.id.et_Contact_phone, R.id.tv_chose_shop_mapregion, R.id.et_details_adress, R.id.submit})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_back:
                 this.finish();
                 break;
             case R.id.tv_chose_shop_region:
-                show1();
+
                 break;
             case R.id.tv_chose_shop_type:
-                Intent i = new Intent(this, SettledActivity.class);
-                Bundle bundle = new Bundle();
-//                bundle.putString("typeId",shop_type);
-                i.putExtras(bundle);
-                startActivityForResult(i, REQUEST_CODE_CHOOSE_SHOP_TYPE);
+
                 break;
 
 
@@ -258,12 +264,36 @@ public class MerchantActivity1 extends BaseActivity implements EasyPermissions.P
             case R.id.upload_id_card:
                 showChoosePic(REQUEST_CODE_UPLOAD_ID_CARD);
                 break;
-            case R.id.tv_chose_shop_open_time:
-                choseTime();
-                break;
+//            case R.id.tv_chose_shop_open_time:
+//                choseTime();
+//                break;
             case R.id.tv_chose_shop_mapregion:
-                MapChooseActivity.startActivity(this,true);
+
                 break;
+
+
+
+            case R.id.rl_chose_shop_region:
+                show1();
+                break;
+            case R.id.rl_chose_shop_type:
+                Intent i = new Intent(this, SettledActivity.class);
+                Bundle bundle = new Bundle();
+//                bundle.putString("typeId",shop_type);
+                i.putExtras(bundle);
+                startActivityForResult(i, REQUEST_CODE_CHOOSE_SHOP_TYPE);
+                break;
+            case R.id.tv_start_time:
+                choseTime("0");
+                break;
+            case R.id.tv_end_time:
+                choseTime("1");
+                break;
+            case R.id.rl_chose_shop_mapregion:
+                MapChooseActivity.startActivity(this, true);
+                break;
+
+
             case R.id.submit:
 
                 shop_name = etShopName.getText().toString();
@@ -272,13 +302,20 @@ public class MerchantActivity1 extends BaseActivity implements EasyPermissions.P
                 contact_phone = etContactPhone.getText().toString();
 
 
-
-
-
-
-
                 shop_details_address = etDetailsAdress.getText().toString();
                 cookie = (String) SharePreferenceMgr.get(this, LOGIN_COOKIE, "");
+
+
+                String starttime="";
+                starttime= tvStartTime.getText().toString();
+                String endtime="";
+                endtime=tvEndTime.getText().toString();
+
+
+                if (starttime.length()!=0 && endtime.length()!=0) {
+                    shop_opentime=starttime+"-"+endtime;
+                }
+
 
 //                Toast.makeText(this, shop_details_address, Toast.LENGTH_SHORT).show();
                 if (shop_region.length() == 0 || shop_type.length() == 0 || shop_name.length() == 0 || shop_details.length() == 0 || base64_shop_photo.length() == 0 || base64_business_license.length() == 0 || getBase64_identity_card.length() == 0 || contacts.length() == 0 || contact_phone.length() == 0 || shop_opentime.length() == 0 || shop_opentime.length() < 8 || shop_lat.length() == 0 || shop_lng.length() == 0 || shop_details_address.length() == 0) {
@@ -310,22 +347,22 @@ public class MerchantActivity1 extends BaseActivity implements EasyPermissions.P
     boolean choseTime = false;
     String ftime = "";
 
-    public void choseTime() {
+    public void choseTime(final String type) {
         TimePickerView pvTime = new TimePickerView.Builder(this, new TimePickerView.OnTimeSelectListener() {
             @Override
             public void onTimeSelect(Date date, View v) {//选中事件回调
                 SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
                 String str = sdf.format(date);
-                if (!choseTime) {
-                    tvChoseShopOpenTime.setText(str + "-");
-                    ftime = str;
-                    choseTime = true;
-                    Toast.makeText(MerchantActivity1.this, "请选择结束营业时间", Toast.LENGTH_SHORT).show();
-                } else {
-                    tvChoseShopOpenTime.setText(ftime + "-" + str);
-                    shop_opentime = ftime + "-" + str;
-                    choseTime = false;
+
+                if (type.equals("0")) {
+
+                    tvStartTime.setText(str+"  -");
+
+                } else if(type.equals("1")){
+                    tvEndTime.setText(str);
                 }
+
+
             }
         })
                 .setType(new boolean[]{false, false, false, true, true, false})
@@ -343,7 +380,7 @@ public class MerchantActivity1 extends BaseActivity implements EasyPermissions.P
                     .countable(true)
                     .maxSelectable(1) // 图片选择的最多数量
                     .gridExpectedSize(getResources().getDimensionPixelSize(R.dimen.grid_expected_size))
-                    .restrictOrientation(android.content.pm.ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
+                    .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
                     .thumbnailScale(0.85f) // 缩略图的比例
                     .imageEngine(new PicassoEngine()) // 使用的图片加载引擎
                     .forResult(request_code); // 设置作为标记的请求码
@@ -369,15 +406,17 @@ public class MerchantActivity1 extends BaseActivity implements EasyPermissions.P
         }
 
         /*地图返回值*/
-        if (requestCode ==  Constants.REQUEST_CODE_CHOOSE_MAP_ADDRESS && resultCode == RESULT_OK) {
+        if (requestCode == Constants.REQUEST_CODE_CHOOSE_MAP_ADDRESS && resultCode == RESULT_OK) {
             LatLng latLon;
 
-            latLon= data.getParcelableExtra(Constants.LATLNG);
-            shop_lng=latLon.longitude+"";
-            shop_lat=latLon.latitude+"";
+            latLon = data.getParcelableExtra(Constants.LATLNG);
+            shop_lng = latLon.longitude + "";
+            shop_lat = latLon.latitude + "";
+
+            tvChoseShopMapregion.setText(shop_lng + "," + shop_lat);
 
 
-            Log.d("onActivityResult", "onActivityResult: "+latLon.latitude+"   "+ latLon.longitude);
+            Log.d("onActivityResult", "onActivityResult: " + latLon.latitude + "   " + latLon.longitude);
 
 
         }
@@ -537,7 +576,8 @@ public class MerchantActivity1 extends BaseActivity implements EasyPermissions.P
 
     }
 
-    ;
+
+
 
 
 }

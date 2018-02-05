@@ -212,6 +212,7 @@
             android:textSize="12sp"
             android:background="@null"
             android:textColor="@color/text_4c"
+            android:inputType="textPassword"
             />
 
 

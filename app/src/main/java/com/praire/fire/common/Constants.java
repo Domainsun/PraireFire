@@ -34,6 +34,10 @@ public class Constants {
         /*用户修改头像*/
     public static final int REQUEST_CHANGE_USER_HEAD =  16;
 
+    /*实名认证身份证照片*/
+    public static final int REQUEST_REAL_VERIFY_PHTOTO =  17;
+
+    public static final int REQUEST_BANK = 18;
     /**
      * 刷新后头部固定时间,毫秒
      */

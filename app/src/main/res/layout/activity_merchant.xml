@@ -14,18 +14,18 @@
         android:orientation="vertical">
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/y96"
+            android:layout_height="50dp"
             android:background="@mipmap/head_backgroud">
 
             <TextView
                 android:id="@+id/tv_back"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/y60"
+                android:layout_height="30dp"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentLeft="true"
                 android:gravity="center"
                 android:layout_centerVertical="true"
-                android:drawablePadding="@dimen/x20"
+                android:drawablePadding="10dp"
                 android:drawableRight="@mipmap/back" />
 
 
@@ -41,12 +41,12 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="@dimen/y100"
+            android:layout_height="50dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentStart="true"
             android:background="@color/white"
             android:gravity="center_vertical"
-            android:paddingLeft="@dimen/x30"
+            android:paddingLeft="15dp"
             android:text="开店流程"
             android:textColor="@color/text_color"
             android:textSize="19sp" />
@@ -54,31 +54,32 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/y230"
+            android:layout_height="105dp"
             android:layout_marginTop="@dimen/y2"
             android:background="@color/white">
 
             <ImageView
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/y125"
+                android:layout_height="60dp"
                 android:src="@mipmap/shop_process"
                 android:layout_centerVertical="true"/>
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/rl_chose_shop_region"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/y100"
+            android:layout_height="50dp"
             android:layout_marginTop="@dimen/y2"
             android:background="@color/white">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/text_color"
-                android:drawablePadding="@dimen/x30"
+                android:drawablePadding="15dp"
                 android:layout_centerVertical="true"
                 android:textSize="19sp"
                 android:text="店铺区域"
-                android:layout_marginLeft="@dimen/x30"/>
+                android:layout_marginLeft="15dp"/>
             <TextView
                 android:id="@+id/tv_chose_shop_region"
                 android:layout_width="wrap_content"
@@ -87,27 +88,28 @@
                 android:layout_alignParentRight="true"
                 android:gravity="center"
                 android:textColor="@color/grey"
-                android:drawablePadding="@dimen/x18"
+                android:drawablePadding="9dp"
                 android:layout_centerVertical="true"
                 android:textSize="16sp"
-                android:layout_marginRight="@dimen/x30"
+                android:layout_marginRight="15dp"
                 android:text=""/>
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/rl_chose_shop_type"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/y100"
+            android:layout_height="50dp"
             android:layout_marginTop="@dimen/y2"
             android:background="@color/white">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/text_color"
-                android:drawablePadding="@dimen/x30"
+                android:drawablePadding="15dp"
                 android:layout_centerVertical="true"
                 android:textSize="19sp"
                 android:text="店铺类别"
-                android:layout_marginLeft="@dimen/x30"/>
+                android:layout_marginLeft="15dp"/>
             <TextView
                 android:text=""
                 android:id="@+id/tv_chose_shop_type"
@@ -117,15 +119,15 @@
                 android:layout_alignParentRight="true"
                 android:gravity="center"
                 android:textColor="@color/grey"
-                android:drawablePadding="@dimen/x18"
+                android:drawablePadding="9dp"
                 android:layout_centerVertical="true"
                 android:textSize="16sp"
-                android:layout_marginRight="@dimen/x30" />
+                android:layout_marginRight="15dp" />
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/y100"
+            android:layout_height="50dp"
             android:layout_marginTop="@dimen/y2"
             android:background="@color/white">
 
@@ -135,8 +137,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
-                android:layout_marginStart="@dimen/x26"
-                android:drawablePadding="@dimen/x30"
+                android:layout_marginStart="13dp"
+                android:drawablePadding="15dp"
                 android:text="店名"
                 android:textColor="@color/text_color"
                 android:textSize="19sp" />
@@ -149,13 +151,13 @@
                 android:layout_alignParentLeft="true"
                 android:background="@null"
                 android:hint="20字以内"
-                android:paddingLeft="@dimen/x250" />
+                android:paddingLeft="125dp" />
         </RelativeLayout>
 
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/y100"
+            android:layout_height="50dp"
             android:layout_marginTop="@dimen/y2"
             android:background="@color/white">
 
@@ -165,8 +167,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
-                android:layout_marginStart="@dimen/x26"
-                android:drawablePadding="@dimen/x30"
+                android:layout_marginStart="13dp"
+                android:drawablePadding="15dp"
                 android:text="商家详情"
                 android:textColor="@color/text_color"
                 android:textSize="19sp" />
@@ -174,7 +176,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/y200"
+            android:layout_height="100dp"
             android:layout_marginTop="@dimen/y2"
             android:background="@color/white">
 
@@ -185,14 +187,14 @@
 
                 android:background="@null"
                 android:hint="添加商家介绍"
-                android:paddingLeft="@dimen/x76"
-                android:paddingTop="@dimen/y32" />
+                android:paddingLeft="38dp"
+                android:paddingTop="15dp" />
         </RelativeLayout>
 
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/y200"
+            android:layout_height="100dp"
             android:layout_marginTop="@dimen/y2"
             android:background="@color/white">
 
@@ -201,7 +203,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/x30"
+                android:layout_marginLeft="15dp"
                 android:text="上传门店照片"
                 android:textColor="@color/text_color"
                 android:textSize="19sp" />
@@ -209,17 +211,17 @@
             <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/upload_shop_photo"
                 android:layout_alignParentRight="true"
-                android:layout_width="@dimen/y200"
-                android:layout_height="@dimen/y140"
-                android:layout_marginRight="@dimen/x30"
-                android:layout_marginTop="@dimen/y30"
+                android:layout_width="100dp"
+                android:layout_height="70dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="15dp"
                 fresco:placeholderImage="@mipmap/add_images" />
         </RelativeLayout>
 
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/y200"
+            android:layout_height="100dp"
             android:layout_marginTop="@dimen/y2"
             android:background="@color/white">
 
@@ -229,7 +231,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/x30"
+                android:layout_marginLeft="15dp"
                 android:text="上传营业执照"
                 android:textColor="@color/text_color"
                 android:textSize="19sp" />
@@ -237,17 +239,17 @@
             <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/upload_business_license"
                 android:layout_alignParentRight="true"
-                android:layout_width="@dimen/y200"
-                android:layout_height="@dimen/y140"
-                android:layout_marginRight="@dimen/x30"
-                android:layout_marginTop="@dimen/y30"
+                android:layout_width="100dp"
+                android:layout_height="70dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="15dp"
                 fresco:placeholderImage="@mipmap/add_images" />
         </RelativeLayout>
 
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/y200"
+            android:layout_height="100dp"
             android:layout_marginTop="@dimen/y2"
             android:background="@color/white">
 
@@ -256,7 +258,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/x30"
+                android:layout_marginLeft="15dp"
                 android:text="上传身份证照片(正面)"
                 android:textColor="@color/text_color"
                 android:textSize="19sp" />
@@ -264,17 +266,17 @@
             <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/upload_id_card"
                 android:layout_alignParentRight="true"
-                android:layout_width="@dimen/y200"
-                android:layout_height="@dimen/y140"
-                android:layout_marginRight="@dimen/x30"
-                android:layout_marginTop="@dimen/y30"
+                android:layout_width="100dp"
+                android:layout_height="70dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="15dp"
                 fresco:placeholderImage="@mipmap/add_images" />
         </RelativeLayout>
 
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/y100"
+            android:layout_height="50dp"
             android:layout_marginTop="@dimen/y2"
             android:background="@color/white">
 
@@ -284,8 +286,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
-                android:layout_marginStart="@dimen/x26"
-                android:drawablePadding="@dimen/x30"
+                android:layout_marginStart="13dp"
+                android:drawablePadding="15dp"
                 android:text="联系人"
                 android:textColor="@color/text_color"
                 android:textSize="19sp" />
@@ -297,14 +299,14 @@
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
                 android:background="@null"
-                android:hint="20字以内"
-                android:paddingLeft="@dimen/x250" />
+                android:hint="输入店铺联系人"
+                android:paddingLeft="125dp" />
         </RelativeLayout>
 
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/y100"
+            android:layout_height="50dp"
             android:layout_marginTop="@dimen/y2"
             android:background="@color/white">
 
@@ -314,8 +316,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
-                android:layout_marginStart="@dimen/x26"
-                android:drawablePadding="@dimen/x30"
+                android:layout_marginStart="13dp"
+                android:drawablePadding="15dp"
                 android:text="联系电话"
                 android:textColor="@color/text_color"
                 android:textSize="19sp" />
@@ -327,55 +329,73 @@
                 android:layout_centerVertical="true"
                 android:layout_alignParentLeft="true"
                 android:background="@null"
-                android:hint="20字以内"
-                android:paddingLeft="@dimen/x250" />
+                android:hint="输入店铺联系电话"
+                android:paddingLeft="125dp" />
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/y100"
+            android:layout_height="50dp"
             android:layout_marginTop="@dimen/y2"
             android:background="@color/white">
 
+
+
+
             <TextView
+                android:id="@+id/tv3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/x30"
-                android:drawablePadding="@dimen/x30"
+                android:layout_marginLeft="15dp"
+                android:drawablePadding="15dp"
                 android:text="营业时间"
                 android:textColor="@color/text_color"
                 android:textSize="19sp" />
 
+
             <TextView
-                android:id="@+id/tv_chose_shop_open_time"
+                android:id="@+id/tv_start_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/x30"
-                android:drawablePadding="@dimen/x18"
-                android:drawableRight="@mipmap/tail"
-                android:gravity="center"
+                android:layout_marginLeft="30dp"
+                android:layout_toRightOf="@id/tv3"
+                android:text="开始时间  -"
                 android:textColor="@color/grey"
                 android:textSize="16sp" />
+
+
+            <TextView
+                android:id="@+id/tv_end_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:layout_toRightOf="@id/tv_start_time"
+                android:text="结束时间"
+                android:textColor="@color/grey"
+                android:textSize="16sp" />
+
+
         </RelativeLayout>
 
 
         <RelativeLayout
+            android:id="@+id/rl_chose_shop_mapregion"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/y100"
-            android:layout_marginTop="@dimen/y2"
+            android:layout_height="50dp"
+            android:layout_marginTop="1dp"
             android:background="@color/white">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/text_color"
-                android:drawablePadding="@dimen/x30"
+                android:drawablePadding="15dp"
                 android:layout_centerVertical="true"
                 android:textSize="19sp"
                 android:text="所在地区"
-                android:layout_marginLeft="@dimen/x30"/>
+                android:layout_marginLeft="15dp"/>
             <TextView
                 android:id="@+id/tv_chose_shop_mapregion"
                 android:layout_width="wrap_content"
@@ -384,16 +404,16 @@
                 android:layout_alignParentRight="true"
                 android:gravity="center"
                 android:textColor="@color/grey"
-                android:drawablePadding="@dimen/x18"
+                android:drawablePadding="9dp"
                 android:layout_centerVertical="true"
                 android:textSize="16sp"
-                android:layout_marginRight="@dimen/x30"
+                android:layout_marginRight="15dp"
                 android:text="地图选区"/>
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/y200"
+            android:layout_height="100dp"
             android:layout_marginTop="@dimen/y2"
             android:background="@color/white">
 
@@ -403,8 +423,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_centerVertical="true"
-                android:layout_marginStart="@dimen/x26"
-                android:drawablePadding="@dimen/x30"
+                android:layout_marginStart="13dp"
+                android:drawablePadding="15dp"
                 android:text="详细地址"
                 android:textColor="@color/text_color"
                 android:textSize="19sp" />
@@ -414,32 +434,30 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
-                android:paddingTop="@dimen/y100"
+                android:paddingTop="50dp"
                 android:background="@null"
-                android:paddingLeft="@dimen/x30" />
+                android:paddingLeft="15dp" />
         </RelativeLayout>
-
-
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/y200"
-            android:layout_marginTop="@dimen/y50"
+            android:layout_height="100dp"
+            android:layout_marginTop="25dp"
             android:background="@color/white">
 
 
-           <Button
-               android:id="@+id/submit"
-               style="?android:attr/borderlessButtonStyle"
-               android:layout_width="@dimen/x690"
-               android:layout_height="@dimen/y100"
-               android:background="@color/orange"
-               android:gravity="center"
-               android:textColor="@color/white"
-               android:textSize="19sp"
-               android:layout_centerHorizontal="true"
-               android:layout_centerVertical="true"
-               android:text="提交审核"/>
+            <Button
+                android:id="@+id/submit"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="345dp"
+                android:layout_height="50dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:background="@color/orange"
+                android:gravity="center"
+                android:text="提交审核"
+                android:textColor="@color/white"
+                android:textSize="19sp" />
 
         </RelativeLayout>
 

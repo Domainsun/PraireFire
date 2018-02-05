@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.amap.api.maps.model.CameraPosition;
 import com.amap.api.maps.model.LatLng;
@@ -69,7 +70,11 @@ public abstract class BaseFragment extends Fragment {
     }
 
     protected boolean hasLogin() {
+<<<<<<< HEAD
         String cookie = (String) SharePreferenceMgr.get(getActivity(), LOGIN_COOKIE, "");
+=======
+        String cookie = (String) SharePreferenceMgr.get(getContext(), LOGIN_COOKIE, "");
+>>>>>>> 106ee3d1a111b3a008fc3b6c3aa6ebdd38d8f544
         /*如果未登录过，自动跳转到登录页*/
         String str = "\"code\":0";
         if (cookie != null && cookie.length() != 0) {
@@ -87,8 +92,16 @@ public abstract class BaseFragment extends Fragment {
         }
         return true;
     }
+<<<<<<< HEAD
     private void toLogin() {
         Intent i = new Intent(getActivity(), SignAcitvity.class);
+=======
+
+    private void toLogin() {
+
+        Toast.makeText(getContext(), "还未登录，请先登录！", Toast.LENGTH_SHORT).show();
+        Intent i = new Intent(getContext(), SignAcitvity.class);
+>>>>>>> 106ee3d1a111b3a008fc3b6c3aa6ebdd38d8f544
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(i);
     }

@@ -37,7 +37,7 @@ import static com.praire.fire.common.ConstanUrl.HsmsCode;
 import static com.praire.fire.common.ConstanUrl.PhotoCode;
 
 public class FindPasswordActivity extends AppCompatActivity {
-    String phone = "";
+
     @BindView(R.id.tv_back)
     TextView tvBack;
     @BindView(R.id.tv_show_phone)
@@ -49,7 +49,7 @@ public class FindPasswordActivity extends AppCompatActivity {
     @BindView(R.id.submit)
     Button submit;
     CountDownTimer timer;
-
+    String phone = "";
     @BindView(R.id.ed_input_photoCode)
     EditText edInputPhotoCode;
     @BindView(R.id.iv_show_code)

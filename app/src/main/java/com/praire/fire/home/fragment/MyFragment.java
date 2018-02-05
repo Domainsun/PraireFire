@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.praire.fire.R;
 import com.praire.fire.SignAcitvity;
+import com.praire.fire.base.BaseActivity;
 import com.praire.fire.base.BaseFragment;
 import com.praire.fire.common.ConstanUrl;
 import com.praire.fire.common.Constants;
@@ -162,6 +163,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                     break;
                 case R.id.fragment_my_earphone:
 //                CustomerServiceActivity.startActivity(getActivity(), false);
+
                     break;
                 case R.id.fragment_my_set:
                     SetActivity.startActivity(getActivity(), false);
@@ -173,7 +175,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                     MyWalletActivity.startActivity(getActivity(), false);
                     break;
                 case R.id.fragment_my_integral_rl:
-//                IntegralActivity.startActivity(getActivity(), false);
+ //                IntegralActivity.startActivity(getActivity(), false);
                     break;
                 case R.id.fragment_my_invitation_integral_rl:
 //                InvitationIntegralActivity.startActivity(getActivity(), false);
@@ -195,6 +197,8 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                 case R.id.fragment_my_merchant_services_rl:
 
                 /*by domain*/
+
+                   if(! hasLogin()){return;}
 
 
                     String cookie = (String) SharePreferenceMgr.get(getContext(), LOGIN_COOKIE, "");
