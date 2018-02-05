@@ -3,6 +3,7 @@ package com.praire.fire.car.adapter;
 import android.content.Context;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,12 +66,15 @@ public class ALLEvalauteAdapter extends RecyclerView.Adapter<ALLEvalauteAdapter.
 //        holder.itemAllEvaluateEvaluate.setText(item.g());
         holder.bussinessRespond.setText(String.format(holder.bussinessRespond.getTag().toString(),item.getReply()));
         TextViewUtils.changeFontColor(context,holder.bussinessRespond,0,5,R.color.grey,R.color.orange);
-        Uri uri = Uri.parse(item.getHead());
-        DraweeController controller = Fresco.newDraweeControllerBuilder()
-                .setUri(uri)
-                .setAutoPlayAnimations(true)
-                .build();
-        holder.userIcon.setController(controller);
+
+         if(!"".equals(item.getHead()) && item.getHead() !=null) {
+            Uri uri = Uri.parse(item.getHead());
+            DraweeController controller = Fresco.newDraweeControllerBuilder()
+                    .setUri(uri)
+                    .setAutoPlayAnimations(true)
+                    .build();
+            holder.userIcon.setController(controller);
+        }
 
     }
 

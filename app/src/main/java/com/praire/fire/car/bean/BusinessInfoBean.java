@@ -170,8 +170,8 @@ public class BusinessInfoBean {
          */
 
         private String commentallcount;
-        private double higherthan;
-        private int highcomment;
+        private String higherthan;
+        private String highcomment;
 
         public String getCommentallcount() {
             return commentallcount;
@@ -181,19 +181,19 @@ public class BusinessInfoBean {
             this.commentallcount = commentallcount;
         }
 
-        public double getHigherthan() {
+        public String getHigherthan() {
             return higherthan;
         }
 
-        public void setHigherthan(double higherthan) {
+        public void setHigherthan(String higherthan) {
             this.higherthan = higherthan;
         }
 
-        public int getHighcomment() {
+        public String getHighcomment() {
             return highcomment;
         }
 
-        public void setHighcomment(int highcomment) {
+        public void setHighcomment(String highcomment) {
             this.highcomment = highcomment;
         }
     }

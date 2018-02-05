@@ -96,7 +96,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
 
     @Override
     public void onTabSelected(int position) {
-        if (position == 2 && !hasLogin()) {
+        if ((position == 2 /*|| position == 3*/) && !hasLogin()) {
              return;
         }
         if (fragments != null) {
@@ -114,31 +114,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         }
     }
 
-    protected boolean hasLogin() {
-        String cookie = (String) SharePreferenceMgr.get(this, LOGIN_COOKIE, "");
-        /*如果未登录过，自动跳转到登录页*/
-        String str = "\"code\":0";
-        if (cookie != null && cookie.length() != 0) {
-            String result = new UseAPIs().getShopInfo(cookie);
-            if (result.length() != 0) {
-                if (result.contains(str)) {
-                    toLogin();
-                    return false;
-                }
-                return true;
-            }
-        } else {
-            toLogin();
-            return false;
-        }
-        return true;
-    }
 
-    private void toLogin() {
-        Intent i = new Intent(this, SignAcitvity.class);
-        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(i);
-    }
 
     @Override
     public void onTabUnselected(int position) {

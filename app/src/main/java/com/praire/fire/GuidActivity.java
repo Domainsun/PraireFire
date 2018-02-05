@@ -21,9 +21,9 @@ public class GuidActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_guid);
-        Handler handler = new Handler();
+       /* Handler handler = new Handler();
         //当计时结束,跳转至主界面
-       /* handler.postDelayed(new Runnable() {
+        handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 swipeLeft();

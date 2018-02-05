@@ -93,7 +93,7 @@
                 android:id="@+id/item_shop_list_address"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="4"
+                android:layout_weight="3"
                 android:drawableLeft="@mipmap/location_samll"
                 android:drawablePadding="5dp"
                 android:ellipsize="end"
@@ -103,11 +103,12 @@
 
             <TextView
                 android:id="@+id/item_shop_list_distance"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_weight="1"
+                android:gravity="right"
                 android:maxLines="1"
+                android:layout_weight="1"
                 android:textSize="12sp"
                 android:textColor="@color/text_color" />
         </LinearLayout>

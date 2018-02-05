@@ -2,7 +2,6 @@ package com.praire.fire.home.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,16 +11,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.praire.fire.R;
+import com.praire.fire.SignAcitvity;
 import com.praire.fire.base.BaseFragment;
 import com.praire.fire.merchant.BusinessServiceActivity;
 import com.praire.fire.merchant.MerchantActivity1;
 import com.praire.fire.my.AccountManagementActivity;
-import com.praire.fire.my.CustomerServiceActivity;
-import com.praire.fire.my.IntegralActivity;
-import com.praire.fire.my.InvitationIntegralActivity;
-import com.praire.fire.my.MyCollectActivity;
 import com.praire.fire.my.MyEvaluateActivity;
 import com.praire.fire.my.MyWalletActivity;
 import com.praire.fire.my.NearbyActivity;
@@ -32,6 +27,8 @@ import com.praire.fire.okhttp.JavaBean.ShopInfoBean;
 import com.praire.fire.okhttp.UseAPIs;
 import com.praire.fire.utils.SharePreferenceMgr;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 import static com.praire.fire.common.Constants.LOGIN_COOKIE;
 
 /**
@@ -40,7 +37,7 @@ import static com.praire.fire.common.Constants.LOGIN_COOKIE;
  */
 
 public class MyFragment extends BaseFragment implements View.OnClickListener {
-    SimpleDraweeView fragmentMyImg;
+    CircleImageView fragmentMyImg;
     TextView fragmentMyPhone;
     TextView fragmentMyVip;
     TextView fragmentMyWallet;
@@ -100,6 +97,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
     @Override
     public void initListener() {
 
+
     }
 
     @Override
@@ -112,7 +110,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.fragment_my_phone:
-                AccountManagementActivity.startActivity(getActivity(), false);
+                SignAcitvity.startActivity(getActivity(),false);
                 break;
             case R.id.fragment_my_vip:
                 break;
@@ -123,7 +121,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                 SetActivity.startActivity(getActivity(), false);
                 break;
             case R.id.fragment_my_img:
-
+                AccountManagementActivity.startActivity(getActivity(), false);
                 break;
             case R.id.fragment_my_wallet_rl:
                 MyWalletActivity.startActivity(getActivity(), false);

@@ -28,8 +28,8 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     // Refer fragment class
     protected FragmentManager fm;
-    protected NetworkHandler uiHandler ;
-    public Context context ;
+    protected NetworkHandler uiHandler;
+    public Context context;
 
 
     @Override
@@ -38,14 +38,12 @@ public abstract class BaseActivity extends AppCompatActivity {
         setContentView(getFragmentLayout());
         setupComponent();
         uiHandler = createNetWorkHandler();
-//        if(hasLogin()) {
-            init();
-//        }
+        init();
     }
+
     public void setupComponent() {
 
     }
-
 
 
     /**
@@ -77,8 +75,6 @@ public abstract class BaseActivity extends AppCompatActivity {
      */
 
 //    protected abstract void isSign();
-
-
     protected void init() {
 
         initReferFragment();
@@ -89,7 +85,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     }
 
-    public  void isSign(){
+    public void isSign() {
 //
         Log.d("isSign", "isSign: 111111111111111111111111111111111");
 
@@ -103,17 +99,16 @@ public abstract class BaseActivity extends AppCompatActivity {
             result = new UseAPIs().getShopInfo(cookie);
 
 
-            Log.d("isSign", "isSign: "+result);
-
+            Log.d("isSign", "isSign: " + result);
 
 
             if (result.length() != 0) {
 
-                if (result.indexOf(str)!= -1) {
+                if (result.indexOf(str) != -1) {
 
                     Toast.makeText(context, "登录已经失效，请重新登录", Toast.LENGTH_SHORT).show();
 
-                    Log.d("isSign222222", "isSign222222: "+result);
+                    Log.d("isSign222222", "isSign222222: " + result);
                     Intent i = new Intent(context, SignAcitvity.class);
                     context.startActivity(i);
                 }
@@ -121,7 +116,6 @@ public abstract class BaseActivity extends AppCompatActivity {
             }
         }
     }
-
 
 
     protected void initReferFragment() {
@@ -134,11 +128,11 @@ public abstract class BaseActivity extends AppCompatActivity {
         return new NetworkHandler(this) {
             @Override
             public void dispatchMessage(Message msg) {
-                if(msg.what == OkhttpRequestUtil.NETWORK_ERROR){
-                    ToastUtil.show(BaseActivity.this,getString(R.string.error_network));
-                }else if(msg.what == OkhttpRequestUtil.NONE_DATA){
-                    ToastUtil.show(BaseActivity.this,getString(R.string.no_data));
-                }else {
+                if (msg.what == OkhttpRequestUtil.NETWORK_ERROR) {
+                    ToastUtil.show(BaseActivity.this, getString(R.string.error_network));
+                } else if (msg.what == OkhttpRequestUtil.NONE_DATA) {
+                    ToastUtil.show(BaseActivity.this, getString(R.string.no_data));
+                } else {
                     networkResponse(msg);
                 }
             }
@@ -146,7 +140,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     /**
-     *
      * @param msg
      */
     protected void networkResponse(Message msg) {

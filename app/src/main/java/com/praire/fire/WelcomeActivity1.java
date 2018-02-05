@@ -23,8 +23,8 @@ public class WelcomeActivity1 extends Activity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome1);
-         Handler handler = new Handler();
-      /*  //当计时结束,跳转至主界面
+       /*    Handler handler = new Handler();
+      //当计时结束,跳转至主界面
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {

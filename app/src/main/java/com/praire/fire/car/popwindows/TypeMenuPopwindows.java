@@ -118,14 +118,13 @@ public class TypeMenuPopwindows extends PopupWindow implements View.OnClickListe
 
             @Override
             public void onItemClick(View view, int position, int type) {
-                Log.e("position=", position + "");
                 switch (type) {
                     case TYPE_SERVICE:
-                        mOnItemClickListener.onItemClick(TYPE_SERVICE, position, entities.getServiceTypeList().get(position).getId());
+                        mOnItemClickListener.onItemClick(TYPE_SERVICE, entities.getServiceTypeList().get(position).getName(), entities.getServiceTypeList().get(position).getId());
                         break;
                     case TYPE_PRODUCT:
 
-                        mOnItemClickListener.onItemClick(TYPE_PRODUCT, position, entities.getProductTypeList().get(position).getId());
+                        mOnItemClickListener.onItemClick(TYPE_PRODUCT, entities.getProductTypeList().get(position).getName(), entities.getProductTypeList().get(position).getId());
                         break;
 
                     default:
@@ -162,7 +161,7 @@ public class TypeMenuPopwindows extends PopupWindow implements View.OnClickListe
     }
 
     public interface OnItemClickListener {
-        void onItemClick(int type, int position, String id);
+        void onItemClick(int type, String typeName, String id);
     }
 
 

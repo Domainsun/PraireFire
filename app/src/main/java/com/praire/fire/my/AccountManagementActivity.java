@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.praire.fire.MyApplication;
 import com.praire.fire.R;
+import com.praire.fire.SignAcitvity;
 import com.praire.fire.base.BaseActivity;
 import com.praire.fire.base.BaseTitleActivity;
 import com.praire.fire.common.Constants;
@@ -100,7 +101,8 @@ public class AccountManagementActivity extends BaseTitleActivity {
                 ShippingAddressActivity.startActivity(this, false);
                 break;
             case R.id.btn_exit_login:
-                new MyApplication().exit();
+                SignAcitvity.startActivity(this,false);
+                finish();
                 break;
             default:
                 break;

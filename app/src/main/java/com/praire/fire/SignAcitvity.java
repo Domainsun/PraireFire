@@ -2,6 +2,7 @@ package com.praire.fire;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,6 +19,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.praire.fire.base.BaseActivity;
+import com.praire.fire.car.CarActivity;
 import com.praire.fire.common.Constants;
 import com.praire.fire.home.MainActivity;
 import com.praire.fire.okhttp.GsonUtils.J2O;
@@ -54,6 +57,16 @@ public class SignAcitvity extends Activity {
     ImageView imageView2;
     @BindView(R.id.check_password)
     CheckBox checkPassword;
+
+    public static void startActivity(Context context, boolean forResult) {
+        Intent intent = new Intent(context, SignAcitvity.class);
+
+        if (!forResult) {
+            context.startActivity(intent);
+        } else if (context instanceof BaseActivity) {
+            ((BaseActivity) context).startActivityForResult(intent, Constants.REQUEST_CODE_COMMONT);
+        }
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -108,7 +121,7 @@ public class SignAcitvity extends Activity {
         });
     }
 
-    @OnClick({R.id.btn_sign, R.id.tv_register, R.id.tv_findPw, R.id.imageView2,R.id.check_password})
+    @OnClick({R.id.btn_sign, R.id.tv_register, R.id.tv_findPw, R.id.imageView2, R.id.check_password})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_sign:
@@ -164,7 +177,6 @@ public class SignAcitvity extends Activity {
                 finish();
                 break;
             case R.id.check_password:
-
 
 
                 break;

@@ -70,7 +70,9 @@ public abstract  class BaseApplication extends Application {
     }
 
     public void exit(){
-        activities.clear();
+        if(activities !=null) {
+            activities.clear();
+        }
         android.os.Process.killProcess(android.os.Process
                 .myPid());
         System.exit(0);

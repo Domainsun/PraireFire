@@ -60,6 +60,7 @@ import com.praire.fire.map.MapSearchActivity;
 import com.praire.fire.map.RoutePlanningActivity;
 import com.praire.fire.map.adapter.NearlyShopAdapter;
 import com.praire.fire.map.bean.NearlyShopBean;
+import com.praire.fire.okhttp.OkhttpRequestUtil;
 import com.praire.fire.utils.RecycleViewDivider;
 import com.praire.fire.utils.statusbarcolor.Eyes;
 import com.yanzhenjie.recyclerview.swipe.SwipeItemClickListener;
@@ -106,8 +107,6 @@ public class MapFragment extends BaseFragment implements AMap.OnMarkerClickListe
     ImageView back, clean;
     private AMap aMap;
     private MarkerOptions markerOption;
-    private AMapLocationClient mlocationClient;
-    private AMapLocationClientOption mLocationOption;
     private NearlyShopAdapter adapter;
     private int index = 1;
     private List<NearlyShopBean> evEntitys = new ArrayList<>();
@@ -146,7 +145,6 @@ public class MapFragment extends BaseFragment implements AMap.OnMarkerClickListe
         View view = inflater.inflate(R.layout.fragment_map, container, false);
         //在activity执行onCreate时执行mMapView.onCreate(savedInstanceState)，创建地图
         initFindView(view);
-//        mMapView.onCreate(savedInstanceState);
         return view;
     }
 
@@ -232,59 +230,23 @@ public class MapFragment extends BaseFragment implements AMap.OnMarkerClickListe
     /**
      * 获取商家列表
      */
-    private void requestShopList(final double longitude, final double latitude, String searchKey) {
-        OkHttpClient okHttpClient = new OkHttpClient();
-        Request request = new Request.Builder()
-                .url(ConstanUrl.SEARCH_NEARSHOP + "?lng=" + longitude + "&lat=" + latitude + "&name=" + searchKey)
-                .build();
-        Call call = okHttpClient.newCall(request);
-        call.enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                Message msg = new Message();
-                msg.what = 0;
-                uiHandler.sendMessage(msg);
-                e.printStackTrace();
-            }
-
-            @Override
-            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-
-                String data = response.body().string();
-                if (data != null) {
-//                    loadMore = false;
-                    Gson gson = new Gson();
-
-                    List<NearlyShopBean> entitys = gson.fromJson(data, new TypeToken<List<NearlyShopBean>>() {
-
-                    }.getType());
-
-                    Message msg = new Message();
-                    if (entitys.size() == 0) {
-                        msg.what = 2;
-                    } else {
-                        msg.what = 1;
-                        msg.obj = entitys;
-                    }
-                    uiHandler.sendMessage(msg);
-                    return;
-                }
-                Message msg = new Message();
-                msg.what = 2;
-                uiHandler.sendMessage(msg);
-            }
-        });
-
+    private void requestShopList( double longitude,  double latitude, String searchKey) {
+        OkhttpRequestUtil.get(ConstanUrl.SEARCH_NEARSHOP + "?lng=" + longitude + "&lat=" + latitude + "&name=" + searchKey,1,false,uiHandler);
     }
 
     @Override
     protected void networkResponse(Message msg) {
         switch (msg.what) {
-            case 0:
-                Toast.makeText(activity, "网络出错，请重试", Toast.LENGTH_SHORT).show();
-                break;
+
             case 1:
-                List<NearlyShopBean> entitys = (List<NearlyShopBean>) msg.obj;
+                Gson gson = new Gson();
+                List<NearlyShopBean> entitys = gson.fromJson((String)msg.obj, new TypeToken<List<NearlyShopBean>>() {
+                }.getType());
+                if (entitys.size() == 0) {
+                    mapRecyclerView.setVisibility(View.GONE);
+                    checkMoreTv.setVisibility(View.GONE);
+                    Toast.makeText(activity, "没有更多数据了", Toast.LENGTH_SHORT).show();
+                }
                 evEntitys = entitys;
                 if (isSearch) {
                     mapRecyclerView.setVisibility(View.VISIBLE);
@@ -293,11 +255,7 @@ public class MapFragment extends BaseFragment implements AMap.OnMarkerClickListe
                 adapter.setEntities(entitys, longitude, latitude);
                 addMarkersToMap(evEntitys);// 往地图上添加marker
                 break;
-            case 2:
-                mapRecyclerView.setVisibility(View.GONE);
-                checkMoreTv.setVisibility(View.GONE);
-                Toast.makeText(activity, "没有更多数据了", Toast.LENGTH_SHORT).show();
-                break;
+
             default:
                 break;
         }
@@ -397,7 +355,7 @@ public class MapFragment extends BaseFragment implements AMap.OnMarkerClickListe
         }
         searchKey = ((MainActivity) activity).getSearchKey();
 
-        if (!"".equals(searchKey)) {
+        if (!searchKey.isEmpty()) {
             mapInputKey.setText(searchKey);
             evEntitys.clear();
             isSearch = true;
@@ -424,6 +382,7 @@ public class MapFragment extends BaseFragment implements AMap.OnMarkerClickListe
      */
     private void addMarkersToMap(List<NearlyShopBean> evEntitys) {
         aMap.clear();
+
         markerOption = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
                 .decodeResource(activity.getResources(), R.mipmap.location_car)))
                 //设置Marker可拖动true
@@ -435,7 +394,12 @@ public class MapFragment extends BaseFragment implements AMap.OnMarkerClickListe
             markerOption.period(i);
             aMap.addMarker(markerOption);
         }
-
+        MarkerOptions markerOption2 = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
+                .decodeResource(activity.getResources(), R.mipmap.location_marker)))
+            .position(CHONGQING)
+                //设置Marker可拖动true
+                .draggable(false);
+        aMap.addMarker(markerOption2);
         // 绑定 Marker 被点击事件
         aMap.setOnMarkerClickListener(this);
 
@@ -538,7 +502,7 @@ public class MapFragment extends BaseFragment implements AMap.OnMarkerClickListe
 
                 break;
             case R.id.map_clean:
-                mapInputKey.setText("");
+                mapInputKey.setText(null);
                 break;
             case R.id.check_more_tv:
                 checkMoreTv.setVisibility(View.GONE);

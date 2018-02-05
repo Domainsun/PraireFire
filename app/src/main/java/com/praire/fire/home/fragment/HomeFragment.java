@@ -26,19 +26,16 @@ import com.google.gson.Gson;
 import com.praire.fire.R;
 import com.praire.fire.base.BaseFragment;
 import com.praire.fire.car.CarActivity;
+import com.praire.fire.car.ShopActivity;
 import com.praire.fire.common.ConstanUrl;
 import com.praire.fire.common.Constants;
-import com.praire.fire.edu.EducationActivity;
-import com.praire.fire.car.ShopActivity;
 import com.praire.fire.home.adapter.ShopListAdapter;
 import com.praire.fire.home.bean.ShopListBean;
 import com.praire.fire.home.bean.SwipeBean;
-import com.praire.fire.merchant.MapChooseActivity;
+import com.praire.fire.map.MapSearchActivity;
 import com.praire.fire.okhttp.OkhttpRequestUtil;
 import com.praire.fire.utils.RecycleViewDivider;
 import com.praire.fire.utils.SharePreferenceMgr;
-import com.yanzhenjie.recyclerview.swipe.SwipeItemClickListener;
-import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +43,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 
 /**
  * Created by lyp on 2017/12/27.
@@ -74,6 +72,7 @@ public class HomeFragment extends BaseFragment implements BaseSliderView.OnSlide
     TextView homeClothes;
     @BindView(R.id.home_ecyclerView)
     RecyclerView homeEcyclerView;
+    Unbinder unbinder;
     private ShopListAdapter adapter;
     private int index = 1;
     private List<ShopListBean.PagelistBean> evEntitys = new ArrayList<>();
@@ -100,8 +99,7 @@ public class HomeFragment extends BaseFragment implements BaseSliderView.OnSlide
     public void initListener() {
         setUpMap();
         index = 1;
-        OkhttpRequestUtil.get(ConstanUrl.COMMONINFO_GET_SWIPE,2,false,uiHandler);
-
+        OkhttpRequestUtil.get(ConstanUrl.COMMONINFO_GET_SWIPE, 2, false, uiHandler);
 
 
         //设置指示器的位置
@@ -181,7 +179,7 @@ public class HomeFragment extends BaseFragment implements BaseSliderView.OnSlide
      * 获取商家列表
      */
     private void requestShopList(int index) {
-        OkhttpRequestUtil.get(ConstanUrl.COMMONINFO_SHOPLIST + "?p=" + index,1,false,uiHandler);
+        OkhttpRequestUtil.get(ConstanUrl.COMMONINFO_SHOPLIST + "?p=" + index, 1, false, uiHandler);
 
     }
 
@@ -206,8 +204,6 @@ public class HomeFragment extends BaseFragment implements BaseSliderView.OnSlide
                 break;
         }
     }
-
-
 
 
     /**
@@ -235,33 +231,7 @@ public class HomeFragment extends BaseFragment implements BaseSliderView.OnSlide
         }
     }
 
-    @OnClick({R.id.search_bar_address, R.id.plug_search_edittext, R.id.search_bar_relativeLayout,
-            R.id.home_car, R.id.home_edu, R.id.home_life, R.id.home_trip, R.id.home_clothes})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.search_bar_address:
-                break;
-            case R.id.plug_search_edittext:
-                break;
-            case R.id.search_bar_relativeLayout:
-                break;
-            case R.id.home_car:
-                CarActivity.startActivity(getActivity(), false);
-                break;
-            case R.id.home_edu:
-//                EducationActivity.startActivity(getActivity(), false);
-                break;
-            case R.id.home_life:
 
-                break;
-            case R.id.home_trip:
-                break;
-            case R.id.home_clothes:
-                break;
-            default:
-                break;
-        }
-    }
 
     @Override
     public void onDestroyView() {
@@ -269,6 +239,7 @@ public class HomeFragment extends BaseFragment implements BaseSliderView.OnSlide
 
         //销毁定位客户端，同时销毁本地定位服务。
         mLocationClient.onDestroy();
+        unbinder.unbind();
     }
 
     //性能优化。当页面显示时进行自动播放
@@ -337,10 +308,10 @@ public class HomeFragment extends BaseFragment implements BaseSliderView.OnSlide
                 longitude = amapLocation.getLongitude();
                 latitude = amapLocation.getLatitude();
 
-                SharePreferenceMgr.put(getActivity() ,Constants.Latitude,amapLocation.getLatitude()+"");
-                SharePreferenceMgr.put(getActivity() ,Constants.Longitude,amapLocation.getLongitude()+"");
-                SharePreferenceMgr.put(getActivity() ,Constants.CITY,amapLocation.getDistrict());
-                        requestShopList(1);
+                SharePreferenceMgr.put(getActivity(), Constants.Latitude, amapLocation.getLatitude() + "");
+                SharePreferenceMgr.put(getActivity(), Constants.Longitude, amapLocation.getLongitude() + "");
+                SharePreferenceMgr.put(getActivity(), Constants.CITY, amapLocation.getDistrict());
+                requestShopList(1);
 //                SharePreferenceMgr.put(getContext(),Constants.District,amapLocation.getDistrict());
             } else {
                 //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
@@ -350,6 +321,37 @@ public class HomeFragment extends BaseFragment implements BaseSliderView.OnSlide
             }
 
 
+        }
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // TODO: inflate a fragment view
+        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        unbinder = ButterKnife.bind(this, rootView);
+        return rootView;
+    }
+
+    @OnClick({R.id.search_bar_address, R.id.search_bar_search, R.id.home_car, R.id.home_edu, R.id.home_life, R.id.home_trip, R.id.home_clothes})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.search_bar_address:
+                break;
+            case R.id.search_bar_search:
+                MapSearchActivity.startActivity(getActivity(), plugSearchEdittext.getText().toString(), false);
+                break;
+            case R.id.home_car:
+                CarActivity.startActivity(getActivity(), false);
+                break;
+            case R.id.home_edu:
+                //                EducationActivity.startActivity(getActivity(), false);
+                break;
+            case R.id.home_life:
+                break;
+            case R.id.home_trip:
+                break;
+            case R.id.home_clothes:
+                break;
         }
     }
 }

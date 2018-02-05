@@ -186,7 +186,7 @@ public class MoreProductActivity extends BaseActivity implements TabLayout.OnTab
                 finish();
                 break;
             case R.id.plug_search_edittext:
-                MapSearchActivity.startActivity(this, plugSearchEdittext.getText().toString().trim(), true);
+                MapSearchActivity.startActivity(this, plugSearchEdittext.getText().toString().trim(), false);
                 break;
             case R.id.product_buying:
                 IntentDataForCommitOrderActivity data = new IntentDataForCommitOrderActivity();

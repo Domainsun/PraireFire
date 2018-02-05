@@ -118,7 +118,7 @@ public class CarActivity extends BaseActivity {
             @Override
             public void onLoadMore() {
                 if (carBeanlist == null || carBeanlist.isEmpty() || carBean.getPagelist().size() == 0) {
-                    ToastUtil.show(CarActivity.this,"暂无更多数据");
+                    ToastUtil.show(CarActivity.this, "暂无更多数据");
                     return;
                 }
                 ++index;
@@ -130,7 +130,7 @@ public class CarActivity extends BaseActivity {
         carRecyclerView.setSwipeItemClickListener(new SwipeItemClickListener() {
             @Override
             public void onItemClick(View itemView, int position) {
-                ShopActivity.startActivity(CarActivity.this,carBeanlist.get(position).getId(),false);
+                ShopActivity.startActivity(CarActivity.this, carBeanlist.get(position).getId(), false);
             }
         });
         carRecyclerView.setAdapter(carAdapter);
@@ -156,13 +156,12 @@ public class CarActivity extends BaseActivity {
         ordertype	string	是	排序类型(1智能排序 2好评优先 3离我最近 4人均最低 5人均最高)		1
         lng	string	是	经度(按距离排序需用)
                 lat	string	是	纬度(按距离排序需用)*/
-        String str = "?type=" + types + "&class=" + sonType + "&ordertype=" + sortId + "&lng=" + lng + "&lat=" + lat+"&p=" + index;
+        String str = "?type=" + types + "&class=" + sonType + "&ordertype=" + sortId + "&lng=" + lng + "&lat=" + lat + "&p=" + index;
         OkhttpRequestUtil.get(ConstanUrl.SEARCH_SEARCHSHOP + str, 2, false, uiHandler);
     }
 
     @Override
     protected void networkResponse(Message msg) {
-        Log.e("msg=", (String) msg.obj);
         switch (msg.what) {
             case 1:
                 Gson gson2 = new Gson();
@@ -170,12 +169,11 @@ public class CarActivity extends BaseActivity {
                 break;
             case 2:
                 carRecyclerView.loadMoreFinish(false, true);
-                if(isFrist){
+                if (isFrist) {
                     carBeanlist.clear();
                 }
                 Gson gson = new Gson();
                 carBean = gson.fromJson((String) msg.obj, CarBean.class);
-
                 carBeanlist.addAll(carBean.getPagelist());
                 carAdapter.setEntities(carBeanlist);
                 break;
@@ -218,9 +216,34 @@ public class CarActivity extends BaseActivity {
                 sortId = position;
                 index = 1;
                 isFrist = true;
+                carSort.setText(getSortName(position));
                 getShopList();
             }
         });
+    }
+
+    private String getSortName(int position) {
+        String name = "智能排序";
+        switch (position) {
+            case 1:
+                name = "智能排序";
+                break;
+            case 2:
+                name = "好评优先";
+                break;
+            case 3:
+                name = "离我最近";
+                break;
+            case 4:
+                name = "人均最低";
+                break;
+            case 5:
+                name = "人均最高";
+                break;
+            default:
+                break;
+        }
+        return name;
     }
 
     private void setPop(int menuType, View tv, TypeMenuBean popentities) {
@@ -229,13 +252,15 @@ public class CarActivity extends BaseActivity {
         medicinePop.setOutsideTouchable(true);
         medicinePop.setDataBack(new TypeMenuPopwindows.OnItemClickListener() {
             @Override
-            public void onItemClick(int type, int position, String id) {
+            public void onItemClick(int type, String typeName, String id) {
                 types = type;
                 sonType = id;
                 index = 1;
                 isFrist = true;
+                carType.setText(typeName);
                 getShopList();
             }
+
         });
     }
 

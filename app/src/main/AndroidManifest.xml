@@ -30,7 +30,6 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:hardwareAccelerated="false"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
 
         <!-- 高德地图apikey -->
@@ -133,9 +132,9 @@
         <activity android:name=".order.ResultActivity" />
         <activity android:name=".order.EvaluateActivity" />
         <activity android:name=".FindPasswordActivity" />
-        <activity android:name=".RechargeActivity" />
-        <activity android:name=".FindPasswordNextActivity"></activity>
-        <activity android:name=".my.RechargeActivity"></activity>
+
+        <activity android:name=".FindPasswordNextActivity"/>
+        <activity android:name=".my.RechargeActivity"
             android:windowSoftInputMode="stateHidden|adjustPan"/>
         <activity android:name=".order.OrderFinishInfoActivity"/>
     </application>
