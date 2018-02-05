@@ -8,6 +8,7 @@ import android.util.Log;
 import com.praire.fire.FindPasswordActivity;
 import com.praire.fire.FindPasswordNextActivity;
 import com.praire.fire.RegisterActivity;
+import com.praire.fire.my.setActivitys.FindPayPasswordActivity;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -51,7 +52,7 @@ public class UseApi {
 
 
 
-    /*type: 0 是注册时用的，1是找回密码时用的*/
+    /*type: 0 是注册时用的，1是找回密码时用的,3是找回支付密码用的*/
 
     public void getPhotoCode(final String type) {
         OkHttpClient client = new OkHttpClient();
@@ -83,6 +84,8 @@ public class UseApi {
                         RegisterActivity.handler_register.sendMessage(message);
                     } else if(type.equals("1")){
                         FindPasswordActivity.handler_findPassword.sendMessage(message);
+                    } else if (type.equals("3")) {
+                        FindPayPasswordActivity.handler_find_pay_Password.sendMessage(message);
                     }
 
 

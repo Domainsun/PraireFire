@@ -6,17 +6,24 @@ import java.util.concurrent.FutureTask;
 import com.praire.fire.MyApplication;
 import com.praire.fire.okhttp.APIThread.AddProductThread;
 import com.praire.fire.okhttp.APIThread.AddServiceThread;
+import com.praire.fire.okhttp.APIThread.BindBankCardThread;
 import com.praire.fire.okhttp.APIThread.BusinessAgreeRefundThread;
 import com.praire.fire.okhttp.APIThread.BusinessEvaluateThread;
 import com.praire.fire.okhttp.APIThread.ChangeCommentStatusThread;
 import com.praire.fire.okhttp.APIThread.ChangeOrderPriceThread;
 import com.praire.fire.okhttp.APIThread.ChangeOrderReadStatusThread;
+import com.praire.fire.okhttp.APIThread.ChangePayPasswordThread;
 import com.praire.fire.okhttp.APIThread.ChangeProductInfoThread;
 import com.praire.fire.okhttp.APIThread.ChangeProductStatusThread;
 import com.praire.fire.okhttp.APIThread.ChangeServiceInfoThread;
+import com.praire.fire.okhttp.APIThread.ChangeSignPasswordSignAfterThread;
 import com.praire.fire.okhttp.APIThread.ChangeSignPasswordThread;
+import com.praire.fire.okhttp.APIThread.ChangeUserInfo;
 import com.praire.fire.okhttp.APIThread.CreatPayThread;
 import com.praire.fire.okhttp.APIThread.GetAccountBillThread;
+import com.praire.fire.okhttp.APIThread.GetBankCardInfoThread;
+import com.praire.fire.okhttp.APIThread.GetBankCityThread;
+import com.praire.fire.okhttp.APIThread.GetBankListThread;
 import com.praire.fire.okhttp.APIThread.GetBusinessOrderListThread;
 import com.praire.fire.okhttp.APIThread.GetEvaluateListThread;
 import com.praire.fire.okhttp.APIThread.GetHistoryIncomeThread;
@@ -31,11 +38,21 @@ import com.praire.fire.okhttp.APIThread.GetServiceTypeThread;
 import com.praire.fire.okhttp.APIThread.GetShopInfoThread;
 import com.praire.fire.okhttp.APIThread.GetShopTypeThread;
 import com.praire.fire.okhttp.APIThread.GetTodayCountThread;
+import com.praire.fire.okhttp.APIThread.GetUserHeadThread;
+import com.praire.fire.okhttp.APIThread.GetUserInfoThread;
+import com.praire.fire.okhttp.APIThread.GetVerifyInfoThread;
+import com.praire.fire.okhttp.APIThread.GetWalletCapitalThread;
+import com.praire.fire.okhttp.APIThread.GetWithdrawBankCardInfoThread;
+import com.praire.fire.okhttp.APIThread.HasSetPayPassWordThread;
+import com.praire.fire.okhttp.APIThread.RealVerifyThread;
 import com.praire.fire.okhttp.APIThread.RegisterThread;
 import com.praire.fire.okhttp.APIThread.SendSmsCodeThread;
 import com.praire.fire.okhttp.APIThread.ChangeServiceStatusThread;
+import com.praire.fire.okhttp.APIThread.SetPayPasswordThread;
 import com.praire.fire.okhttp.APIThread.ShopSettledThread;
 import com.praire.fire.okhttp.APIThread.SignThread;
+import com.praire.fire.okhttp.APIThread.UploadHeadThread;
+import com.praire.fire.okhttp.APIThread.UserWithdrawThread;
 import com.praire.fire.okhttp.APIThread.VerifySmsThread;
 
 /**
@@ -47,6 +64,121 @@ public class UseAPIs {
     public String sendSmsCode(String tel, String checkcode, String cookie,String type) {
         String result = "";
         SendSmsCodeThread tSign = new SendSmsCodeThread(tel, checkcode, cookie,type);
+        FutureTask<String> ft = new FutureTask<>(tSign);
+        Thread Thread = new Thread(ft);
+        Thread.start();
+        try {
+            result = ft.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public String getUserInfo(String cookie) {
+        String result = "";
+        GetUserInfoThread tSign = new GetUserInfoThread(cookie);
+        FutureTask<String> ft = new FutureTask<>(tSign);
+        Thread Thread = new Thread(ft);
+        Thread.start();
+        try {
+            result = ft.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public String getUserHead(String cookie) {
+        String result = "";
+        GetUserHeadThread tSign = new GetUserHeadThread(cookie);
+        FutureTask<String> ft = new FutureTask<>(tSign);
+        Thread Thread = new Thread(ft);
+        Thread.start();
+        try {
+            result = ft.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+
+    public String changePayPassword(String pwd, String idnum, String cookie) {
+        String result = "";
+        ChangePayPasswordThread tSign = new ChangePayPasswordThread( pwd,  idnum,  cookie);
+        FutureTask<String> ft = new FutureTask<>(tSign);
+        Thread Thread = new Thread(ft);
+        Thread.start();
+        try {
+            result = ft.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public String changeSignPasswordAfterSign(String pwdsrc, String pwd, String cpwd, String cookie) {
+        String result = "";
+        ChangeSignPasswordSignAfterThread tSign = new ChangeSignPasswordSignAfterThread(  pwdsrc,  pwd,  cpwd,  cookie);
+        FutureTask<String> ft = new FutureTask<>(tSign);
+        Thread Thread = new Thread(ft);
+        Thread.start();
+        try {
+            result = ft.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+
+    public String userRealVerity(String idnum, String truename, String frontpic, String cookie) {
+        String result = "";
+        RealVerifyThread tSign = new RealVerifyThread(  idnum,  truename,  frontpic,  cookie);
+        FutureTask<String> ft = new FutureTask<>(tSign);
+        Thread Thread = new Thread(ft);
+        Thread.start();
+        try {
+            result = ft.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public String uploadUserHead(String cookie,String head) {
+        String result = "";
+        UploadHeadThread tSign = new UploadHeadThread(cookie,head);
+        FutureTask<String> ft = new FutureTask<>(tSign);
+        Thread Thread = new Thread(ft);
+        Thread.start();
+        try {
+            result = ft.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+
+    public String changeUserInfo(String cookie, String nickname, String address, String contact, String contactnumber, String postcode, String sex) {
+        String result = "";
+        ChangeUserInfo tSign = new ChangeUserInfo( cookie,  nickname,  address,  contact,  contactnumber,  postcode,  sex);
         FutureTask<String> ft = new FutureTask<>(tSign);
         Thread Thread = new Thread(ft);
         Thread.start();
@@ -281,6 +413,168 @@ public class UseAPIs {
     public String getShopType() {
         String result = "";
         GetShopTypeThread tSign = new GetShopTypeThread();
+        FutureTask<String> ft = new FutureTask<>(tSign);
+        Thread Thread = new Thread(ft);
+        Thread.start();
+        try {
+            result = ft.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public String getBankList() {
+        String result = "";
+        GetBankListThread tSign = new GetBankListThread();
+        FutureTask<String> ft = new FutureTask<>(tSign);
+        Thread Thread = new Thread(ft);
+        Thread.start();
+        try {
+            result = ft.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public String getBankCity() {
+        String result = "";
+        GetBankCityThread tSign = new GetBankCityThread();
+        FutureTask<String> ft = new FutureTask<>(tSign);
+        Thread Thread = new Thread(ft);
+        Thread.start();
+        try {
+            result = ft.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public String getBindBankCardInfo(String cookie) {
+        String result = "";
+        GetBankCardInfoThread tSign = new GetBankCardInfoThread(cookie);
+        FutureTask<String> ft = new FutureTask<>(tSign);
+        Thread Thread = new Thread(ft);
+        Thread.start();
+        try {
+            result = ft.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+
+    public String getWithdrawBankCardInfo(String cookie) {
+        String result = "";
+        GetWithdrawBankCardInfoThread tSign = new GetWithdrawBankCardInfoThread(cookie);
+        FutureTask<String> ft = new FutureTask<>(tSign);
+        Thread Thread = new Thread(ft);
+        Thread.start();
+        try {
+            result = ft.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public String getWalletCapital(String cookie) {
+        String result = "";
+        GetWalletCapitalThread tSign = new GetWalletCapitalThread(cookie);
+        FutureTask<String> ft = new FutureTask<>(tSign);
+        Thread Thread = new Thread(ft);
+        Thread.start();
+        try {
+            result = ft.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+
+
+    public String userWithdraw(String money, String pwd, String cookie) {
+        String result = "";
+        UserWithdrawThread tSign = new UserWithdrawThread( money,  pwd,  cookie);
+        FutureTask<String> ft = new FutureTask<>(tSign);
+        Thread Thread = new Thread(ft);
+        Thread.start();
+        try {
+            result = ft.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+    public String getRealVerifyInfo(String cookie) {
+        String result = "";
+        GetVerifyInfoThread tSign = new GetVerifyInfoThread( cookie);
+        FutureTask<String> ft = new FutureTask<>(tSign);
+        Thread Thread = new Thread(ft);
+        Thread.start();
+        try {
+            result = ft.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public String hasSetPassword(String cookie) {
+        String result = "";
+        HasSetPayPassWordThread tSign = new HasSetPayPassWordThread( cookie);
+        FutureTask<String> ft = new FutureTask<>(tSign);
+        Thread Thread = new Thread(ft);
+        Thread.start();
+        try {
+            result = ft.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public String setPayPassword(String pwd, String cpwd, String cookie) {
+        String result = "";
+        SetPayPasswordThread tSign = new SetPayPasswordThread(  pwd,  cpwd,  cookie);
+        FutureTask<String> ft = new FutureTask<>(tSign);
+        Thread Thread = new Thread(ft);
+        Thread.start();
+        try {
+            result = ft.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public String bindBankCard(String cardno, String cardtype, String city, String branchname, String cookie) {
+        String result = "";
+        BindBankCardThread tSign = new BindBankCardThread( cardno,  cardtype,  city,  branchname,  cookie);
         FutureTask<String> ft = new FutureTask<>(tSign);
         Thread Thread = new Thread(ft);
         Thread.start();

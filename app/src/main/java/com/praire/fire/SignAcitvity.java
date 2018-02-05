@@ -10,6 +10,7 @@ import android.os.Message;
 import android.support.annotation.Nullable;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -23,8 +24,11 @@ import com.praire.fire.base.BaseActivity;
 import com.praire.fire.car.CarActivity;
 import com.praire.fire.common.Constants;
 import com.praire.fire.home.MainActivity;
+import com.praire.fire.my.setActivitys.RealVerifyActivity;
+import com.praire.fire.my.setActivitys.SetPayPasswrodActivity;
 import com.praire.fire.okhttp.GsonUtils.J2O;
 import com.praire.fire.okhttp.JavaBean.APIResultBean;
+import com.praire.fire.okhttp.JavaBean.RealVerifyBean;
 import com.praire.fire.okhttp.UseAPIs;
 import com.praire.fire.utils.SharePreferenceMgr;
 
@@ -33,6 +37,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.praire.fire.common.ConstanUrl.Hsign;
+import static com.praire.fire.common.Constants.LOGIN_COOKIE;
 
 /**
  * Created by sunlo on 2018/1/2.
@@ -57,6 +62,11 @@ public class SignAcitvity extends Activity {
     ImageView imageView2;
     @BindView(R.id.check_password)
     CheckBox checkPassword;
+
+    String cookie = "";
+    UseAPIs u = new UseAPIs();
+    J2O j = new J2O();
+
 
     public static void startActivity(Context context, boolean forResult) {
         Intent intent = new Intent(context, SignAcitvity.class);
@@ -140,11 +150,50 @@ public class SignAcitvity extends Activity {
                             SharePreferenceMgr.put(MyApplication.getInstance(), Constants.LOGIN_COOKIE, myApplication.getSignCookie());
                             //-------//add by lyp --------
 
-                            Intent i = new Intent(this, MainActivity.class);
+
+
+
+
+
+//
                             SharePreferenceMgr.put(this, Constants.USER_ID, phone);
                             SharePreferenceMgr.put(this, Constants.PASSWORD, pw);
-                            startActivity(i);
-                            finish();
+//
+
+                            cookie = (String) SharePreferenceMgr.get(this, LOGIN_COOKIE, "");
+                                     /*----add by domain--------*/
+
+                              /*判断是否设置了支付密码，没则跳转设置*/
+                            try {
+                                String str = u.hasSetPassword(cookie);
+                                APIResultBean o = j.getAPIResult(str);
+
+
+                                Log.d("onViewClicked", "onViewClicked: "+o.getCode());
+                                if (o.getCode().equals("0")) {
+                                    startActivity(new Intent(this, SetPayPasswrodActivity.class));
+                                } else {
+
+                                    try {
+                                        String str1= u.getRealVerifyInfo(cookie);
+                                        RealVerifyBean r  =j.getRealVerifyInfo(str1);
+
+                                        if (r.getStatus()!=null) {
+                                            startActivity(new Intent(this, MainActivity.class));
+                                        }
+                                    } catch (Exception e) {
+                                        startActivity(new Intent(this,RealVerifyActivity.class));
+                                    }
+
+
+                                }
+                            } catch (Exception e) {
+                                Log.e("initViews", "initViews: " + e.toString());
+                            }
+
+
+                                 /*----add by domain--------*/
+//                            finish();
                         }
                     } else {
                         Toast.makeText(SignAcitvity.this, "网络错误！", Toast.LENGTH_SHORT).show();

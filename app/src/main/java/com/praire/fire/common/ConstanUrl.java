@@ -17,8 +17,31 @@ public class ConstanUrl {
     public final static String ADD_SERVICE="https://www.lygyxh.cn/api.php/Service/in";
 
     /*
+    * 实名认证*/
+    public final static String REAL_VERIFY="https://www.lygyxh.cn/api.php/Identify/check";
+
+    /*
     * 添加产品*/
     public final static String ADD_PRODUCT="https://www.lygyxh.cn/api.php/Product/in";
+    /*判断是否设置支付密码*/
+    public final static String HAS_SET_PASSWORD="https://www.lygyxh.cn/api.php/Paypassword/getpaypassword";
+    /*
+    * 设置支付密码*/
+    public final static String SET_PAY_PASSWORD="https://www.lygyxh.cn/api.php/Paypassword/setpaypassword";
+    /*
+    * 绑定银行卡*/
+    public final static String BIND_BANK_CARD="https://www.lygyxh.cn/api.php/Bindcard/bind";
+
+    /*用户提现*/
+    public final static String USER_WITHDRAW="https://www.lygyxh.cn/api.php/Capital/out";
+
+    /*
+    * 上传用户头像*/
+    public final static String UPLOAD_USER_HEAD="https://www.lygyxh.cn/api.php/User/savehead";
+
+    /*
+    * 改变用户信息*/
+    public final static String CHANGE_USER_INFO="https://www.lygyxh.cn/api.php/User/saveinfo";
 
     /*
     * 验证验证码*/
@@ -27,6 +50,14 @@ public class ConstanUrl {
     /*
     * 修改登录密码*/
     public final static String CHANGE_SIGN_PASSWORD="https://www.lygyxh.cn/api.php/Public/setpassword";
+    /*
+    *
+    *修改支付密码*/
+
+    public final static String CHANGE_PAY_PASSWORD="https://www.lygyxh.cn/api.php/Paypassword/changepaypassword";
+
+    /*登录后修改密码*/
+    public final static String CHANGE_SIGN_PASSWORD_AFTER_SIGN="https://www.lygyxh.cn/api.php/Password/changepwd";
     /*
     * 改变订单商品价格*/
     public final static String CHANGE_ORDER_PRICE="https://www.lygyxh.cn/api.php/ShopOrder/changeorderprice";
@@ -69,6 +100,23 @@ public class ConstanUrl {
     /*得到店铺类型*/
     public final static String GET_SHOP_TYPE="https://www.lygyxh.cn/api.php/Class/getShopType";
     public final static String GET_REGION="https://www.lygyxh.cn/api.php/class/getArea";
+    /*
+    * 得到银行列表
+    * */
+    public final static String GET_BANK_LIST="https://www.lygyxh.cn/api.php/Commoninfo/banklist";
+    /*
+    * 得到银行城市*/
+    public final static String GET_BANK_CITY="https://www.lygyxh.cn/api.php/Commoninfo/getcity";
+    /*
+    * 得到银行卡信息*/
+    public final static String GET_BANK_INFO="https://www.lygyxh.cn/api.php/Bindcard/info";
+
+    /*
+    * 得到钱包余额*/
+    public final static String GET_WALLET_CAPITAL="https://www.lygyxh.cn/api.php/Capital/index";
+
+    /*得到提现时银行卡信息*/
+    public final static String GET_WITHDRAW_BANK_INFO="https://www.lygyxh.cn/api.php/Capital/outinfo";
     public final static String GET_SERVICE_TYPE="https://www.lygyxh.cn/api.php/Class/getServiceType";
     /*得到产品类型
     * */
@@ -84,6 +132,10 @@ public class ConstanUrl {
 
     public final static String GET_EVALUATE_LIST="https://www.lygyxh.cn/api.php/ShopComment/commentlist";
 
+/*
+* 得到用户信息*/
+    public final static String GET_USER_INFO="https://www.lygyxh.cn/api.php/User/getinfo";
+
     /*
     * 得到产品信息*/
     public final static String GET_PRODUCT_INFO="https://www.lygyxh.cn/api.php/Product/info";
@@ -94,6 +146,14 @@ public class ConstanUrl {
     /*
     * 得到商家订单*/
     public final static String GET_BUSINESS_ORDER_LIST="https://www.lygyxh.cn/api.php/ShopOrder/orderlist";
+
+    /*
+    * 得到用户头像*/
+    public final static String GET_USER_HEAD="https://www.lygyxh.cn/api.php/User/gethead";
+
+    /*
+    * 得到实名认证信息*/
+    public final static String GET_VERIFY_INFO="https://www.lygyxh.cn/api.php/Identify/detail";
     /*
     * 得到产品列表*/
     public final static String GET_PRODUCT_LIST="https://www.lygyxh.cn/api.php/Product/productlist";

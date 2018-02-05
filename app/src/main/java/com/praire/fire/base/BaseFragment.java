@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.amap.api.maps.model.CameraPosition;
 import com.amap.api.maps.model.LatLng;
@@ -68,5 +69,31 @@ public abstract class BaseFragment extends Fragment {
     protected void networkResponse(Message msg) {
     }
 
+    protected boolean hasLogin() {
+        String cookie = (String) SharePreferenceMgr.get(getContext(), LOGIN_COOKIE, "");
+        /*如果未登录过，自动跳转到登录页*/
+        String str = "\"code\":0";
+        if (cookie != null && cookie.length() != 0) {
+            String result = new UseAPIs().getShopInfo(cookie);
+            if (result.length() != 0) {
+                if (result.contains(str)) {
+                    toLogin();
+                    return false;
+                }
+                return true;
+            }
+        } else {
+            toLogin();
+            return false;
+        }
+        return true;
+    }
 
+    private void toLogin() {
+
+        Toast.makeText(getContext(), "还未登录，请先登录！", Toast.LENGTH_SHORT).show();
+        Intent i = new Intent(getContext(), SignAcitvity.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(i);
+    }
 }

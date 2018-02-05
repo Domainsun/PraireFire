@@ -54,12 +54,7 @@ public class PassWordManagementActivity extends BaseTitleActivity {
 
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
+
 
     @OnClick({R.id.password_management_find, R.id.password_management_edite})
     public void onViewClicked(View view) {

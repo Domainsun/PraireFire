@@ -68,7 +68,7 @@ public class AccountBillAdapter extends RecyclerView.Adapter<AccountBillAdapter.
             holder.ivType.setImageResource(R.mipmap.bill_recharge);
         } else if (data.get(position).getType().equals("3")) {
             holder.ivType.setImageResource(R.mipmap.bill_consumption);
-        } else if (data.get(position).getType().equals("4")) {
+        } else if (data.get(position).getType().equals("4" )||data.get(position).getType().equals("8" )) {
             holder.ivType.setImageResource(R.mipmap.bill_withdrawals);
         } else if (data.get(position).getType().equals("5")) {
             holder.ivType.setImageResource(R.mipmap.bill_shop);

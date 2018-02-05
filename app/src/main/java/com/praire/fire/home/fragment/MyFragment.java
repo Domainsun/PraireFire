@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.praire.fire.R;
 import com.praire.fire.SignAcitvity;
+import com.praire.fire.base.BaseActivity;
 import com.praire.fire.base.BaseFragment;
 import com.praire.fire.merchant.BusinessServiceActivity;
 import com.praire.fire.merchant.MerchantActivity1;
@@ -118,12 +119,14 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
 //                CustomerServiceActivity.startActivity(getActivity(), false);
                 break;
             case R.id.fragment_my_set:
+                if(! hasLogin()){return;}
                 SetActivity.startActivity(getActivity(), false);
                 break;
             case R.id.fragment_my_img:
                 AccountManagementActivity.startActivity(getActivity(), false);
                 break;
             case R.id.fragment_my_wallet_rl:
+                if(! hasLogin()){return;}
                 MyWalletActivity.startActivity(getActivity(), false);
                 break;
             case R.id.fragment_my_integral_rl:
@@ -149,6 +152,8 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
             case R.id.fragment_my_merchant_services_rl:
 
                 /*by domain*/
+
+                   if(! hasLogin()){return;}
 
 
                 String cookie = (String) SharePreferenceMgr.get(getContext(), LOGIN_COOKIE, "");

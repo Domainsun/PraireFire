@@ -6,9 +6,11 @@ import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
+import com.praire.fire.MyApplication;
 import com.praire.fire.R;
 import com.praire.fire.SignAcitvity;
 import com.praire.fire.base.BaseActivity;
@@ -17,6 +19,9 @@ import com.praire.fire.home.fragment.HomeFragment;
 import com.praire.fire.home.fragment.MyFragment;
 import com.praire.fire.home.fragment.OrderFragment;
 import com.praire.fire.home.fragment.MapFragment;
+import com.praire.fire.my.setActivitys.SetPayPasswrodActivity;
+import com.praire.fire.okhttp.GsonUtils.J2O;
+import com.praire.fire.okhttp.JavaBean.APIResultBean;
 import com.praire.fire.okhttp.UseAPIs;
 import com.praire.fire.utils.SharePreferenceMgr;
 
@@ -32,6 +37,7 @@ import static com.praire.fire.common.Constants.LOGIN_COOKIE;
  * @date 2017/12/27
  */
 public class MainActivity extends BaseActivity implements BottomNavigationBar.OnTabSelectedListener {
+
 
     private ArrayList<Fragment> fragments;
     private BottomNavigationBar bottomNavigationBar;
@@ -56,6 +62,13 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
 
     @Override
     protected void initViews() {
+
+
+
+
+
+
+
 
 
         bottomNavigationBar = findViewById(R.id.bottom_navigation_bar);

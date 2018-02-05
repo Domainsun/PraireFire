@@ -234,7 +234,7 @@ public class BillActivity extends BaseActivity implements View.OnClickListener {
         //因为系统Calendar的月份是从0-11的,所以如果是调用Calendar的set方法来设置时间,月份的范围也要是从0-11
         Calendar selectedDate = Calendar.getInstance();
         final Calendar startDate = Calendar.getInstance();
-        startDate.set(2018, 0, 0);
+        startDate.set(2016, 0, 0);
         final Calendar endDate = Calendar.getInstance();
         endDate.set(2050, 11, 31);
         //时间选择器
