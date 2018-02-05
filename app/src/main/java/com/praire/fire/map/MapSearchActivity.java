@@ -75,6 +75,9 @@ public class MapSearchActivity extends BaseActivity implements View.OnClickListe
         searchEntities = save.getSearchArrayList(this);
         if (!TextUtils.isEmpty(searchKey)) {
             edtSearch.setText(searchKey);
+            //保存
+//            save.saveArrayList(MapSearchActivity.this, searchEntities, searchKey);
+//            goSearch();
         }
         clean.setOnClickListener(this);
         back.setOnClickListener(this);
@@ -128,6 +131,8 @@ public class MapSearchActivity extends BaseActivity implements View.OnClickListe
      * 带了数据的
      */
     protected void getIntentDatas() {
+        searchKey = getIntent().getStringExtra(Constants.SEARCH_KEY);
+
         /*initData = (IntentDataForMarchantActivity) getIntent().getSerializableExtra(INTENT_DATA);
         if (initData != null) {
             isGroup = initData.groupNavParams.getFIsGroup();

@@ -63,11 +63,13 @@
 
         <activity android:name=".RegisterActivity" />
         <activity android:name=".merchant.SettledActivity" />
-        <activity android:name=".home.MainActivity" />
+        <activity android:name=".home.MainActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden"/>
         <activity android:name=".WelcomeActivity1" />
         <activity android:name=".WelcomeActivity2" />
         <activity android:name=".WelcomeActivity3" />
-        <activity android:name=".car.CarActivity" />
+        <activity android:name=".car.CarActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden"/>
         <activity android:name=".edu.EducationActivity" />
         <activity android:name=".my.CustomerServiceActivity" />
         <activity android:name=".my.IntegralActivity" />
@@ -102,7 +104,8 @@
         <activity android:name=".merchant.AddServiceActivity" />
         <activity android:name=".car.ProductEvalauteInfoActivity" />
         <activity android:name=".car.ProductInfoActivity" />
-        <activity android:name=".car.MoreProductActivity" />
+        <activity android:name=".car.MoreProductActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden"/>
         <activity android:name=".car.ShopAllEvalauteActivity" />
         <activity android:name=".car.ServiceInfoActivity" />
         <activity android:name=".car.CommitOrderActivity" />
@@ -137,6 +140,12 @@
         <activity android:name=".my.RechargeActivity"
             android:windowSoftInputMode="stateHidden|adjustPan"/>
         <activity android:name=".order.OrderFinishInfoActivity"/>
+        <activity android:name=".WelcomeActivity0"/>
+        <activity android:name="me.iwf.photopicker.PhotoPickerActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"
+            />
+        <activity android:name="me.iwf.photopicker.PhotoPagerActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
     </application>
 
 </manifest>

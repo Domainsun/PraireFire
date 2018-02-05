@@ -2,36 +2,30 @@ package com.praire.fire;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.Handler;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MotionEvent;
 
-import com.praire.fire.home.MainActivity;
-import com.praire.fire.utils.SharePreferenceMgr;
-
-
 /**
- * 欢迎页面
- * @author lyp
+ * Created by lyp on 2017/12/27.
  */
-public class GuidActivity extends Activity {
-    private static final String IS_FRIST_OPEN = "IS_FRIST_OPEN";
+
+public class WelcomeActivity0 extends Activity  {
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_guid);
-       /* Handler handler = new Handler();
-        //当计时结束,跳转至主界面
+        setContentView(R.layout.activity_welcome0);
+       /*    Handler handler = new Handler();
+      //当计时结束,跳转至主界面
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 swipeLeft();
-
             }
         }, 3000);*/
     }
-
     private float startX,offSetX;
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -60,16 +54,8 @@ public class GuidActivity extends Activity {
     }
 
     private void swipeLeft() {
-        boolean isfrist = (Boolean) SharePreferenceMgr.get(GuidActivity.this, IS_FRIST_OPEN, true);
-        if(isfrist) {
-            SharePreferenceMgr.put(GuidActivity.this, IS_FRIST_OPEN, false);
-            Intent intent = new Intent(GuidActivity.this, WelcomeActivity0.class);
-            startActivity(intent);
-            GuidActivity.this.finish();
-        }else {
-            Intent intent = new Intent(GuidActivity.this, MainActivity.class);
-            startActivity(intent);
-            GuidActivity.this.finish();
-        }
+        Intent intent = new Intent(WelcomeActivity0.this, WelcomeActivity1.class);
+        startActivity(intent);
+        WelcomeActivity0.this.finish();
     }
 }

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
-    tools:context="com.praire.fire.GuidActivity">
+    tools:context="com.praire.fire.WelcomeActivity1">
 
     <ImageView
         android:layout_width="match_parent"
@@ -14,7 +14,6 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:scaleType="fitXY"
-        android:src="@mipmap/guid"/>
+        android:src="@mipmap/welcome1"/>
 
 </android.support.constraint.ConstraintLayout>

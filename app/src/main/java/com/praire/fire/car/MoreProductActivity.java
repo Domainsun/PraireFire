@@ -7,7 +7,11 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -35,6 +39,7 @@ import com.praire.fire.my.bean.CommentResultBean;
 import com.praire.fire.okhttp.OkhttpRequestUtil;
 import com.praire.fire.order.OrderUtils;
 import com.praire.fire.utils.RecycleViewDivider;
+import com.praire.fire.utils.ToastUtil;
 import com.praire.fire.utils.statusbarcolor.Eyes;
 import com.yanzhenjie.recyclerview.swipe.SwipeItemClickListener;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
@@ -95,6 +100,7 @@ public class MoreProductActivity extends BaseActivity implements TabLayout.OnTab
     private int shoppingCarCount = 0;
 
     List<CommitProduct> commitProductList = new ArrayList<>();
+    private String searchKey = "";
 
     public static void startActivity(Context context, String businessId, int type, boolean forResult) {
         Intent intent = new Intent(context, MoreProductActivity.class);
@@ -122,8 +128,51 @@ public class MoreProductActivity extends BaseActivity implements TabLayout.OnTab
         productTab.setOnTabSelectedListener(this);
         businessId = getIntent().getStringExtra(Constants.BUSSINESS_ID);
         tabType = getIntent().getIntExtra(Constants.UI_TYPE, 0);
+        plugSearchEdittext.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-        plugSearchEdittext.setFocusable(false);
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (editable.toString().length() == 0) {
+                    searchKey = "";
+                    if (tabType == 0) {
+                        getProductList(1);
+                    } else {
+                        getServiceList(1);
+                    }
+                }
+            }
+        });
+        plugSearchEdittext.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                boolean aBoolean = (actionId == 0 || actionId == 3) && event != null;
+                if (aBoolean) {
+                    searchKey = plugSearchEdittext.getText().toString().trim();
+                    if (TextUtils.isEmpty(searchKey)) {
+                        searchKey = "";
+                    }
+                    if (tabType == 0) {
+                        getProductList(1);
+                    } else {
+                        getServiceList(1);
+                    }
+                    return true;
+                }
+                return false;
+
+            }
+
+        });
 
     }
 
@@ -172,11 +221,11 @@ public class MoreProductActivity extends BaseActivity implements TabLayout.OnTab
     }
 
     private void getProductList(int index) {
-        OkhttpRequestUtil.get(ConstanUrl.COMMONINFO_PRODUCTLIST + "?shopid=" + businessId + "&p=" + index, 1, false, uiHandler);
+        OkhttpRequestUtil.get(ConstanUrl.COMMONINFO_PRODUCTLIST + "?shopid=" + businessId + "&keywords=" + searchKey + "&p=" + index, 1, false, uiHandler);
     }
 
     private void getServiceList(int index) {
-        OkhttpRequestUtil.get(ConstanUrl.COMMONINFO_SERVICELIST + "?shopid=" + businessId + "&p=" + index, 2, false, uiHandler);
+        OkhttpRequestUtil.get(ConstanUrl.COMMONINFO_SERVICELIST + "?shopid=" + businessId + "&keywords=" + searchKey + "&p=" + index, 2, false, uiHandler);
     }
 
     @OnClick({R.id.search_bar2_back, R.id.plug_search_edittext, R.id.product_buying, R.id.shopping_car})
@@ -186,7 +235,7 @@ public class MoreProductActivity extends BaseActivity implements TabLayout.OnTab
                 finish();
                 break;
             case R.id.plug_search_edittext:
-                MapSearchActivity.startActivity(this, plugSearchEdittext.getText().toString().trim(), false);
+//                MapSearchActivity.startActivity(this, plugSearchEdittext.getText().toString().trim(), false);
                 break;
             case R.id.product_buying:
                 IntentDataForCommitOrderActivity data = new IntentDataForCommitOrderActivity();
@@ -205,7 +254,6 @@ public class MoreProductActivity extends BaseActivity implements TabLayout.OnTab
     @Override
     protected void networkResponse(Message msg) {
         String data = (String) msg.obj;
-        Log.e("moreProduct=", data);
         switch (msg.what) {
             case 1:
                 JSONArray personObject = null;
@@ -290,9 +338,11 @@ public class MoreProductActivity extends BaseActivity implements TabLayout.OnTab
 
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
+        searchKey = plugSearchEdittext.getText().toString().trim();
         switch (tab.getPosition()) {
             case 0:
                 tabType = 0;
+
                 productCommodityImg.setImageResource(R.mipmap.commodity);
                 productCommodity.setText(R.string.product);
                 productRecyclerView.setAdapter(adapterProduct);

@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,6 +37,13 @@ import com.praire.fire.map.MapSearchActivity;
 import com.praire.fire.okhttp.OkhttpRequestUtil;
 import com.praire.fire.utils.RecycleViewDivider;
 import com.praire.fire.utils.SharePreferenceMgr;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
+import com.scwang.smartrefresh.layout.footer.BallPulseFooter;
+import com.scwang.smartrefresh.layout.header.BezierRadarHeader;
+import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,7 +80,14 @@ public class HomeFragment extends BaseFragment implements BaseSliderView.OnSlide
     TextView homeClothes;
     @BindView(R.id.home_ecyclerView)
     RecyclerView homeEcyclerView;
-    Unbinder unbinder;
+    @BindView(R.id.active1)
+    ImageView active1;
+    @BindView(R.id.active2)
+    ImageView active2;
+    @BindView(R.id.active3)
+    ImageView active3;
+    @BindView(R.id.refreshLayout)
+    SmartRefreshLayout refreshLayout;
     private ShopListAdapter adapter;
     private int index = 1;
     private List<ShopListBean.PagelistBean> evEntitys = new ArrayList<>();
@@ -87,6 +102,7 @@ public class HomeFragment extends BaseFragment implements BaseSliderView.OnSlide
     //声明AMapLocationClientOption对象
     public AMapLocationClientOption mLocationOption = null;
     private AMapLocation myLocation;
+    private boolean isFrist = true;
 
     @Override
     public View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -126,13 +142,39 @@ public class HomeFragment extends BaseFragment implements BaseSliderView.OnSlide
                 ShopActivity.startActivity(getActivity(), evEntitys.get(position).getId(), false);
             }
         });
+//设置 Header 为 Material样式
+        refreshLayout.setRefreshHeader(new BezierRadarHeader(getActivity()).setEnableHorizontalDrag(true));
+//设置 Footer 为 球脉冲
+        refreshLayout.setRefreshFooter(new BallPulseFooter(getActivity()).setSpinnerStyle(SpinnerStyle.Scale));
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                isFrist = true;
+                index = 1;
+                requestShopList(index);
+                //加载失败的话3秒后结束加载
+                refreshlayout.finishRefresh(3000/*,false*/);//传入false表示刷新失败
+            }
+        });
+        refreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
+            @Override
+            public void onLoadmore(RefreshLayout refreshlayout) {
+                if(loadMore){
+
+                    getNextPage();
+                }
+                //加载失败的话3秒后结束加载
+                refreshlayout.finishLoadmore(3000/*,false*/);//传入false表示加载失败
+            }
+        });
     }
 
 
     @Override
     public void initData() {
-
-        requestShopList(1);
+        isFrist = true;
+        index = 1;
+        requestShopList(index);
 
     }
 
@@ -171,6 +213,7 @@ public class HomeFragment extends BaseFragment implements BaseSliderView.OnSlide
             loadMore = false;
             return;
         }
+        isFrist = false;
         index++;
         requestShopList(index);
     }
@@ -185,14 +228,19 @@ public class HomeFragment extends BaseFragment implements BaseSliderView.OnSlide
 
     @Override
     protected void networkResponse(Message msg) {
+        //结束加载
+        refreshLayout.finishRefresh();
         switch (msg.what) {
             case 0:
                 Toast.makeText(getActivity(), "网络出错，请重试", Toast.LENGTH_SHORT).show();
                 break;
             case 1:
+                if(isFrist){
+                    evEntitys.clear();
+                }
                 Gson gson = new Gson();
                 final ShopListBean evEntity = gson.fromJson((String) msg.obj, ShopListBean.class);
-                evEntitys = evEntity.getPagelist();
+                evEntitys.addAll(evEntity.getPagelist());
                 adapter.setEntities(evEntitys, longitude, latitude);
                 break;
             case 2:
@@ -232,14 +280,12 @@ public class HomeFragment extends BaseFragment implements BaseSliderView.OnSlide
     }
 
 
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
 
         //销毁定位客户端，同时销毁本地定位服务。
         mLocationClient.onDestroy();
-        unbinder.unbind();
     }
 
     //性能优化。当页面显示时进行自动播放
@@ -324,21 +370,16 @@ public class HomeFragment extends BaseFragment implements BaseSliderView.OnSlide
         }
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: inflate a fragment view
-        View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        unbinder = ButterKnife.bind(this, rootView);
-        return rootView;
-    }
 
-    @OnClick({R.id.search_bar_address, R.id.search_bar_search, R.id.home_car, R.id.home_edu, R.id.home_life, R.id.home_trip, R.id.home_clothes})
+    @OnClick({R.id.search_bar_address, R.id.search_bar_search, R.id.home_car, R.id.home_edu, R.id.home_life,
+            R.id.home_trip, R.id.home_clothes, R.id.plug_search_edittext})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.search_bar_address:
                 break;
+
             case R.id.search_bar_search:
-                MapSearchActivity.startActivity(getActivity(), plugSearchEdittext.getText().toString(), false);
+                MapSearchActivity.startActivity(getActivity(), plugSearchEdittext.getText().toString().trim(), true);
                 break;
             case R.id.home_car:
                 CarActivity.startActivity(getActivity(), false);
@@ -354,4 +395,7 @@ public class HomeFragment extends BaseFragment implements BaseSliderView.OnSlide
                 break;
         }
     }
+
+
+
 }
