@@ -73,6 +73,9 @@ public abstract class BaseFragment extends Fragment {
 
         String cookie = (String) SharePreferenceMgr.get(getActivity(), LOGIN_COOKIE, "");
 
+
+
+
         /*如果未登录过，自动跳转到登录页*/
         String str = "\"code\":0";
         if (cookie != null && cookie.length() != 0) {
@@ -90,6 +93,9 @@ public abstract class BaseFragment extends Fragment {
         }
         return true;
     }
+
+
+
 
 
     private void toLogin() {

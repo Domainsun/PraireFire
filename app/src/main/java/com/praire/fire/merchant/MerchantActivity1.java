@@ -129,7 +129,8 @@ public class MerchantActivity1 extends BaseActivity implements EasyPermissions.P
     List<String> privince = new ArrayList<>();
     List<String> city = new ArrayList<>();
     List<String> countylist = new ArrayList<>();
-
+    String starttime="";
+    String endtime="";
 
     HashMap<String, List<String>> cityMap = new HashMap<String, List<String>>();
     HashMap<String, List<String>> countyMap = new HashMap<String, List<String>>();
@@ -167,7 +168,7 @@ public class MerchantActivity1 extends BaseActivity implements EasyPermissions.P
 
 
 
-                    String times[]=time.split("--");
+                    String times[]=time.split("-");
                     tvStartTime.setText(times[0]);
                     tvEndTime.setText(times[1]);
                     Log.d("time", "onCreate: "+time);
@@ -331,10 +332,8 @@ public class MerchantActivity1 extends BaseActivity implements EasyPermissions.P
                 cookie = (String) SharePreferenceMgr.get(this, LOGIN_COOKIE, "");
 
 
-                String starttime="";
-                starttime= tvStartTime.getText().toString();
-                String endtime="";
-                endtime=tvEndTime.getText().toString();
+
+
 
 
                 if (starttime.length()!=0 && endtime.length()!=0) {
@@ -380,11 +379,14 @@ public class MerchantActivity1 extends BaseActivity implements EasyPermissions.P
                 String str = sdf.format(date);
 
                 if (type.equals("0")) {
+                    starttime= str;
+
 
                     tvStartTime.setText(str+"  -");
 
                 } else if(type.equals("1")){
                     tvEndTime.setText(str);
+                    endtime=str;
                 }
 
 
