@@ -162,6 +162,17 @@ public class MerchantActivity1 extends BaseActivity implements EasyPermissions.P
 //                    tvChoseShopOpenTime.setText(s.getOpentime());
                     tvChoseShopMapregion.setText(s.getLat() + "," + s.getLng());
                     tvAddress.setText(s.getAddress());
+
+                    String time=s.getOpentime();
+
+
+
+                    String times[]=time.split("--");
+                    tvStartTime.setText(times[0]);
+                    tvEndTime.setText(times[1]);
+                    Log.d("time", "onCreate: "+time);
+
+
                     submit.setText("审核中");
                     submit.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -169,6 +180,20 @@ public class MerchantActivity1 extends BaseActivity implements EasyPermissions.P
                             Toast.makeText(MerchantActivity1.this, "审核中，请耐心等待", Toast.LENGTH_SHORT).show();
                         }
                     });
+
+                    rlChoseShopType.setEnabled(false);
+                    rlChoseShopRegion.setEnabled(false);
+                    etShopName.setEnabled(false);
+                    etShopDetails.setEnabled(false);
+                    uploadShopPhoto.setEnabled(false);
+                    uploadIdCard.setEnabled(false);
+                    uploadBusinessLicense.setEnabled(false);
+                    etContactPerson.setEnabled(false);
+                    etContactPhone.setEnabled(false);
+                    tvStartTime.setEnabled(false);
+                    tvEndTime.setEnabled(false);
+                    rlChoseShopMapregion.setEnabled(false);
+                    etDetailsAdress.setEnabled(false);
                     submit.setEnabled(false);
 
                 } else if (s.getChecked().equals("2")) {
@@ -527,7 +552,7 @@ public class MerchantActivity1 extends BaseActivity implements EasyPermissions.P
             public void onClick(View view) {
                 tvChoseShopRegion.setText(mainWheelView.getSelectionItem() + " " + subWheelView.getSelectionItem() + " " + childWheelView.getSelectionItem());
                 shop_region = countyMap1.get(childWheelView.getSelectionItem());
-                Toast.makeText(MerchantActivity1.this, shop_region, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(MerchantActivity1.this, shop_region, Toast.LENGTH_SHORT).show();
                 bottomDialog.dismiss();
             }
         });

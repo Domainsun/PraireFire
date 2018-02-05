@@ -123,7 +123,8 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                 SetActivity.startActivity(getActivity(), false);
                 break;
             case R.id.fragment_my_img:
-                AccountManagementActivity.startActivity(getActivity(), false);
+                if(! hasLogin()){return;}
+                SetActivity.startActivity(getActivity(), false);
                 break;
             case R.id.fragment_my_wallet_rl:
                 if(! hasLogin()){return;}

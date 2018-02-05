@@ -50,7 +50,9 @@
             android:layout_marginLeft="15dp"
             android:text="密码"
             android:textColor="@color/text_color"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:hint="请输入6位数的支付密码"
+            android:maxLength="6"/>
 
         <EditText
             android:inputType="textPassword"

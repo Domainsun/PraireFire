@@ -83,8 +83,7 @@ public class SettledActivity extends BaseActivity {
         }
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mRecyclerView.addItemDecoration(new RecycleViewDivider(
-                this, LinearLayoutManager.HORIZONTAL, 2, getResources().getColor(R.color.grey)));
+
         adapter = new SetledAdapter(this);
         adapter.setData(mDatas);
         adapter.setmOnItemClickListener(new SetledAdapter.OnItemClickListener() {
