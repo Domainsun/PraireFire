@@ -16,6 +16,8 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -150,7 +152,6 @@ public class MapFragment extends BaseFragment implements AMap.OnMarkerClickListe
 
 
     private void initFindView(View view) {
-//        mMapView = view.findViewById(R.id.map);
         mapRecyclerView = view.findViewById(R.id.map_recyclerView);
         checkMoreTv = view.findViewById(R.id.check_more_tv);
         mapInputKey = view.findViewById(R.id.map_input_key);
@@ -200,6 +201,10 @@ public class MapFragment extends BaseFragment implements AMap.OnMarkerClickListe
                 ShopActivity.startActivity(activity, evEntitys.get(position).getId(), false);
             }
         });
+
+        if (mapRecyclerView.getVisibility() == View.GONE && mapBusinessInfoLl.getVisibility() == View.GONE) {
+            checkMoreTv.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -223,15 +228,33 @@ public class MapFragment extends BaseFragment implements AMap.OnMarkerClickListe
             }
 
         });
+       /* mapInputKey.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (editable.toString().length() == 0) {
+                    searchKey = "";
+                    requestShopList(longitude, latitude, searchKey);
+                }
+            }
+        });*/
     }
 
 
     /**
      * 获取商家列表
      */
-    private void requestShopList( double longitude,  double latitude, String searchKey) {
-        OkhttpRequestUtil.get(ConstanUrl.SEARCH_NEARSHOP + "?lng=" + longitude + "&lat=" + latitude + "&name=" + searchKey,1,false,uiHandler);
+    private void requestShopList(double longitude, double latitude, String searchKey) {
+        OkhttpRequestUtil.get(ConstanUrl.SEARCH_NEARSHOP + "?lng=" + longitude + "&lat=" + latitude + "&name=" + searchKey, 1, false, uiHandler);
     }
 
     @Override
@@ -240,7 +263,7 @@ public class MapFragment extends BaseFragment implements AMap.OnMarkerClickListe
 
             case 1:
                 Gson gson = new Gson();
-                List<NearlyShopBean> entitys = gson.fromJson((String)msg.obj, new TypeToken<List<NearlyShopBean>>() {
+                List<NearlyShopBean> entitys = gson.fromJson((String) msg.obj, new TypeToken<List<NearlyShopBean>>() {
                 }.getType());
                 if (entitys.size() == 0) {
                     mapRecyclerView.setVisibility(View.GONE);
@@ -354,14 +377,18 @@ public class MapFragment extends BaseFragment implements AMap.OnMarkerClickListe
             mMapView.onResume();
         }
         searchKey = ((MainActivity) activity).getSearchKey();
-
-        if (!searchKey.isEmpty()) {
+        if (searchKey.isEmpty()) {
+            searchKey = "";
+            requestShopList(longitude, latitude, searchKey);
+        }
+        if (!"0".equals(searchKey)) {
+            isSearch = true;
             mapInputKey.setText(searchKey);
             evEntitys.clear();
-            isSearch = true;
             requestShopList(longitude, latitude, searchKey);
             ((MainActivity) activity).setSearchKey("");
         }
+
     }
 
     /**
@@ -396,7 +423,7 @@ public class MapFragment extends BaseFragment implements AMap.OnMarkerClickListe
         }
         MarkerOptions markerOption2 = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
                 .decodeResource(activity.getResources(), R.mipmap.location_marker)))
-            .position(CHONGQING)
+                .position(CHONGQING)
                 //设置Marker可拖动true
                 .draggable(false);
         aMap.addMarker(markerOption2);
@@ -494,11 +521,25 @@ public class MapFragment extends BaseFragment implements AMap.OnMarkerClickListe
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.map_back:
-                mapRecyclerView.setVisibility(mapRecyclerView.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
-                if (isMarkerClicked) {
-                    mapBusinessInfoLl.setVisibility(mapBusinessInfoLl.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
-                    mapBusinessInfoRound.setVisibility(mapBusinessInfoRound.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
+                if (mapRecyclerView.getVisibility() == View.VISIBLE) {
+                    mapRecyclerView.setVisibility(mapRecyclerView.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
+                    if (isMarkerClicked) {
+                        mapBusinessInfoLl.setVisibility(mapBusinessInfoLl.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
+                        mapBusinessInfoRound.setVisibility(mapBusinessInfoRound.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
+                    }
+                    if (mapRecyclerView.getVisibility() == View.GONE && mapBusinessInfoLl.getVisibility() == View.GONE) {
+                        checkMoreTv.setVisibility(View.VISIBLE);
+                    }
+                } else {
+                    if (isMarkerClicked) {
+                        mapBusinessInfoLl.setVisibility(mapBusinessInfoLl.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
+                        mapBusinessInfoRound.setVisibility(mapBusinessInfoRound.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
+                    }
+                    if (mapRecyclerView.getVisibility() == View.GONE && mapBusinessInfoLl.getVisibility() == View.GONE) {
+                        checkMoreTv.setVisibility(View.VISIBLE);
+                    }
                 }
+
 
                 break;
             case R.id.map_clean:

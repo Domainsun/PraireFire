@@ -4,7 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -19,7 +21,6 @@ import com.praire.fire.common.Constants;
 import com.praire.fire.merchant.bean.ShopTypeBeanList;
 import com.praire.fire.okhttp.UseAPIs;
 import com.praire.fire.utils.SaveArrayListUtil;
-import com.praire.fire.utils.ToastUtil;
 import com.praire.fire.utils.statusbarcolor.Eyes;
 
 import java.util.ArrayList;
@@ -33,11 +34,11 @@ import java.util.List;
 public class MapSearchActivity extends BaseActivity implements View.OnClickListener, TabLayout.OnTabSelectedListener {
 
     private FlowLayout mFlowLayout;
-    private TextView clean;
+    private TextView clean, searchBtn;
     private ArrayList<String> searchEntities = new ArrayList<>();
     private ShopTypeBeanList typeEntities;
     SaveArrayListUtil save;
-    private String searchKey;
+    private String searchKey = "汽车";
     EditText edtSearch;
     TabLayout tabLayout;
     ImageView back;
@@ -65,6 +66,8 @@ public class MapSearchActivity extends BaseActivity implements View.OnClickListe
         edtSearch = findViewById(R.id.plug_search_edittext);
         tabLayout = findViewById(R.id.search_tabs);
         back = findViewById(R.id.search_bar2_back);
+        searchBtn = findViewById(R.id.search_bar2_search);
+
         requestShopTypeList();
     }
 
@@ -81,7 +84,7 @@ public class MapSearchActivity extends BaseActivity implements View.OnClickListe
         }
         clean.setOnClickListener(this);
         back.setOnClickListener(this);
-
+        searchBtn.setOnClickListener(this);
     }
 
     @Override
@@ -94,37 +97,35 @@ public class MapSearchActivity extends BaseActivity implements View.OnClickListe
                 boolean aBoolean = (actionId == 0 || actionId == 3) && event != null;
                 if (aBoolean) {
                     searchKey = edtSearch.getText().toString();
-                    if (TextUtils.isEmpty(searchKey)) {
-                        ToastUtil.show(MapSearchActivity.this, "请输入搜索条件");
-                        return false;
+                    if (!TextUtils.isEmpty(searchKey)) {
+                        //保存
+                        save.saveArrayList(MapSearchActivity.this, searchEntities, searchKey);
                     }
-                    //保存
-                    save.saveArrayList(MapSearchActivity.this, searchEntities, searchKey);
                     goSearch();
                     return true;
-
-
                 }
                 return false;
 
             }
 
         });
+
     }
+
     /**
      * 获取商家类型列表
      */
     private void requestShopTypeList() {
-        String str=new UseAPIs().getShopType();
+        String str = new UseAPIs().getShopType();
         Gson gson = new Gson();
         typeEntities = gson.fromJson(str, ShopTypeBeanList.class);
-        for(ShopTypeBeanList.ListBean bean :typeEntities.getList()){
+        tabLayout.addTab(tabLayout.newTab().setText(""));
+        for (ShopTypeBeanList.ListBean bean : typeEntities.getList()) {
             tabLayout.addTab(tabLayout.newTab().setText(bean.getName()));
         }
         tabLayout.setOnTabSelectedListener(this);
 
     }
-
 
 
     /**
@@ -172,7 +173,7 @@ public class MapSearchActivity extends BaseActivity implements View.OnClickListe
     }
 
     private void goSearch() {
-        Intent intent  = new Intent();
+        Intent intent = new Intent();
         intent.putExtra(Constants.SEARCH_KEY, searchKey);
         setResult(RESULT_OK, intent);
         finish();
@@ -188,6 +189,17 @@ public class MapSearchActivity extends BaseActivity implements View.OnClickListe
                 break;
             case R.id.search_bar2_back:
                 finish();
+                break;
+            case R.id.search_bar2_search:
+                searchKey = edtSearch.getText().toString().trim();
+                if (!TextUtils.isEmpty(searchKey)) {
+                    //保存
+                    save.saveArrayList(MapSearchActivity.this, searchEntities, searchKey);
+                }else{
+                    searchKey = "";
+                }
+                goSearch();
+                break;
             default:
                 break;
         }
@@ -196,31 +208,9 @@ public class MapSearchActivity extends BaseActivity implements View.OnClickListe
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
 //        statusType = tab.getText().toString();
-        searchKey = typeEntities.getList().get(tab.getPosition()).getName();
+        searchKey = typeEntities.getList().get(tab.getPosition()-1).getName();
         goSearch();
-       /* switch (tab.getPosition()) {
-            case 0:
-                statusType = tab.getText().toString();
-                break;
-            case 1:
-                statusType = "56";
 
-                break;
-            case 2:
-                statusType = "57";
-
-                break;
-            case 3:
-                statusType = "58";
-
-                break;
-            case 4:
-                statusType = "59";
-
-                break;
-            default:
-                break;
-        }*/
     }
 
     @Override
@@ -232,4 +222,8 @@ public class MapSearchActivity extends BaseActivity implements View.OnClickListe
     public void onTabReselected(TabLayout.Tab tab) {
 
     }
+
+
+
+
 }

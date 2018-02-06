@@ -1,5 +1,7 @@
 package com.praire.fire.order;
 
+import android.util.Log;
+
 import com.praire.fire.car.bean.CommitProduct;
 import com.praire.fire.my.bean.ShoppingCarBean;
 import com.praire.fire.order.bean.OrderInfoBean;
@@ -25,12 +27,16 @@ public class OrderUtils {
      * @param list
      * @return
      */
-    public static double totlePrice(List<CommitProduct> list) {
+    public static String totlePrice(List<CommitProduct> list) {
         double total = 0;
         for (CommitProduct product : list) {
             total += AppBigDecimal.multiply(Double.valueOf(product.getpPrice()), product.getNumber(), 2);
         }
-        return total;
+
+        // 构造方法的字符格式这里如果小数不足2位,会以0补足.
+        DecimalFormat decimalFormat = new DecimalFormat();
+        // format 返回的是字符串
+        return decimalFormat.format(total);
     }
     /**
      * 计算购物车内的商品总价
@@ -39,12 +45,15 @@ public class OrderUtils {
      * @param list
      * @return
      */
-    public static double totlePriceCar(List<ShoppingCarBean.PagelistBean> list) {
+    public static String totlePriceCar(List<ShoppingCarBean.PagelistBean> list) {
         double total = 0;
         for (ShoppingCarBean.PagelistBean product : list) {
             total += AppBigDecimal.multiply(Double.valueOf(product.getInfo().getNprice()), Double.valueOf(product.getCount()), 2);
         }
-        return total;
+        // 构造方法的字符格式这里如果小数不足2位,会以0补足.
+        DecimalFormat decimalFormat = new DecimalFormat();
+        // format 返回的是字符串
+        return decimalFormat.format(total);
     }
 
     /**
@@ -149,12 +158,12 @@ public class OrderUtils {
         double total1 = 0;
         for (OrderInfoBean.OrderlistBean products : pslist) {
             for(OrderInfoBean.OrderlistBean.PslistBean ps: products.getPslist()){
-                total1 += AppBigDecimal.multiply(Double.valueOf(ps.getNprice()), Double.valueOf(ps.getNumber()), 2);
+                total1 += AppBigDecimal.multiply(Double.valueOf(ps.getNprice().trim()), Double.valueOf(ps.getNumber().trim()), 2);
             }
             total += total1;
         }
         // 构造方法的字符格式这里如果小数不足2位,会以0补足.
-        DecimalFormat decimalFormat = new DecimalFormat(".##");
+        DecimalFormat decimalFormat = new DecimalFormat();
         // format 返回的是字符串
         return decimalFormat.format(total);
     }
@@ -172,6 +181,7 @@ public class OrderUtils {
     public static String totlePriceList(List<OrderListBean.PagelistBean.PslistBean> pslist) {
         float total = 0;
         for(OrderListBean.PagelistBean.PslistBean ps: pslist){
+            Log.e("getPrice * number",ps.getPrice()+"*"+ps.getNumber());
             total += AppBigDecimal.multiply(Float.valueOf(ps.getPrice()), Float.valueOf(ps.getNumber()), 2);
         }
         // 构造方法的字符格式这里如果小数不足2位,会以0补足.

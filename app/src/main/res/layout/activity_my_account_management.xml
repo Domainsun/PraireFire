@@ -79,11 +79,46 @@
                 android:layout_marginRight="30dp"
                 android:gravity="center"
                 android:src="@mipmap/tail"
-                android:text="张三"
                 android:textColor="@color/grey"
                 android:textSize="16sp" />
         </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/account_management_sex_rl"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="1dp"
+            android:background="@color/white"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:drawablePadding="10dp"
+                android:text="性别"
+                android:textColor="@color/text_color"
+                android:textSize="19sp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/tail" />
+
+            <TextView
+                android:id="@+id/account_management_sex"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="30dp"
+                android:gravity="center"
+                android:src="@mipmap/tail"
+                android:textColor="@color/grey"
+                android:textSize="16sp" />
+        </RelativeLayout>
         <RelativeLayout
             android:id="@+id/account_management_phone_rl"
             android:layout_width="match_parent"
@@ -118,7 +153,6 @@
                 android:layout_marginRight="30dp"
                 android:gravity="center"
                 android:src="@mipmap/tail"
-                android:text="1501231231"
                 android:textColor="@color/grey"
                 android:textSize="16sp" />
         </RelativeLayout>

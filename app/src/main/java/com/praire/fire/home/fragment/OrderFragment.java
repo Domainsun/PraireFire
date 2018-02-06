@@ -17,6 +17,7 @@ import com.praire.fire.base.BaseActivity;
 import com.praire.fire.base.BaseFragment;
 import com.praire.fire.common.CommonDialog;
 import com.praire.fire.common.ConstanUrl;
+import com.praire.fire.data.IntentDataForEvaluateActivity;
 import com.praire.fire.my.bean.CommentResultBean;
 import com.praire.fire.okhttp.OkhttpRequestUtil;
 import com.praire.fire.order.EvaluateActivity;
@@ -59,7 +60,8 @@ public class OrderFragment extends BaseFragment implements TabLayout.OnTabSelect
      * 订单状态(0:未支付 1:已支付 2:已消费 3:已退款 4:已评价)
      */
     private String statusType = "";
-    private OrderListBean orderlist;
+
+    private OrderListBean orderlists;
 
 
     @Override
@@ -93,7 +95,12 @@ public class OrderFragment extends BaseFragment implements TabLayout.OnTabSelect
 
 
         adapter = new OrderListAdapter(getActivity());
+
         srecyclerView.setAdapter(adapter);
+        setItemClick();
+    }
+
+    private void setItemClick() {
         adapter.setItemClickLister(new OrderListAdapter.ItemClickLister() {
             @Override
             public void cancel(String status, final String orderId) {
@@ -118,7 +125,7 @@ public class OrderFragment extends BaseFragment implements TabLayout.OnTabSelect
 
             @Override
             public void itemClick(View itemView, int position) {
-                OrderListBean.PagelistBean bean = orderlist.getPagelist().get(position);
+                OrderListBean.PagelistBean bean = orderlists.getPagelist().get(position);
                 if ("0".equals(bean.getStatus())) {
                     OrderInfoActivity.startActivity(getActivity(), bean.getOrderno(), false);
 
@@ -137,14 +144,16 @@ public class OrderFragment extends BaseFragment implements TabLayout.OnTabSelect
                         CommonDialog.Build((BaseActivity) getActivity()).setTitle(false).setMessage("是否确认消费？").setConfirm(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                checkOrder(orderlist.getPagelist().get(position).getId());
+                                checkOrder(orderlists.getPagelist().get(position).getId());
                             }
                         }).showconfirm();
 
                         break;
                     case "2":
 //                                评价
-                        EvaluateActivity.startActivity(getActivity(), orderlist.getPagelist().get(position), false);
+                        IntentDataForEvaluateActivity data = new IntentDataForEvaluateActivity();
+                        data.orderInfo = orderlists.getPagelist().get(position);
+                        EvaluateActivity.startActivity(getActivity(), data, false);
                         break;
                     default:
                         break;
@@ -157,14 +166,18 @@ public class OrderFragment extends BaseFragment implements TabLayout.OnTabSelect
 
     @Override
     public void initData() {
-        isFirst = true;
-        index = 1;
 
-        getDates(index, statusType);
+        if (hasLogin(true)) {
+            isFirst = true;
+            index = 1;
+            getDates(index, statusType, ORDER_LIST);
+
+        }
+
     }
 
-    private void getDates(int index, String status) {
-        OkhttpRequestUtil.get(ConstanUrl.ORDER_ORDERLIST + "?status=" + status + "&p=" + index, ORDER_LIST, true, uiHandler);
+    private void getDates(int index, String status, int type) {
+        OkhttpRequestUtil.get(ConstanUrl.ORDER_ORDERLIST + "?status=" + status + "&p=" + index, type, true, uiHandler);
     }
 
 
@@ -173,30 +186,32 @@ public class OrderFragment extends BaseFragment implements TabLayout.OnTabSelect
         switch (msg.what) {
             case ORDER_LIST:
                 Gson gson = new Gson();
-                orderlist = gson.fromJson((String) msg.obj, OrderListBean.class);
+                OrderListBean orderlist = gson.fromJson((String) msg.obj, OrderListBean.class);
+                orderlists = orderlist;
                 if (orderlist != null) {
                     adapter.setEntities(orderlist.getPagelist());
                 }
                 break;
+
             case CANCEL_ORDER:
-                Gson gson2 = new Gson();
-                CommentResultBean resultBean = gson2.fromJson((String) msg.obj, CommentResultBean.class);
+                Gson gson5 = new Gson();
+                CommentResultBean resultBean = gson5.fromJson((String) msg.obj, CommentResultBean.class);
                 ToastUtil.show(getActivity(), resultBean.getMsg());
-                getDates(1, statusType);
+                getDates(1, statusType, ORDER_LIST);
                 break;
             case REFUND_ORDER:
                 Log.e("REFUND_ORDER", (String) msg.obj);
-                Gson gson3 = new Gson();
-                CommentResultBean resultBean1 = gson3.fromJson((String) msg.obj, CommentResultBean.class);
+                Gson gson6 = new Gson();
+                CommentResultBean resultBean1 = gson6.fromJson((String) msg.obj, CommentResultBean.class);
                 ToastUtil.show(getActivity(), resultBean1.getMsg());
-                getDates(1, statusType);
+                getDates(1, statusType, ORDER_LIST);
                 break;
             case CHECK_ORDER:
                 Log.e("CHECK_ORDER", (String) msg.obj);
-                Gson gson4 = new Gson();
-                CommentResultBean resultBean2 = gson4.fromJson((String) msg.obj, CommentResultBean.class);
+                Gson gson7 = new Gson();
+                CommentResultBean resultBean2 = gson7.fromJson((String) msg.obj, CommentResultBean.class);
                 ToastUtil.show(getActivity(), resultBean2.getMsg());
-                getDates(1, statusType);
+                getDates(1, statusType, ORDER_LIST);
 
                 break;
             default:
@@ -207,7 +222,7 @@ public class OrderFragment extends BaseFragment implements TabLayout.OnTabSelect
     @Override
     public void onResume() {
         super.onResume();
-        getDates(1, statusType);
+        getDates(1, statusType, ORDER_LIST);
     }
 
     public void getNextPage() {
@@ -223,28 +238,36 @@ public class OrderFragment extends BaseFragment implements TabLayout.OnTabSelect
 
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
-        switch (tab.getPosition()) {
-            case 0:
-                statusType = "";
-
-                break;
-            case 1:
-                statusType = "0";
-
-                break;
-            case 2:
-                statusType = "1";
-
-                break;
-            case 3:
-                statusType = "2";
-                break;
-            case 4:
-                statusType = "3";
-            default:
-                break;
+        if (hasLogin(true)) {
+            switch (tab.getPosition()) {
+                case 0:
+                    statusType = "";
+                    break;
+                case 1:
+                    statusType = "0";
+                    break;
+                case 2:
+                    statusType = "1";
+                    break;
+                case 3:
+                    statusType = "2";
+                    break;
+                case 4:
+                    statusType = "3";
+                default:
+                    break;
+            }
+            setDatas();
         }
-        getDates(1, statusType);
+    }
+
+    private void setDatas() {
+        adapter = null;
+        adapter = new OrderListAdapter(getActivity());
+        srecyclerView.setAdapter(adapter);
+        setItemClick();
+
+        getDates(1, statusType, ORDER_LIST);
     }
 
     @Override

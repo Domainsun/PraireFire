@@ -134,6 +134,7 @@ public class OrderFinishInfoActivity extends BaseTitleActivity {
                 orderInfoTotleProducts.setText(String.format(orderInfoTotleProducts.getTag().toString(), totleNPrice));
                 //优惠折扣
                 orderInfoDiscounts.setText(String.format(orderInfoDiscounts.getTag().toString(), AppBigDecimal.substract(totleNPrice,totlePrice,2)));
+//                orderInfoDiscounts.setText(String.format(orderInfoDiscounts.getTag().toString(), Double.valueOf(totleNPrice)-Double.valueOf(totlePrice)));
                 //订单总价
                 orderInfoTotleOrder.setText(String.format(orderInfoTotleOrder.getTag().toString(), totlePrice));
 

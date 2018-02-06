@@ -42,7 +42,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
     private ArrayList<Fragment> fragments;
     private BottomNavigationBar bottomNavigationBar;
 
-    private String searchKey = "";
+    private String searchKey = "0";
 
 
     public static void startActivity(Context context, int type, boolean forResult) {
@@ -109,9 +109,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
 
     @Override
     public void onTabSelected(int position) {
-        if ((position == 2 /*|| position == 3*/) && !hasLogin()) {
-             return;
-        }
+
         if (fragments != null) {
             if (position < fragments.size()) {
                 FragmentManager fm = getSupportFragmentManager();

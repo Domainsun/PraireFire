@@ -193,7 +193,7 @@ public class SignAcitvity extends Activity {
 
 
                                  /*----add by domain--------*/
-//                            finish();
+                            finish();
                         }
                     } else {
                         Toast.makeText(SignAcitvity.this, "网络错误！", Toast.LENGTH_SHORT).show();

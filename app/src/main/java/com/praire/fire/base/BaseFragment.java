@@ -69,12 +69,15 @@ public abstract class BaseFragment extends Fragment {
     protected void networkResponse(Message msg) {
     }
 
-    protected boolean hasLogin() {
+    /**
+     * 判断是否已登录
+     *
+     * @param toLogin 若未登录是否进入登录页面
+     * @return
+     */
+    protected boolean hasLogin( boolean toLogin) {
 
         String cookie = (String) SharePreferenceMgr.get(getActivity(), LOGIN_COOKIE, "");
-
-
-
 
         /*如果未登录过，自动跳转到登录页*/
         String str = "\"code\":0";
@@ -82,13 +85,17 @@ public abstract class BaseFragment extends Fragment {
             String result = new UseAPIs().getShopInfo(cookie);
             if (result.length() != 0) {
                 if (result.contains(str)) {
-                    toLogin();
+                    if(toLogin) {
+                        toLogin();
+                    }
                     return false;
                 }
                 return true;
             }
         } else {
-            toLogin();
+            if(toLogin) {
+                toLogin();
+            }
             return false;
         }
         return true;

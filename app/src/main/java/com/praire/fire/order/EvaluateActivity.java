@@ -19,6 +19,7 @@ import com.praire.fire.base.BaseTitleActivity;
 import com.praire.fire.common.CommonMethod;
 import com.praire.fire.common.ConstanUrl;
 import com.praire.fire.common.Constants;
+import com.praire.fire.data.IntentDataForEvaluateActivity;
 import com.praire.fire.my.bean.CommentResultBean;
 import com.praire.fire.okhttp.OkhttpRequestUtil;
 import com.praire.fire.order.adapter.EvaluateOrderAdapter;
@@ -50,7 +51,7 @@ import static com.praire.fire.common.Constants.INTENT_DATA;
 public class EvaluateActivity extends BaseTitleActivity {
 
 
-    OrderListBean.PagelistBean orderInfo;
+    IntentDataForEvaluateActivity data;
     String base64_photo1 = "";
     String base64_photo2 = "";
     String base64_photo3 = "";
@@ -68,7 +69,7 @@ public class EvaluateActivity extends BaseTitleActivity {
     private EvaluateOrderAdapter adapter;
     private String productId;
 
-    public static void startActivity(Context context, OrderListBean.PagelistBean orderInfo, boolean forResult) {
+    public static void startActivity(Context context, IntentDataForEvaluateActivity orderInfo,boolean forResult) {
         Intent intent = new Intent(context, EvaluateActivity.class);
         intent.putExtra(INTENT_DATA, orderInfo);
 
@@ -97,7 +98,7 @@ public class EvaluateActivity extends BaseTitleActivity {
         adapter = new EvaluateOrderAdapter(this);
 
         recyclerviewEv.setAdapter(adapter);
-        adapter.setEntities(orderInfo.getPslist());
+        adapter.setEntities(data.orderInfo.getPslist());
     }
 
     @Override
@@ -134,9 +135,9 @@ public class EvaluateActivity extends BaseTitleActivity {
 
     @Override
     public void initiTile() {
-        orderInfo = getIntent().getParcelableExtra(INTENT_DATA);
+        data = getIntent().getParcelableExtra(INTENT_DATA);
         setDefaultBack();
-        setTitleMiddle(orderInfo.getShopname());
+        setTitleMiddle(data.orderInfo.getShopname());
     }
 
 
@@ -155,14 +156,13 @@ public class EvaluateActivity extends BaseTitleActivity {
     private void commitEvaluateInfo() {
 
         EvaluateCommitInfo commitInfo = new EvaluateCommitInfo();
-        commitInfo.setOrder_id(orderInfo.getId());
+        commitInfo.setOrder_id(data.orderInfo.getId());
         commitInfo.setOrderps_list(sList);
         // 转换得到String
         Gson gson = new Gson();
         String strins = gson.toJson(commitInfo);
-        Log.e("commentstr",strins);
         RequestBody requestBody = new FormBody.Builder()
-                .add("orderid", orderInfo.getOrderno())
+                .add("orderid", data.orderInfo.getOrderno())
                 .add("commentstr", strins)
                 .build();
         OkhttpRequestUtil.post(ConstanUrl.COMMENT_IN, requestBody, 1, uiHandler, true);

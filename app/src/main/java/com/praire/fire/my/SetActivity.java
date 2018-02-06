@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -27,7 +26,7 @@ import com.praire.fire.base.BaseActivity;
 import com.praire.fire.common.CommonMethod;
 import com.praire.fire.common.Constants;
 import com.praire.fire.my.setActivitys.AddressActivity;
-import com.praire.fire.my.setActivitys.BindCardActivity;
+import com.praire.fire.my.setActivitys.BankCardActivity;
 import com.praire.fire.my.setActivitys.ChangeNameActivity;
 import com.praire.fire.my.setActivitys.PasswordMangeActivity;
 import com.praire.fire.my.setActivitys.RealVerifyActivity;
@@ -204,7 +203,7 @@ public class SetActivity extends BaseActivity {
                 break;
             case R.id.rl_bind_bank_card:
 
-                BindCardActivity.startActivity(this, false);
+                BankCardActivity.startActivity(this, false);
                 break;
 
             case R.id.rl_address:

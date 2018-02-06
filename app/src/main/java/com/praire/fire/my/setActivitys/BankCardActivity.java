@@ -3,7 +3,6 @@ package com.praire.fire.my.setActivitys;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -40,7 +39,7 @@ import butterknife.OnClick;
 import static com.praire.fire.common.Constants.LOGIN_COOKIE;
 import static com.praire.fire.common.Constants.REQUEST_BANK;
 
-public class BindCardActivity extends BaseActivity {
+public class BankCardActivity extends BaseActivity {
 
 
     @BindView(R.id.tv_id_num)
@@ -99,7 +98,7 @@ public class BindCardActivity extends BaseActivity {
 
 
     public static void startActivity(Context context, boolean forResult) {
-        Intent intent = new Intent(context, BindCardActivity.class);
+        Intent intent = new Intent(context, BankCardActivity.class);
 
         if (!forResult) {
             context.startActivity(intent);

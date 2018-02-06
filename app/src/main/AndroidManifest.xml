@@ -82,9 +82,6 @@
         <activity android:name=".my.ShoppingCarActivity" />
         <activity android:name=".car.ShopActivity" />
         <activity android:name=".my.AccountManagementActivity" />
-        <activity android:name=".my.ShippingAddressActivity" />
-        <activity android:name=".my.CertificationActivity" />
-        <activity android:name=".my.BankCardActivity" />
         <activity android:name=".my.ChangLoginPswActivity" />
         <activity android:name=".my.PassWordManagementActivity" />
         <activity android:name=".my.VerifyPhoneActivity" />
@@ -156,7 +153,7 @@
         <activity android:name=".my.setActivitys.FindPayPasswordNextActivity" />
         <activity android:name=".my.setActivitys.ChangeSignPasswordActivity" />
         <activity android:name=".my.setActivitys.RealVerifyActivity" />
-        <activity android:name=".my.setActivitys.BindCardActivity" />
+        <activity android:name=".my.setActivitys.BankCardActivity" />
         <activity android:name=".my.setActivitys.ChooseBankActivity" />
         <activity android:name=".my.setActivitys.AddressActivity" />
         <activity android:name=".my.setActivitys.SetPayPasswrodActivity"></activity>

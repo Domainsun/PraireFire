@@ -1,6 +1,7 @@
 package com.praire.fire.home.fragment;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Message;
 import android.text.TextUtils;
@@ -35,6 +36,7 @@ import com.praire.fire.okhttp.OkhttpRequestUtil;
 import com.praire.fire.okhttp.UseAPIs;
 import com.praire.fire.utils.ImageUtils;
 import com.praire.fire.utils.SharePreferenceMgr;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
 
@@ -108,8 +110,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
 
     @Override
     public void initListener() {
-        if (hasLogin()) {
-
+        if (hasLogin(false)) {
             OkhttpRequestUtil.get(ConstanUrl.USER_INDEX, 1, true, uiHandler);
         }
 
@@ -122,28 +123,28 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
 
     @Override
     protected void networkResponse(Message msg) {
-        Log.e("msg user",(String) msg.obj);
         switch (msg.what) {
             case 1:
                 Gson gson = new Gson();
-                UserBean userBean = gson.fromJson((String)msg.obj,UserBean.class);
-                fragmentMyPhone.setText(userBean.getTel());
-                if (!TextUtils.isEmpty(userBean.getHead())) {
-                    if (new File(userBean.getHead()).exists()) {
-                        try {
-                            ImageUtils.LoadImage(fragmentMyImg, userBean.getHead());
-                        } catch (OutOfMemoryError e) {
-                            e.printStackTrace();
-                        }
-                    }
+                UserBean userBean = gson.fromJson((String) msg.obj, UserBean.class);
+                if (!userBean.getNickname().isEmpty()) {
+                    fragmentMyPhone.setText(userBean.getNickname());
+                } else {
+                    fragmentMyPhone.setText(userBean.getTel());
                 }
-//                fragmentMyImg = view.findViewById(R.id.fragment_my_img);
+                if (!TextUtils.isEmpty(userBean.getHead())) {
+                    Picasso.with(getActivity()).load(userBean.getHead()).into(fragmentMyImg);
+                } else {
+                    fragmentMyImg.setImageResource(R.mipmap.avatar2);
+                }
+
                 fragmentMyVip.setText(userBean.getLevelinfo().getDes());
                 fragmentMyWallet.setText(userBean.getCapital());
-                fragmentMyIntegral.setText(userBean.getTel());
-                fragmentMyInvitationIntegral.setText(userBean.getTel());
-                fragmentMyOrder.setText(userBean.getTel());
-                fragmentMyShoppingcar.setText(userBean.getTel());
+
+//                fragmentMyIntegral.setText(userBean.getTel());
+//                fragmentMyInvitationIntegral.setText(userBean.getTel());
+//                fragmentMyOrder.setText(userBean.getTel());
+//                fragmentMyShoppingcar.setText(userBean.getTel());
                 break;
             default:
                 break;
@@ -151,10 +152,24 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
     }
 
     @Override
-    public void onClick(View view) {
-        if (!hasLogin()) {
-            return;
+    public void onResume() {
+        super.onResume();
+        if (hasLogin(false)) {
+            OkhttpRequestUtil.get(ConstanUrl.USER_INDEX, 1, true, uiHandler);
+        } else {
+            fragmentMyPhone.setText("点击登录");
+            fragmentMyImg.setImageResource(R.mipmap.avatar2);
+            fragmentMyVip.setText("普通会员");
+            fragmentMyWallet.setText("0.00");
+            fragmentMyIntegral.setText("0");
+            fragmentMyInvitationIntegral.setText("0");
         }
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (hasLogin(true)) {
+
             switch (view.getId()) {
                 case R.id.fragment_my_phone:
                     SignAcitvity.startActivity(getActivity(), false);
@@ -176,7 +191,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                     MyWalletActivity.startActivity(getActivity(), false);
                     break;
                 case R.id.fragment_my_integral_rl:
- //                IntegralActivity.startActivity(getActivity(), false);
+                    //                IntegralActivity.startActivity(getActivity(), false);
                     break;
                 case R.id.fragment_my_invitation_integral_rl:
 
@@ -199,9 +214,6 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                 case R.id.fragment_my_merchant_services_rl:
 
                 /*by domain*/
-
-                   if(! hasLogin()){return;}
-
 
                     String cookie = (String) SharePreferenceMgr.get(getContext(), LOGIN_COOKIE, "");
                     String result = "";
@@ -247,6 +259,6 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                 default:
                     break;
             }
-
+        }
     }
 }

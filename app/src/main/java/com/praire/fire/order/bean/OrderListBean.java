@@ -11,7 +11,7 @@ import java.util.List;
  * Created by lyp on 2018/1/19.
  */
 
-public class OrderListBean  {
+public class OrderListBean {
     /**
      * code : 1
      * p : 1
@@ -46,7 +46,7 @@ public class OrderListBean  {
         this.pagelist = pagelist;
     }
 
-    public static class PagelistBean  implements Parcelable{
+    public static class PagelistBean {
         /**
          * id : 193
          * shop_id : 0
@@ -82,7 +82,7 @@ public class OrderListBean  {
         private String channel;
         private String buyeraccount;
         private String payprice;
-//        (0:未支付 1:已支付 2:已消费 3:已退款 4:已评价 5:已取消)
+        //        (0:未支付 1:已支付 2:已消费 3:已退款 4:已评价 5:已取消)
         protected String status;
         private String refund;
         private String refund_time;
@@ -272,7 +272,7 @@ public class OrderListBean  {
             this.pslist = pslist;
         }
 
-        public static class PslistBean implements Parcelable{
+        public static class PslistBean {
             /**
              * id : 103
              * order_id : 193
@@ -302,8 +302,8 @@ public class OrderListBean  {
             private String update_time;
 
 
-
             private String classpath;
+
             public String getId() {
                 return id;
             }
@@ -404,134 +404,11 @@ public class OrderListBean  {
                 return classpath;
             }
 
-            public void setClasspath(String classpath) {
-                this.classpath = classpath;
-            }
 
-            @Override
-            public int describeContents() {
-                return 0;
-            }
-
-            @Override
-            public void writeToParcel(Parcel dest, int flags) {
-                dest.writeString(this.id);
-                dest.writeString(this.order_id);
-                dest.writeString(this.type);
-                dest.writeString(this.ps_id);
-                dest.writeString(this.name);
-                dest.writeString(this.cover);
-                dest.writeString(this.nprice);
-                dest.writeString(this.price);
-                dest.writeString(this.shopprice);
-                dest.writeString(this.number);
-                dest.writeString(this.create_time);
-                dest.writeString(this.update_time);
-                dest.writeString(this.classpath);
-            }
-
-            public PslistBean() {
-            }
-
-            protected PslistBean(Parcel in) {
-                this.id = in.readString();
-                this.order_id = in.readString();
-                this.type = in.readString();
-                this.ps_id = in.readString();
-                this.name = in.readString();
-                this.cover = in.readString();
-                this.nprice = in.readString();
-                this.price = in.readString();
-                this.shopprice = in.readString();
-                this.number = in.readString();
-                this.create_time = in.readString();
-                this.update_time = in.readString();
-                this.classpath = in.readString();
-            }
-
-            public static final Creator<PslistBean> CREATOR = new Creator<PslistBean>() {
-                @Override
-                public PslistBean createFromParcel(Parcel source) {
-                    return new PslistBean(source);
-                }
-
-                @Override
-                public PslistBean[] newArray(int size) {
-                    return new PslistBean[size];
-                }
-            };
         }
 
-        @Override
-        public int describeContents() {
-            return 0;
-        }
 
-        @Override
-        public void writeToParcel(Parcel dest, int flags) {
-            dest.writeString(this.id);
-            dest.writeString(this.shop_id);
-            dest.writeString(this.user_id);
-            dest.writeString(this.orderno);
-            dest.writeString(this.payno);
-            dest.writeString(this.tradeno);
-            dest.writeString(this.paytype);
-            dest.writeString(this.channel);
-            dest.writeString(this.buyeraccount);
-            dest.writeString(this.payprice);
-            dest.writeString(this.status);
-            dest.writeString(this.refund);
-            dest.writeString(this.refund_time);
-            dest.writeString(this.shoprefund_time);
-            dest.writeString(this.rejectmessage);
-            dest.writeString(this.pay_time);
-            dest.writeString(this.isread);
-            dest.writeString(this.create_time);
-            dest.writeString(this.update_time);
-            dest.writeString(this.use_time);
-            dest.writeString(this.shopname);
-            dest.writeList(this.pslist);
-        }
-
-        public PagelistBean() {
-        }
-
-        protected PagelistBean(Parcel in) {
-            this.id = in.readString();
-            this.shop_id = in.readString();
-            this.user_id = in.readString();
-            this.orderno = in.readString();
-            this.payno = in.readString();
-            this.tradeno = in.readString();
-            this.paytype = in.readString();
-            this.channel = in.readString();
-            this.buyeraccount = in.readString();
-            this.payprice = in.readString();
-            this.status = in.readString();
-            this.refund = in.readString();
-            this.refund_time = in.readString();
-            this.shoprefund_time = in.readString();
-            this.rejectmessage = in.readString();
-            this.pay_time = in.readString();
-            this.isread = in.readString();
-            this.create_time = in.readString();
-            this.update_time = in.readString();
-            this.use_time = in.readString();
-            this.shopname = in.readString();
-            this.pslist = new ArrayList<PslistBean>();
-            in.readList(this.pslist, PslistBean.class.getClassLoader());
-        }
-
-        public static final Creator<PagelistBean> CREATOR = new Creator<PagelistBean>() {
-            @Override
-            public PagelistBean createFromParcel(Parcel source) {
-                return new PagelistBean(source);
-            }
-
-            @Override
-            public PagelistBean[] newArray(int size) {
-                return new PagelistBean[size];
-            }
-        };
     }
+
+
 }

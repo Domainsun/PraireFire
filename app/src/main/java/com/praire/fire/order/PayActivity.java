@@ -188,14 +188,10 @@ public class PayActivity extends BaseTitleActivity {
                 if(PAY_TYPE_ALIPAY.equals(payType)) {
                     aliPay(paystr);
                 }else if(PAY_TYPE_WEIXIN.equals(payType)){
-//                    weixinPay(paystr);
+                    weixinPay(paystr);
                 }else if(PAY_TYPE_YU_E.equals(payType)){
 
                 }
-
-                String alipaystr0 = (String) msg.obj ;
-                String alipaystr=alipaystr0.replace("alipay_sdk=","app_id=");
-                aliPay((String) msg.obj);
 
                 break;
             case SDK_PAY_FLAG:
@@ -250,12 +246,12 @@ public class PayActivity extends BaseTitleActivity {
         try {
             JSONObject json = new JSONObject(paystr);
 
-            //req.appId = "wx5895e8ea9a3542a1";  //  appId
-            req.appId = json.getString("appid");
+
+            req.appId = json.getString("appId");
             req.partnerId = json.getString("partnerid");
-            req.prepayId = json.getString("prepayid");
-            req.nonceStr = json.getString("noncestr");
-            req.timeStamp = json.getString("timestamp");
+            req.prepayId = json.getString("prepayId");
+            req.nonceStr = json.getString("nonceStr");
+            req.timeStamp = json.getString("timeStamp");
             req.packageValue = json.getString("package");
             req.sign = json.getString("sign");
 //                req.extData = "app data"; // optional

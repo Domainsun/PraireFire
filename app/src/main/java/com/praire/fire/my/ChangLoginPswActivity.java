@@ -25,7 +25,7 @@ public class ChangLoginPswActivity extends BaseTitleActivity {
     }
     @Override
     protected int getFragmentLayout() {
-        return R.layout.activity_my_certification;
+        return 0;
     }
 
     @Override

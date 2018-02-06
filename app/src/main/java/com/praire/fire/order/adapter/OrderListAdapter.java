@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Paint;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,6 +58,8 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.MyVi
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
         final OrderListBean.PagelistBean bean = entities.get(position);
+
+
         holder.itemView.setTag(position);
         holder.itemOrderListBusinessname.setText(bean.getShopname());
         holder.itemOrderListOrderId.setText(bean.getOrderno());
@@ -81,6 +84,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.MyVi
         if("3".equals(bean.getStatus()) || "4".equals(bean.getStatus()) ||"5".equals(bean.getStatus())) {
             holder.itemOrderListStatusBtn.setVisibility(View.GONE);
         }
+
         final String totlePrice =  OrderUtils.totlePriceList(bean.getPslist());
         holder.itemOrderListStatusBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -155,13 +159,13 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.MyVi
         TextView itemOrderListPnumber;
         @BindView(R.id.item_order_list_totle_price)
         TextView itemOrderListTotlePrice;
+        boolean isFrist;
 
-        boolean isFrist = true;
 
         public MyViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
-
+              isFrist = true;
         }
 
     }

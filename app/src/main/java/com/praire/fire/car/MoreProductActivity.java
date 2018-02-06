@@ -2,6 +2,7 @@ package com.praire.fire.car;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Message;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
@@ -10,7 +11,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -33,13 +33,11 @@ import com.praire.fire.car.bean.ServicelistBean;
 import com.praire.fire.common.ConstanUrl;
 import com.praire.fire.common.Constants;
 import com.praire.fire.data.IntentDataForCommitOrderActivity;
-import com.praire.fire.map.MapSearchActivity;
 import com.praire.fire.my.ShoppingCarActivity;
 import com.praire.fire.my.bean.CommentResultBean;
 import com.praire.fire.okhttp.OkhttpRequestUtil;
 import com.praire.fire.order.OrderUtils;
 import com.praire.fire.utils.RecycleViewDivider;
-import com.praire.fire.utils.ToastUtil;
 import com.praire.fire.utils.statusbarcolor.Eyes;
 import com.yanzhenjie.recyclerview.swipe.SwipeItemClickListener;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
@@ -228,7 +226,7 @@ public class MoreProductActivity extends BaseActivity implements TabLayout.OnTab
         OkhttpRequestUtil.get(ConstanUrl.COMMONINFO_SERVICELIST + "?shopid=" + businessId + "&keywords=" + searchKey + "&p=" + index, 2, false, uiHandler);
     }
 
-    @OnClick({R.id.search_bar2_back, R.id.plug_search_edittext, R.id.product_buying, R.id.shopping_car})
+    @OnClick({R.id.search_bar2_back, R.id.plug_search_edittext, R.id.product_buying, R.id.shopping_car,R.id.search_bar2_search})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.search_bar2_back:
@@ -245,6 +243,17 @@ public class MoreProductActivity extends BaseActivity implements TabLayout.OnTab
                 break;
             case R.id.shopping_car:
                 ShoppingCarActivity.startActivity(this, false);
+                break;
+            case R.id.search_bar2_search:
+                searchKey = plugSearchEdittext.getText().toString().trim();
+                if (TextUtils.isEmpty(searchKey)) {
+                    searchKey = "";
+                }
+                if (tabType == 0) {
+                    getProductList(1);
+                } else {
+                    getServiceList(1);
+                }
                 break;
             default:
                 break;

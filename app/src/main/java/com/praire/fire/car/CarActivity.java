@@ -10,7 +10,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -29,7 +28,6 @@ import com.praire.fire.car.popwindows.SortMenuPopwindows;
 import com.praire.fire.car.popwindows.TypeMenuPopwindows;
 import com.praire.fire.common.ConstanUrl;
 import com.praire.fire.common.Constants;
-import com.praire.fire.map.MapSearchActivity;
 import com.praire.fire.okhttp.OkhttpRequestUtil;
 import com.praire.fire.utils.RecycleViewDivider;
 import com.praire.fire.utils.SharePreferenceMgr;
@@ -197,7 +195,7 @@ public class CarActivity extends BaseActivity {
         ordertype	string	是	排序类型(1智能排序 2好评优先 3离我最近 4人均最低 5人均最高)		1
         lng	string	是	经度(按距离排序需用)
                 lat	string	是	纬度(按距离排序需用)*/
-        String str = "?type=" + types + "&class=" + sonType + "&ordertype=" + sortId + "&lng=" + lng + "&lat=" + lat +"&keywords="+searchKey+ "&p=" + index;
+        String str = "?type=" + types + "&class=" + sonType + "&ordertype=" + sortId + "&lng=" + lng + "&lat=" + lat + "&keywords=" + searchKey + "&p=" + index;
         OkhttpRequestUtil.get(ConstanUrl.SEARCH_SEARCHSHOP + str, 2, false, uiHandler);
     }
 
@@ -223,7 +221,7 @@ public class CarActivity extends BaseActivity {
         }
     }
 
-    @OnClick({R.id.search_bar2_back, R.id.plug_search_edittext, R.id.car_type, R.id.car_sort})
+    @OnClick({R.id.search_bar2_back, R.id.plug_search_edittext, R.id.car_type, R.id.car_sort,R.id.search_bar2_search})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.search_bar2_back:
@@ -240,6 +238,13 @@ public class CarActivity extends BaseActivity {
                 if (typeMenuBean != null) {
                     setSortPop(chooseLine);
                 }
+                break;
+            case R.id.search_bar2_search:
+                searchKey = plugSearchEdittext.getText().toString();
+                if (TextUtils.isEmpty(searchKey)) {
+                    searchKey = "";
+                }
+                getShopList();
                 break;
             default:
                 break;
@@ -304,6 +309,7 @@ public class CarActivity extends BaseActivity {
 
         });
     }
+
 
 
 }

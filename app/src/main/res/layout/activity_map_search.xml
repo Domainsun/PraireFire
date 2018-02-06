@@ -16,7 +16,9 @@
         app:tabIndicatorColor="@color/white"
         app:tabTextColor="@color/grey"
         app:tabGravity="fill"
-        app:tabMode="fixed" />
+        app:tabMaxWidth="60dp"
+        app:tabMinWidth="0dp"
+        app:tabMode="scrollable" />
     <com.nex3z.flowlayout.FlowLayout
         android:id="@+id/flow_layout"
         android:layout_width="match_parent"

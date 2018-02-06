@@ -2,8 +2,6 @@ package com.praire.fire.my;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.text.Html;
 import android.util.Log;
 import android.view.View;
@@ -17,7 +15,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.praire.fire.R;
 import com.praire.fire.base.BaseActivity;
 import com.praire.fire.common.Constants;
-import com.praire.fire.my.setActivitys.BindCardActivity;
+import com.praire.fire.my.setActivitys.BankCardActivity;
 import com.praire.fire.okhttp.GsonUtils.J2O;
 import com.praire.fire.okhttp.JavaBean.APIResultBean;
 import com.praire.fire.okhttp.JavaBean.BindBankCardInfoBean;
@@ -25,7 +23,6 @@ import com.praire.fire.okhttp.JavaBean.WalletCapitalBean;
 import com.praire.fire.okhttp.JavaBean.WithdrawBankCardInfo;
 import com.praire.fire.okhttp.UseAPIs;
 import com.praire.fire.utils.SharePreferenceMgr;
-import com.praire.fire.utils.statusbarcolor.Eyes;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -185,7 +182,7 @@ public class WithdrawActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.tv_bind_bank_card:
-                BindCardActivity.startActivity(this,false);
+                BankCardActivity.startActivity(this,false);
                 break;
             case R.id.submit:
                 String price="";
