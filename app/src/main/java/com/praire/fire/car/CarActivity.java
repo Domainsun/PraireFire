@@ -83,6 +83,7 @@ public class CarActivity extends BaseActivity {
     private boolean isFrist = true;
     private List<CarBean.PagelistBean> carBeanlist = new ArrayList<>();
     private String searchKey = "";
+    private boolean loadMore = true;
 
     public static void startActivity(Context context, boolean forResult) {
         Intent intent = new Intent(context, CarActivity.class);
@@ -156,13 +157,17 @@ public class CarActivity extends BaseActivity {
         carRecyclerView.setLoadMoreListener(new SwipeMenuRecyclerView.LoadMoreListener() {
             @Override
             public void onLoadMore() {
+                if (loadMore) {
+
                 if (carBeanlist == null || carBeanlist.isEmpty() || carBean.getPagelist().size() == 0) {
                     ToastUtil.show(CarActivity.this, "暂无更多数据");
+                    loadMore  = false;
                     return;
                 }
                 ++index;
                 isFrist = false;
                 getShopList();
+            }
             }
         });
         carAdapter = new CarAdapter(this);

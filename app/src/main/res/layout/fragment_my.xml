@@ -150,7 +150,6 @@
             android:gravity="center"
             android:textColor="@color/grey"
             android:drawablePadding="10dp"
-            android:text="0"
             android:layout_centerVertical="true"
             android:textSize="16sp"
              />

@@ -56,7 +56,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
     TextView fragmentMyVip;
     TextView fragmentMyWallet;
     TextView fragmentMyIntegral;
-    TextView fragmentMyInvitationIntegral;
+//    TextView fragmentMyInvitationIntegral;
     TextView fragmentMyOrder;
     TextView fragmentMyShoppingcar;
     RelativeLayout nearby, merchantServices, myEvaluate, myOrder, shoppingcar, collect, wallet, myIntegral, invitationIntegral;
@@ -74,7 +74,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         fragmentMyPhone = view.findViewById(R.id.fragment_my_phone);
         fragmentMyWallet = view.findViewById(R.id.fragment_my_wallet);
         fragmentMyIntegral = view.findViewById(R.id.fragment_my_integral);
-        fragmentMyInvitationIntegral = view.findViewById(R.id.fragment_my_invitation_integral);
+//        fragmentMyInvitationIntegral = view.findViewById(R.id.fragment_my_invitation_integral);
         fragmentMyOrder = view.findViewById(R.id.fragment_my_order);
         fragmentMyShoppingcar = view.findViewById(R.id.fragment_my_shoppingcar);
 
@@ -141,8 +141,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                 fragmentMyVip.setText(userBean.getLevelinfo().getDes());
                 fragmentMyWallet.setText(userBean.getCapital());
 
-//                fragmentMyIntegral.setText(userBean.getTel());
-//                fragmentMyInvitationIntegral.setText(userBean.getTel());
+//                fragmentMyIntegral.setText(userBean.g());
 //                fragmentMyOrder.setText(userBean.getTel());
 //                fragmentMyShoppingcar.setText(userBean.getTel());
                 break;
@@ -162,7 +161,6 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
             fragmentMyVip.setText("普通会员");
             fragmentMyWallet.setText("0.00");
             fragmentMyIntegral.setText("0");
-            fragmentMyInvitationIntegral.setText("0");
         }
     }
 

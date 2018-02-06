@@ -109,7 +109,9 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
 
     @Override
     public void onTabSelected(int position) {
-
+        if ((position == 2) && !hasLogin()) {
+             return;
+        }
         if (fragments != null) {
             if (position < fragments.size()) {
                 FragmentManager fm = getSupportFragmentManager();

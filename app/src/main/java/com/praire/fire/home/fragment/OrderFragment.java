@@ -167,12 +167,12 @@ public class OrderFragment extends BaseFragment implements TabLayout.OnTabSelect
     @Override
     public void initData() {
 
-        if (hasLogin(true)) {
+
             isFirst = true;
             index = 1;
             getDates(index, statusType, ORDER_LIST);
 
-        }
+
 
     }
 
@@ -238,7 +238,7 @@ public class OrderFragment extends BaseFragment implements TabLayout.OnTabSelect
 
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
-        if (hasLogin(true)) {
+
             switch (tab.getPosition()) {
                 case 0:
                     statusType = "";
@@ -258,7 +258,7 @@ public class OrderFragment extends BaseFragment implements TabLayout.OnTabSelect
                     break;
             }
             setDatas();
-        }
+
     }
 
     private void setDatas() {
