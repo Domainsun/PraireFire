@@ -277,7 +277,7 @@ public class SetActivity extends BaseActivity {
                     str = u.changeUserInfo(cookie, "", "", "", "", "", "0");
                     APIResultBean a = j.getAPIResult(str);
                     Toast.makeText(SetActivity.this, a.getMsg(), Toast.LENGTH_SHORT).show();
-                    if (a.getCode().equals("1")) {
+                    if (1==a.getCode()) {
                         tvSex.setText("男");
                     }
                     mPopWindow.dismiss();
@@ -295,7 +295,7 @@ public class SetActivity extends BaseActivity {
                     str = u.changeUserInfo(cookie, "", "", "", "", "", "1");
                     APIResultBean a = j.getAPIResult(str);
                     Toast.makeText(SetActivity.this, a.getMsg(), Toast.LENGTH_SHORT).show();
-                    if (a.getCode().equals("1")) {
+                    if (1==a.getCode()) {
                         tvSex.setText("女");
                     }
                     mPopWindow.dismiss();
@@ -311,7 +311,7 @@ public class SetActivity extends BaseActivity {
 
 
     private void showChoosePic(int request_code) {
-        String[] perms = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+        String[] perms = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.CAMERA};
         if (EasyPermissions.hasPermissions(this, perms)) {
             Matisse.from(SetActivity.this)
                     .choose(MimeType.allOf()) // 选择 mime 的类型

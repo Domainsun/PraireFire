@@ -340,7 +340,7 @@ public class AccountManagementActivity extends BaseTitleActivity {
                     str = u.changeUserInfo(cookie, "", "", "", "", "", "0");
                     APIResultBean a = j.getAPIResult(str);
                     Toast.makeText(AccountManagementActivity.this, a.getMsg(), Toast.LENGTH_SHORT).show();
-                    if (a.getCode().equals("1")) {
+                    if (a.getCode()==1) {
                         accountManagementSex.setText("男");
                     }
                     mPopWindow.dismiss();
@@ -358,7 +358,7 @@ public class AccountManagementActivity extends BaseTitleActivity {
                     str = u.changeUserInfo(cookie, "", "", "", "", "", "1");
                     APIResultBean a = j.getAPIResult(str);
                     Toast.makeText(AccountManagementActivity.this, a.getMsg(), Toast.LENGTH_SHORT).show();
-                    if (a.getCode().equals("1")) {
+                    if (a.getCode()==1) {
                         accountManagementSex.setText("女");
                     }
                     mPopWindow.dismiss();

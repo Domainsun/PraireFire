@@ -238,7 +238,7 @@ public class ServiceManageActivity extends BaseActivity {
                     APIResultBean a = new J2O().getAPIResult(str);
                     Toast.makeText(ServiceManageActivity.this, a.getMsg() + "", Toast.LENGTH_SHORT).show();
 
-                    if (a.getCode().equals("1")) {
+                    if (1==a.getCode()) {
                         if (status.equals("0")) {
                             mDatas.get(position).setStatus("0");
                         } else {

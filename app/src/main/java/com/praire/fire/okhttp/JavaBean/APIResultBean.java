@@ -13,14 +13,14 @@ public class APIResultBean {
      * msg : 验证码发送成功
      */
 
-    private String code;
+    private int code;
     private String msg;
 
-    public String getCode() {
+    public int getCode() {
         return code;
     }
 
-    public void setCode(String code) {
+    public void setCode(int code) {
         this.code = code;
     }
 

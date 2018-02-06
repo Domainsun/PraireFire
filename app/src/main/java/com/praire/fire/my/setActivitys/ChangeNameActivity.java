@@ -107,7 +107,7 @@ public class ChangeNameActivity extends BaseActivity {
                         str=u.changeUserInfo(cookie,name,"","","","","");
                         APIResultBean a=j.getAPIResult(str);
                         Toast.makeText(this, a.getMsg(), Toast.LENGTH_SHORT).show();
-                        if (a.getCode().equals("1")) {
+                        if (1==a.getCode()) {
                             Intent i=new Intent();
                             i.putExtra("name",name);
                             setResult(RESULT_OK, i);

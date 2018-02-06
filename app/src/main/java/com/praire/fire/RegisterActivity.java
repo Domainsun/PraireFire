@@ -58,12 +58,15 @@ public class RegisterActivity extends Activity {
     J2O j2O = new J2O();
     @BindView(R.id.check_password)
     CheckBox checkPassword;
+    @BindView(R.id.et_confirm_pw)
+    EditText etConfirmPw;
 
 
     private String phone = "";
     private String photoCode = "";
     private String smsCode = "";
     private String pw = "";
+    String cpw = "";
     private String invitation = "";
     String photoCodeCookie = "";
     String smsCodeCookie = "";
@@ -155,7 +158,7 @@ public class RegisterActivity extends Activity {
 
 
                             APIResultBean a = j2O.getAPIResult(result);
-                            if ("1".equals(a.getCode())) {
+                            if (1==a.getCode()) {
                                 Toast.makeText(this, "发送成功", Toast.LENGTH_SHORT).show();
                                 timer.start();
                             } else {
@@ -176,28 +179,38 @@ public class RegisterActivity extends Activity {
                 phone = edInputPhone.getText().toString();
                 smsCode = etInputSmsCode.getText().toString();
                 pw = etInputPw.getText().toString();
+                cpw = etConfirmPw.getText().toString();
                 invitation = etInputInvitationCode.getText().toString();
 
-                if (phone.equals("") || pw.equals("") || smsCode.equals("")) {
+
+
+                if (phone.equals("") || pw.equals("") || smsCode.equals("") || cpw.equals("")) {
                     Toast.makeText(this, "请填写完整", Toast.LENGTH_SHORT).show();
                 } else {
-                    String result = "";
-                    try {
-                        result = new UseAPIs().register(phone, pw, smsCode, invitation, smsCodeCookie);
-                        if (result.length() != 0) {
-                            APIResultBean a = j2O.getAPIResult(result);
-                            if ("1".equals(a.getCode())) {
-                                Intent i = new Intent(this, SignAcitvity.class);
-                                i.putExtra("phone", phone);
-                                startActivity(i);
+
+                    if (cpw.equals(pw)) {
+                        String result = "";
+                        try {
+                            result = new UseAPIs().register(phone, pw, smsCode, invitation, smsCodeCookie);
+                            if (result.length() != 0) {
+                                APIResultBean a = j2O.getAPIResult(result);
+                                Toast.makeText(this, a.getMsg()+"", Toast.LENGTH_SHORT).show();
+                                if (1==a.getCode()) {
+                                    Intent i = new Intent(this, SignAcitvity.class);
+                                    i.putExtra("phone", phone);
+                                    startActivity(i);
+                                }
+                            } else {
+                                Toast.makeText(RegisterActivity.this, "网络错误！", Toast.LENGTH_SHORT).show();
                             }
-                        } else {
-                            Toast.makeText(RegisterActivity.this, "网络错误！", Toast.LENGTH_SHORT).show();
+                        } catch (Exception e) {
+                            Log.e("onViewClicked", "onViewClicked: " + e.toString());
+                            Toast.makeText(this, "网络错误！", Toast.LENGTH_SHORT).show();
                         }
-                    } catch (Exception e) {
-                        Log.e("onViewClicked", "onViewClicked: " + e.toString());
-                        Toast.makeText(this, "网络错误！", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(this, "两次密码不一致", Toast.LENGTH_SHORT).show();
                     }
+
 
                 }
 

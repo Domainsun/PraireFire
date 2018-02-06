@@ -103,7 +103,7 @@ public class ChangeSignPasswordActivity extends BaseActivity {
                     try{
                         String str=u.changeSignPasswordAfterSign(oldPassword,newPassword,confirmPassword,cookie);
                         APIResultBean o =j.getAPIResult(str);
-                        if (o.getCode().equals("1")) {
+                        if (1==o.getCode()) {
                             startActivity(new Intent(this, SignAcitvity.class));
                         }
                         Toast.makeText(this, o.getMsg()+"", Toast.LENGTH_SHORT).show();

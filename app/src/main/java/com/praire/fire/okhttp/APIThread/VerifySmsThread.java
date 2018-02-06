@@ -1,10 +1,15 @@
 package com.praire.fire.okhttp.APIThread;
 
+import android.util.Log;
+
+import com.iflytek.cloud.thirdparty.S;
 import com.praire.fire.common.ConstanUrl;
 import com.praire.fire.okhttp.GsonUtils.J2O;
 import com.praire.fire.okhttp.JavaBean.APIResultBean;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.Callable;
 
 import okhttp3.FormBody;
@@ -50,7 +55,7 @@ public class VerifySmsThread implements Callable {
         }
         String cookie = response.headers("set-cookie").get(0);
 
-        System.out.println("verifysmscookie"+response.headers());
+//        System.out.println("verifysmscookie"+response.headers());
 
 
 
@@ -58,17 +63,30 @@ public class VerifySmsThread implements Callable {
 
         String result = response.body().string();
 
-        APIResultBean a = new J2O().getAPIResult(result);
-
-        if (a.getCode().equals("1")) {
-            return cookie;
-        } else if (a.getCode().equals("0")){
-            return result;
-        }
 
 
 
-        return result;
+//        APIResultBean a = new J2O().getAPIResult(result);
+//
+//        if (1==a.getCode()) {
+//
+//            return cookie;
+//
+//        } else if (0 == a.getCode()){
+//
+//
+//            return result;
+//        }
+
+        String str[]=new String[2];
+        str[0]=result;
+        str[1]=cookie;
+
+        Log.d("call", "call: "+str[0]);
+
+
+//
+        return str;
 
     }
 }

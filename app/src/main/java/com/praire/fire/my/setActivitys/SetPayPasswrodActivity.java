@@ -41,11 +41,12 @@ public class SetPayPasswrodActivity extends BaseActivity {
     @BindView(R.id.submit)
     Button submit;
 
-    UseAPIs u=new UseAPIs();
-    J2O j=new J2O();
-    String cookie="";
-    String password="";
-    String cpassword="";
+    UseAPIs u = new UseAPIs();
+    J2O j = new J2O();
+    String cookie = "";
+    String password = "";
+    String cpassword = "";
+
 
     @Override
     protected int getFragmentLayout() {
@@ -74,39 +75,43 @@ public class SetPayPasswrodActivity extends BaseActivity {
     }
 
 
-
-    @OnClick({R.id.et_password, R.id.et_confirm_password, R.id.submit})
+    @OnClick({R.id.tv_back,R.id.et_password, R.id.et_confirm_password, R.id.submit})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+
+            case R.id.tv_back:
+                finish();
+                break;
+
             case R.id.submit:
-                password=etPassword.getText().toString();
-                cpassword=etConfirmPassword.getText().toString();
-                if (password.length()!=0 && cpassword.length()!=0) {
+                password = etPassword.getText().toString();
+                cpassword = etConfirmPassword.getText().toString();
+                if (password.length() != 0 && cpassword.length() != 0) {
 
                     try {
-                        String str=   u.setPayPassword(password,cpassword,cookie);
-                        APIResultBean o =j.getAPIResult(str);
+                        String str = u.setPayPassword(password, cpassword, cookie);
+                        APIResultBean o = j.getAPIResult(str);
 
-                        Toast.makeText(this, o.getMsg()+"", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, o.getMsg() + "", Toast.LENGTH_SHORT).show();
 
-                        if (o.getCode().equals("1")) {
+                        if (1==o.getCode()) {
 
                             try {
-                                String str1= u.getRealVerifyInfo(cookie);
-                                RealVerifyBean r  =j.getRealVerifyInfo(str1);
+                                String str1 = u.getRealVerifyInfo(cookie);
+                                RealVerifyBean r = j.getRealVerifyInfo(str1);
 
-                                if (r.getStatus()!=null) {
+                                if (r.getStatus() != null) {
                                     startActivity(new Intent(this, MainActivity.class));
                                 }
                             } catch (Exception e) {
-                                startActivity(new Intent(this,RealVerifyActivity.class));
+                                startActivity(new Intent(this, RealVerifyActivity.class));
                             }
 
                         }
 
-                        Log.d("str", "onViewClicked: "+str);
+                        Log.d("str", "onViewClicked: " + str);
                     } catch (Exception e) {
-                        Log.e("onViewClicked", "onViewClicked: "+e.toString() );
+                        Log.e("onViewClicked", "onViewClicked: " + e.toString());
                     }
 
                 }
@@ -115,4 +120,7 @@ public class SetPayPasswrodActivity extends BaseActivity {
                 break;
         }
     }
+
+
+
 }

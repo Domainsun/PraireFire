@@ -352,7 +352,7 @@ public class MerchantActivity1 extends BaseActivity implements EasyPermissions.P
                         APIResultBean a = new J2O().getAPIResult(s);
                         Toast.makeText(MerchantActivity1.this, a.getMsg() + "", Toast.LENGTH_SHORT).show();
 
-                        if (a.getCode().equals("1")) {
+                        if (1==a.getCode()) {
                             submit.setText("审核中");
                             submit.setEnabled(false);
                         }

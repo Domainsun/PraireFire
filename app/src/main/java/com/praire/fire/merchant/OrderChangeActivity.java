@@ -105,7 +105,7 @@ public class OrderChangeActivity extends BaseActivity {
 
                     Log.d("nprice", "nprice: "+nprice+"   "+psId+"  "+   orderId);
                     APIResultBean a = j.getAPIResult(str);
-                    if (a.getCode().equals("1")) {
+                    if (1==a.getCode()) {
 
                         getData();
 

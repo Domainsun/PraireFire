@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.praire.fire.R;
 import com.praire.fire.base.BaseActivity;
@@ -82,8 +83,8 @@ public class FindPayPasswordNextActivity extends BaseActivity {
                 if (inum.length()!=0 && password.length()!=0) {
                    String str=u.changePayPassword(password,inum,cookie);
                     APIResultBean o =j.getAPIResult(str);
-
-                    if (o.getCode().equals("1")) {
+                    Toast.makeText(this, o.getMsg()+"", Toast.LENGTH_SHORT).show();
+                    if (1==o.getCode()) {
                         startActivity(new Intent(this,PasswordMangeActivity.class));
 
                         Log.d("str", "str: " + str);
