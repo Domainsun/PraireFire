@@ -19,6 +19,7 @@ import com.praire.fire.R;
 import com.praire.fire.base.BaseActivity;
 import com.praire.fire.common.CommonMethod;
 import com.praire.fire.common.Constants;
+import com.praire.fire.my.SetActivity;
 import com.praire.fire.okhttp.GsonUtils.J2O;
 import com.praire.fire.okhttp.JavaBean.APIResultBean;
 import com.praire.fire.okhttp.JavaBean.RealVerifyBean;
@@ -98,7 +99,7 @@ public class RealVerifyActivity extends BaseActivity {
                 etName.setText(name);
                 etInum.setText(inum);
                 uploadIdCard.setImageURI(iphoto);
-                submit.setText("等待审核");
+                submit.setText("审核中");
                 submit.setEnabled(false);
                 etInum.setEnabled(false);
                 etName.setEnabled(false);
@@ -107,12 +108,13 @@ public class RealVerifyActivity extends BaseActivity {
                 etName.setText(name);
                 etInum.setText(inum);
                 uploadIdCard.setImageURI(iphoto);
-                rlSubmit.setVisibility(View.INVISIBLE);
+//                rlSubmit.setVisibility(View.INVISIBLE);
                 etInum.setEnabled(false);
                 etName.setEnabled(false);
                 uploadIdCard.setEnabled(false);
+                submit.setText("已认证");
             } else if (status.equals("2")) {
-                submit.setText("已被拒绝，点击重新提交");
+                submit.setText("信息有误，请重新提交");
             }
 
 
@@ -146,6 +148,8 @@ public class RealVerifyActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.upload_id_card:
+
+
                 showChoosePic(REQUEST_REAL_VERIFY_PHTOTO);
 
 
@@ -158,11 +162,15 @@ public class RealVerifyActivity extends BaseActivity {
                     try {
                         String str = u.userRealVerity(inum, name, iphoto, cookie);
                         APIResultBean o = j.getAPIResult(str);
-                        if (o.getCode().equals("1")) {
-                            finish();
-                        }
                         Toast.makeText(this, o.getMsg() + "", Toast.LENGTH_SHORT).show();
 
+                        Log.d("str", "str: "+str);
+
+                        if (1==o.getCode()) {
+
+                            Log.d("startAcitivty", "onViewClicked-----------------startAcitivty: ");
+                            SetActivity.startActivity(this,false);
+                        }
                     } catch (Exception e) {
                         Log.e("onViewClicked", "onViewClicked: " + e.toString());
 
@@ -177,7 +185,7 @@ public class RealVerifyActivity extends BaseActivity {
     }
 
     private void showChoosePic(int request_code) {
-        String[] perms = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+        String[] perms = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.CAMERA};
         if (EasyPermissions.hasPermissions(this, perms)) {
             Matisse.from(RealVerifyActivity.this)
                     .choose(MimeType.allOf()) // 选择 mime 的类型
@@ -219,10 +227,5 @@ public class RealVerifyActivity extends BaseActivity {
         }
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
+
 }

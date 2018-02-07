@@ -159,7 +159,7 @@ public class FindPayPasswordActivity extends BaseActivity {
     }
 
 
-
+    String str[] =new String[2];
     @OnClick({R.id.tv_back, R.id.iv_show_code, R.id.btn_sendSmsCode, R.id.submit})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -181,7 +181,7 @@ public class FindPayPasswordActivity extends BaseActivity {
 
                         if (result.length() != 0) {
                             APIResultBean a = new J2O().getAPIResult(result);
-                            if ("1".equals(a.getCode())) {
+                            if (1==a.getCode()) {
                                 Toast.makeText(this, "发送成功", Toast.LENGTH_SHORT).show();
                                 timer.start();
                             } else {
@@ -202,34 +202,31 @@ public class FindPayPasswordActivity extends BaseActivity {
 
                 String sms="";
 
-                try {
 
                     sms=etSmsCode.getText().toString();
                     if (phone.length() != 0 && sms.length() != 0) {
 
 
-                        String str= u.verifySms(phone,sms);
-                        Log.d("smsstr", "smsstr: "+str);
+                        try {
+                            str= u.verifySms(phone,sms);
 
-
-                        if (str.equals("msg")) {
-
-                            APIResultBean o = new J2O().getAPIResult(str);
+                            Log.d("str[0]", "onViewClicked: "+str[0]);
+                            APIResultBean o = new J2O().getAPIResult(str[0]);
                             Toast.makeText(this, o.getMsg(), Toast.LENGTH_SHORT).show();
+                            if (o.getCode()==1) {
+                                Intent i = new Intent(this, FindPasswordNextActivity.class);
+                                i.putExtra("phone", phone);
+                                i.putExtra("cookie", str[1]);
+                                startActivity(i);
+                            }
 
-                        }else {
-
-                            Intent i = new Intent(this, FindPayPasswordNextActivity.class);
-                            i.putExtra("phone", phone);
-                            i.putExtra("cookie", str);
-                            startActivity(i);
+                        } catch (Exception e) {
+                            Log.e("eee", "onViewClicked: "+e.toString() );
                         }
                     } else {
                         Toast.makeText(this, "请把信息填写完整", Toast.LENGTH_SHORT).show();
                     }
-                } catch (Exception e) {
 
-                }
                 break;
         }
     }

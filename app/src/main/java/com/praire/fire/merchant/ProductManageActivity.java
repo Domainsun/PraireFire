@@ -237,7 +237,7 @@ public class ProductManageActivity extends BaseActivity {
                     APIResultBean a = new J2O().getAPIResult(str);
                     Toast.makeText(ProductManageActivity.this, a.getMsg() + "", Toast.LENGTH_SHORT).show();
                     Log.d("onClick", "onClick: "+a.getCode());
-                    if (a.getCode().equals("1")) {
+                    if (1==a.getCode()) {
                         if (status.equals("0")) {
                             mDatas.get(position).setStatus("0");
                         } else {

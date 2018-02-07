@@ -44,19 +44,20 @@
 
         <TextView
             android:id="@+id/tv_id_num"
-            android:layout_width="100dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
-            android:text="真实姓名"
+            android:text="真实姓名:"
             android:textColor="@color/text_color"
             android:textSize="16sp" />
 
         <EditText
+            android:layout_marginLeft="15dp"
             android:id="@+id/et_name"
             android:inputType="text"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="填写本人姓名"
             android:textSize="14sp"
@@ -72,13 +73,14 @@
         android:background="@color/white">
 
         <TextView
+
             android:id="@+id/tv_pay_password"
-            android:layout_width="100dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
-            android:text="身份证号码"
+            android:text="身份证号:"
             android:textColor="@color/text_color"
             android:textSize="16sp"
         />
@@ -86,7 +88,7 @@
 
         <EditText
             android:id="@+id/et_inum"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text"
             android:hint="填写本人身份证号码"
@@ -95,6 +97,7 @@
             android:layout_centerVertical="true"
             android:layout_toRightOf="@id/tv_pay_password"
             android:maxLength="18"
+            android:layout_marginLeft="15dp"
             />
     </RelativeLayout>
     <RelativeLayout

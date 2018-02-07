@@ -52,9 +52,10 @@
         >
 
         <TextView
+            android:id="@+id/tv1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/x30"
+            android:layout_marginStart="15dp"
             android:text="手     机   号:"
             android:textColor="@color/black"
             android:textSize="16sp"
@@ -63,14 +64,16 @@
 
         <EditText
             android:id="@+id/ed_input_phone"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/y260"
+            android:layout_toRightOf="@id/tv1"
             android:background="@null"
             android:hint="请输入手机号"
             android:inputType="phone"
             android:textSize="13sp"
             android:layout_centerVertical="true"
+
+            android:layout_marginLeft="15dp"
            />
 
         <View
@@ -99,6 +102,7 @@
         >
 
         <TextView
+            android:id="@+id/tv2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="图形验证码:"
@@ -111,20 +115,21 @@
         <EditText
             android:id="@+id/ed_input_photoCode"
             android:layout_width="wrap_content"
-            android:layout_height="64dp"
-            android:layout_marginStart="@dimen/y260"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/tv2"
             android:background="@null"
             android:hint="请输入右侧验证码"
             android:inputType="phone"
             android:textSize="13sp"
-            android:layout_centerVertical="true" />
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"/>
 
 
         <ImageView
             android:id="@+id/iv_show_code"
             android:layout_width="100dp"
-            android:layout_height="35dp"
-
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
             android:gravity="center"
             android:textSize="16sp"
             android:layout_alignParentRight="true" />
@@ -148,9 +153,10 @@
         >
 
         <TextView
+            android:id="@+id/tv5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/x30"
+            android:layout_marginStart="15dp"
             android:text="短信验证码:"
             android:textColor="@color/black"
             android:textSize="16sp"
@@ -160,21 +166,21 @@
             android:id="@+id/et_input_smsCode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/y260"
+            android:layout_toRightOf="@id/tv5"
             android:background="@null"
             android:hint="请输入短信验证码"
             android:inputType="phone"
             android:textSize="13sp"
-            android:layout_centerVertical="true" />
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"/>
 
 
         <Button
             android:id="@+id/btn_sendSmsCode"
-            android:layout_width="@dimen/x200"
-            android:layout_height="@dimen/y70"
-            android:layout_marginEnd="@dimen/x30"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_marginEnd="15dp"
             android:background="@drawable/shape_btn_resgister"
-            android:gravity="center"
             android:text="发送验证码"
             android:textColor="#fff"
             android:textSize="16sp"
@@ -198,10 +204,11 @@
         >
 
         <TextView
+            android:id="@+id/tv3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/x30"
-            android:text="密             码:"
+            android:layout_marginStart="15dp"
+            android:text="密           码:"
             android:textColor="@color/black"
             android:textSize="16sp"
            android:layout_centerVertical="true" />
@@ -211,11 +218,12 @@
             android:id="@+id/et_input_pw"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/y260"
+            android:layout_toRightOf="@id/tv3"
             android:background="@null"
             android:hint="输入6-20位数字或者字母密码"
             android:textSize="13sp"
-            android:layout_centerVertical="true" />
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"/>
 
 
         <CheckBox
@@ -228,7 +236,7 @@
             android:button="@drawable/check_box_style3"
             android:checked="false"
             android:clickable="true"
-            android:layout_marginRight="30dp"/>
+            android:layout_marginRight="15dp"/>
 
         <View
             android:layout_width="match_parent"
@@ -238,7 +246,47 @@
 
     </RelativeLayout>
 
+    <RelativeLayout
 
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="0dp"
+        android:orientation="horizontal"
+        >
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:text="确 认 密 码:"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:layout_centerVertical="true"
+            android:id="@+id/textView3" />
+
+        <EditText
+            android:layout_marginLeft="15dp"
+            android:id="@+id/et_confirm_pw"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/textView3"
+            android:background="@null"
+            android:hint="再次输入密码"
+            android:inputType="textPassword"
+            android:textSize="13sp" />
+
+
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/viewcolor1"
+            android:layout_alignParentBottom="true"/>
+
+    </RelativeLayout>
 
 
 
@@ -251,19 +299,21 @@
         >
 
         <TextView
+            android:id="@+id/tv4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/x30"
+            android:layout_marginStart="15dp"
             android:text="邀     请   码:"
             android:textColor="@color/black"
             android:textSize="16sp"
             android:layout_centerVertical="true" />
 
         <EditText
+            android:layout_marginLeft="15dp"
             android:id="@+id/et_input_invitationCode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/y260"
+            android:layout_toRightOf="@id/tv4"
             android:background="@null"
             android:hint="请填写推荐人号码(选填)"
             android:textSize="13sp"

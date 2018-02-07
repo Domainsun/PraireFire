@@ -147,7 +147,7 @@ public class AddressActivity extends BaseActivity {
                         str=u.changeUserInfo(cookie,"",address,name,phone,postCode,"");
                         APIResultBean a=j.getAPIResult(str);
                         Toast.makeText(this, a.getMsg(), Toast.LENGTH_SHORT).show();
-                        if (a.getCode().equals("1")) {
+                        if (1==a.getCode()) {
                             finish();
                         }
                         Log.d("str", "str: "+str);

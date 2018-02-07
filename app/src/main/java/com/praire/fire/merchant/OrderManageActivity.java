@@ -288,7 +288,7 @@ public class OrderManageActivity extends BaseActivity implements TabLayout.OnTab
                 if (str.length()!=0) {
 
                     APIResultBean a = new J2O().getAPIResult(str);
-                    if (a.getCode().equals("1")) {
+                    if (1==a.getCode()) {
                         Datas.get(position).setRefund("3");
                         adapter.notifyItemChanged(position);
                     }

@@ -69,7 +69,7 @@ public class FindPasswordNextActivity extends AppCompatActivity {
                             APIResultBean a = new J2O().getAPIResult(str);
 
 
-                            if (a.getCode().equals("1")) {
+                            if (1==a.getCode()) {
                                 Intent i=new Intent(this,SignAcitvity.class);
 
                                 i.putExtra("phone",phone);

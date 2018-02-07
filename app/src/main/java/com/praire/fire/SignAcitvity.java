@@ -145,7 +145,7 @@ public class SignAcitvity extends Activity {
                     if (result.length() != 0) {
                         APIResultBean a = new J2O().getAPIResult(result);
                         Toast.makeText(this, a.getMsg() + "", Toast.LENGTH_SHORT).show();
-                        if ("1".equals(a.getCode())) {
+                        if (1==a.getCode()) {
                             SharePreferenceMgr.put(this, Constants.LOGIN_COOKIE, myApplication.getSignCookie());
                             SharePreferenceMgr.put(MyApplication.getInstance(), Constants.LOGIN_COOKIE, myApplication.getSignCookie());
                             //-------//add by lyp --------
@@ -168,9 +168,10 @@ public class SignAcitvity extends Activity {
                                 String str = u.hasSetPassword(cookie);
                                 APIResultBean o = j.getAPIResult(str);
 
+                                Log.d("signstr", "signstr: "+str);
 
                                 Log.d("onViewClicked", "onViewClicked: "+o.getCode());
-                                if (o.getCode().equals("0")) {
+                                if (0==a.getCode()) {
                                     startActivity(new Intent(this, SetPayPasswrodActivity.class));
                                 } else {
 
@@ -223,7 +224,10 @@ public class SignAcitvity extends Activity {
 
                 break;
             case R.id.imageView2:
-                finish();
+
+               startActivity(new Intent(this,MainActivity.class));
+
+//                finish();
                 break;
             case R.id.check_password:
 

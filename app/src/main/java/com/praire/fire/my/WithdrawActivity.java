@@ -198,7 +198,7 @@ public class WithdrawActivity extends BaseActivity {
 
                         APIResultBean o = j.getAPIResult(str);
                         Toast.makeText(this, o.getMsg()+"", Toast.LENGTH_SHORT).show();
-                        if (o.getCode().equals("1")) {
+                        if (1==o.getCode()) {
                             finish();
                         }
                     } catch (Exception e) {

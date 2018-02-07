@@ -1,5 +1,7 @@
 package com.praire.fire.okhttp;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 
@@ -314,20 +316,21 @@ public class UseAPIs {
     }
 
 
-    public String verifySms(String tel, String smscode) {
-        String result = "";
+    public String[] verifySms(String tel, String smscode) {
+//        Map<String,String> map=new HashMap<>();
+        String str[] =new String[2];
         VerifySmsThread tSign = new VerifySmsThread( tel,  smscode);
-        FutureTask<String> ft = new FutureTask<>(tSign);
+        FutureTask<String[]> ft = new FutureTask<>(tSign);
         Thread Thread = new Thread(ft);
         Thread.start();
         try {
-            result = ft.get();
+            str = ft.get();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
-        return result;
+        return str;
     }
 
     public String addService(String name, String type, String desc, String price, String cookie) {
@@ -391,7 +394,9 @@ public class UseAPIs {
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
+
         return result;
+
     }
 
     public String sign(String tel, String pwd, MyApplication application) {

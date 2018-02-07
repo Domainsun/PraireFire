@@ -144,7 +144,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginTop="56dp">
+        android:layout_marginTop="30dp">
 
 
     <Button
@@ -153,7 +153,7 @@
             android:layout_height="50dp"
             android:background="@drawable/shape_btn_resgister"
             android:text="登录"
-            android:textColor="@color/text_color"
+            android:textColor="@color/white"
             android:textSize="18sp"
             android:layout_centerHorizontal="true"
           />
@@ -169,19 +169,19 @@
             android:id="@+id/tv_register"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="手机快速注册"
             android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
             android:layout_marginLeft="30dp"
-            android:textSize="10sp"
+            android:text="手机快速注册"
             android:textColor="#8f8f8f"
-             />
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/tv_findPw"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="找回密码"
-            android:textSize="10sp"
+            android:textSize="14sp"
             android:textColor="@color/text_8f"
             android:layout_alignParentRight="true"
             android:layout_marginRight="30dp"/>

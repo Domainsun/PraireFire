@@ -253,7 +253,7 @@ public class EvaluateManageActivity extends BaseActivity {
 
                     Toast.makeText(EvaluateManageActivity.this, o.getMsg(), Toast.LENGTH_SHORT).show();
 
-                    if (o.getCode().equals("1")) {
+                    if (1==o.getCode()) {
                         mDatas.get(position).setReply(reply);
                         adapter.notifyItemChanged(position);
                     }
