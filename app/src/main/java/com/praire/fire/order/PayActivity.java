@@ -247,15 +247,15 @@ public class PayActivity extends BaseTitleActivity {
             JSONObject json = new JSONObject(paystr);
 
 
-            req.appId = json.getString("appId");
+            req.appId = json.getString("appid");
             req.partnerId = json.getString("partnerid");
-            req.prepayId = json.getString("prepayId");
-            req.nonceStr = json.getString("nonceStr");
-            req.timeStamp = json.getString("timeStamp");
+            req.prepayId = json.getString("prepayid");
+            req.nonceStr = json.getString("noncestr");
+            req.timeStamp = json.getString("timestamp");
             req.packageValue = json.getString("package");
             req.sign = json.getString("sign");
 //                req.extData = "app data"; // optional
-            if (isWXAppInstalledAndSupported()) {
+            if (isWXAppInstalledAndSupported(req.appId)) {
                 ToastUtil.show(this,"正常调起支付");
                 // 在支付之前，如果应用没有注册到微信，应该先调用IWXMsg.registerApp将应用注册到微信
                 api.sendReq(req);
@@ -294,10 +294,11 @@ public class PayActivity extends BaseTitleActivity {
 
      /**
      * 判断用户手机是否安装微信客户端
-     */
-    private boolean isWXAppInstalledAndSupported() {
+      * @param appId
+      */
+    private boolean isWXAppInstalledAndSupported(String appId) {
         IWXAPI msgApi = WXAPIFactory.createWXAPI(this, null);
-        msgApi.registerApp(Constants.PRODUCT_WEIXIN_APP_ID);
+        msgApi.registerApp(appId);
 
         boolean sIsWXAppInstalledAndSupported = msgApi.isWXAppInstalled()
                 && msgApi.isWXAppSupportAPI();

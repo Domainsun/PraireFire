@@ -142,20 +142,20 @@ public class HomeFragment extends BaseFragment implements BaseSliderView.OnSlide
                 ShopActivity.startActivity(getActivity(), evEntitys.get(position).getId(), false);
             }
         });
-//设置 Header 为 Material样式
-        refreshLayout.setRefreshHeader(new BezierRadarHeader(getActivity()).setEnableHorizontalDrag(true));
+////设置 Header 为 Material样式
+//        refreshLayout.setRefreshHeader(new BezierRadarHeader(getActivity()).setEnableHorizontalDrag(true));
 //设置 Footer 为 球脉冲
         refreshLayout.setRefreshFooter(new BallPulseFooter(getActivity()).setSpinnerStyle(SpinnerStyle.Scale));
-        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+       /* refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
                 isFrist = true;
                 index = 1;
                 requestShopList(index);
                 //加载失败的话3秒后结束加载
-                refreshlayout.finishRefresh(3000/*,false*/);//传入false表示刷新失败
+                refreshlayout.finishRefresh(3000*//*,false*//*);//传入false表示刷新失败
             }
-        });
+        });*/
         refreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {

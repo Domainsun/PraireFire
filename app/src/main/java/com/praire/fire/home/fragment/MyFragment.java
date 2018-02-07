@@ -1,7 +1,6 @@
 package com.praire.fire.home.fragment;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Message;
 import android.text.TextUtils;
@@ -17,16 +16,13 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.praire.fire.R;
 import com.praire.fire.SignAcitvity;
-import com.praire.fire.base.BaseActivity;
 import com.praire.fire.base.BaseFragment;
 import com.praire.fire.common.ConstanUrl;
-import com.praire.fire.common.Constants;
 import com.praire.fire.merchant.BusinessServiceActivity;
 import com.praire.fire.merchant.MerchantActivity1;
 import com.praire.fire.my.AccountManagementActivity;
 import com.praire.fire.my.MyEvaluateActivity;
 import com.praire.fire.my.MyWalletActivity;
-import com.praire.fire.my.NearbyActivity;
 import com.praire.fire.my.SetActivity;
 import com.praire.fire.my.ShoppingCarActivity;
 import com.praire.fire.my.bean.UserBean;
@@ -34,16 +30,12 @@ import com.praire.fire.okhttp.GsonUtils.J2O;
 import com.praire.fire.okhttp.JavaBean.ShopInfoBean;
 import com.praire.fire.okhttp.OkhttpRequestUtil;
 import com.praire.fire.okhttp.UseAPIs;
-import com.praire.fire.utils.ImageUtils;
 import com.praire.fire.utils.SharePreferenceMgr;
 import com.squareup.picasso.Picasso;
-
-import java.io.File;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.praire.fire.common.Constants.LOGIN_COOKIE;
-import static com.praire.fire.common.Constants.USER_ID;
 
 /**
  * 我的
@@ -160,7 +152,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
             fragmentMyImg.setImageResource(R.mipmap.avatar2);
             fragmentMyVip.setText("普通会员");
             fragmentMyWallet.setText("0.00");
-            fragmentMyIntegral.setText("0");
+             fragmentMyIntegral.setText("0");
         }
     }
 
@@ -196,18 +188,26 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
 //                InvitationIntegralActivity.startActivity(getActivity(), false);
                     break;
                 case R.id.fragment_my_order_rl:
-//                CustomerServiceActivity.startActivity(getActivity(),false);
+                   /* OrderFragment orderFragment = new OrderFragment();
+                    getActivity().getSupportFragmentManager()
+                            .beginTransaction()
+                            .addToBackStack("我的")  //将当前fragment加入到返回栈中
+                            .replace(R.id.layFrame, orderFragment).commit();
+                    Bundle bundle = new Bundle();
+                    bundle.putInt(Constants.FRAGMENTFLAG,2);
+                    orderFragment.setArguments(bundle);*/
+                   if(onClickShopListner != null) {
+                       onClickShopListner.setOnClickShopListner(2);
+                   }
                     break;
                 case R.id.fragment_my_shoppingcar_rl:
                     ShoppingCarActivity.startActivity(getActivity(), false);
                     break;
                 case R.id.fragment_my_collect_rl:
-//                MyCollectActivity.startActivity(getActivity(), false);
+    //                MyCollectActivity.startActivity(getActivity(), false);
                     break;
                 case R.id.fragment_my_evaluate_rl:
                     MyEvaluateActivity.startActivity(getActivity(), false);
-
-
                     break;
                 case R.id.fragment_my_merchant_services_rl:
 
@@ -252,11 +252,20 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
 
                     break;
                 case R.id.fragment_my_nearby_rl:
-                    NearbyActivity.startActivity(getActivity(), false);
+                    if(onClickShopListner != null) {
+                        onClickShopListner.setOnClickShopListner(1);
+                    }
                     break;
                 default:
                     break;
             }
         }
+    }
+    OnClickShopListner onClickShopListner;
+    /**
+     * 定义地接口，用于fragment和activity之间的数据传递
+     */
+    public interface OnClickShopListner{
+         void setOnClickShopListner(int index);
     }
 }

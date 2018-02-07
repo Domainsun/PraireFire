@@ -19,7 +19,7 @@ public class Constants {
     public static final int REQUEST_CODE_CHOOSE_REGION = 6;
     public static final String LOGIN_COOKIE = "loginCookie";
     public static final int REQUEST_CODE_SEARCH =  11;
-
+    public static final String FRAGMENTFLAG = "fragmentflag";
 
 
 
@@ -48,7 +48,7 @@ public class Constants {
      * 用户登录名
      */
     public static final String USER_ID = "userId";
-    public static final String PRODUCT_WEIXIN_APP_ID = "PRODUCT_WEIXIN_APP_ID";
+    public static final String PRODUCT_WEIXIN_APP_ID = "wx426b3015555a46be";
     public static final String CITY = "city";
     public static final String TOTLE_PRICE = "TOTLE_PRICE";
     public static final String THANKS_MSG = "THANKS_MSG";

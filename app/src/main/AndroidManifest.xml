@@ -77,7 +77,6 @@
         <activity android:name=".my.MyCollectActivity" />
         <activity android:name=".my.MyEvaluateActivity" />
         <activity android:name=".my.MyWalletActivity" />
-        <activity android:name=".my.NearbyActivity" />
         <activity android:name=".my.SetActivity" />
         <activity android:name=".my.ShoppingCarActivity" />
         <activity android:name=".car.ShopActivity" />

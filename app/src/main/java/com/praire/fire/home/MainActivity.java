@@ -3,6 +3,7 @@ package com.praire.fire.home;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -39,6 +40,7 @@ import static com.praire.fire.common.Constants.LOGIN_COOKIE;
 public class MainActivity extends BaseActivity implements BottomNavigationBar.OnTabSelectedListener {
 
 
+
     private ArrayList<Fragment> fragments;
     private BottomNavigationBar bottomNavigationBar;
 
@@ -64,19 +66,12 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
     protected void initViews() {
 
 
-
-
-
-
-
-
-
         bottomNavigationBar = findViewById(R.id.bottom_navigation_bar);
-        bottomNavigationBar.setMode(BottomNavigationBar.MODE_FIXED);
+        bottomNavigationBar.setMode(BottomNavigationBar.MODE_FIXED);//MODE_SHIFTING
         bottomNavigationBar
                 .setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC
                 );
-        bottomNavigationBar.addItem(new BottomNavigationItem(R.mipmap.home_page1, getString(R.string.index)).setActiveColorResource(R.color.orange))
+        bottomNavigationBar.addItem(new BottomNavigationItem(R.mipmap.home_page, getString(R.string.index)).setActiveColorResource(R.color.orange))
                 .addItem(new BottomNavigationItem(R.mipmap.map, getString(R.string.map)).setActiveColorResource(R.color.orange))
                 .addItem(new BottomNavigationItem(R.mipmap.order, getString(R.string.order)).setActiveColorResource(R.color.orange))
                 .addItem(new BottomNavigationItem(R.mipmap.my, getString(R.string.my)).setActiveColorResource(R.color.orange))
@@ -131,7 +126,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
 
     @Override
     public void onTabUnselected(int position) {
-        /*if (fragments != null) {
+         if (fragments != null) {
             if (position < fragments.size()) {
                 FragmentManager fm = getSupportFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
@@ -139,7 +134,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
                 ft.remove(fragment);
                 ft.commitAllowingStateLoss();
             }
-        }*/
+        }
     }
 
     @Override
@@ -186,5 +181,13 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
     public void setSearchKey(String searchKey) {
         this.searchKey = searchKey;
     }
-
+    @Override
+    protected void onResume() {
+        Bundle bundle = new Bundle();
+        int id = bundle.getInt(Constants.FRAGMENTFLAG, 0);
+        if (id == 2 ) {
+            bottomNavigationBar.selectTab(2);
+        }
+        super.onResume();
+    }
 }
