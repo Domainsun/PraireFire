@@ -240,7 +240,7 @@ public class PayActivity extends BaseTitleActivity {
 
     private void weixinPay(String paystr) {
 
-        IWXAPI  api = WXAPIFactory.createWXAPI(this, Constants.PRODUCT_WEIXIN_APP_ID);
+        IWXAPI  api = WXAPIFactory.createWXAPI(this, Constants.PRODUCT_WEIXIN_APP_ID,false);
         api.registerApp(Constants.PRODUCT_WEIXIN_APP_ID);
         PayReq req = new PayReq();
         try {
@@ -254,8 +254,7 @@ public class PayActivity extends BaseTitleActivity {
             req.timeStamp = json.getString("timestamp");
             req.packageValue = json.getString("package");
             req.sign = json.getString("sign");
-//                req.extData = "app data"; // optional
-//            Log.e("weixinpay=", "checkArgs=" + req.checkArgs());//这个只有在true的情况才有可能调起支付页面。
+            req.extData			= "app data"; // optional
             if (isWXAppInstalledAndSupported()) {
                 ToastUtil.show(this,"正常调起支付");
                 // 在支付之前，如果应用没有注册到微信，应该先调用IWXMsg.registerApp将应用注册到微信
@@ -297,12 +296,24 @@ public class PayActivity extends BaseTitleActivity {
      * 判断用户手机是否安装微信客户端
       */
     private boolean isWXAppInstalledAndSupported() {
-        IWXAPI msgApi = WXAPIFactory.createWXAPI(this, Constants.PRODUCT_WEIXIN_APP_ID, false);
+        IWXAPI msgApi = WXAPIFactory.createWXAPI(this,null);
         msgApi.registerApp(Constants.PRODUCT_WEIXIN_APP_ID);
 
         boolean sIsWXAppInstalledAndSupported = msgApi.isWXAppInstalled()
                 && msgApi.isWXAppSupportAPI();
 
         return sIsWXAppInstalledAndSupported;
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //调支付页面最好加个进度条，因为有时候很慢，造成无反应假像，然后在这里关闭。
+//        if (dialog!=null) {
+//            dialog.dismissProcessDialog();
+//        }
+//        微信支付成功后关闭此页面
+        if (Constants.payResult==0) {
+            finish();
+        }
     }
 }

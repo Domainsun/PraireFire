@@ -3,6 +3,7 @@ package com.praire.fire.my;
 import android.content.Context;
 import android.content.Intent;
 
+import com.praire.fire.R;
 import com.praire.fire.base.BaseActivity;
 import com.praire.fire.common.Constants;
 
@@ -23,7 +24,7 @@ public class InvitationIntegralActivity extends BaseActivity {
     }
     @Override
     protected int getFragmentLayout() {
-        return 0;
+        return R.layout.activity_invitation_integral;
     }
 
     @Override

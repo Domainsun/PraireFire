@@ -159,17 +159,17 @@
         <activity android:name=".wxapi.WXPayEntryActivity"
             android:exported="true"
             android:launchMode="singleTop">
-        <!--<intent-filter>
+         <intent-filter>
             <action android:name="android.intent.action.VIEW"/>
             <category android:name="android.intent.category.DEFAULT"/>
             <data android:scheme="wx329efa110cf1d2ac"/>
-        </intent-filter>-->
+        </intent-filter>
         </activity>
         <activity android:name=".WelcomeActivity0"/>
         <activity
             android:name="com.lzy.imagepicker.ui.ImagePreviewDelActivity"
             android:theme="@style/ImagePickerThemeFullScreen"/>
-
+        <activity android:name=".my.IntegralDetailActivity"/>
     </application>
 
 </manifest>

@@ -54,6 +54,7 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
 		if (resp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {
 			if(resp.errCode == 0){
 				msgs = "支付成功";
+				Constants.payResult=resp.errCode;
 			}else if(resp.errCode == 2){
 				msgs = "取消支付";
 			}else {

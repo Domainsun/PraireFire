@@ -1,6 +1,5 @@
 package com.praire.fire.common;
 
-import android.content.Context;
 
 /**
  * Created by Administrator on 2017/12/29.
@@ -85,4 +84,5 @@ public class Constants {
 
     public static final String DRIVE_RESULT = "drive_result";
     public static final String DRIVE_PATH = "drive_path";
+    public static int payResult = -1;
 }
