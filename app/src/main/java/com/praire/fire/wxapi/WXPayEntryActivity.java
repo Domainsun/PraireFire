@@ -28,7 +28,7 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setContentView(R.layout.pay_result);
+        setContentView(R.layout.pay_result);
 		Eyes.setStatusBarColor(this, ContextCompat.getColor(this, R.color.status_bar));
     	api = WXAPIFactory.createWXAPI(this, Constants.PRODUCT_WEIXIN_APP_ID);
         api.handleIntent(getIntent(), this);
@@ -61,7 +61,7 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
 			}
 			ToastUtil.show(this,msgs);
 //			EventBus.getDefault().post(new FirstEvent(msgs));
-//			finish();
+			finish();
 			/*AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			builder.setTitle(R.string.app_tip);
 			builder.setMessage(getString(R.string.pay_result_callback_msg, String.valueOf(resp.errCode)));

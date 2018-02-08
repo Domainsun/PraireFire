@@ -38,4 +38,5 @@
     <string name="launch_wx">启动微信</string>
     <string name="check_timeline_supported">检查是否支持发送到朋友圈</string>
     <string name="scan_qrcode_login">扫码登录</string>
+    <string name="pay_result_tip">这个界面用于显示第三方app通过微信支付的结果</string>
 </resources>
