@@ -1,4 +1,4 @@
-package com.praire.fire.order;
+package com.praire.fire.wxapi;
 
 
 import android.app.Activity;
@@ -9,6 +9,7 @@ import android.util.Log;
 
 import com.praire.fire.R;
 import com.praire.fire.common.Constants;
+import com.praire.fire.utils.ToastUtil;
 import com.praire.fire.utils.statusbarcolor.Eyes;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
@@ -20,7 +21,7 @@ import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
 	
-	private static final String TAG = "MicroMsg.SDKSample.WXPayEntryActivity";
+	private static final String TAG = "WXPayEntryActivity";
 	
     private IWXAPI api;
 	
@@ -58,8 +59,9 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
 			}else {
 				msgs = "支付失败，请重试";
 			}
+			ToastUtil.show(this,msgs);
 //			EventBus.getDefault().post(new FirstEvent(msgs));
-			finish();
+//			finish();
 			/*AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			builder.setTitle(R.string.app_tip);
 			builder.setMessage(getString(R.string.pay_result_callback_msg, String.valueOf(resp.errCode)));

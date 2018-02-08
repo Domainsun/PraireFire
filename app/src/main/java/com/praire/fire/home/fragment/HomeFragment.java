@@ -33,7 +33,6 @@ import com.praire.fire.common.Constants;
 import com.praire.fire.home.adapter.ShopListAdapter;
 import com.praire.fire.home.bean.ShopListBean;
 import com.praire.fire.home.bean.SwipeBean;
-import com.praire.fire.map.MapSearchActivity;
 import com.praire.fire.okhttp.OkhttpRequestUtil;
 import com.praire.fire.utils.RecycleViewDivider;
 import com.praire.fire.utils.SharePreferenceMgr;
@@ -41,9 +40,7 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.footer.BallPulseFooter;
-import com.scwang.smartrefresh.layout.header.BezierRadarHeader;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
-import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,6 +85,8 @@ public class HomeFragment extends BaseFragment implements BaseSliderView.OnSlide
     ImageView active3;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
+    @BindView(R.id.no_more_line)
+    TextView bottonLine;
     private ShopListAdapter adapter;
     private int index = 1;
     private List<ShopListBean.PagelistBean> evEntitys = new ArrayList<>();
@@ -156,15 +155,20 @@ public class HomeFragment extends BaseFragment implements BaseSliderView.OnSlide
                 refreshlayout.finishRefresh(3000*//*,false*//*);//传入false表示刷新失败
             }
         });*/
+
         refreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
-                if(loadMore){
-
+                if (loadMore) {
                     getNextPage();
+                    bottonLine.setVisibility(View.GONE);
+//                    refreshlayout.finishLoadmore(2000/*,false*/);//传入false表示加载失败
+                } else {
+                    refreshLayout.finishLoadmoreWithNoMoreData();
+                    bottonLine.setVisibility(View.VISIBLE);
                 }
                 //加载失败的话3秒后结束加载
-                refreshlayout.finishLoadmore(3000/*,false*/);//传入false表示加载失败
+
             }
         });
     }
@@ -209,10 +213,7 @@ public class HomeFragment extends BaseFragment implements BaseSliderView.OnSlide
     }
 
     private void getNextPage() {
-        if (evEntitys.isEmpty() || evEntitys.size() % 10 != 0) {
-            loadMore = false;
-            return;
-        }
+
         isFrist = false;
         index++;
         requestShopList(index);
@@ -230,16 +231,20 @@ public class HomeFragment extends BaseFragment implements BaseSliderView.OnSlide
     protected void networkResponse(Message msg) {
         //结束加载
         refreshLayout.finishRefresh();
+        refreshLayout.finishLoadmore();
         switch (msg.what) {
             case 0:
                 Toast.makeText(getActivity(), "网络出错，请重试", Toast.LENGTH_SHORT).show();
                 break;
             case 1:
-                if(isFrist){
+                if (isFrist) {
                     evEntitys.clear();
                 }
                 Gson gson = new Gson();
                 final ShopListBean evEntity = gson.fromJson((String) msg.obj, ShopListBean.class);
+                if (evEntity.getPagelist().isEmpty() || evEntity.getPagelist().size() % 10 != 0) {
+                    loadMore = false;
+                }
                 evEntitys.addAll(evEntity.getPagelist());
                 adapter.setEntities(evEntitys, longitude, latitude);
                 break;
@@ -379,7 +384,10 @@ public class HomeFragment extends BaseFragment implements BaseSliderView.OnSlide
                 break;
 
             case R.id.search_bar_search:
-                MapSearchActivity.startActivity(getActivity(), plugSearchEdittext.getText().toString().trim(), true);
+                if (onClickShopListner != null) {
+                    onClickShopListner.setOnClickShopListner(plugSearchEdittext.getText().toString().trim());
+                }
+//                MapSearchActivity.startActivity(getActivity(), plugSearchEdittext.getText().toString().trim(), true);
                 break;
             case R.id.home_car:
                 CarActivity.startActivity(getActivity(), false);
@@ -396,6 +404,19 @@ public class HomeFragment extends BaseFragment implements BaseSliderView.OnSlide
         }
     }
 
+    OnClickShopListner onClickShopListner;
 
+    /**
+     * 定义地接口，用于fragment和activity之间的数据传递
+     */
+    public OnClickShopListner setOnClickShopListner(OnClickShopListner onClickShopListner) {
+        return this.onClickShopListner = onClickShopListner;
+    }
+
+
+
+    public interface OnClickShopListner {
+        void setOnClickShopListner(String key);
+    }
 
 }

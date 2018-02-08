@@ -2,7 +2,6 @@ package com.praire.fire.my;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.os.Message;
 import android.support.design.widget.TabLayout;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -16,19 +15,11 @@ import com.google.gson.Gson;
 import com.praire.fire.R;
 import com.praire.fire.base.BaseActivity;
 import com.praire.fire.base.BaseTitleActivity;
-import com.praire.fire.common.CommonDialog;
 import com.praire.fire.common.ConstanUrl;
 import com.praire.fire.common.Constants;
-import com.praire.fire.data.IntentDataForEvaluateActivity;
 import com.praire.fire.my.adapter.IntegralAdapter;
 import com.praire.fire.my.bean.IntegralBean;
 import com.praire.fire.okhttp.OkhttpRequestUtil;
-import com.praire.fire.order.EvaluateActivity;
-import com.praire.fire.order.OrderFinishInfoActivity;
-import com.praire.fire.order.OrderInfoActivity;
-import com.praire.fire.order.PayActivity;
-import com.praire.fire.order.adapter.OrderListAdapter;
-import com.praire.fire.order.bean.OrderListBean;
 import com.praire.fire.utils.RecycleViewDivider;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -44,11 +35,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * 我的积分
- * Created by lyp on 2018/1/2.
+ * 积分详情
+ * Created by lyp on 2018/2/8.
  */
 
-public class IntegralActivity extends BaseTitleActivity implements TabLayout.OnTabSelectedListener {
+public class IntegralDetailActivity extends BaseTitleActivity implements TabLayout.OnTabSelectedListener {
     @BindView(R.id.integral_score)
     TextView integralScore;
     @BindView(R.id.integral_used_score)
@@ -66,9 +57,9 @@ public class IntegralActivity extends BaseTitleActivity implements TabLayout.OnT
     private boolean isFrist = true;
     private int index = 1;
 
-    public static void startActivity(Context context, boolean forResult) {
-        Intent intent = new Intent(context, IntegralActivity.class);
-
+    public static void startActivity(Context context, String id, boolean forResult) {
+        Intent intent = new Intent(context, IntegralDetailActivity.class);
+        intent.putExtra(Constants.PRODUCT_ID,id);
         if (!forResult) {
             context.startActivity(intent);
         } else if (context instanceof BaseActivity) {
@@ -100,9 +91,9 @@ public class IntegralActivity extends BaseTitleActivity implements TabLayout.OnT
             public void onRefresh(RefreshLayout refreshlayout) {
                 isFrist = true;
                 index = 1;
-                if ("0".equals(statusType)) {
+                if("0".equals(statusType)){
                     initData();
-                } else {
+                }else {
                     setDatas();
                 }
                 //加载失败的话2秒后结束加载
@@ -127,8 +118,8 @@ public class IntegralActivity extends BaseTitleActivity implements TabLayout.OnT
     private void getNextPage() {
 
 
-        isFrist = false;
-        index++;
+            isFrist = false;
+            index++;
         initData();
     }
 
@@ -146,44 +137,20 @@ public class IntegralActivity extends BaseTitleActivity implements TabLayout.OnT
     @Override
     protected void initData() {
 
-        OkhttpRequestUtil.get(ConstanUrl.CREDIT_INDEX + "?p=" + index, 1, true, uiHandler);
+        OkhttpRequestUtil.get(ConstanUrl.CREDIT_INDEX+"?p="+index, 1, true, uiHandler);
     }
 
     private void setDatas() {
-        OkhttpRequestUtil.get(ConstanUrl.CREDIT_INDEX + "?type=" + statusType + "&p=" + index, 1, true, uiHandler);
+        OkhttpRequestUtil.get(ConstanUrl.CREDIT_INDEX + "?type=" + statusType+"&p="+index, 1, true, uiHandler);
     }
 
     @Override
     public void initiTile() {
         setDefaultBack();
-        setTitleMiddle("我的积分");
+        setTitleMiddle("积分详情");
     }
-    @Override
-    protected void networkResponse(Message msg) {
-        //结束加载
-        iRefreshLayout.finishRefresh();
-        iRefreshLayout.finishLoadmore();
-        switch (msg.what) {
-            case 1:
-                Gson gson = new Gson();
-                IntegralBean integralBean = gson.fromJson((String) msg.obj, IntegralBean.class);
-                if (isFrist) {
-                    beans.clear();
-                    integralUsedScore.setText(integralBean.getExpendcredit());
-                    integralScore.setText(integralBean.getCredit());
-                }
-                loadMore = !integralBean.getPagelist().isEmpty() && integralBean.getPagelist().size() % 10 == 0;
 
-                beans.addAll(integralBean.getPagelist());
-                adapter.setData(beans);
-
-                break;
-            default:
-                break;
-        }
-    }
     private void setItemClick() {
-        iRefreshLayout.resetNoMoreData();
         adapter = null;
         adapter = new IntegralAdapter(this);
         irecyclerView.setAdapter(adapter);
@@ -191,7 +158,7 @@ public class IntegralActivity extends BaseTitleActivity implements TabLayout.OnT
 
             @Override
             public void itemClick(View itemView, int position) {
-//                IntegralDetailActivity.startActivity(IntegralActivity.this, beans.get(position).getId(), false);
+
             }
         });
     }
@@ -234,5 +201,24 @@ public class IntegralActivity extends BaseTitleActivity implements TabLayout.OnT
     public void onTabReselected(TabLayout.Tab tab) {
     }
 
-
+    @Override
+    protected void networkResponse(Message msg) {
+        //结束加载
+        iRefreshLayout.finishRefresh();
+        iRefreshLayout.finishLoadmore();
+        Log.e("msgIntegral", (String) msg.obj);
+        switch (msg.what) {
+            case 1:
+                if (isFrist) {
+                    beans.clear();
+                }
+                Gson gson = new Gson();
+                IntegralBean integralBean = gson.fromJson((String) msg.obj,IntegralBean.class);
+                beans.addAll(integralBean.getPagelist());
+                adapter.setData(beans);
+                break;
+            default:
+                break;
+        }
+    }
 }

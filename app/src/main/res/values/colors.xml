@@ -38,5 +38,7 @@
     <drawable name="bg_grays">#f6f6f6</drawable>
     <drawable name="whiltes">#ffffff</drawable>
     <color name="pop_bg">#66000000</color>
+
+    <color name="navpage">#FFE1E8EB</color>
 </resources>
 

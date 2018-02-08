@@ -40,11 +40,12 @@ import static com.praire.fire.common.Constants.LOGIN_COOKIE;
 public class MainActivity extends BaseActivity implements BottomNavigationBar.OnTabSelectedListener {
 
 
-
     private ArrayList<Fragment> fragments;
     private BottomNavigationBar bottomNavigationBar;
 
     private String searchKey = "0";
+    private MyFragment myFragment;
+    private HomeFragment homeFragment;
 
 
     public static void startActivity(Context context, int type, boolean forResult) {
@@ -65,6 +66,27 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
     @Override
     protected void initViews() {
 
+        myFragment = new MyFragment();
+        myFragment.setOnClickShopListner(new MyFragment.OnClickShopListner() {
+            @Override
+            public void setOnClickShopListner(int index) {
+                if (index == 2) {
+                    bottomNavigationBar.selectTab(2);
+                }
+                if (index == 1) {
+                    bottomNavigationBar.selectTab(1);
+                }
+            }
+        });
+        homeFragment = new HomeFragment();
+        homeFragment.setOnClickShopListner(new HomeFragment.OnClickShopListner() {
+
+            @Override
+            public void setOnClickShopListner(String key) {
+                setSearchKey(key);
+                bottomNavigationBar.selectTab(1);
+            }
+        });
 
         bottomNavigationBar = findViewById(R.id.bottom_navigation_bar);
         bottomNavigationBar.setMode(BottomNavigationBar.MODE_FIXED);//MODE_SHIFTING
@@ -105,7 +127,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
     @Override
     public void onTabSelected(int position) {
         if ((position == 2) && !hasLogin()) {
-             return;
+            return;
         }
         if (fragments != null) {
             if (position < fragments.size()) {
@@ -123,10 +145,9 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
     }
 
 
-
     @Override
     public void onTabUnselected(int position) {
-         if (fragments != null) {
+        if (fragments != null) {
             if (position < fragments.size()) {
                 FragmentManager fm = getSupportFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
@@ -148,17 +169,17 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
     private void setDefaultFragment() {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction transaction = fm.beginTransaction();
-        transaction.replace(R.id.layFrame, new HomeFragment());
+        transaction.replace(R.id.layFrame, homeFragment);
         transaction.commit();
     }
 
     private ArrayList<Fragment> getFragments() {
 
         ArrayList<Fragment> fragments = new ArrayList<>();
-        fragments.add(new HomeFragment());
+        fragments.add(homeFragment);
         fragments.add(new MapFragment());
         fragments.add(new OrderFragment());
-        fragments.add(new MyFragment());
+        fragments.add(myFragment);
         return fragments;
     }
 
@@ -181,7 +202,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
     public void setSearchKey(String searchKey) {
         this.searchKey = searchKey;
     }
-    @Override
+    /*@Override
     protected void onResume() {
         Bundle bundle = new Bundle();
         int id = bundle.getInt(Constants.FRAGMENTFLAG, 0);
@@ -189,5 +210,5 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
             bottomNavigationBar.selectTab(2);
         }
         super.onResume();
-    }
+    }*/
 }

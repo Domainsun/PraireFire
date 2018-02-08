@@ -21,6 +21,7 @@ import com.praire.fire.common.ConstanUrl;
 import com.praire.fire.merchant.BusinessServiceActivity;
 import com.praire.fire.merchant.MerchantActivity1;
 import com.praire.fire.my.AccountManagementActivity;
+import com.praire.fire.my.IntegralActivity;
 import com.praire.fire.my.MyEvaluateActivity;
 import com.praire.fire.my.MyWalletActivity;
 import com.praire.fire.my.SetActivity;
@@ -131,7 +132,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                 }
 
                 fragmentMyVip.setText(userBean.getLevelinfo().getDes());
-                fragmentMyWallet.setText(userBean.getCapital());
+                fragmentMyWallet.setText("￥"+userBean.getCapital());
 
 //                fragmentMyIntegral.setText(userBean.g());
 //                fragmentMyOrder.setText(userBean.getTel());
@@ -184,21 +185,13 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                     MyWalletActivity.startActivity(getActivity(), false);
                     break;
                 case R.id.fragment_my_integral_rl:
-                    //                IntegralActivity.startActivity(getActivity(), false);
+                 IntegralActivity.startActivity(getActivity(), false);
                     break;
                 case R.id.fragment_my_invitation_integral_rl:
 
 //                InvitationIntegralActivity.startActivity(getActivity(), false);
                     break;
                 case R.id.fragment_my_order_rl:
-                   /* OrderFragment orderFragment = new OrderFragment();
-                    getActivity().getSupportFragmentManager()
-                            .beginTransaction()
-                            .addToBackStack("我的")  //将当前fragment加入到返回栈中
-                            .replace(R.id.layFrame, orderFragment).commit();
-                    Bundle bundle = new Bundle();
-                    bundle.putInt(Constants.FRAGMENTFLAG,2);
-                    orderFragment.setArguments(bundle);*/
                    if(onClickShopListner != null) {
                        onClickShopListner.setOnClickShopListner(2);
                    }
@@ -268,6 +261,9 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
     /**
      * 定义地接口，用于fragment和activity之间的数据传递
      */
+    public OnClickShopListner setOnClickShopListner(OnClickShopListner onClickShopListner ){
+       return this.onClickShopListner = onClickShopListner;
+    }
     public interface OnClickShopListner{
          void setOnClickShopListner(int index);
     }

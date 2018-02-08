@@ -297,7 +297,21 @@ public class ConstanUrl {
      */
     public static final String COMMONINFO_COMMENTLIST = "https://www.lygyxh.cn/api.php/Commoninfo/commentlist";
     /**
-     *  我的数据接口
+     *  我的 数据接口
      */
     public static final String USER_INDEX = "https://www.lygyxh.cn/api.php/User/index";
+    /**
+     *  积分列表
+     */
+    public static final String CREDIT_INDEX = "https://www.lygyxh.cn/api.php/Credit/index";
+    /**
+     *  积分详情
+     */
+    public static final String CREDIT_detail = "https://www.lygyxh.cn/api.php/Credit/detail";
+    /**
+     *  积分兑换
+     */
+    public static final String CREDIT_excharge = "https://www.lygyxh.cn/api.php/Credit/excharge";
+
+
 }

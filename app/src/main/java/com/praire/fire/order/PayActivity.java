@@ -255,7 +255,8 @@ public class PayActivity extends BaseTitleActivity {
             req.packageValue = json.getString("package");
             req.sign = json.getString("sign");
 //                req.extData = "app data"; // optional
-            if (isWXAppInstalledAndSupported(req.appId)) {
+//            Log.e("weixinpay=", "checkArgs=" + req.checkArgs());//这个只有在true的情况才有可能调起支付页面。
+            if (isWXAppInstalledAndSupported()) {
                 ToastUtil.show(this,"正常调起支付");
                 // 在支付之前，如果应用没有注册到微信，应该先调用IWXMsg.registerApp将应用注册到微信
                 api.sendReq(req);
@@ -294,11 +295,10 @@ public class PayActivity extends BaseTitleActivity {
 
      /**
      * 判断用户手机是否安装微信客户端
-      * @param appId
       */
-    private boolean isWXAppInstalledAndSupported(String appId) {
+    private boolean isWXAppInstalledAndSupported() {
         IWXAPI msgApi = WXAPIFactory.createWXAPI(this, null);
-        msgApi.registerApp(appId);
+        msgApi.registerApp(Constants.PRODUCT_WEIXIN_APP_ID);
 
         boolean sIsWXAppInstalledAndSupported = msgApi.isWXAppInstalled()
                 && msgApi.isWXAppSupportAPI();

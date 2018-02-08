@@ -32,4 +32,10 @@
                 3、提现收取 2元/笔 手续费<br>4、如有任何疑问，请联系客服电话0797-8330000<br>
 
     </font>]]></Data></string>
+    <string name="enter">这是SDK_Sample的入口界面</string>
+    <string name="reg">将该app注册到微信</string>
+    <string name="goto_send">跳转到发消息界面</string>
+    <string name="launch_wx">启动微信</string>
+    <string name="check_timeline_supported">检查是否支持发送到朋友圈</string>
+    <string name="scan_qrcode_login">扫码登录</string>
 </resources>

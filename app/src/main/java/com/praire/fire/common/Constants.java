@@ -48,7 +48,7 @@ public class Constants {
      * 用户登录名
      */
     public static final String USER_ID = "userId";
-    public static final String PRODUCT_WEIXIN_APP_ID = "wx426b3015555a46be";
+    public static final String PRODUCT_WEIXIN_APP_ID = "wx329efa110cf1d2ac";
     public static final String CITY = "city";
     public static final String TOTLE_PRICE = "TOTLE_PRICE";
     public static final String THANKS_MSG = "THANKS_MSG";
