@@ -297,7 +297,7 @@ public class PayActivity extends BaseTitleActivity {
      * 判断用户手机是否安装微信客户端
       */
     private boolean isWXAppInstalledAndSupported() {
-        IWXAPI msgApi = WXAPIFactory.createWXAPI(this, null);
+        IWXAPI msgApi = WXAPIFactory.createWXAPI(this, Constants.PRODUCT_WEIXIN_APP_ID, false);
         msgApi.registerApp(Constants.PRODUCT_WEIXIN_APP_ID);
 
         boolean sIsWXAppInstalledAndSupported = msgApi.isWXAppInstalled()
