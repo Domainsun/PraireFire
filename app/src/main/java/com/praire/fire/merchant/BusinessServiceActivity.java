@@ -1,9 +1,9 @@
 package com.praire.fire.merchant;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -12,9 +12,12 @@ import android.widget.Toast;
 
 import com.praire.fire.R;
 import com.praire.fire.base.BaseActivity;
+import com.praire.fire.common.ConstanUrl;
 import com.praire.fire.my.WithdrawActivity;
 import com.praire.fire.okhttp.GsonUtils.J2O;
 import com.praire.fire.okhttp.JavaBean.BusinessTodayCountBean;
+import com.praire.fire.okhttp.JavaBean.ShopInfoBean;
+import com.praire.fire.okhttp.OkhttpRequestUtil;
 import com.praire.fire.okhttp.UseAPIs;
 import com.praire.fire.utils.SharePreferenceMgr;
 
@@ -68,76 +71,82 @@ public class BusinessServiceActivity extends BaseActivity {
     @BindView(R.id.tv_evaluate_count)
     TextView tvEvaluateCount;
 
-    String orderCount="";
-    String evaluateCount="";
+    String orderCount = "";
+    String evaluateCount = "";
 
     String cookie;
+    @BindView(R.id.rl_info_manage)
+    RelativeLayout rlInfoManage;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_business_service);
-
-
-
-
-    }
+//    @Override
+//    protected void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+////        setContentView(R.layout.activity_business_service);
+//
+//
+//
+//
+//    }
 
     @Override
     protected int getFragmentLayout() {
-        super.context=this;
+        super.context = this;
         return R.layout.activity_business_service;
     }
 
     @Override
     protected void initViews() {
         ButterKnife.bind(this);
-        cookie= (String) SharePreferenceMgr.get(this, LOGIN_COOKIE, "");
+        cookie = (String) SharePreferenceMgr.get(this, LOGIN_COOKIE, "");
 
-        showTodayInfo();
+
+
+
+
+        OkhttpRequestUtil.get(ConstanUrl.GET_BUSINESS_TODAY_COUNT, 1, true, uiHandler);
+
+
+//        showTodayInfo();
 
     }
 
-    public void showTodayInfo(){
-        String result1 = "";
-        result1 = new UseAPIs().getBusinessTodayCount(cookie);
-        if (result1.length() != 0) {
-
-            try  {
-                BusinessTodayCountBean b = new J2O().getBusinessTodayCount(result1);
-                tvMoney.setText(b.getTotal_income());
-                tvDealCount.setText("共交易" + b.getPay_count() + "笔");
-                tvConsumeCount.setText("共消费" + b.getUse_count() + "笔");
-                tvRefundCount.setText("共退款" + b.getRefund_count() + "笔");
-
-                orderCount=b.getOrder_count();
-                evaluateCount=b.getComment_count();
-
-                if (orderCount.equals("0")) {
-                    tvOrderCount.setVisibility(View.INVISIBLE);
-                } else {
-                    tvOrderCount.setVisibility(View.VISIBLE);
-                    tvOrderCount.setText(b.getOrder_count());
-                }
-
-                if (evaluateCount.equals("0")) {
-                    tvEvaluateCount.setVisibility(View.INVISIBLE);
-                } else {
-                    tvEvaluateCount.setVisibility(View.VISIBLE);
-                    tvEvaluateCount.setText((b.getComment_count()));
-                }
-            } catch (Exception e) {
-
-            }
-
-
-
-
-
-        } else {
-            Toast.makeText(this, "网络错误！", Toast.LENGTH_SHORT).show();
-        }
-    }
+//    public void showTodayInfo() {
+//        String result1 = "";
+//        result1 = new UseAPIs().getBusinessTodayCount(cookie);
+//        if (result1.length() != 0) {
+//
+//            try {
+//                BusinessTodayCountBean b = new J2O().getBusinessTodayCount(result1);
+//                tvMoney.setText(b.getTotal_income());
+//                tvDealCount.setText("共交易" + b.getPay_count() + "笔");
+//                tvConsumeCount.setText("共消费" + b.getUse_count() + "笔");
+//                tvRefundCount.setText("共退款" + b.getRefund_count() + "笔");
+//
+//                orderCount = b.getOrder_count();
+//                evaluateCount = b.getComment_count();
+//
+//                if (orderCount.equals("0")) {
+//                    tvOrderCount.setVisibility(View.INVISIBLE);
+//                } else {
+//                    tvOrderCount.setVisibility(View.VISIBLE);
+//                    tvOrderCount.setText(b.getOrder_count());
+//                }
+//
+//                if (evaluateCount.equals("0")) {
+//                    tvEvaluateCount.setVisibility(View.INVISIBLE);
+//                } else {
+//                    tvEvaluateCount.setVisibility(View.VISIBLE);
+//                    tvEvaluateCount.setText((b.getComment_count()));
+//                }
+//            } catch (Exception e) {
+//
+//            }
+//
+//
+//        } else {
+//            Toast.makeText(this, "网络错误！", Toast.LENGTH_SHORT).show();
+//        }
+//    }
 
     @Override
     protected void initListeners() {
@@ -155,27 +164,72 @@ public class BusinessServiceActivity extends BaseActivity {
     }
 
 
+    @Override
+    protected void networkResponse(Message msg) {
+        super.networkResponse(msg);
 
 
+        switch (msg.what) {
+            case 1:
+
+                try {
+                    String str=msg.obj+"";
+                    BusinessTodayCountBean b = new J2O().getBusinessTodayCount(str);
+                    tvMoney.setText(b.getTotal_income());
+                    tvDealCount.setText("共交易" + b.getPay_count() + "笔");
+                    tvConsumeCount.setText("共消费" + b.getUse_count() + "笔");
+                    tvRefundCount.setText("共退款" + b.getRefund_count() + "笔");
+
+                    orderCount = b.getOrder_count();
+                    evaluateCount = b.getComment_count();
+
+                    if (orderCount.equals("0")) {
+                        tvOrderCount.setVisibility(View.INVISIBLE);
+                    } else {
+                        tvOrderCount.setVisibility(View.VISIBLE);
+                        tvOrderCount.setText(b.getOrder_count());
+                    }
+
+                    if (evaluateCount.equals("0")) {
+                        tvEvaluateCount.setVisibility(View.INVISIBLE);
+                    } else {
+                        tvEvaluateCount.setVisibility(View.VISIBLE);
+                        tvEvaluateCount.setText((b.getComment_count()));
+                    }
+
+                } catch (Exception e) {
+
+                    Log.e("networkResponseeeee", "networkResponseeeee: "+e.toString() );
+                }
 
 
-    Intent iReconciliation= new Intent();
-    @OnClick({R.id.tv_back, R.id.ll_income, R.id.tv_reconciliation, R.id.tv_withdrawal, R.id.rl_service_manage, R.id.rl_commodity_manage, R.id.rl_order_manage, R.id.rl_member_manage, R.id.rl_evaluate_manage})
+                break;
+            default:
+                break;
+        }
+
+
+    }
+
+
+    Intent iReconciliation = new Intent();
+
+    @OnClick({R.id.rl_info_manage,R.id.tv_back, R.id.ll_income, R.id.tv_reconciliation, R.id.tv_withdrawal, R.id.rl_service_manage, R.id.rl_commodity_manage, R.id.rl_order_manage, R.id.rl_member_manage, R.id.rl_evaluate_manage})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_back:
                 this.finish();
                 break;
             case R.id.ll_income:
-                iReconciliation.setClass(this,TodayIncomeActivity.class);
+                iReconciliation.setClass(this, TodayIncomeActivity.class);
                 startActivity(iReconciliation);
                 break;
             case R.id.tv_reconciliation:
-                iReconciliation.setClass(this,TodayIncomeActivity.class);
+                iReconciliation.setClass(this, TodayIncomeActivity.class);
                 startActivity(iReconciliation);
                 break;
             case R.id.tv_withdrawal:
-                WithdrawActivity.startActivity(this,false);
+                WithdrawActivity.startActivity(this, false);
                 break;
             case R.id.rl_service_manage:
                 Intent i = new Intent(this, ServiceManageActivity.class);
@@ -196,6 +250,11 @@ public class BusinessServiceActivity extends BaseActivity {
                 Intent i4 = new Intent(this, EvaluateManageActivity.class);
                 startActivity(i4);
                 break;
+
+
+            case R.id.rl_info_manage:
+                InfoChooseActivity.startActivity(this,false);
+                break;
         }
 
     }
@@ -203,6 +262,9 @@ public class BusinessServiceActivity extends BaseActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
-        showTodayInfo();
+        OkhttpRequestUtil.get(ConstanUrl.GET_BUSINESS_TODAY_COUNT, 1, true, uiHandler);
+
     }
+
+
 }

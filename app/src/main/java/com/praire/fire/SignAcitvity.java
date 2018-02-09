@@ -121,10 +121,8 @@ public class SignAcitvity extends Activity {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (b) {
-//                    checkPassword.setChecked(false);
                     etPw.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
                 } else {
-//                    checkPassword.setChecked(true);
                     etPw.setTransformationMethod(PasswordTransformationMethod.getInstance());
                 }
             }
@@ -230,6 +228,8 @@ public class SignAcitvity extends Activity {
 //                finish();
                 break;
             case R.id.check_password:
+
+
 
 
                 break;

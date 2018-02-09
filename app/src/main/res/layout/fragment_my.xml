@@ -16,14 +16,25 @@
         android:background="@mipmap/head_backgroud">
 
         <ImageView
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
             android:id="@+id/fragment_my_earphone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_margin="15dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="15dp"
             android:src="@mipmap/earphone" />
 
         <ImageView
+
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+
             android:id="@+id/fragment_my_set"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

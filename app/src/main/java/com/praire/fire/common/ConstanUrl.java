@@ -157,7 +157,9 @@ public class ConstanUrl {
     /*
     * 得到产品列表*/
     public final static String GET_PRODUCT_LIST="https://www.lygyxh.cn/api.php/Product/productlist";
-
+    /*
+    * 得到商铺信息
+    * */
     public final static String GET_SHOP_INFO="https://www.lygyxh.cn/api.php/Shop/info";
     /*登录*/
     public final static String LOGIN="https://www.lygyxh.cn/api.php/Public/login";

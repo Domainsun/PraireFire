@@ -242,6 +242,7 @@
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
             android:textSize="16sp"
+            android:visibility="invisible"
             android:text="1"/>
 
         <TextView
@@ -324,6 +325,7 @@
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
             android:textSize="16sp"
+            android:visibility="invisible"
             android:text="1"/>
 
         <TextView
@@ -340,4 +342,42 @@
             android:layout_marginRight="15dp"
             android:text=""/>
     </RelativeLayout>
+
+
+
+    <RelativeLayout
+        android:id="@+id/rl_info_manage"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="2dp"
+        android:background="@color/white">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_color"
+            android:layout_centerVertical="true"
+            android:textSize="17sp"
+            android:text="信息管理"
+            android:layout_marginLeft="15dp"
+            android:drawableLeft="@mipmap/business_evaluate"
+            android:drawablePadding="10dp"
+            />
+
+
+
+        <TextView
+            android:id="@+id/tv_info_manage_go"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableRight="@mipmap/tail"
+            android:layout_alignParentRight="true"
+            android:gravity="center"
+            android:textColor="@color/grey"
+            android:drawablePadding="9dp"
+            android:layout_centerVertical="true"
+            android:textSize="16sp"
+            android:layout_marginRight="15dp"
+            android:text=""/>
+    </RelativeLayout>
+
 </LinearLayout>

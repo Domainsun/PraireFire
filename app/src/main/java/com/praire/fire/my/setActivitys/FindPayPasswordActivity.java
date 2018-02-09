@@ -214,7 +214,7 @@ public class FindPayPasswordActivity extends BaseActivity {
                             APIResultBean o = new J2O().getAPIResult(str[0]);
                             Toast.makeText(this, o.getMsg(), Toast.LENGTH_SHORT).show();
                             if (o.getCode()==1) {
-                                Intent i = new Intent(this, FindPasswordNextActivity.class);
+                                Intent i = new Intent(this, FindPayPasswordNextActivity.class);
                                 i.putExtra("phone", phone);
                                 i.putExtra("cookie", str[1]);
                                 startActivity(i);

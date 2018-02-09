@@ -3,8 +3,12 @@ package com.praire.fire.my.setActivitys;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,13 +43,19 @@ public class ChangeSignPasswordActivity extends BaseActivity {
     Button submit;
 
 
-    UseAPIs u=new UseAPIs();
-    J2O j=new J2O();
+    UseAPIs u = new UseAPIs();
+    J2O j = new J2O();
 
-    String cookie="";
-    String oldPassword="";
-    String newPassword="";
-    String confirmPassword="";
+    String cookie = "";
+    String oldPassword = "";
+    String newPassword = "";
+    String confirmPassword = "";
+    @BindView(R.id.check_password)
+    CheckBox checkPassword;
+    @BindView(R.id.check_password2)
+    CheckBox checkPassword2;
+    @BindView(R.id.check_password3)
+    CheckBox checkPassword3;
 
 
     public static void startActivity(Context context, boolean forResult) {
@@ -65,7 +75,41 @@ public class ChangeSignPasswordActivity extends BaseActivity {
 
     @Override
     protected void initViews() {
+
         ButterKnife.bind(this);
+        checkPassword.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
+                    etOldPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                } else {
+                    etOldPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                }
+            }
+        });
+        checkPassword2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
+                    etNewPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                } else {
+                    etNewPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                }
+            }
+        });
+
+        checkPassword3.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
+                    etConfirmPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                } else {
+                    etConfirmPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                }
+            }
+        });
+
+
     }
 
     @Override
@@ -85,8 +129,6 @@ public class ChangeSignPasswordActivity extends BaseActivity {
     }
 
 
-
-
     @OnClick({R.id.tv_back, R.id.submit})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -95,20 +137,20 @@ public class ChangeSignPasswordActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.submit:
-                oldPassword=etOldPassword.getText().toString();
-                newPassword=etNewPassword.getText().toString();
-                confirmPassword=etConfirmPassword.getText().toString();
+                oldPassword = etOldPassword.getText().toString();
+                newPassword = etNewPassword.getText().toString();
+                confirmPassword = etConfirmPassword.getText().toString();
 
-                if (oldPassword.length()!=0 && newPassword.length()!=0 && confirmPassword.length()!=0) {
-                    try{
-                        String str=u.changeSignPasswordAfterSign(oldPassword,newPassword,confirmPassword,cookie);
-                        APIResultBean o =j.getAPIResult(str);
-                        if (1==o.getCode()) {
+                if (oldPassword.length() != 0 && newPassword.length() != 0 && confirmPassword.length() != 0) {
+                    try {
+                        String str = u.changeSignPasswordAfterSign(oldPassword, newPassword, confirmPassword, cookie);
+                        APIResultBean o = j.getAPIResult(str);
+                        if (1 == o.getCode()) {
                             startActivity(new Intent(this, SignAcitvity.class));
                         }
-                        Toast.makeText(this, o.getMsg()+"", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, o.getMsg() + "", Toast.LENGTH_SHORT).show();
 
-                    }catch (Exception e){
+                    } catch (Exception e) {
 
 
                     }
@@ -118,4 +160,6 @@ public class ChangeSignPasswordActivity extends BaseActivity {
                 break;
         }
     }
+
+
 }

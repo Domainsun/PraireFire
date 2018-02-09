@@ -240,12 +240,15 @@ public class PayActivity extends BaseTitleActivity {
 
     private void weixinPay(String paystr) {
 
+        Log.e("1111", "1111: "+paystr);
+
         IWXAPI  api = WXAPIFactory.createWXAPI(this, Constants.PRODUCT_WEIXIN_APP_ID,false);
         api.registerApp(Constants.PRODUCT_WEIXIN_APP_ID);
         PayReq req = new PayReq();
         try {
             JSONObject json = new JSONObject(paystr);
 
+            Log.e("2222222", "2222222: "+json.getString("package"));
 
             req.appId = json.getString("appid");
             req.partnerId = json.getString("partnerid");
@@ -263,6 +266,9 @@ public class PayActivity extends BaseTitleActivity {
             }
             Toast.makeText(this, "请先安装微信客户端方可使用微信支付", Toast.LENGTH_LONG).show();
         } catch (JSONException e) {
+
+            Log.e("weixinPay", "weixinPay: "+e.toString() );
+
             e.printStackTrace();
         }
 
