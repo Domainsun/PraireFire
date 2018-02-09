@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="15dp">
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="5dp"
+    android:text="· 分享得积分"
+    android:textSize="19sp"
+    android:textColor="@color/text_color"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="通过邀请分享一名有效用户得20积分"
+        android:layout_marginLeft="15dp"
+        android:textSize="15sp"
+        android:textColor="@color/text_color"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="· 消费得积分"
+        android:textSize="19sp"
+        android:textColor="@color/text_color"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="   通过APP完成消费,消费多少得多少积分 ( 1元 = 1积分 )"
+        android:textSize="15sp"
+        android:textColor="@color/text_color"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="· 分享赚现金"
+        android:textSize="19sp"
+        android:textColor="@color/text_color"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="   分享的有效用户通过平台消费,按消费额1%的奖励金直接回报给推荐人,并直接结算到钱包余额中"
+        android:textSize="15sp"
+        android:textColor="@color/text_color"/>
+</LinearLayout>

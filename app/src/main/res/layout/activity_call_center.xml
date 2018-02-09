@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/grey_background"
+    >
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:padding="15dp"
+        android:text="会员享有哪些服务"
+        android:textSize="19sp"
+        android:textColor="@color/text_color"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="15dp"
+        android:background="@color/white">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="1.会员可以得到专业的洗车、护车注意事项的温馨提醒。"
+        android:background="@color/white"
+        android:textSize="16sp"
+        android:textColor="@color/grey"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="2. 可以根据会员对洗车店的需求,对市面上合作的汽车店进行筛选排列(评分、距离),让会员一目了然,更容易选择适合自己的洗车店。"
+        android:textSize="16sp"
+        android:textColor="@color/grey"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="3.燎原生活APP不断追求完美,给会员带来更加贴心的服务,将征集并整合会员的建议,在后期陆续给出预约汽车等服务项目。"
+        android:textSize="16sp"
+        android:layout_marginBottom="10dp"
+        android:textColor="@color/grey"/>
+    </LinearLayout>
+
+</LinearLayout>

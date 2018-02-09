@@ -29,8 +29,17 @@ import com.praire.fire.order.adapter.OrderListAdapter;
 import com.praire.fire.order.bean.OrderListBean;
 import com.praire.fire.utils.RecycleViewDivider;
 import com.praire.fire.utils.ToastUtil;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
+import com.scwang.smartrefresh.layout.footer.BallPulseFooter;
+import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.yanzhenjie.recyclerview.swipe.SwipeItemClickListener;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import okhttp3.FormBody;
 import okhttp3.RequestBody;
@@ -50,7 +59,7 @@ public class OrderFragment extends BaseFragment implements TabLayout.OnTabSelect
 
     TabLayout tabLayout;
     RecyclerView srecyclerView;
-
+    SmartRefreshLayout refreshLayout;
 
     private boolean isFirst = true;
     private int index = 1;
@@ -61,7 +70,8 @@ public class OrderFragment extends BaseFragment implements TabLayout.OnTabSelect
      */
     private String statusType = "";
 
-    private OrderListBean orderlists;
+    private List<OrderListBean.PagelistBean> orderlists = new ArrayList<>();
+    private boolean isFrist = true;
 
 
     @Override
@@ -74,8 +84,7 @@ public class OrderFragment extends BaseFragment implements TabLayout.OnTabSelect
     private void initFindView(View view) {
         tabLayout = view.findViewById(R.id.order_tabs);
         srecyclerView = view.findViewById(R.id.order_list_recyclerview);
-
-
+        refreshLayout = view.findViewById(R.id.order_refreshLayout);
     }
 
     @Override
@@ -86,6 +95,31 @@ public class OrderFragment extends BaseFragment implements TabLayout.OnTabSelect
         tabLayout.addTab(tabLayout.newTab().setText("待评价"));
         tabLayout.addTab(tabLayout.newTab().setText("退款/售后"));
         tabLayout.setOnTabSelectedListener(this);
+
+
+        refreshLayout.setRefreshFooter(new BallPulseFooter(getActivity()).setSpinnerStyle(SpinnerStyle.Scale));
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                initData();
+
+                //加载失败的话2秒后结束加载
+//                refreshlayout.finishRefresh(2000  /*,false*/  );//传入false表示刷新失败
+            }
+        });
+        refreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
+            @Override
+            public void onLoadmore(RefreshLayout refreshlayout) {
+                if (loadMore) {
+                    getNextPage();
+                    //加载失败的话2秒后结束加载
+//                    refreshlayout.finishLoadmore(2000 /*,false*/);//传入false表示加载失败
+                } else {
+                    refreshlayout.finishLoadmoreWithNoMoreData();
+                }
+
+            }
+        });
 
         srecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         //添加分割线
@@ -125,7 +159,7 @@ public class OrderFragment extends BaseFragment implements TabLayout.OnTabSelect
 
             @Override
             public void itemClick(View itemView, int position) {
-                OrderListBean.PagelistBean bean = orderlists.getPagelist().get(position);
+                OrderListBean.PagelistBean bean = orderlists.get(position);
                 if ("0".equals(bean.getStatus())) {
                     OrderInfoActivity.startActivity(getActivity(), bean.getOrderno(), false);
 
@@ -144,7 +178,7 @@ public class OrderFragment extends BaseFragment implements TabLayout.OnTabSelect
                         CommonDialog.Build((BaseActivity) getActivity()).setTitle(false).setMessage("是否确认消费？").setConfirm(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                checkOrder(orderlists.getPagelist().get(position).getId());
+                                checkOrder(orderlists.get(position).getId());
                             }
                         }).showconfirm();
 
@@ -152,7 +186,7 @@ public class OrderFragment extends BaseFragment implements TabLayout.OnTabSelect
                     case "2":
 //                                评价
                         IntentDataForEvaluateActivity data = new IntentDataForEvaluateActivity();
-                        data.orderInfo = orderlists.getPagelist().get(position);
+                        data.orderInfo = orderlists.get(position);
                         EvaluateActivity.startActivity(getActivity(), data, false);
                         break;
                     default:
@@ -166,14 +200,9 @@ public class OrderFragment extends BaseFragment implements TabLayout.OnTabSelect
 
     @Override
     public void initData() {
-
-
-            isFirst = true;
-            index = 1;
-            getDates(index, statusType, ORDER_LIST);
-
-
-
+        isFirst = true;
+        index = 1;
+        getDates(index, statusType, ORDER_LIST);
     }
 
     private void getDates(int index, String status, int type) {
@@ -183,14 +212,21 @@ public class OrderFragment extends BaseFragment implements TabLayout.OnTabSelect
 
     @Override
     protected void networkResponse(Message msg) {
+
         switch (msg.what) {
             case ORDER_LIST:
+                //结束加载
+                refreshLayout.finishRefresh();
+                refreshLayout.finishLoadmore();
+                if (isFrist) {
+                    orderlists.clear();
+                }
                 Gson gson = new Gson();
                 OrderListBean orderlist = gson.fromJson((String) msg.obj, OrderListBean.class);
-                orderlists = orderlist;
-                if (orderlist != null) {
-                    adapter.setEntities(orderlist.getPagelist());
-                }
+                loadMore = !orderlist.getPagelist().isEmpty() && orderlist.getPagelist().size() % 10 == 0;
+                orderlists.addAll(orderlist.getPagelist());
+                adapter.setEntities(orderlists);
+
                 break;
 
             case CANCEL_ORDER:
@@ -226,42 +262,39 @@ public class OrderFragment extends BaseFragment implements TabLayout.OnTabSelect
     }
 
     public void getNextPage() {
-       /* if (entities == null || entities.isEmpty()) {
-            refresh.stopRefresh();
-            return;
-        }*/
         isFirst = false;
         index++;
-//        getDates(index);
+        getDates(index, statusType, ORDER_LIST);
     }
 
 
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
 
-            switch (tab.getPosition()) {
-                case 0:
-                    statusType = "";
-                    break;
-                case 1:
-                    statusType = "0";
-                    break;
-                case 2:
-                    statusType = "1";
-                    break;
-                case 3:
-                    statusType = "2";
-                    break;
-                case 4:
-                    statusType = "3";
-                default:
-                    break;
-            }
-            setDatas();
+        switch (tab.getPosition()) {
+            case 0:
+                statusType = "";
+                break;
+            case 1:
+                statusType = "0";
+                break;
+            case 2:
+                statusType = "1";
+                break;
+            case 3:
+                statusType = "2";
+                break;
+            case 4:
+                statusType = "3";
+            default:
+                break;
+        }
+        setDatas();
 
     }
 
     private void setDatas() {
+        refreshLayout.resetNoMoreData();
         adapter = null;
         adapter = new OrderListAdapter(getActivity());
         srecyclerView.setAdapter(adapter);

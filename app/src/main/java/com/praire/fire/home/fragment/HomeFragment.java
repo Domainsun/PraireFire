@@ -124,7 +124,7 @@ public class HomeFragment extends BaseFragment implements BaseSliderView.OnSlide
         //添加textView动画特效
         homeBannerSlider.setCustomAnimation(new DescriptionAnimation());
         //设置切换时长3000 ,时长越小，切换速度越快
-        homeBannerSlider.setDuration(3000);
+        homeBannerSlider.setDuration(6000);
 
         linearLayoutManager = new LinearLayoutManager(getActivity());
         homeEcyclerView.setLayoutManager(linearLayoutManager);
@@ -321,9 +321,8 @@ public class HomeFragment extends BaseFragment implements BaseSliderView.OnSlide
      */
     @Override
     public void onSliderClick(BaseSliderView baseSliderView) {
-        homeBannerSlider.startAutoCycle(4000, 4000, true);
-
-        int id = homeBannerSlider.getCurrentPosition();
+        homeBannerSlider.startAutoCycle(6000, 6000, true);
+//        int id = homeBannerSlider.getCurrentPosition();
 //        switch (imgAdEntitys.get(id).imgPage) {}
     }
 

@@ -246,7 +246,6 @@ public class PayActivity extends BaseTitleActivity {
         try {
             JSONObject json = new JSONObject(paystr);
 
-
             req.appId = json.getString("appid");
             req.partnerId = json.getString("partnerid");
             req.prepayId = json.getString("prepayid");
@@ -254,7 +253,7 @@ public class PayActivity extends BaseTitleActivity {
             req.timeStamp = json.getString("timestamp");
             req.packageValue = json.getString("package");
             req.sign = json.getString("sign");
-            req.extData			= "app data"; // optional
+//            req.extData			= "app data"; // optional
             if (isWXAppInstalledAndSupported()) {
                 ToastUtil.show(this,"正常调起支付");
                 // 在支付之前，如果应用没有注册到微信，应该先调用IWXMsg.registerApp将应用注册到微信

@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">燎原生活</string>
     <string name="checkin">点击进入</string>
+    <string name="weixin_key">wx329efa110cf1d2ac</string>
+    <string name="sina_weibo_key">00000000000</string>
+
+
     <string name="my">我的</string>
     <string name="order">订单</string>
     <string name="map">地图</string>
@@ -39,4 +43,6 @@
     <string name="check_timeline_supported">检查是否支持发送到朋友圈</string>
     <string name="scan_qrcode_login">扫码登录</string>
     <string name="pay_result_tip">这个界面用于显示第三方app通过微信支付的结果</string>
+
+
 </resources>

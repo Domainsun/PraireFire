@@ -7,15 +7,16 @@ import com.praire.fire.R;
 import com.praire.fire.base.BaseActivity;
 import com.praire.fire.base.BaseTitleActivity;
 import com.praire.fire.common.Constants;
-import com.praire.fire.edu.EducationActivity;
 
-/**客服中心
- * Created by lyp on 2018/1/2.
+/**
+ * 分享说明
+ * Created by lyp on 2018/2/9.
  */
 
-public class CustomerServiceActivity extends BaseTitleActivity {
+public class ShareExplainActivity extends BaseTitleActivity {
+
     public static void startActivity(Context context, boolean forResult) {
-        Intent intent = new Intent(context, CustomerServiceActivity.class);
+        Intent intent = new Intent(context, ShareExplainActivity.class);
 
         if (!forResult) {
             context.startActivity(intent);
@@ -23,9 +24,10 @@ public class CustomerServiceActivity extends BaseTitleActivity {
             ((BaseActivity) context).startActivityForResult(intent, Constants.REQUEST_CODE_COMMONT);
         }
     }
+
     @Override
     protected int getFragmentLayout() {
-        return R.layout.activity_call_center;//这个要换掉 不能修改这个activity_call_center文件这是客服中心详情用的
+        return R.layout.activity_share_explain;
     }
 
     @Override
@@ -51,6 +53,6 @@ public class CustomerServiceActivity extends BaseTitleActivity {
     @Override
     public void initiTile() {
         setDefaultBack();
-        setTitleMiddle("客服中心");
+        setTitleMiddle("分享说明");
     }
 }

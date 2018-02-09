@@ -36,6 +36,7 @@
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="1773bbc6ba5191bf32f2c3cc7a5c4b6b" />
+
         <activity android:name=".GuidActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -63,13 +64,15 @@
 
         <activity android:name=".RegisterActivity" />
         <activity android:name=".merchant.SettledActivity" />
-        <activity android:name=".home.MainActivity"
-            android:windowSoftInputMode="adjustResize|stateHidden"/>
+        <activity
+            android:name=".home.MainActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity android:name=".WelcomeActivity1" />
         <activity android:name=".WelcomeActivity2" />
         <activity android:name=".WelcomeActivity3" />
-        <activity android:name=".car.CarActivity"
-            android:windowSoftInputMode="adjustResize|stateHidden"/>
+        <activity
+            android:name=".car.CarActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity android:name=".edu.EducationActivity" />
         <activity android:name=".my.CustomerServiceActivity" />
         <activity android:name=".my.IntegralActivity" />
@@ -100,8 +103,9 @@
         <activity android:name=".merchant.AddServiceActivity" />
         <activity android:name=".car.ProductEvalauteInfoActivity" />
         <activity android:name=".car.ProductInfoActivity" />
-        <activity android:name=".car.MoreProductActivity"
-            android:windowSoftInputMode="adjustResize|stateHidden"/>
+        <activity
+            android:name=".car.MoreProductActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity android:name=".car.ShopAllEvalauteActivity" />
         <activity android:name=".car.ServiceInfoActivity" />
         <activity android:name=".car.CommitOrderActivity" />
@@ -132,8 +136,9 @@
         <activity android:name=".order.EvaluateActivity" />
         <activity android:name=".FindPasswordActivity" />
         <activity android:name=".FindPasswordNextActivity" />
-        <activity android:name=".my.RechargeActivity"
-        android:windowSoftInputMode="stateHidden|adjustPan"/>
+        <activity
+            android:name=".my.RechargeActivity"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity android:name=".order.OrderFinishInfoActivity" />
 
         <provider
@@ -155,21 +160,67 @@
         <activity android:name=".my.setActivitys.BankCardActivity" />
         <activity android:name=".my.setActivitys.ChooseBankActivity" />
         <activity android:name=".my.setActivitys.AddressActivity" />
-        <activity android:name=".my.setActivitys.SetPayPasswrodActivity"/>
-        <activity android:name=".wxapi.WXPayEntryActivity"
+        <activity android:name=".my.setActivitys.SetPayPasswrodActivity" />
+        <activity
+            android:name=".wxapi.WXPayEntryActivity"
             android:exported="true"
             android:launchMode="singleTop">
-         <intent-filter>
-            <action android:name="android.intent.action.VIEW"/>
-            <category android:name="android.intent.category.DEFAULT"/>
-            <data android:scheme="wx329efa110cf1d2ac"/>
-        </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:scheme="wx329efa110cf1d2ac" />
+            </intent-filter>
         </activity>
-        <activity android:name=".WelcomeActivity0"/>
+        <activity android:name=".WelcomeActivity0" />
         <activity
             android:name="com.lzy.imagepicker.ui.ImagePreviewDelActivity"
-            android:theme="@style/ImagePickerThemeFullScreen"/>
-        <activity android:name=".my.IntegralDetailActivity"/>
+            android:theme="@style/ImagePickerThemeFullScreen" />
+        <activity android:name=".my.IntegralDetailActivity" />
+        <activity android:name=".my.ShareExplainActivity"/>
+        <activity android:name=".my.CustomerServiceInfoActivity"/>
+
+
+
+        <!--分享-->
+        <!-- QQ SDK 需要註冊Activity -->
+         <activity
+            android:name="com.tencent.connect.common.AssistActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="behind"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <activity
+            android:name="com.tencent.tauth.AuthActivity"
+            android:launchMode="singleTask"
+            android:noHistory="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="tencent222222" />  <!--    ;主要是因为这个scheme，回调时候因为找这个Activity才出现选择框
+                  -->
+            </intent-filter>
+        </activity>
+        <!-- QQ SDK 需要註冊 Activity -->
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <meta-data
+             android:name="weixin_key"
+             android:value="@string/weixin_key" />
+        <!--  <meta-data
+                android:name="weixin_redirecturi"
+                android:value="http://www.xxx.com" />
+            <meta-data
+                android:name="sina_weibo_key"
+                android:value="@string/sina_weibo_key" />
+            <meta-data
+                android:name="sina_weibo_redirecturi"
+                android:value="http://www.xxx.com" /> -->
+        <!--分享-->
     </application>
 
 </manifest>

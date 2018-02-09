@@ -57,11 +57,10 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
 				Constants.payResult=resp.errCode;
 			}else if(resp.errCode == 2){
 				msgs = "取消支付";
-			}else {
+			}else {//-1
 				msgs = "支付失败，请重试";
 			}
 			ToastUtil.show(this,msgs);
-//			EventBus.getDefault().post(new FirstEvent(msgs));
 			finish();
 			/*AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			builder.setTitle(R.string.app_tip);

@@ -21,7 +21,9 @@ import com.praire.fire.common.ConstanUrl;
 import com.praire.fire.merchant.BusinessServiceActivity;
 import com.praire.fire.merchant.MerchantActivity1;
 import com.praire.fire.my.AccountManagementActivity;
+import com.praire.fire.my.CustomerServiceActivity;
 import com.praire.fire.my.IntegralActivity;
+import com.praire.fire.my.InvitationIntegralActivity;
 import com.praire.fire.my.MyEvaluateActivity;
 import com.praire.fire.my.MyWalletActivity;
 import com.praire.fire.my.SetActivity;
@@ -49,7 +51,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
     TextView fragmentMyVip;
     TextView fragmentMyWallet;
     TextView fragmentMyIntegral;
-//    TextView fragmentMyInvitationIntegral;
+    //    TextView fragmentMyInvitationIntegral;
     TextView fragmentMyOrder;
     TextView fragmentMyShoppingcar;
     RelativeLayout nearby, merchantServices, myEvaluate, myOrder, shoppingcar, collect, wallet, myIntegral, invitationIntegral;
@@ -132,7 +134,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                 }
 
                 fragmentMyVip.setText(userBean.getLevelinfo().getDes());
-                fragmentMyWallet.setText("￥"+userBean.getCapital());
+                fragmentMyWallet.setText("￥" + userBean.getCapital());
 
 //                fragmentMyIntegral.setText(userBean.g());
 //                fragmentMyOrder.setText(userBean.getTel());
@@ -153,7 +155,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
             fragmentMyImg.setImageResource(R.mipmap.avatar2);
             fragmentMyVip.setText("普通会员");
             fragmentMyWallet.setText("0.00");
-             fragmentMyIntegral.setText("0");
+            fragmentMyIntegral.setText("0");
         }
     }
 
@@ -168,9 +170,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                 case R.id.fragment_my_vip:
                     break;
                 case R.id.fragment_my_earphone:
-//                CustomerServiceActivity.startActivity(getActivity(), false);
-
-
+                    CustomerServiceActivity.startActivity(getActivity(), false);
                     break;
                 case R.id.fragment_my_set:
                     SetActivity.startActivity(getActivity(), false);
@@ -178,35 +178,33 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                 case R.id.fragment_my_img:
 //                    AccountManagementActivity.startActivity(getActivity(), false);
 
-                    SetActivity.startActivity(getActivity(),false);
+                    SetActivity.startActivity(getActivity(), false);
 
                     break;
                 case R.id.fragment_my_wallet_rl:
                     MyWalletActivity.startActivity(getActivity(), false);
                     break;
                 case R.id.fragment_my_integral_rl:
-                 IntegralActivity.startActivity(getActivity(), false);
+                    IntegralActivity.startActivity(getActivity(), false);
                     break;
                 case R.id.fragment_my_invitation_integral_rl:
-
-//                InvitationIntegralActivity.startActivity(getActivity(), false);
+                    InvitationIntegralActivity.startActivity(getActivity(), false);
                     break;
                 case R.id.fragment_my_order_rl:
-                   if(onClickShopListner != null) {
-                       onClickShopListner.setOnClickShopListner(2);
-                   }
+                    if (onClickShopListner != null) {
+                        onClickShopListner.setOnClickShopListner(2);
+                    }
                     break;
                 case R.id.fragment_my_shoppingcar_rl:
                     ShoppingCarActivity.startActivity(getActivity(), false);
                     break;
                 case R.id.fragment_my_collect_rl:
-    //                MyCollectActivity.startActivity(getActivity(), false);
+                    //                MyCollectActivity.startActivity(getActivity(), false);
                     break;
                 case R.id.fragment_my_evaluate_rl:
                     MyEvaluateActivity.startActivity(getActivity(), false);
                     break;
                 case R.id.fragment_my_merchant_services_rl:
-
                 /*by domain*/
 
                     String cookie = (String) SharePreferenceMgr.get(getContext(), LOGIN_COOKIE, "");
@@ -248,7 +246,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
 
                     break;
                 case R.id.fragment_my_nearby_rl:
-                    if(onClickShopListner != null) {
+                    if (onClickShopListner != null) {
                         onClickShopListner.setOnClickShopListner(1);
                     }
                     break;
@@ -257,14 +255,17 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
             }
         }
     }
+
     OnClickShopListner onClickShopListner;
+
     /**
      * 定义地接口，用于fragment和activity之间的数据传递
      */
-    public OnClickShopListner setOnClickShopListner(OnClickShopListner onClickShopListner ){
-       return this.onClickShopListner = onClickShopListner;
+    public OnClickShopListner setOnClickShopListner(OnClickShopListner onClickShopListner) {
+        return this.onClickShopListner = onClickShopListner;
     }
-    public interface OnClickShopListner{
-         void setOnClickShopListner(int index);
+
+    public interface OnClickShopListner {
+        void setOnClickShopListner(int index);
     }
 }
