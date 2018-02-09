@@ -128,7 +128,7 @@ public class ShopInfoActivity extends BaseActivity {
                     Log.e("networkResponseeeee", "networkResponseeeee: "+e.toString() );
                 }
 
-
+/*dddd*/
                 break;
             default:
                 break;
