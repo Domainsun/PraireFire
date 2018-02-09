@@ -1,5 +1,7 @@
 package com.praire.fire.okhttp.APIThread;
 
+import android.util.Log;
+
 import com.praire.fire.common.ConstanUrl;
 
 import java.io.IOException;
@@ -30,6 +32,8 @@ public class ChangePayPasswordThread implements Callable {
     @Override
     public Object call() throws Exception {
 
+
+        Log.d("cookieFindPayPasswrod", "call: "+cookie);
 
         final OkHttpClient client = new OkHttpClient();
         RequestBody formBody = new FormBody.Builder()

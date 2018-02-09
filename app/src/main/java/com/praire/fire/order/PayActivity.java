@@ -240,6 +240,7 @@ public class PayActivity extends BaseTitleActivity {
 
     private void weixinPay(String paystr) {
 
+
         IWXAPI  api = WXAPIFactory.createWXAPI(this, Constants.PRODUCT_WEIXIN_APP_ID,false);
         api.registerApp(Constants.PRODUCT_WEIXIN_APP_ID);
         PayReq req = new PayReq();
@@ -262,6 +263,9 @@ public class PayActivity extends BaseTitleActivity {
             }
             Toast.makeText(this, "请先安装微信客户端方可使用微信支付", Toast.LENGTH_LONG).show();
         } catch (JSONException e) {
+
+            Log.e("weixinPay", "weixinPay: "+e.toString() );
+
             e.printStackTrace();
         }
 

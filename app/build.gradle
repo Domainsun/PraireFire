@@ -6,8 +6,24 @@ def releaseTime() {
 }
 
 android {
+
     signingConfigs {
+        config {
+            keyAlias 'key0'
+            keyPassword 'PF1234567'
+            storeFile file('D:/PraireFire/PFKeyStore.jks')
+            storePassword 'PF1234567'
+        }
+
     }
+//    signingConfigs {
+//        config {
+//            keyAlias 'key0'
+//            keyPassword 'PF1234567'
+//            storeFile file('F:/ASWorkSpace/PraireFire/PFKeyStore.jks')
+//            storePassword 'PF1234567'
+//        }
+//    }
     compileSdkVersion 26
     defaultConfig {
         applicationId "com.praire.fire"
@@ -22,20 +38,48 @@ android {
 //            abiFilters "armeabi", "armeabi-v7a", "arm64-v8a", "x86", "arm64-v8a", "x86_64"
 //        }
     }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-        debug {
-        }
+
+//    buildTypes {
+//        release {
+//            minifyEnabled false
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+//        }
+//        debug {
+//        }
+//    }
+
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
     }
+//    buildTypes {
+//        release {
+//            minifyEnabled false
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+//            signingConfig signingConfigs.config
+//        }
+//        debug {
+//            signingConfig signingConfigs.config
+//        }
+//    }
+
 //配置打包名称
     android.applicationVariants.all { variant ->
         variant.outputs.all {
             outputFileName = "prairefire_v${defaultConfig.versionName}_${releaseTime()}.apk"
         }
     }
+
+
+    buildTypes {
+        release {
+            signingConfig signingConfigs.config
+        }
+        debug {
+            signingConfig signingConfigs.config
+        }
+    }
+
 }
 
 /**/
@@ -49,17 +93,14 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-
     //    //列表
     implementation 'com.yanzhenjie:recyclerview-swipe:1.1.2'
-
     //底部菜单栏
     implementation('com.ashokvarma.android:bottom-navigation-bar:1.2.0') {
         exclude module: 'support-v4'
         exclude module: 'support-annotations'
         exclude group: 'com.android.support'
     }
-
     //三级缓存的图片加载器
     compile 'com.squareup.picasso:picasso:2.5.2'
 
@@ -117,7 +158,7 @@ dependencies {
 
     ////    3D地图
 
-    //
+    //ddd
 
     //    compile 'com.amap.api:3dmap:latest.integration'
 
@@ -137,9 +178,12 @@ dependencies {
     //流式布局  在商家搜索页面用到
     compile 'com.nex3z:flow-layout:1.1.0'
 
+
     //支付
     compile files('libs/alipaySdk-20170922.jar')
     compile 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:1.1.6'
+
+
 
     //方法总数超过64K解决办法
     compile 'com.android.support:multidex:1.0.0'
@@ -147,10 +191,12 @@ dependencies {
     //选择图片可裁剪http://blog.csdn.net/stephen2wong/article/details/68921740
     compile 'com.lzy.widget:imagepicker:0.5.0'
 
+
     //分享https://github.com/xyzlf/ShareSDK
     compile('com.xyzlf.share:sharesdk:0.0.10') {
         exclude group: 'com.android.support', module: 'appcompat-v7'
     }
+
 }
 
 

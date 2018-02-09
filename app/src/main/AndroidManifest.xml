@@ -175,6 +175,7 @@
         <activity
             android:name="com.lzy.imagepicker.ui.ImagePreviewDelActivity"
             android:theme="@style/ImagePickerThemeFullScreen" />
+
         <activity android:name=".my.IntegralDetailActivity" />
         <activity android:name=".my.ShareExplainActivity"/>
         <activity android:name=".my.CustomerServiceInfoActivity"/>
@@ -221,6 +222,11 @@
                 android:name="sina_weibo_redirecturi"
                 android:value="http://www.xxx.com" /> -->
         <!--分享-->
+
+        <activity android:name=".merchant.InfoChooseActivity" />
+        <activity android:name=".merchant.BaseInfoActivity" />
+        <activity android:name=".merchant.ShopInfoActivity"></activity>
+
     </application>
 
 </manifest>

@@ -3,9 +3,13 @@ package com.praire.fire;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,7 +35,11 @@ public class FindPasswordNextActivity extends AppCompatActivity {
     String phone = "";
     String password = "";
     String cpassword = "";
-    String cookie="";
+    String cookie = "";
+    @BindView(R.id.check_password)
+    CheckBox checkPassword;
+    @BindView(R.id.check_password2)
+    CheckBox checkPassword2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,9 +49,38 @@ public class FindPasswordNextActivity extends AppCompatActivity {
 
         Intent i = getIntent();
         phone = i.getStringExtra("phone");
-        cookie=i.getStringExtra("cookie");
+        cookie = i.getStringExtra("cookie");
 
-        Log.d("smscodecookie", "smscodecookie: "+cookie);
+        Log.d("smscodecookie", "smscodecookie: " + cookie);
+
+
+        checkPassword.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
+//                    checkPassword.setChecked(false);
+                    etPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                } else {
+//                    checkPassword.setChecked(true);
+                    etPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                }
+            }
+        });
+
+        checkPassword2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
+//                    checkPassword.setChecked(false);
+                    etCpassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                } else {
+//                    checkPassword.setChecked(true);
+                    etCpassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                }
+            }
+        });
+
+
     }
 
     @OnClick({R.id.tv_back, R.id.submit})
@@ -61,18 +98,18 @@ public class FindPasswordNextActivity extends AppCompatActivity {
                     if (password.equals(cpassword)) {
                         String str = "";
                         try {
-                            str = new UseAPIs().changeSignPassword(password, cpassword, phone,cookie);
+                            str = new UseAPIs().changeSignPassword(password, cpassword, phone, cookie);
 
-                            Log.d("phone", "phone: "+phone);
+                            Log.d("phone", "phone: " + phone);
 
 
                             APIResultBean a = new J2O().getAPIResult(str);
 
 
-                            if (1==a.getCode()) {
-                                Intent i=new Intent(this,SignAcitvity.class);
+                            if (1 == a.getCode()) {
+                                Intent i = new Intent(this, SignAcitvity.class);
 
-                                i.putExtra("phone",phone);
+                                i.putExtra("phone", phone);
                                 startActivity(i);
                             }
                             Toast.makeText(this, a.getMsg(), Toast.LENGTH_SHORT).show();

@@ -133,6 +133,8 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                     fragmentMyImg.setImageResource(R.mipmap.avatar2);
                 }
 
+
+
                 fragmentMyVip.setText(userBean.getLevelinfo().getDes());
                 fragmentMyWallet.setText("￥" + userBean.getCapital());
 
@@ -209,6 +211,11 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
 
                     String cookie = (String) SharePreferenceMgr.get(getContext(), LOGIN_COOKIE, "");
                     String result = "";
+
+
+
+
+
                     try {
                         result = new UseAPIs().getShopInfo(cookie);
 

@@ -5,12 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/grey_background"
-    tools:context="com.praire.fire.my.setActivitys.PasswordMangeActivity">
+    tools:context="com.praire.fire.merchant.BaseInfoActivity">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@mipmap/background_business_head">
+        android:background="@mipmap/head_backgroud">
 
         <TextView
             android:id="@+id/tv_back"
@@ -29,89 +29,118 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_gravity="center"
-            android:text="密码管理"
+            android:text="基础信息"
             android:textColor="@android:color/white"
             android:textSize="20sp" />
     </RelativeLayout>
 
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:layout_marginTop="@dimen/y2"
         android:background="@color/white">
 
         <TextView
-            android:id="@+id/tv_id_num"
+            android:id="@+id/tv_contacts"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="15dp"
-            android:text="身份证号码:"
+            android:layout_marginStart="13dp"
+            android:drawablePadding="15dp"
+            android:text="联  系  人:"
             android:textColor="@color/text_color"
-            android:textSize="16sp" />
-
-
-       <EditText
-           android:id="@+id/et_inum"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:layout_toRightOf="@id/tv_id_num"
-           android:layout_marginRight="15dp"
-           android:hint="输入身份证号码"
-           android:textSize="14sp"
-           android:background="@null"
-           android:layout_centerVertical="true"
-           android:paddingLeft="15dp"/>
-    </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/white">
-
-        <TextView
-            android:id="@+id/tv_pay_password"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="15dp"
-            android:text="新支付密码:"
-            android:textColor="@color/text_color"
-            android:textSize="16sp" />
-
+            android:textSize="19sp" />
 
         <EditText
-            android:id="@+id/et_password"
-            android:inputType="textPassword"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/tv_pay_password"
-            android:hint="输入新的密码"
-            android:textSize="14sp"
-            android:layout_marginLeft="15dp"
-            android:background="@null"
-            android:layout_centerVertical="true"
-           />
-
-
-        <CheckBox
-            android:id="@+id/check_password"
+            android:id="@+id/tv_Contact_person1"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/tv_contacts"
+            android:paddingLeft="30dp"
+            android:layout_centerVertical="true"
+            android:background="@null"
+            android:hint="输入店铺联系人"
+            />
+    </RelativeLayout>
 
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="@dimen/y2"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/tv_contact_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="13dp"
+            android:drawablePadding="15dp"
+            android:text="联系电话:"
+            android:textColor="@color/text_color"
+            android:textSize="19sp" />
+
+        <EditText
+            android:id="@+id/tv_Contact_phone1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/tv_contact_phone"
+            android:paddingLeft="30dp"
+            android:background="@null"
+            android:hint="输入店铺联系电话"
+             />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="@dimen/y2"
+        android:background="@color/white">
+
+
+
+
+        <TextView
+            android:id="@+id/tv3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
-            android:layout_toRightOf="@id/et_password"
-            android:button="@drawable/check_box_style3"
-            android:checked="false"
-            android:clickable="true" />
+            android:drawablePadding="15dp"
+            android:text="营业时间:"
+            android:textColor="@color/text_color"
+            android:textSize="19sp" />
 
 
+        <TextView
+            android:id="@+id/tv_start_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="30dp"
+            android:layout_toRightOf="@id/tv3"
+            android:text="开始时间  -"
+            android:textColor="@color/grey"
+            android:textSize="16sp" />
+
+
+        <TextView
+            android:id="@+id/tv_end_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:layout_toRightOf="@id/tv_start_time"
+            android:text="结束时间"
+            android:textColor="@color/grey"
+            android:textSize="16sp" />
 
 
     </RelativeLayout>
-
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -133,13 +162,10 @@
                 android:layout_centerVertical="true"
                 android:background="@color/orange"
                 android:gravity="center"
-                android:text="保存"
+                android:text="确定修改"
                 android:textColor="@color/white"
                 android:textSize="19sp" />
         </RelativeLayout>
     </LinearLayout>
-
-
-
 
 </LinearLayout>

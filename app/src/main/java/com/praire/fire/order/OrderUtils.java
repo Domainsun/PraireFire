@@ -181,7 +181,6 @@ public class OrderUtils {
     public static String totlePriceList(List<OrderListBean.PagelistBean.PslistBean> pslist) {
         float total = 0;
         for(OrderListBean.PagelistBean.PslistBean ps: pslist){
-            Log.e("getPrice * number",ps.getPrice()+"*"+ps.getNumber());
             total += AppBigDecimal.multiply(Float.valueOf(ps.getPrice()), Float.valueOf(ps.getNumber()), 2);
         }
         // 构造方法的字符格式这里如果小数不足2位,会以0补足.
