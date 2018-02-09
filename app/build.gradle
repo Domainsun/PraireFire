@@ -39,29 +39,21 @@ android {
 //        }
     }
 
-//    buildTypes {
-//        release {
-//            minifyEnabled false
-//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-//        }
-//        debug {
-//        }
-//    }
 
     lintOptions {
         checkReleaseBuilds false
         abortOnError false
     }
-//    buildTypes {
-//        release {
-//            minifyEnabled false
-//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-//            signingConfig signingConfigs.config
-//        }
-//        debug {
-//            signingConfig signingConfigs.config
-//        }
-//    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
+        }
+        debug {
+            signingConfig signingConfigs.config
+        }
+    }
 
 //配置打包名称
     android.applicationVariants.all { variant ->
