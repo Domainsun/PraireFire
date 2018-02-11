@@ -111,6 +111,7 @@ public class OrderFragment extends BaseFragment implements TabLayout.OnTabSelect
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
                 if (loadMore) {
+
                     getNextPage();
                     //加载失败的话2秒后结束加载
 //                    refreshlayout.finishLoadmore(2000 /*,false*/);//传入false表示加载失败
@@ -215,15 +216,16 @@ public class OrderFragment extends BaseFragment implements TabLayout.OnTabSelect
 
         switch (msg.what) {
             case ORDER_LIST:
-                //结束加载
-                refreshLayout.finishRefresh();
-                refreshLayout.finishLoadmore();
                 if (isFrist) {
+                    //结束加载
+                    refreshLayout.finishRefresh();
                     orderlists.clear();
+                }else{
+                    refreshLayout.finishLoadmore();
                 }
                 Gson gson = new Gson();
                 OrderListBean orderlist = gson.fromJson((String) msg.obj, OrderListBean.class);
-                loadMore = !orderlist.getPagelist().isEmpty() && orderlist.getPagelist().size() % 10 == 0;
+                loadMore = !orderlist.getPagelist().isEmpty() && orderlist.getPagelist().size() % 5 == 0;
                 orderlists.addAll(orderlist.getPagelist());
                 adapter.setEntities(orderlists);
 

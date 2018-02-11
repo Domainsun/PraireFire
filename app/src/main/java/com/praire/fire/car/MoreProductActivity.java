@@ -38,6 +38,7 @@ import com.praire.fire.my.bean.CommentResultBean;
 import com.praire.fire.okhttp.OkhttpRequestUtil;
 import com.praire.fire.order.OrderUtils;
 import com.praire.fire.utils.RecycleViewDivider;
+import com.praire.fire.utils.ToastUtil;
 import com.praire.fire.utils.statusbarcolor.Eyes;
 import com.yanzhenjie.recyclerview.swipe.SwipeItemClickListener;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
@@ -236,13 +237,22 @@ public class MoreProductActivity extends BaseActivity implements TabLayout.OnTab
 //                MapSearchActivity.startActivity(this, plugSearchEdittext.getText().toString().trim(), false);
                 break;
             case R.id.product_buying:
-                IntentDataForCommitOrderActivity data = new IntentDataForCommitOrderActivity();
-                data.commitProductList = commitProductList;
-                data.type = "0";
-                CommitOrderActivity.startActivity(this, data, false);
+                if(hasLogin()) {
+                    if(commitProductList.size() == 0){
+                        ToastUtil.show(this,"请选择商品");
+                        return;
+                    }
+                    IntentDataForCommitOrderActivity data = new IntentDataForCommitOrderActivity();
+                    data.commitProductList = commitProductList;
+                    data.type = "0";
+                    CommitOrderActivity.startActivity(this, data, false);
+                    finish();
+                }
                 break;
             case R.id.shopping_car:
-                ShoppingCarActivity.startActivity(this, false);
+                if(hasLogin()) {
+                    ShoppingCarActivity.startActivity(this, false);
+                }
                 break;
             case R.id.search_bar2_search:
                 searchKey = plugSearchEdittext.getText().toString().trim();

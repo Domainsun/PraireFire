@@ -307,7 +307,9 @@ public class ShopActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.go_shoping_car:
-                ShoppingCarActivity.startActivity(this, false);
+                if(hasLogin()) {
+                    ShoppingCarActivity.startActivity(this, false);
+                }
                 break;
             case R.id.go_my:
                 MainActivity.startActivity(this, 3, false);
