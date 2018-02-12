@@ -1,5 +1,6 @@
 package com.praire.fire;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -16,10 +17,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.praire.fire.base.BaseActivity;
+import com.praire.fire.common.Constants;
 import com.praire.fire.okhttp.GsonUtils.J2O;
 import com.praire.fire.okhttp.JavaBean.APIResultBean;
 import com.praire.fire.okhttp.UseAPIs;
 import com.praire.fire.okhttp.UseApi;
+import com.praire.fire.order.PayActivity;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -37,6 +41,8 @@ import okhttp3.Response;
 
 import static com.praire.fire.common.ConstanUrl.HsmsCode;
 import static com.praire.fire.common.ConstanUrl.PhotoCode;
+import static com.praire.fire.common.Constants.INTENT_DATA;
+import static com.praire.fire.common.Constants.UI_TYPE;
 
 public class FindPasswordActivity extends AppCompatActivity {
 
@@ -66,7 +72,15 @@ public class FindPasswordActivity extends AppCompatActivity {
 
     UseApi api = new UseApi();
     UseAPIs u=new UseAPIs();
-
+    public static void startActivity(Context context, String phone, boolean forResult) {
+        Intent intent = new Intent(context, FindPasswordActivity.class);
+        intent.putExtra("phone", phone);
+        if (!forResult) {
+            context.startActivity(intent);
+        } else if (context instanceof BaseActivity) {
+            ((BaseActivity) context).startActivityForResult(intent, Constants.REQUEST_CODE_COMMONT);
+        }
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

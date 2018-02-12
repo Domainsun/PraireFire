@@ -15,7 +15,7 @@
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:layout_marginRight="10dp"
-            fresco:placeholderImage="@mipmap/my"
+            fresco:placeholderImage="@mipmap/home_my"
              />
 
         <TextView

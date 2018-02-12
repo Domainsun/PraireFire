@@ -136,8 +136,8 @@ public class InvitationIntegralActivity extends BaseActivity {
                 ShareExplainActivity.startActivity(this,false);
                 break;
             case R.id.btn_share:
-                showShareDialog();
-//                startShare();
+//                showShareDialog();
+                startShare();
 
               /*  String path = getResourcesUri(R.mipmap.ic_launcher);
                 Intent imageIntent = new Intent(Intent.ACTION_SEND);
@@ -159,8 +159,9 @@ public class InvitationIntegralActivity extends BaseActivity {
      * 调用分享界面
      */
     public void showShareDialog() {
-        ShareEntity testBean = new ShareEntity("邀请好友", "我是内容，描述内容。");
+        ShareEntity testBean = new ShareEntity("“TA”！您身边的服务管家！", "生活所需，服务所致");
         testBean.setUrl("https://www.baidu.com"); //分享链接
+//        testBean.setDrawableId(R.mipmap.ic_launcher);
         testBean.setImgUrl("https://www.baidu.com/img/bd_logo1.png");
         ShareUtil.showShareDialog(this, testBean, ShareConstant.REQUEST_CODE);
     }
@@ -169,7 +170,7 @@ public class InvitationIntegralActivity extends BaseActivity {
      * 使用分享功能，如下实例 使用 更多(系统自带) 分享功能：
      */
     public void startShare() {
-        ShareEntity testBean = new ShareEntity("邀请好友", "我是燎原分享我是燎原分享测试");
+        ShareEntity testBean = new ShareEntity("“TA”！您身边的服务管家！", "生活所需，服务所致");
         testBean.setUrl("https://www.baidu.com"); //分享链接
 //        testBean.setImgUrl("https://www.baidu.com/img/bd_logo1.png");
         testBean.setDrawableId(R.mipmap.ic_launcher);

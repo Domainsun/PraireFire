@@ -20,18 +20,29 @@ import com.praire.fire.MyApplication;
 import com.praire.fire.R;
 import com.praire.fire.base.BaseActivity;
 import com.praire.fire.base.BaseTitleActivity;
+import com.praire.fire.common.ConstanUrl;
 import com.praire.fire.common.Constants;
 import com.praire.fire.okhttp.NetworkHandler;
+import com.praire.fire.okhttp.OkhttpRequestUtil;
 import com.praire.fire.okhttp.UseAPIs;
 import com.praire.fire.order.PayActivity;
 import com.praire.fire.order.ResultActivity;
 import com.praire.fire.order.bean.PayResult;
 import com.praire.fire.utils.SharePreferenceMgr;
+import com.praire.fire.utils.ToastUtil;
 import com.praire.fire.utils.statusbarcolor.Eyes;
+import com.tencent.mm.opensdk.modelpay.PayReq;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.FormBody;
+import okhttp3.RequestBody;
 import pub.devrel.easypermissions.EasyPermissions;
 
 import static com.praire.fire.common.Constants.LOGIN_COOKIE;
@@ -57,6 +68,7 @@ public class RechargeActivity extends BaseActivity {
     Button submit;
 
     private static final int SDK_PAY_FLAG = 100;
+    private static final int SDK_PAY_WEIXIN = 101;
     UseAPIs u = new UseAPIs();
 
     String cookie;
@@ -114,11 +126,12 @@ public class RechargeActivity extends BaseActivity {
     protected void networkResponse(Message msg) {
 
         switch (msg.what) {
-
+            case SDK_PAY_WEIXIN:
+                weixinPay((String) msg.obj);
+                break;
             case SDK_PAY_FLAG:
                 //ailipay
             {
-                Log.e("SDK_PAY_FLAG", (String) msg.obj);
                 PayResult payResult = new PayResult((String) msg.obj);
                 /**
                  对于支付结果，请商户依赖服务端的异步通知结果。同步通知结果，仅作为支付结束的通知。
@@ -152,7 +165,6 @@ public class RechargeActivity extends BaseActivity {
                 break;
             case R.id.iv_select1:
                 bpay = true;
-
                 ivSelect1.setImageResource(R.mipmap.selected_circle);
                 ivSelect2.setImageResource(R.mipmap.unselected);
 
@@ -167,13 +179,10 @@ public class RechargeActivity extends BaseActivity {
 
                 String[] perms = {Manifest.permission.READ_PHONE_STATE};
                 if (EasyPermissions.hasPermissions(this, perms)) {
-
-
                     String price = "";
                     price = etRecharge.getText().toString();
-
                     if (bpay) {
-
+                        creatPay(price);
 
                     } else {
 
@@ -187,13 +196,27 @@ public class RechargeActivity extends BaseActivity {
                         }
                     }
 
-
                     break;
                 } else {
                     EasyPermissions.requestPermissions(this, "读取手机设备需要获取权限",
                             0, perms);
                 }
         }
+    }
+
+    /**
+     * type支付类型(1支付宝，2微信 0余额)
+     * recharge  是否充值(0付款，1充值)
+     */
+    private void creatPay(String price) {
+        RequestBody requestBody = new FormBody.Builder()
+                .add("type", "2")
+                .add("recharge", "1")
+                .add("orderno[]", "")
+                .add("money", price)
+                .build();
+        OkhttpRequestUtil.post(ConstanUrl.COMMONINFO_CREATEPAY, requestBody, SDK_PAY_WEIXIN, uiHandler, true);
+
     }
 
     private void aliPay(final String orderInfo) {
@@ -216,5 +239,52 @@ public class RechargeActivity extends BaseActivity {
         payThread.start();
     }
 
+    private void weixinPay(String paystr) {
+
+
+        IWXAPI api = WXAPIFactory.createWXAPI(this, Constants.PRODUCT_WEIXIN_APP_ID, false);
+        api.registerApp(Constants.PRODUCT_WEIXIN_APP_ID);
+        PayReq req = new PayReq();
+        try {
+            JSONObject json = new JSONObject(paystr);
+
+            req.appId = json.getString("appid");
+            req.partnerId = json.getString("partnerid");
+            req.prepayId = json.getString("prepayid");
+            req.nonceStr = json.getString("noncestr");
+            req.timeStamp = json.getString("timestamp");
+            req.packageValue = json.getString("package");
+            req.sign = json.getString("sign");
+//            req.extData			= "app data"; // optional
+            if (isWXAppInstalledAndSupported()) {
+                ToastUtil.show(this, "正常调起支付");
+                // 在支付之前，如果应用没有注册到微信，应该先调用IWXMsg.registerApp将应用注册到微信
+                api.sendReq(req);
+                return;
+            }
+            Toast.makeText(this, "请先安装微信客户端方可使用微信支付", Toast.LENGTH_LONG).show();
+        } catch (JSONException e) {
+
+            Log.e("weixinPay", "weixinPay: " + e.toString());
+
+            e.printStackTrace();
+        }
+
+
+        ToastUtil.show(this, paystr);
+    }
+
+    /**
+     * 判断用户手机是否安装微信客户端
+     */
+    private boolean isWXAppInstalledAndSupported() {
+        IWXAPI msgApi = WXAPIFactory.createWXAPI(this, null);
+        msgApi.registerApp(Constants.PRODUCT_WEIXIN_APP_ID);
+
+        boolean sIsWXAppInstalledAndSupported = msgApi.isWXAppInstalled()
+                && msgApi.isWXAppSupportAPI();
+
+        return sIsWXAppInstalledAndSupported;
+    }
 
 }

@@ -159,7 +159,7 @@
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:maxLines="1"
-            android:text="---------------------------亲，我是有底线的---------------------------"
+            android:text="---------------------亲，我是有底线的---------------------"
             android:textColor="@color/grey"
             android:textSize="12sp"
             android:visibility="gone" />

@@ -259,8 +259,8 @@ public class OrderFragment extends BaseFragment implements TabLayout.OnTabSelect
 
     @Override
     public void onResume() {
-        super.onResume();
         getDates(1, statusType, ORDER_LIST);
+        super.onResume();
     }
 
     public void getNextPage() {

@@ -83,7 +83,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
-                    android:drawableLeft="@mipmap/map"
+                    android:drawableLeft="@mipmap/home_map"
                     android:drawablePadding="5dp"
                     android:ellipsize="end"
                     android:maxLines="1"

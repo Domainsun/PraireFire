@@ -1,0 +1,17 @@
+<!--
+  ~ *******************************************************************************
+  ~ * Copyright (c) 2016, create by xjliao on 16-5-19 上午9:44
+  ~ * ProjectName: Company02_bat
+  ~ * ModuleName: app
+  ~ * FileName: shape_pay_btn_normal.xml
+  ~ * ClassName: shape_pay_btn_normal.xml
+  ~ * LastModified: 16-4-28 下午3:44
+  ~ ******************************************************************************
+  -->
+
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <stroke android:color="@color/white"></stroke>
+    <corners android:radius="5dp"></corners>
+    <solid android:color="@color/white" />
+</shape>

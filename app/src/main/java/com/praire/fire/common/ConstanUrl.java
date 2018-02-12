@@ -315,5 +315,8 @@ public class ConstanUrl {
      */
     public static final String CREDIT_excharge = "https://www.lygyxh.cn/api.php/Credit/excharge";
 
-
+    /**
+     * 自动升级
+     */
+    public static final String CHECK_VERSION = "https://www.lygyxh.cn/api.php/Public/getversion";
 }

@@ -211,7 +211,7 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <meta-data
              android:name="weixin_key"
-             android:value="@string/weixin_key" />
+             android:value="02b5fbf3d18be6bf5084bb302188525e" />
         <!--  <meta-data
                 android:name="weixin_redirecturi"
                 android:value="http://www.xxx.com" />

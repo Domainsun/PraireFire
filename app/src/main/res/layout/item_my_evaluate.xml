@@ -22,7 +22,7 @@
                 android:id="@+id/user_icon"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                fresco:placeholderImage="@mipmap/my"
+                fresco:placeholderImage="@mipmap/home_my"
                   />
             <TextView
                 android:id="@+id/item_my_ealuate_name"

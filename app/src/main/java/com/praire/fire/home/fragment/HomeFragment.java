@@ -241,8 +241,8 @@ public class HomeFragment extends BaseFragment implements BaseSliderView.OnSlide
                     evEntitys.clear();
                 }
                 Gson gson = new Gson();
-                final ShopListBean evEntity = gson.fromJson((String) msg.obj, ShopListBean.class);
-                if (evEntity.getPagelist().isEmpty() || evEntity.getPagelist().size() % 10 != 0) {
+                  ShopListBean evEntity = gson.fromJson((String) msg.obj, ShopListBean.class);
+                if (evEntity == null || evEntity.getPagelist().size() % 10 != 0) {
                     loadMore = false;
                 }
                 evEntitys.addAll(evEntity.getPagelist());
@@ -251,7 +251,9 @@ public class HomeFragment extends BaseFragment implements BaseSliderView.OnSlide
             case 2:
                 Gson gson2 = new Gson();
                 SwipeBean bean = gson2.fromJson((String) msg.obj, SwipeBean.class);
-                getAdSuccess(bean.getSwipelist());
+                if(bean !=null) {
+                    getAdSuccess(bean.getSwipelist());
+                }
                 break;
             default:
                 break;

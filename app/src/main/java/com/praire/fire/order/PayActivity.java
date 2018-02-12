@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -48,7 +49,7 @@ public class PayActivity extends BaseTitleActivity {
     private static final int SDK_PAY_FLAG = 100;
     public static final String PAY_TYPE_WEIXIN = "2";
     public static final String PAY_TYPE_ALIPAY = "1";
-    public static final String PAY_TYPE_YU_E = "0";
+    public static final String PAY_TYPE_balance = "3";
     @BindView(R.id.pay_cost)
     TextView payCost;
     @BindView(R.id.business_name_pay)
@@ -72,7 +73,7 @@ public class PayActivity extends BaseTitleActivity {
     private String recharge;
     private String orderId;
     private static final String PAY_COST = "PayCost";
-    private String payType = PAY_TYPE_YU_E;
+    private String payType = PAY_TYPE_balance;
 
     /**
      * @param context
@@ -162,13 +163,17 @@ public class PayActivity extends BaseTitleActivity {
                 break;
             case R.id.btn_commit_pay:
                  if (payBalanceCheckbox.isChecked()) {
-                     payType = PAY_TYPE_YU_E;
+                     payType = PAY_TYPE_balance;
+                     inputPassWord(payType);
+
                 } else if (payWeixinCheckbox.isChecked()) {
                      payType = PAY_TYPE_WEIXIN;
+                     creatPay(payType);
                 } else if (payAlipayCheckbox.isChecked()) {
                      payType = PAY_TYPE_ALIPAY;
+                     creatPay(payType);
                 }
-                creatPay(payType);
+
 
                 break;
             default:
@@ -189,8 +194,8 @@ public class PayActivity extends BaseTitleActivity {
                     aliPay(paystr);
                 }else if(PAY_TYPE_WEIXIN.equals(payType)){
                     weixinPay(paystr);
-                }else if(PAY_TYPE_YU_E.equals(payType)){
-
+                }else if(PAY_TYPE_balance.equals(payType)){
+                    balancePay(paystr);
                 }
 
                 break;
@@ -223,7 +228,6 @@ public class PayActivity extends BaseTitleActivity {
     }
 
 
-
     /**
      * @param type 支付类型(1支付宝，2微信 0余额)
      *             recharge  是否充值(0付款，1充值)
@@ -238,6 +242,36 @@ public class PayActivity extends BaseTitleActivity {
 
     }
 
+    /**
+     * @param type 支付类型(1支付宝，2微信 0余额)
+     *             recharge  是否充值(0付款，1充值)
+     */
+    private void creatPay1(String type,String pwd) {
+        RequestBody requestBody = new FormBody.Builder()
+                .add("type", type)
+                .add("recharge", recharge)
+                .add("orderno[]", orderId)
+                .add("paypwd",pwd)
+                .build();
+        OkhttpRequestUtil.post(ConstanUrl.COMMONINFO_CREATEPAY, requestBody, 1, uiHandler, true);
+
+    }
+
+    private void balancePay(String paystr) {
+        try {
+            JSONObject json = new JSONObject(paystr);
+            int code = json.getInt("code");
+            if(code ==1){
+                ToastUtil.show(this,json.getString("msg"));
+                finish();
+            }else{
+                ToastUtil.show(this,json.getString("msg"));
+            }
+        } catch (JSONException e) {
+            Log.e("balancePay", "balancePay: "+e.toString() );
+            e.printStackTrace();
+        }
+    }
     private void weixinPay(String paystr) {
 
 
@@ -318,5 +352,23 @@ public class PayActivity extends BaseTitleActivity {
         if (Constants.payResult==0) {
             finish();
         }
+    }
+
+    /**
+     * 输入密码支付
+     * @param payType
+     */
+    public void inputPassWord(final String payType) {
+
+        InputPasswordPopwindows medicinePop = new InputPasswordPopwindows(PayActivity.this);
+            medicinePop.showAtLocation(btnCommitPay, Gravity.BOTTOM, 0, 0);
+            medicinePop.setOutsideTouchable(true);
+            medicinePop.setDataBack(new InputPasswordPopwindows.OnItemClickListener() {
+                @Override
+                public void onItemClick(String pwd) {
+                    creatPay1(payType,pwd);
+                }
+
+            });
     }
 }
