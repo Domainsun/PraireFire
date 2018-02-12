@@ -5,13 +5,14 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.praire.fire.common.Constants;
+import com.praire.fire.utils.ToastUtil;
 import com.tencent.mm.sdk.modelbase.BaseReq;
 import com.tencent.mm.sdk.modelbase.BaseResp;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.xyzlf.share.library.interfaces.ShareConstant;
-import com.xyzlf.share.library.util.ManifestUtil;
 
 /**
  * 这个类是微信回调的类
@@ -23,7 +24,8 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        api = WXAPIFactory.createWXAPI(this, ManifestUtil.getWeixinKey(this), false);
+        // 通过WXAPIFactory工厂，获取IWXAPI的实例
+        api = WXAPIFactory.createWXAPI(this, Constants.PRODUCT_WEIXIN_APP_ID, false);
         api.handleIntent(getIntent(), this);
     }
 

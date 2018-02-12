@@ -2,8 +2,9 @@
 <project version="4">
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/praire/fire/base/BaseDialogFragment.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/praire/fire/order/fragment/InputPwdDialogFragment.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_dialog_input_password.xml" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/praire/fire/utils/WeixinUtil.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/praire/fire/wxapi/Util.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/praire/fire/wxapi/WXEntryActivity.java" charset="GBK" />
     <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>

@@ -23,6 +23,7 @@ import android.view.View.MeasureSpec;
 import android.widget.ImageView;
 
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -32,7 +33,22 @@ public class ImageUtils {
 
 
 
+    public static byte[] bmpToByteArray(final Bitmap bmp, final boolean needRecycle) {
+        ByteArrayOutputStream output = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.PNG, 100, output);
+        if (needRecycle) {
+            bmp.recycle();
+        }
 
+        byte[] result = output.toByteArray();
+        try {
+            output.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
 
     public static void LoadImage(ImageView view, String path) {
         int measureSpec = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);

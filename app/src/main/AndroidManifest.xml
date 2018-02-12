@@ -205,9 +205,8 @@
         <!-- QQ SDK 需要註冊 Activity -->
         <activity
             android:name=".wxapi.WXEntryActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:label="@string/app_name"
             android:exported="true"
-            android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <meta-data
              android:name="weixin_key"
