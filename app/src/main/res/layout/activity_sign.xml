@@ -127,7 +127,7 @@
             android:id="@+id/check_password"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_toRightOf="@id/et_pw"
+            android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:button="@drawable/check_box_style3"
             android:checked="false"

@@ -20,6 +20,7 @@ import com.amap.api.maps2d.model.LatLng;
 import com.amap.api.maps2d.model.Marker;
 import com.amap.api.maps2d.model.MarkerOptions;
 import com.amap.api.maps2d.overlay.WalkRouteOverlay;
+import com.amap.api.navi.model.NaviLatLng;
 import com.amap.api.services.core.AMapException;
 import com.amap.api.services.core.LatLonPoint;
 import com.amap.api.services.route.BusRouteResult;
@@ -32,10 +33,11 @@ import com.amap.api.services.route.WalkRouteResult;
 import com.praire.fire.R;
 import com.praire.fire.base.BaseActivity;
 import com.praire.fire.common.Constants;
+import com.praire.fire.data.IntentDataForGPSNaviActivity;
 import com.praire.fire.data.IntentDataForRoutePlanningActivity;
 import com.praire.fire.map.adapter.BusResultListAdapter;
-import com.praire.fire.utils.map.AMapUtil;
 import com.praire.fire.utils.ToastUtil;
+import com.praire.fire.utils.map.AMapUtil;
 import com.praire.fire.utils.statusbarcolor.Eyes;
 
 import butterknife.BindView;
@@ -63,12 +65,13 @@ public class RoutePlanningActivity extends AppCompatActivity implements AMap.OnM
     private DriveRouteResult mDriveRouteResult;
     private LatLonPoint mStartPoint;
     private LatLonPoint mEndPoint;
-    private final int ROUTE_TYPE_DRIVE = 2;
+
     private RelativeLayout mBottomLayout, mHeadLayout;
     private TextView mRotueTimeDes, mRouteDetailDes;
     // 搜索时进度条
     private ProgressDialog progDialog = null;
     private RouteSearch.FromAndTo fromAndTo;
+    private final int ROUTE_TYPE_DRIVE = 2;
     private final int ROUTE_TYPE_BUS = 1;
     private final int ROUTE_TYPE_WALK = 3;
     private WalkRouteResult mWalkRouteResult;
@@ -76,6 +79,7 @@ public class RoutePlanningActivity extends AppCompatActivity implements AMap.OnM
     private LinearLayout busResultlayout;
     private ListView mBusResultList;
     private String city = "0797";
+    private int ROUTE_TYPE = 2;
 
     public static void startActivity(Context context, IntentDataForRoutePlanningActivity data, boolean forResult) {
         Intent intent = new Intent(context, RoutePlanningActivity.class);
@@ -409,32 +413,42 @@ public class RoutePlanningActivity extends AppCompatActivity implements AMap.OnM
 
     }
 
-    @OnClick({R.id.route_drive, R.id.route_bus, R.id.route_walk})
+    @OnClick({R.id.route_drive, R.id.route_bus, R.id.route_walk, R.id.navi_btn})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.route_drive:
                 busResultlayout.setVisibility(View.GONE);
                 searchRouteResult(ROUTE_TYPE_DRIVE);
+                ROUTE_TYPE = ROUTE_TYPE_DRIVE;
                 mBottomLayout.setVisibility(View.VISIBLE);
                 routeDrive.setImageResource(R.mipmap.route_drive_select);
-                  routeBus.setImageResource(R.mipmap.route_bus_normal);
-                  routeWalk.setImageResource(R.mipmap.route_walk_normal);
+                routeBus.setImageResource(R.mipmap.route_bus_normal);
+                routeWalk.setImageResource(R.mipmap.route_walk_normal);
                 break;
             case R.id.route_bus:
                 busResultlayout.setVisibility(View.VISIBLE);
                 mBottomLayout.setVisibility(View.GONE);
+                ROUTE_TYPE = ROUTE_TYPE_BUS;
                 searchRouteResult(ROUTE_TYPE_BUS);
                 routeDrive.setImageResource(R.mipmap.route_drive_normal);
                 routeBus.setImageResource(R.mipmap.route_bus_select);
                 routeWalk.setImageResource(R.mipmap.route_walk_normal);
                 break;
             case R.id.route_walk:
+                ROUTE_TYPE = ROUTE_TYPE_WALK;
                 busResultlayout.setVisibility(View.GONE);
                 searchRouteResult(ROUTE_TYPE_WALK);
                 mBottomLayout.setVisibility(View.VISIBLE);
                 routeDrive.setImageResource(R.mipmap.route_drive_normal);
                 routeBus.setImageResource(R.mipmap.route_bus_normal);
                 routeWalk.setImageResource(R.mipmap.route_walk_select);
+                break;
+            case R.id.navi_btn:
+                IntentDataForGPSNaviActivity data = new IntentDataForGPSNaviActivity();
+                data.mStartPoint = new NaviLatLng(this.mStartPoint.getLatitude(), this.mStartPoint.getLongitude());
+                data.mEndPoint = new NaviLatLng(this.mEndPoint.getLatitude(), this.mEndPoint.getLongitude());
+                data.naviType = ROUTE_TYPE;
+                GPSNaviActivity.startActivity(this,data,false);
                 break;
             default:
                 break;

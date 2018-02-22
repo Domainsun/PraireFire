@@ -139,24 +139,15 @@ public class InvitationIntegralActivity extends BaseActivity {
             case R.id.btn_share:
 //                showShareDialog();
 //                startShare();
+                mTargetScene = SendMessageToWX.Req.WXSceneSession;
+//                mTargetScene = SendMessageToWX.Req.WXSceneTimeline;
+//                mTargetScene = SendMessageToWX.Req.WXSceneFavorite;
                 showShareWeixin();
-              /*  String path = getResourcesUri(R.mipmap.ic_launcher);
-                Intent imageIntent = new Intent(Intent.ACTION_SEND);
-                imageIntent.setType("image/jpeg");
-                imageIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse(path));
-                startActivity(Intent.createChooser(imageIntent, "邀请好友"));
-                Intent textIntent = new Intent(Intent.ACTION_SEND);
-                textIntent.setType("text/plain");
-                textIntent.putExtra(Intent.EXTRA_TEXT, "这是一段分享的文字");
-                startActivity(Intent.createChooser(textIntent, "邀请好友"));*/
-
-
-
                 break;
         }
     }
     /**
-     * 调用分享界面
+     * 分享到微信
      */
     public void showShareWeixin() {
         IWXAPI api  ;
@@ -180,7 +171,13 @@ public class InvitationIntegralActivity extends BaseActivity {
         api.sendReq(req);
 
     }
-    private int mTargetScene = SendMessageToWX.Req.WXSceneSession;
+
+    /**
+     * 发送到聊天界面——WXSceneSession
+     发送到朋友圈——WXSceneTimeline
+     添加到微信收藏——WXSceneFavorite
+     */
+    private int mTargetScene = SendMessageToWX.Req.WXSceneSession;//WXSceneTimeline//WXSceneFavorite
     private static final int THUMB_SIZE = 150;
     private String buildTransaction(final String type) {
         return (type == null) ? String.valueOf(System.currentTimeMillis()) : type + System.currentTimeMillis();

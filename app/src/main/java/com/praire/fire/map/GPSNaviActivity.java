@@ -24,10 +24,10 @@ import java.util.List;
  * @author lyp
  */
 public class GPSNaviActivity extends BaseNaviActivity {
-//        protected NaviLatLng mEndLatlng ;//= new NaviLatLng(40.084894,116.603039);
-//    protected NaviLatLng mStartLatlng ;//= new NaviLatLng(39.825934,116.342972);
+
     protected final List<NaviLatLng> sList = new ArrayList<>();
     protected final List<NaviLatLng> eList = new ArrayList<>();
+    private int naviType = 0;
 
     public static void startActivity(Context context, IntentDataForGPSNaviActivity data, boolean forResult) {
         Intent intent = new Intent(context, GPSNaviActivity.class);
@@ -43,10 +43,10 @@ public class GPSNaviActivity extends BaseNaviActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         IntentDataForGPSNaviActivity data = getIntent().getParcelableExtra(Constants.INTENT_DATA);
-//        mStartLatlng = data.mStartPoint;
-//        mEndLatlng = data.mEndPoint;
+
         sList.add(data.mStartPoint);
         eList.add(data.mEndPoint);
+        naviType = data.naviType;
         setContentView(R.layout.activity_map_navi);
         Eyes.setStatusBarColor(this, ContextCompat.getColor(this, R.color.status_bar));
         mAMapNaviView = (AMapNaviView) findViewById(R.id.navi_view);
@@ -59,7 +59,6 @@ public class GPSNaviActivity extends BaseNaviActivity {
         super.onInitNaviSuccess();
         /**
          * 方法: int strategy=mAMapNavi.strategyConvert(congestion, avoidhightspeed, cost, hightspeed, multipleroute); 参数:
-         *
          * @congestion 躲避拥堵
          * @avoidhightspeed 不走高速
          * @cost 避免收费
@@ -76,8 +75,14 @@ public class GPSNaviActivity extends BaseNaviActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        mAMapNavi.setCarNumber("京", "DFZ588");
-        mAMapNavi.calculateDriveRoute(sList, eList, mWayPointList, strategy);
+//        mAMapNavi.setCarNumber("京", "DFZ588");
+        if(naviType == 2) {
+            //驾车导航
+            mAMapNavi.calculateDriveRoute(sList, eList, mWayPointList, strategy);
+        }else {
+            //步行导航
+            mAMapNavi.calculateWalkRoute(sList.get(0), eList.get(0));
+        }
 
     }
 

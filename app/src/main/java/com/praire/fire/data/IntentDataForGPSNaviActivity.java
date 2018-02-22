@@ -12,6 +12,8 @@ import com.amap.api.services.core.LatLonPoint;
 public class IntentDataForGPSNaviActivity implements Parcelable {
     public NaviLatLng mStartPoint;
     public NaviLatLng mEndPoint;
+    public int naviType = 2;
+
 
     @Override
     public int describeContents() {
@@ -22,14 +24,16 @@ public class IntentDataForGPSNaviActivity implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeParcelable(this.mStartPoint, flags);
         dest.writeParcelable(this.mEndPoint, flags);
+        dest.writeInt(this.naviType);
     }
 
     public IntentDataForGPSNaviActivity() {
     }
 
     protected IntentDataForGPSNaviActivity(Parcel in) {
-        this.mStartPoint = in.readParcelable(LatLonPoint.class.getClassLoader());
-        this.mEndPoint = in.readParcelable(LatLonPoint.class.getClassLoader());
+        this.mStartPoint = in.readParcelable(NaviLatLng.class.getClassLoader());
+        this.mEndPoint = in.readParcelable(NaviLatLng.class.getClassLoader());
+        this.naviType = in.readInt();
     }
 
     public static final Creator<IntentDataForGPSNaviActivity> CREATOR = new Creator<IntentDataForGPSNaviActivity>() {
