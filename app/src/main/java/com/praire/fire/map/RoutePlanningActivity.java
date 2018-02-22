@@ -3,6 +3,7 @@ package com.praire.fire.map;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +14,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps2d.AMap;
 import com.amap.api.maps2d.MapView;
 import com.amap.api.maps2d.model.BitmapDescriptorFactory;
@@ -45,7 +47,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * 驾车路线规划
+ * 路线规划
  * Created by lyp on 2018/1/9.
  */
 
@@ -107,7 +109,6 @@ public class RoutePlanningActivity extends AppCompatActivity implements AMap.OnM
     }
 
     private void setfromandtoMarker() {
-
         aMap.addMarker(new MarkerOptions()
                 .position(AMapUtil.convertToLatLng(mStartPoint))
                 .icon(BitmapDescriptorFactory.fromResource(R.mipmap.start)));
@@ -123,6 +124,7 @@ public class RoutePlanningActivity extends AppCompatActivity implements AMap.OnM
         if (aMap == null) {
             aMap = mapView.getMap();
         }
+
         registerListener();
         mRouteSearch = new RouteSearch(this);
         mRouteSearch.setRouteSearchListener(this);
@@ -196,7 +198,7 @@ public class RoutePlanningActivity extends AppCompatActivity implements AMap.OnM
             // 驾车路径规划
             case ROUTE_TYPE_DRIVE:
                 // 第一个参数表示路径规划的起点和终点，第二个参数表示驾车模式，第三个参数表示途经点，第四个参数表示避让区域，第五个参数表示避让道路
-                RouteSearch.DriveRouteQuery query = new RouteSearch.DriveRouteQuery(fromAndTo, RouteSearch.DrivingDefault, null,
+                RouteSearch.DriveRouteQuery query = new RouteSearch.DriveRouteQuery(fromAndTo, RouteSearch.DrivingMultiStrategy, null,
                         null, "");
                 // 异步路径规划驾车模式查询
                 mRouteSearch.calculateDriveRouteAsyn(query);
@@ -228,6 +230,7 @@ public class RoutePlanningActivity extends AppCompatActivity implements AMap.OnM
         }
 
     }
+
 
     @Override
     public void onBusRouteSearched(BusRouteResult result, int errorCode) {
@@ -265,7 +268,7 @@ public class RoutePlanningActivity extends AppCompatActivity implements AMap.OnM
                             mDriveRouteResult.getStartPos(),
                             mDriveRouteResult.getTargetPos(), null);
                     drivingRouteOverlay.setNodeIconVisibility(false);//设置节点marker是否显示
-                    drivingRouteOverlay.setIsColorfulline(true);//是否用颜色展示交通拥堵情况，默认true
+                    drivingRouteOverlay.setIsColorfulline(false);//是否用颜色展示交通拥堵情况，默认true
                     drivingRouteOverlay.removeFromMap();
                     drivingRouteOverlay.addToMap();
                     drivingRouteOverlay.zoomToSpan();

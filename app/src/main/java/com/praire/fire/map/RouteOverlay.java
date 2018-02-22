@@ -123,8 +123,9 @@ public class RouteOverlay {
 
 		endMarker = mAMap.addMarker((new MarkerOptions()).position(endPoint)
 				.icon(getEndBitmapDescriptor()).title("\u7EC8\u70B9"));
-		// mAMap.moveCamera(CameraUpdateFactory.newLatLngZoom(startPoint,
-		// getShowRouteZoom()));
+		//地图的缩放级别
+		 mAMap.moveCamera(CameraUpdateFactory.newLatLngZoom(startPoint,
+		 getShowRouteZoom()));
 	}
 	/**
 	 * 移动镜头到当前的视角。
@@ -191,7 +192,7 @@ public class RouteOverlay {
 	}
 	
 	protected float getRouteWidth() {
-		return 18f;
+		return 10f;
 	}
 
 	protected int getWalkColor() {
@@ -208,10 +209,10 @@ public class RouteOverlay {
 	}
 
 	protected int getDriveColor() {
-		return Color.parseColor("#537edc");
+		return Color.RED;//Color.parseColor("#ff0000");
 	}
 
-	// protected int getShowRouteZoom() {
-	// return 15;
-	// }
+	 protected int getShowRouteZoom() {
+	 return 18;
+	 }
 }

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -17,6 +18,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.amap.api.services.core.LatLonPoint;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -32,9 +34,12 @@ import com.praire.fire.car.bean.ProductlistBean;
 import com.praire.fire.car.bean.ServicelistBean;
 import com.praire.fire.common.ConstanUrl;
 import com.praire.fire.common.Constants;
+import com.praire.fire.data.IntentDataForRoutePlanningActivity;
 import com.praire.fire.home.MainActivity;
+import com.praire.fire.map.RoutePlanningActivity;
 import com.praire.fire.my.ShoppingCarActivity;
 import com.praire.fire.utils.RecycleViewDivider;
+import com.praire.fire.utils.SharePreferenceMgr;
 import com.praire.fire.utils.statusbarcolor.Eyes;
 import com.yanzhenjie.recyclerview.swipe.SwipeItemClickListener;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
@@ -228,19 +233,19 @@ public class ShopActivity extends BaseActivity {
     protected void networkResponse(Message msg) {
         switch (msg.what) {
             case 0:
-                Toast.makeText(this,  R.string.error_network, Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.error_network, Toast.LENGTH_SHORT).show();
                 break;
             case 1:
                 setBaseInfo();
-                List<ServicelistBean>  servicelistBeans = businessInfoBean.getServicelist();
+                List<ServicelistBean> servicelistBeans = businessInfoBean.getServicelist();
                 List<ProductlistBean> productlistBeans = businessInfoBean.getProductlist();
                 List<CommentlistBean> commentlistBeans = businessInfoBean.getCommentlist();
-                adapterService.setEntities(servicelistBeans,false);
-                adapterProduct.setEntities(productlistBeans,false);
+                adapterService.setEntities(servicelistBeans, false);
+                adapterProduct.setEntities(productlistBeans, false);
                 adapterEvaluate.setEntities(commentlistBeans);
                 break;
             case 2:
-                Toast.makeText(this,  R.string.no_data, Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.no_data, Toast.LENGTH_SHORT).show();
                 break;
             default:
                 break;
@@ -272,7 +277,8 @@ public class ShopActivity extends BaseActivity {
     }
 
     @OnClick({R.id.shop_back, R.id.shop_more, R.id.shop_collect, R.id.shop_share, R.id.shop_tel,
-            R.id.shop_more_service, R.id.shop_more_products, R.id.shop_more_evaluate, R.id.go_shop, R.id.go_shoping_car, R.id.go_my})
+            R.id.shop_more_service, R.id.shop_more_products, R.id.shop_more_evaluate, R.id.go_shop,
+            R.id.go_shoping_car, R.id.go_my, R.id.shop_address})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.shop_back:
@@ -285,7 +291,7 @@ public class ShopActivity extends BaseActivity {
             case R.id.shop_share:
                 break;
             case R.id.shop_tel:
-                if(businessInfoBean != null && !"".equals(businessInfoBean.getTel())) {
+                if (businessInfoBean != null && !"".equals(businessInfoBean.getTel())) {
                     if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
                         // TODO: Consider calling
                         return;
@@ -294,20 +300,20 @@ public class ShopActivity extends BaseActivity {
                 }
                 break;
             case R.id.shop_more_service:
-                MoreProductActivity.startActivity(this, businessId, 1,false);
+                MoreProductActivity.startActivity(this, businessId, 1, false);
                 break;
             case R.id.shop_more_products:
-                MoreProductActivity.startActivity(this, businessId, 0,false);
+                MoreProductActivity.startActivity(this, businessId, 0, false);
                 break;
             case R.id.shop_more_evaluate:
-                ShopAllEvalauteActivity.startActivity(ShopActivity.this, businessId,businessInfoBean.getComment().getCommentallcount(),0, false);
+                ShopAllEvalauteActivity.startActivity(ShopActivity.this, businessId, businessInfoBean.getComment().getCommentallcount(), 0, false);
                 break;
             case R.id.go_shop:
                 MainActivity.startActivity(this, 0, false);
                 finish();
                 break;
             case R.id.go_shoping_car:
-                if(hasLogin()) {
+                if (hasLogin()) {
                     ShoppingCarActivity.startActivity(this, false);
                 }
                 break;
@@ -315,10 +321,15 @@ public class ShopActivity extends BaseActivity {
                 MainActivity.startActivity(this, 3, false);
                 finish();
                 break;
+            case R.id.shop_address:
+                IntentDataForRoutePlanningActivity data = new IntentDataForRoutePlanningActivity();
+                data.mStartPoint = new LatLonPoint(Double.valueOf((String) SharePreferenceMgr.get(this, Constants.Latitude, "")), Double.valueOf((String) SharePreferenceMgr.get(this, Constants.Longitude, "")));
+                data.mEndPoint = new LatLonPoint(Double.valueOf(businessInfoBean.getLat()), Double.valueOf(businessInfoBean.getLng()));
+                RoutePlanningActivity.startActivity(this, data, false);
+                break;
             default:
                 break;
         }
     }
-
 
 }
