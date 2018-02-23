@@ -349,7 +349,7 @@
         android:id="@+id/go_shop"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:drawableTop="@mipmap/home_page1"
+        android:drawableTop="@mipmap/home_page"
         android:layout_weight="1"
         android:gravity="center"
         android:drawablePadding="5dp"

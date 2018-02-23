@@ -3,21 +3,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/transparent"
-    android:paddingBottom="60dp"
-    android:paddingTop="60dp" >
+    >
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+   <!-- <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:background="@android:color/transparent"
-        android:paddingBottom="60dp"
-        android:paddingTop="60dp" >
+        android:layout_centerInParent="true"
+          >-->
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
+       <RelativeLayout
+            android:layout_width="297dp"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:layout_margin="40dp"
             android:background="@drawable/shape_btn_gray" >
 
             <LinearLayout
@@ -132,7 +130,7 @@
                         android:visibility="visible" />
                 </RelativeLayout>
             </LinearLayout>
-        </RelativeLayout>
-    </RelativeLayout>
+         </RelativeLayout>
+    <!--</RelativeLayout>-->
 
 </RelativeLayout>

@@ -11,6 +11,6 @@
 
     <stroke
         android:width="1px"
-        android:color="@color/dialog__separation_line" />
+        android:color="@color/dialog_separation_line" />
 
 </shape>

@@ -6,13 +6,12 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.praire.fire.common.Constants;
-import com.praire.fire.utils.ToastUtil;
-import com.tencent.mm.sdk.modelbase.BaseReq;
-import com.tencent.mm.sdk.modelbase.BaseResp;
-import com.tencent.mm.sdk.openapi.IWXAPI;
-import com.tencent.mm.sdk.openapi.IWXAPIEventHandler;
-import com.tencent.mm.sdk.openapi.WXAPIFactory;
-import com.xyzlf.share.library.interfaces.ShareConstant;
+import com.tencent.mm.opensdk.modelbase.BaseReq;
+import com.tencent.mm.opensdk.modelbase.BaseResp;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+
 
 /**
  * 这个类是微信回调的类
@@ -44,8 +43,8 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
     @Override
     public void onResp(BaseResp resp) {
         Intent intent = new Intent();
-        intent.setAction(ShareConstant.ACTION_WEIXIN_CALLBACK);
-        intent.putExtra(ShareConstant.EXTRA_WEIXIN_RESULT, resp.errCode);
+        intent.setAction(Constants.ACTION_WEIXIN_CALLBACK);
+        intent.putExtra(Constants.EXTRA_WEIXIN_RESULT, resp.errCode);
         sendBroadcast(intent);
         finish();
     }

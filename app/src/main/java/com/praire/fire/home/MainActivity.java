@@ -22,6 +22,7 @@ import com.praire.fire.R;
 import com.praire.fire.base.BaseActivity;
 import com.praire.fire.common.ConstanUrl;
 import com.praire.fire.common.Constants;
+import com.praire.fire.home.fragment.MapFragmentNew;
 import com.praire.fire.utils.version.ProgressResponseBody;
 import com.praire.fire.utils.version.VersionInfo;
 import com.praire.fire.home.fragment.DownloadDialogFragment;
@@ -29,7 +30,6 @@ import com.praire.fire.home.fragment.HomeFragment;
 import com.praire.fire.home.fragment.MyFragment;
 import com.praire.fire.home.fragment.NewVersionDialogFragment;
 import com.praire.fire.home.fragment.OrderFragment;
-import com.praire.fire.home.fragment.MapFragment;
 import com.praire.fire.okhttp.OkhttpRequestUtil;
 import com.praire.fire.utils.ToastUtil;
 
@@ -138,9 +138,6 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
 
     @Override
     public void onTabSelected(int position) {
-        if ((position == 2) && !hasLogin()) {
-            return;
-        }
         if (fragments != null) {
             if (position < fragments.size()) {
                 FragmentManager fm = getSupportFragmentManager();
@@ -189,7 +186,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
 
         ArrayList<Fragment> fragments = new ArrayList<>();
         fragments.add(homeFragment);
-        fragments.add(new MapFragment());
+        fragments.add(new MapFragmentNew());
         fragments.add(new OrderFragment());
         fragments.add(myFragment);
         return fragments;

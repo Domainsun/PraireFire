@@ -26,9 +26,7 @@ import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.opensdk.modelmsg.WXWebpageObject;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
-import com.xyzlf.share.library.bean.ShareEntity;
-import com.xyzlf.share.library.interfaces.ShareConstant;
-import com.xyzlf.share.library.util.ShareUtil;
+
 
 
 import butterknife.BindView;
@@ -79,7 +77,7 @@ public class InvitationIntegralActivity extends BaseActivity {
 
     @Override
     protected void initListeners() {
-         refreshLayout.setRefreshFooter(new BallPulseFooter(this).setSpinnerStyle(SpinnerStyle.Scale));
+        refreshLayout.setRefreshFooter(new BallPulseFooter(this).setSpinnerStyle(SpinnerStyle.Scale));
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
@@ -185,13 +183,13 @@ public class InvitationIntegralActivity extends BaseActivity {
     /**
      * 调用分享界面
      */
-    public void showShareDialog() {
+/*    public void showShareDialog() {
        ShareEntity testBean = new ShareEntity("“TA”！您身边的服务管家！", "生活所需，服务所致");
         testBean.setUrl("https://www.baidu.com"); //分享链接
 //        testBean.setDrawableId(R.mipmap.ic_launcher);
         testBean.setImgUrl("https://www.baidu.com/img/bd_logo1.png");
         ShareUtil.showShareDialog(this, testBean, ShareConstant.REQUEST_CODE);
-    }
+    }*/
 
     /**
      * 使用分享功能，如下实例 使用 更多(系统自带) 分享功能：
@@ -211,14 +209,14 @@ public class InvitationIntegralActivity extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
     /*    *//**
          * 分享回调处理
-         *//*
-        if (requestCode == ShareConstant.REQUEST_CODE) {
+         */
+       /* if (requestCode == Constants.REQUEST_CODE) {
             if (data != null) {
-                int channel = data.getIntExtra(ShareConstant.EXTRA_SHARE_CHANNEL, -1);
-                int status = data.getIntExtra(ShareConstant.EXTRA_SHARE_STATUS, -1);
+                int channel = data.getIntExtra(Constants.EXTRA_SHARE_CHANNEL, -1);
+                int status = data.getIntExtra(Constants.EXTRA_SHARE_STATUS, -1);
                 onShareCallback(channel, status);
             }
-        }*/
+        } */
     }
 
     /**

@@ -7,6 +7,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import com.praire.fire.data.IntentDataForEvaluateActivity;
 import com.praire.fire.my.bean.CommentResultBean;
 import com.praire.fire.okhttp.OkhttpRequestUtil;
 import com.praire.fire.order.EvaluateActivity;
+import com.praire.fire.order.InputPasswordPopwindows;
 import com.praire.fire.order.OrderFinishInfoActivity;
 import com.praire.fire.order.OrderInfoActivity;
 import com.praire.fire.order.OrderUtils;
@@ -179,7 +181,7 @@ public class OrderFragment extends BaseFragment implements TabLayout.OnTabSelect
                         CommonDialog.Build((BaseActivity) getActivity()).setTitle(false).setMessage("是否确认消费？").setConfirm(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                checkOrder(orderlists.get(position).getId());
+                                getPayPassword(orderlists.get(position).getId());
                             }
                         }).showconfirm();
 
@@ -205,8 +207,17 @@ public class OrderFragment extends BaseFragment implements TabLayout.OnTabSelect
         index = 1;
         getDates(index, statusType, ORDER_LIST);
     }
-
+    @Override
+    public void onResume() {
+        if (hasLogin(false)) {
+            OkhttpRequestUtil.get(ConstanUrl.ORDER_ORDERLIST + "?status=" + statusType + "&p=" + 1, ORDER_LIST, true, uiHandler);
+        }
+        super.onResume();
+    }
     private void getDates(int index, String status, int type) {
+        if ( !hasLogin(true)) {
+            return;
+        }
         OkhttpRequestUtil.get(ConstanUrl.ORDER_ORDERLIST + "?status=" + status + "&p=" + index, type, true, uiHandler);
     }
 
@@ -216,16 +227,15 @@ public class OrderFragment extends BaseFragment implements TabLayout.OnTabSelect
 
         switch (msg.what) {
             case ORDER_LIST:
-                if (isFrist) {
-                    //结束加载
-                    refreshLayout.finishRefresh();
+                //结束加载
+                refreshLayout.finishRefresh();
+                refreshLayout.finishLoadmore();
+                if(isFrist){
                     orderlists.clear();
-                }else{
-                    refreshLayout.finishLoadmore();
                 }
                 Gson gson = new Gson();
                 OrderListBean orderlist = gson.fromJson((String) msg.obj, OrderListBean.class);
-                loadMore = !orderlist.getPagelist().isEmpty() && orderlist.getPagelist().size() % 5 == 0;
+                loadMore = orderlist.getPagelist().size()!=0 && orderlist.getPagelist().size() % 10 == 0;
                 orderlists.addAll(orderlist.getPagelist());
                 adapter.setEntities(orderlists);
 
@@ -238,14 +248,12 @@ public class OrderFragment extends BaseFragment implements TabLayout.OnTabSelect
                 getDates(1, statusType, ORDER_LIST);
                 break;
             case REFUND_ORDER:
-                Log.e("REFUND_ORDER", (String) msg.obj);
                 Gson gson6 = new Gson();
                 CommentResultBean resultBean1 = gson6.fromJson((String) msg.obj, CommentResultBean.class);
                 ToastUtil.show(getActivity(), resultBean1.getMsg());
                 getDates(1, statusType, ORDER_LIST);
                 break;
             case CHECK_ORDER:
-                Log.e("CHECK_ORDER", (String) msg.obj);
                 Gson gson7 = new Gson();
                 CommentResultBean resultBean2 = gson7.fromJson((String) msg.obj, CommentResultBean.class);
                 ToastUtil.show(getActivity(), resultBean2.getMsg());
@@ -257,11 +265,7 @@ public class OrderFragment extends BaseFragment implements TabLayout.OnTabSelect
         }
     }
 
-    @Override
-    public void onResume() {
-        getDates(1, statusType, ORDER_LIST);
-        super.onResume();
-    }
+
 
     public void getNextPage() {
         isFirst = false;
@@ -341,19 +345,23 @@ public class OrderFragment extends BaseFragment implements TabLayout.OnTabSelect
 
     /**
      * 用户确认消费
-     *
      * @param orderId 订单id
      */
-    private void checkOrder(String orderId) {
-        getPayPassword();
-        RequestBody requestBody = new FormBody.Builder()
-                .add("id", orderId)
-//                .add("paypassword", payPsd)
-                .build();
-        OkhttpRequestUtil.post(ConstanUrl.ORDER_CHECKUSE, requestBody, CHECK_ORDER, uiHandler, true);
-    }
+      private void getPayPassword(final String orderId) {
+//          输入支付密码
+        InputPasswordPopwindows medicinePop = new InputPasswordPopwindows(getActivity());
+        medicinePop.showAtLocation(tabLayout, Gravity.BOTTOM, 0, 0);
+        medicinePop.setOutsideTouchable(true);
+        medicinePop.setDataBack(new InputPasswordPopwindows.OnItemClickListener() {
+            @Override
+            public void onItemClick(String pwd) {
+                RequestBody requestBody = new FormBody.Builder()
+                        .add("id", orderId)
+                        .add("paypassword",pwd)
+                        .build();
+                OkhttpRequestUtil.post(ConstanUrl.ORDER_CHECKUSE, requestBody, CHECK_ORDER, uiHandler, true);
+            }
 
-    private void getPayPassword() {
-//        payPsd
+        });
     }
 }

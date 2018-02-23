@@ -90,7 +90,6 @@ public class HomeFragment extends BaseFragment implements BaseSliderView.OnSlide
     private ShopListAdapter adapter;
     private int index = 1;
     private List<ShopListBean.PagelistBean> evEntitys = new ArrayList<>();
-    private int lastVisibleItem;
     private LinearLayoutManager linearLayoutManager;
     private boolean loadMore = true;
     private double longitude = 0;
@@ -100,7 +99,6 @@ public class HomeFragment extends BaseFragment implements BaseSliderView.OnSlide
     public AMapLocationClient mLocationClient = null;
     //声明AMapLocationClientOption对象
     public AMapLocationClientOption mLocationOption = null;
-    private AMapLocation myLocation;
     private boolean isFrist = true;
 
     @Override
@@ -245,6 +243,7 @@ public class HomeFragment extends BaseFragment implements BaseSliderView.OnSlide
                 if (evEntity == null || evEntity.getPagelist().size() % 10 != 0) {
                     loadMore = false;
                 }
+                assert evEntity != null;
                 evEntitys.addAll(evEntity.getPagelist());
                 adapter.setEntities(evEntitys, longitude, latitude);
                 break;

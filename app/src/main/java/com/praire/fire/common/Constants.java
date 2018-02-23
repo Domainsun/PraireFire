@@ -55,6 +55,8 @@ public class Constants {
     public static final String COUNT = "count";
     public static final String PASSWORD = "PASSWORD";
     public static final String ADDRESS = "address";
+    public static final String ACTION_WEIXIN_CALLBACK = "ACTION_WEIXIN_CALLBACK";
+    public static final String EXTRA_WEIXIN_RESULT = "EXTRA_WEIXIN_RESULT";
 
     public static String photoCookie="";
     /**

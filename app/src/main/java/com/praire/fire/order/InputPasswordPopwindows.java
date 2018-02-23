@@ -1,5 +1,6 @@
 package com.praire.fire.order;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,12 +21,12 @@ import com.praire.fire.utils.SharePreferenceMgr;
  */
 
 public class InputPasswordPopwindows extends PopupWindow{
-    private BaseActivity context;
+    private Activity context;
     PasswordView passwordView;
     View mainView;
     private OnItemClickListener mOnItemClickListener;
 
-    public InputPasswordPopwindows(BaseActivity context) {
+    public InputPasswordPopwindows(Activity context) {
         super(context);
         this.context = context;
         int layoutid = R.layout.input_pass_word;

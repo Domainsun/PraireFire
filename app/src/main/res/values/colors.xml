@@ -31,7 +31,7 @@
 
     <color name="dialog_background">#fffbfbfb</color>
     <color name="dialog_background_pressed">#ffe2e1df</color>
-    <color name="dialog__separation_line">#ffd9d9d9</color>
+    <color name="dialog_separation_line">#ffd9d9d9</color>
 
     <drawable name="oranges">#FF9118</drawable>
     <drawable name="grays">#989898</drawable>

@@ -167,7 +167,8 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
 
             switch (view.getId()) {
                 case R.id.fragment_my_phone:
-                    SignAcitvity.startActivity(getActivity(), false);
+//                    AccountManagementActivity.startActivity(getActivity(), false);
+                    SetActivity.startActivity(getActivity(), false);
                     break;
                 case R.id.fragment_my_vip:
                     break;
