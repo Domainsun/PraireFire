@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Message;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
@@ -17,12 +18,15 @@ import android.widget.Toast;
 
 import com.praire.fire.R;
 import com.praire.fire.base.BaseActivity;
+import com.praire.fire.common.ConstanUrl;
 import com.praire.fire.merchant.adapter.ProductAdapter;
 import com.praire.fire.merchant.adapter.ServiceAdapter;
 import com.praire.fire.okhttp.GsonUtils.J2O;
 import com.praire.fire.okhttp.JavaBean.APIResultBean;
 import com.praire.fire.okhttp.JavaBean.ProductListBean;
+import com.praire.fire.okhttp.JavaBean.ProductTypeBean;
 import com.praire.fire.okhttp.JavaBean.ServiceListBean;
+import com.praire.fire.okhttp.OkhttpRequestUtil;
 import com.praire.fire.okhttp.UseAPIs;
 import com.praire.fire.utils.SharePreferenceMgr;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
@@ -119,7 +123,7 @@ public class ProductManageActivity extends BaseActivity {
                 showButtonDialogFragment(position,view,id,status);
             }
         });
-        recyclerView.setAdapter(adapter);
+
     }
 
     private void initdata() {
@@ -186,27 +190,50 @@ public class ProductManageActivity extends BaseActivity {
         }
 
     };
-
+    @Override
+    protected void networkResponse(Message msg) {
+        super.networkResponse(msg);
+        switch (msg.what) {
+            case 1:
+                String str = msg.obj + "";
+                if (!str.isEmpty()) {
+                    ProductListBean s = j.getProductList(str);
+                    for (int i = 0; i < mDatas.size(); i++) {
+                        mDatas.remove(i);
+                    }
+                    mDatas = s.getPagelist();
+                    adapter.setData(mDatas);
+                    recyclerView.setAdapter(adapter);
+                    recyclerView.loadMoreFinish(false, true);
+                }
+                break;
+            default:
+                break;
+        }
+    }
     private void loadData() {
 
-        try {
-            String str = "";
-            str=u.getProductList(cookie, "1");
-            if (str.length() != 0) {
-                ProductListBean s = j.getProductList(str);
-                for (int i = 0; i < mDatas.size(); i++) {
-                    mDatas.remove(i);
-                }
-                mDatas = s.getPagelist();
-                adapter.setData(mDatas);
-                recyclerView.loadMoreFinish(false, true);
-            } else {
-                Toast.makeText(this, "网络错误！", Toast.LENGTH_SHORT).show();
-            }
+        OkhttpRequestUtil.get(ConstanUrl.GET_PRODUCT_LIST+"?p=1", 1, true, uiHandler);
 
-        } catch (Exception e) {
-            Log.e("loadData", "loadData: "+e.toString() );
-        }
+
+//        try {
+//            String str = "";
+//            str=u.getProductList(cookie, "1");
+//            if (str.length() != 0) {
+//                ProductListBean s = j.getProductList(str);
+//                for (int i = 0; i < mDatas.size(); i++) {
+//                    mDatas.remove(i);
+//                }
+//                mDatas = s.getPagelist();
+//                adapter.setData(mDatas);
+//                recyclerView.loadMoreFinish(false, true);
+//            } else {
+//                Toast.makeText(this, "网络错误！", Toast.LENGTH_SHORT).show();
+//            }
+//
+//        } catch (Exception e) {
+//            Log.e("loadData", "loadData: "+e.toString() );
+//        }
 
 
 

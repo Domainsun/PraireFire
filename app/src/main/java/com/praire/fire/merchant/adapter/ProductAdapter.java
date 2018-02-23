@@ -70,7 +70,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
 
-
+        holder.setIsRecyclable(false);
 
         holder.iv.setVisibility(data.get(position).getStatus().equals("0") ? View.VISIBLE : View.INVISIBLE);
         holder.tvDelete.setText(data.get(position).getStatus().equals("0") ?  "上架" : "下架");
@@ -105,6 +105,16 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
         });
 
         holder.tvChange.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String  productId = data.get(position).getId();
+                Intent i = new Intent(context, AddProductActivity.class);
+                i.putExtra("data",productId);
+                context.startActivity(i);
+            }
+        });
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String  productId = data.get(position).getId();

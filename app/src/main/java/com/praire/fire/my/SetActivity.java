@@ -1,6 +1,7 @@
 package com.praire.fire.my;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -40,11 +41,14 @@ import com.praire.fire.okhttp.JavaBean.UserInfoBean;
 import com.praire.fire.okhttp.OkhttpRequestUtil;
 import com.praire.fire.okhttp.UseAPIs;
 import com.praire.fire.utils.SharePreferenceMgr;
+import com.wx.wheelview.adapter.ArrayWheelAdapter;
+import com.wx.wheelview.widget.WheelView;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.engine.impl.PicassoEngine;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -102,7 +106,11 @@ public class SetActivity extends BaseActivity {
     String phone = "";
 
 
+    private WheelView mainWheelView;
+    List<String> servicelists = new ArrayList<>();
     CommonMethod commonMethod = new CommonMethod();
+
+
 
     public static void startActivity(Context context, boolean forResult) {
         Intent intent = new Intent(context, SetActivity.class);
@@ -140,11 +148,12 @@ public class SetActivity extends BaseActivity {
 
 //        getUserInfo(cookie);
 
+        servicelists.add("男");
+        servicelists.add("女");
 
-        if (hasLogin()) {
             OkhttpRequestUtil.get(ConstanUrl.GET_USER_HEAD, 1, true, uiHandler);
             OkhttpRequestUtil.get(ConstanUrl.GET_USER_INFO, 2, true, uiHandler);
-        }
+
 
 
     }
@@ -185,7 +194,6 @@ public class SetActivity extends BaseActivity {
                     tvPhone.setText(o.getTel());
 
                 }
-
 
 
                 break;
@@ -241,7 +249,9 @@ public class SetActivity extends BaseActivity {
                 ChangeNameActivity.startActivity(this, true);
                 break;
             case R.id.rl_sex:
-                showPopupWindow();
+//                showPopupWindow();
+
+                show1();
                 break;
             case R.id.rl_phone:
                 break;
@@ -325,7 +335,7 @@ public class SetActivity extends BaseActivity {
             public void onClick(View view) {
                 try {
                     String str = "";
-                    str = u.changeUserInfo(cookie, "", "", "", "", "", "0");
+                    str = u.changeUserInfo(cookie, null, null, null, null, null, "0");
                     APIResultBean a = j.getAPIResult(str);
                     Toast.makeText(SetActivity.this, a.getMsg(), Toast.LENGTH_SHORT).show();
                     if (1 == a.getCode()) {
@@ -343,7 +353,7 @@ public class SetActivity extends BaseActivity {
             public void onClick(View view) {
                 try {
                     String str = "";
-                    str = u.changeUserInfo(cookie, "", "", "", "", "", "1");
+                    str = u.changeUserInfo(cookie, null, null, null, null, null, "1");
                     APIResultBean a = j.getAPIResult(str);
                     Toast.makeText(SetActivity.this, a.getMsg(), Toast.LENGTH_SHORT).show();
                     if (1 == a.getCode()) {
@@ -355,8 +365,78 @@ public class SetActivity extends BaseActivity {
                 }
             }
         });
+
+
         //显示PopupWindow
 
+
+    }
+
+
+    //滚轮选择性别
+    private void show1() {
+
+
+
+        final Dialog bottomDialog = new Dialog(this, R.style.BottomDialog);
+        View contentView = LayoutInflater.from(this).inflate(R.layout.select_service_type_dialog, null);
+
+        WheelView.WheelViewStyle style = new WheelView.WheelViewStyle();
+        style.selectedTextSize = 20;
+        style.textSize = 16;
+
+        mainWheelView = (WheelView) contentView.findViewById(R.id.main_wheelview);
+        mainWheelView.setWheelAdapter(new ArrayWheelAdapter(this));
+        mainWheelView.setSkin(WheelView.Skin.Holo);
+        mainWheelView.setWheelData(servicelists);
+        mainWheelView.setStyle(style);
+
+
+        bottomDialog.setContentView(contentView);
+        ViewGroup.LayoutParams layoutParams = contentView.getLayoutParams();
+        layoutParams.width = getResources().getDisplayMetrics().widthPixels;
+        contentView.setLayoutParams(layoutParams);
+        bottomDialog.getWindow().setGravity(Gravity.BOTTOM);
+        bottomDialog.getWindow().setWindowAnimations(R.style.BottomDialog_Animation);
+        bottomDialog.show();
+
+        TextView tv_confirm = contentView.findViewById(R.id.tv_ok);
+        TextView tv_cancle = contentView.findViewById(R.id.tv_cancel);
+        tv_confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                try {
+                    String str = "";
+                    if (mainWheelView.getSelectionItem().equals("男")) {
+                        str = u.changeUserInfo(cookie, null, null, null, null, null, "0");
+                    } else {
+                        str = u.changeUserInfo(cookie, null, null, null, null, null, "1");
+                    }
+
+                    APIResultBean a = j.getAPIResult(str);
+                    Toast.makeText(SetActivity.this, a.getMsg(), Toast.LENGTH_SHORT).show();
+                    if (1 == a.getCode()) {
+                        tvSex.setText(mainWheelView.getSelectionItem() + "");
+                    }
+                    mPopWindow.dismiss();
+                    Log.d("str", "str: " + str);
+                } catch (Exception e) {
+
+
+                }
+                bottomDialog.dismiss();
+            }
+        });
+
+
+        tv_cancle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                bottomDialog.dismiss();
+            }
+        });
 
     }
 

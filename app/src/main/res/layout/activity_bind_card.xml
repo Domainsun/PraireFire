@@ -50,7 +50,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
-            android:text="银行户名"
+            android:text="银行户名:"
             android:textColor="@color/text_color"
             android:textSize="16sp" />
 
@@ -64,7 +64,7 @@
             android:background="@null"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@id/tv_id_num"
-            android:maxLength="5"
+            android:maxLength="15"
             />
     </RelativeLayout>
     <RelativeLayout
@@ -80,7 +80,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
-            android:text="银行卡号"
+            android:text="银行卡号:"
             android:textColor="@color/text_color"
             android:textSize="16sp"
             />
@@ -113,7 +113,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_centerVertical="true"
-            android:text="开户行"
+            android:text="开户行:"
             android:textColor="@color/text_color"
             android:textSize="16sp" />
 
@@ -144,7 +144,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
-            android:text="开户行所在地"
+            android:text="开户行所在地:"
             android:textColor="@color/text_color"
             android:textSize="16sp" />
 
@@ -177,7 +177,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
-            android:text="开户支行"
+            android:text="开户支行:"
             android:textColor="@color/text_color"
             android:textSize="16sp"
             />

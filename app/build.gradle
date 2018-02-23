@@ -7,23 +7,23 @@ def releaseTime() {
 
 android {
 
-    signingConfigs {
-        config {
-            keyAlias 'key0'
-            keyPassword 'PF1234567'
-            storeFile file('D:/PraireFire/PFKeyStore.jks')
-            storePassword 'PF1234567'
-        }
-
-    }
 //    signingConfigs {
 //        config {
 //            keyAlias 'key0'
 //            keyPassword 'PF1234567'
-//            storeFile file('F:/ASWorkSpace/PraireFire/PFKeyStore.jks')
+//            storeFile file('D:/PraireFire/PFKeyStore.jks')
 //            storePassword 'PF1234567'
 //        }
+//
 //    }
+    signingConfigs {
+        config {
+            keyAlias 'key0'
+            keyPassword 'PF1234567'
+            storeFile file('F:/ASWorkSpace/PraireFire/PFKeyStore.jks')
+            storePassword 'PF1234567'
+        }
+    }
     compileSdkVersion 26
     defaultConfig {
         applicationId "com.praire.fire"

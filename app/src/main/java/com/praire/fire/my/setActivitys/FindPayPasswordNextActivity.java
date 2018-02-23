@@ -71,6 +71,9 @@ public class FindPayPasswordNextActivity extends BaseActivity {
     protected void initViews() {
         ButterKnife.bind(this);
         cookie = (String) SharePreferenceMgr.get(this, LOGIN_COOKIE, "");
+
+        Log.d("signcookie", "signcookie: "+cookie);
+
         checkPassword.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -97,7 +100,7 @@ public class FindPayPasswordNextActivity extends BaseActivity {
     protected void initData() {
 //        Intent i = getIntent();
 //        cookie = i.getStringExtra("cookie");
-//        Log.d("cookie", "cookie: " + cookie);
+//        Log.d("smscookie", "smscookie: " + cookie);
     }
 
 
@@ -115,7 +118,7 @@ public class FindPayPasswordNextActivity extends BaseActivity {
                     String str = u.changePayPassword(password, inum, cookie);
                     APIResultBean o = j.getAPIResult(str);
 
-                    Log.d("str findpay", "findpay: "+str);
+                    Log.d("str findpay", "findpay: " + str);
 
                     Toast.makeText(this, o.getMsg() + "", Toast.LENGTH_SHORT).show();
                     if (1 == o.getCode()) {
@@ -123,6 +126,8 @@ public class FindPayPasswordNextActivity extends BaseActivity {
 
                         Log.d("str", "str: " + str);
                     }
+                } else {
+                    Toast.makeText(this, "请把信息填写完整!", Toast.LENGTH_SHORT).show();
                 }
 
 

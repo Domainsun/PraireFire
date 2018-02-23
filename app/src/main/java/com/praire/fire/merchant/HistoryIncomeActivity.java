@@ -2,6 +2,7 @@ package com.praire.fire.merchant;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Message;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,11 +15,13 @@ import android.widget.Toast;
 import com.bigkoo.pickerview.TimePickerView;
 import com.praire.fire.R;
 import com.praire.fire.base.BaseActivity;
+import com.praire.fire.common.ConstanUrl;
 import com.praire.fire.merchant.adapter.HistoryIncomeAdapter;
 import com.praire.fire.merchant.adapter.TodayIncomeAdapter;
 import com.praire.fire.okhttp.GsonUtils.J2O;
 import com.praire.fire.okhttp.JavaBean.HistoryIncomeBean;
 import com.praire.fire.okhttp.JavaBean.TodayIncomeBean;
+import com.praire.fire.okhttp.OkhttpRequestUtil;
 import com.praire.fire.okhttp.UseAPIs;
 import com.praire.fire.utils.SharePreferenceMgr;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
@@ -139,25 +142,52 @@ public class HistoryIncomeActivity extends BaseActivity {
 
     }
 
+    @Override
+    protected void networkResponse(Message msg) {
+        super.networkResponse(msg);
+
+
+        switch (msg.what) {
+            case 1:
+
+                String str = msg.obj + "";
+                if (!str.isEmpty()) {
+
+                    Log.d("initdata", "initdata: \n" + str);
+                    HistoryIncomeBean s = j.getHistoryIncome(str);
+                    Datas = s.getPagelist();
+                    adapter.setData(Datas);
+                    recyclerView.setAdapter(adapter);
+
+                }
+
+
+                break;
+        }
+    }
+
+
 
     private void initdata(String startDate,String endDate) {
         recyclerView.loadMoreFinish(false, true);
         for (int i=0;i<Datas.size();i++) {
             Datas.remove(i);
         }
+        OkhttpRequestUtil.get(ConstanUrl.GET_HISTORY_INCOME+"?startdate="+startDate+"&enddate="+endDate+"&p=1", 1, true, uiHandler);
 
-        String str = "";
-        str = u.getHistoryIncome(cookie, "1",startDate,endDate);
-        if (str.length() != 0) {
-            Log.d("initdata", "initdata: \n" + str);
-            HistoryIncomeBean s = j.getHistoryIncome(str);
-            Datas = s.getPagelist();
-            adapter.setData(Datas);
-            recyclerView.setAdapter(adapter);
 
-        } else {
-            Toast.makeText(this, "网络错误", Toast.LENGTH_SHORT).show();
-        }
+//        String str = "";
+//        str = u.getHistoryIncome(cookie, "1",startDate,endDate);
+//        if (str.length() != 0) {
+//            Log.d("initdata", "initdata: \n" + str);
+//            HistoryIncomeBean s = j.getHistoryIncome(str);
+//            Datas = s.getPagelist();
+//            adapter.setData(Datas);
+//            recyclerView.setAdapter(adapter);
+//
+//        } else {
+//            Toast.makeText(this, "网络错误", Toast.LENGTH_SHORT).show();
+//        }
 
     }
 
@@ -245,6 +275,7 @@ public class HistoryIncomeActivity extends BaseActivity {
                 String str=getTime(date);
 
 
+
                 TextView tv = (TextView) v;
                 if (!choose) {
                     tv.setText(str + "-");
@@ -270,8 +301,8 @@ public class HistoryIncomeActivity extends BaseActivity {
         })
 
                 //年月日时分秒 的显示与否，不设置则默认全部显示
-                .setType(new boolean[]{true, true, true, false, false, false})
-                .setLabel("年", "月", "日", "", "", "")
+                .setType(new boolean[]{true, true, false, false, false, false})
+                .setLabel("年", "月", "", "", "", "")
                 .isCenterLabel(false)
                 .setDividerColor(Color.DKGRAY)
                 .setContentSize(21)

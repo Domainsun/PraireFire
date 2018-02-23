@@ -1,5 +1,6 @@
 package com.praire.fire.okhttp.APIThread;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.praire.fire.common.ConstanUrl;
@@ -50,25 +51,25 @@ public class ChangeUserInfo implements Callable {
 
         FormBody.Builder formBody = new FormBody.Builder();
 
-        if (nickname.length()!=0){
+        if (!TextUtils.isEmpty(nickname)){
             formBody.add("nickname", nickname);
         }
 
-        if (address.length()!=0){
+        if (!TextUtils.isEmpty(address)){
             formBody.add("address", address);
         }
 
-        if (contact.length()!=0){
+        if (!TextUtils.isEmpty(contact)){
             formBody.add("contact", contact);
         }
-        if (contactnumber.length()!=0){
+        if (!TextUtils.isEmpty(contactnumber)){
             formBody.add("contactnumber", contactnumber);
         }
 
-        if (postcode.length()!=0){
+        if (!TextUtils.isEmpty(postcode)){
             formBody.add("postcode", postcode);
         }
-         if (sex.length()!=0){
+         if (!TextUtils.isEmpty(sex)){
             formBody.add("sex", sex);
         }
 

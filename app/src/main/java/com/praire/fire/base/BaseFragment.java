@@ -67,7 +67,11 @@ public abstract class BaseFragment extends Fragment {
         };
     }
     protected void networkResponse(Message msg) {
+
+
     }
+
+
 
     /**
      * 判断是否已登录

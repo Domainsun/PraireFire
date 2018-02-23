@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Message;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
@@ -18,10 +19,13 @@ import android.widget.Toast;
 
 import com.praire.fire.R;
 import com.praire.fire.base.BaseActivity;
+import com.praire.fire.common.ConstanUrl;
 import com.praire.fire.merchant.adapter.ServiceAdapter;
 import com.praire.fire.okhttp.GsonUtils.J2O;
 import com.praire.fire.okhttp.JavaBean.APIResultBean;
 import com.praire.fire.okhttp.JavaBean.ServiceListBean;
+import com.praire.fire.okhttp.JavaBean.TodayIncomeBean;
+import com.praire.fire.okhttp.OkhttpRequestUtil;
 import com.praire.fire.okhttp.UseAPIs;
 import com.praire.fire.utils.SharePreferenceMgr;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
@@ -134,9 +138,37 @@ public class ServiceManageActivity extends BaseActivity {
                 Log.d("status: ", "status: " + status);
             }
         });
-        recyclerView.setAdapter(adapter);
 
 
+
+    }
+
+
+    @Override
+    protected void networkResponse(Message msg) {
+        super.networkResponse(msg);
+
+
+        switch (msg.what) {
+            case 1:
+
+                String str = msg.obj + "";
+                if (!str.isEmpty()) {
+
+                    ServiceListBean s = j.getServiceList(str);
+                    for (int i = 0; i < mDatas.size(); i++) {
+                        mDatas.remove(i);
+                    }
+                    mDatas = s.getPagelist();
+                    adapter.setData(mDatas);
+                    recyclerView.setAdapter(adapter);
+                    recyclerView.loadMoreFinish(false, true);
+
+                }
+
+
+                break;
+        }
     }
 
 
@@ -200,20 +232,25 @@ public class ServiceManageActivity extends BaseActivity {
 
 
     private void loadData() {
-        String str = "";
-        str = u.getServiceList(cookie, "1");
 
-        if (str.length() != 0) {
-            ServiceListBean s = j.getServiceList(str);
-            for (int i = 0; i < mDatas.size(); i++) {
-                mDatas.remove(i);
-            }
-            mDatas = s.getPagelist();
-            adapter.setData(mDatas);
-            recyclerView.loadMoreFinish(false, true);
-        } else {
-            Toast.makeText(this, "网络错误！", Toast.LENGTH_SHORT).show();
-        }
+
+//        ConstanUrl.GET_SERVICE_LIST+"?p=1";
+        OkhttpRequestUtil.get( ConstanUrl.GET_SERVICE_LIST+"?p=1", 1, true, uiHandler);
+
+//        String str = "";
+//        str = u.getServiceList(cookie, "1");
+//
+//        if (str.length() != 0) {
+//            ServiceListBean s = j.getServiceList(str);
+//            for (int i = 0; i < mDatas.size(); i++) {
+//                mDatas.remove(i);
+//            }
+//            mDatas = s.getPagelist();
+//            adapter.setData(mDatas);
+//            recyclerView.loadMoreFinish(false, true);
+//        } else {
+//            Toast.makeText(this, "网络错误！", Toast.LENGTH_SHORT).show();
+//        }
 
     }
 
@@ -278,5 +315,11 @@ public class ServiceManageActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        loadData();
     }
 }

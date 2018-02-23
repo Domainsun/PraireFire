@@ -5,6 +5,7 @@
     android:background="@color/grey_background"
     >
     <TextView
+        android:id="@+id/tv_1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
@@ -19,6 +20,7 @@
         android:padding="15dp"
         android:background="@color/white">
     <TextView
+        android:id="@+id/tv_2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="1.会员可以得到专业的洗车、护车注意事项的温馨提醒。"
@@ -26,6 +28,7 @@
         android:textSize="16sp"
         android:textColor="@color/grey"/>
     <TextView
+        android:id="@+id/tv_3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -33,6 +36,7 @@
         android:textSize="16sp"
         android:textColor="@color/grey"/>
     <TextView
+        android:id="@+id/tv_4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"

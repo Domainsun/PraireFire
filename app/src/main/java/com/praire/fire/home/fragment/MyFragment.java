@@ -134,13 +134,40 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                 }
 
 
-
                 fragmentMyVip.setText(userBean.getLevelinfo().getDes());
                 fragmentMyWallet.setText("￥" + userBean.getCapital());
 
 //                fragmentMyIntegral.setText(userBean.g());
 //                fragmentMyOrder.setText(userBean.getTel());
 //                fragmentMyShoppingcar.setText(userBean.getTel());
+                break;
+
+            case 2:
+
+
+                String result;
+                result = msg.obj + "";
+                if (result.isEmpty()) {
+                    Intent i2 = new Intent(getContext(), MerchantActivity1.class);
+                    startActivity(i2);
+                } else {
+
+
+                    ShopInfoBean s = new J2O().getShopInfo(result);
+                    if (s.getChecked().equals("0") || s.getChecked().equals("2")) {  /*审核中 和 被拒绝*/
+                        Intent i = new Intent(getContext(), MerchantActivity1.class);
+                        Bundle b = new Bundle();
+                        b.putSerializable("shopInfo", s);
+                        i.putExtras(b);
+                        startActivity(i);
+
+                    } else if (s.getChecked().equals("1")) {/*通过*/
+                    /*跳到商家服务*/
+                        Intent i = new Intent(getContext(), BusinessServiceActivity.class);
+                        startActivity(i);
+                    }
+                }
+
                 break;
             default:
                 break;
@@ -176,7 +203,10 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                     CustomerServiceActivity.startActivity(getActivity(), false);
                     break;
                 case R.id.fragment_my_set:
+
                     SetActivity.startActivity(getActivity(), false);
+
+
                     break;
                 case R.id.fragment_my_img:
 //                    AccountManagementActivity.startActivity(getActivity(), false);
@@ -210,46 +240,46 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                 case R.id.fragment_my_merchant_services_rl:
                 /*by domain*/
 
-                    String cookie = (String) SharePreferenceMgr.get(getContext(), LOGIN_COOKIE, "");
-                    String result = "";
+//                    String cookie = (String) SharePreferenceMgr.get(getContext(), LOGIN_COOKIE, "");
+//                    String result = "";
 
 
+                    OkhttpRequestUtil.get(ConstanUrl.GET_SHOP_INFO, 2, true, uiHandler);
 
 
-
-                    try {
-                        result = new UseAPIs().getShopInfo(cookie);
-
-                        Log.d("result", "onClick: " + result);
-
-                        if (result.length() == 0) {
-
-                        }
-
-                        if (result != null) {
-                            ShopInfoBean s = new J2O().getShopInfo(result);
-
-
-                            if (s.getChecked().equals("0") || s.getChecked().equals("2")) {  /*审核中 和 被拒绝*/
-                                Intent i = new Intent(getContext(), MerchantActivity1.class);
-                                Bundle b = new Bundle();
-                                b.putSerializable("shopInfo", s);
-                                i.putExtras(b);
-                                startActivity(i);
-
-                            } else if (s.getChecked().equals("1")) {/*通过*/
-                    /*跳到商家服务*/
-                                Intent i = new Intent(getContext(), BusinessServiceActivity.class);
-                                startActivity(i);
-                            }
-                        } else {
-
-                            Toast.makeText(getContext(), "网络错误！", Toast.LENGTH_SHORT).show();
-                        }
-                    } catch (Exception e) {
-                        Intent i2 = new Intent(getContext(), MerchantActivity1.class);
-                        startActivity(i2);
-                    }
+//                    try {
+//                        result = new UseAPIs().getShopInfo(cookie);
+//
+//                        Log.d("result", "onClick: " + result);
+//
+//                        if (result.length() == 0) {
+//
+//                        }
+//
+//                        if (result != null) {
+//                            ShopInfoBean s = new J2O().getShopInfo(result);
+//
+//
+//                            if (s.getChecked().equals("0") || s.getChecked().equals("2")) {  /*审核中 和 被拒绝*/
+//                                Intent i = new Intent(getContext(), MerchantActivity1.class);
+//                                Bundle b = new Bundle();
+//                                b.putSerializable("shopInfo", s);
+//                                i.putExtras(b);
+//                                startActivity(i);
+//
+//                            } else if (s.getChecked().equals("1")) {/*通过*/
+//                    /*跳到商家服务*/
+//                                Intent i = new Intent(getContext(), BusinessServiceActivity.class);
+//                                startActivity(i);
+//                            }
+//                        } else {
+//
+//                            Toast.makeText(getContext(), "网络错误！", Toast.LENGTH_SHORT).show();
+//                        }
+//                    } catch (Exception e) {
+//                        Intent i2 = new Intent(getContext(), MerchantActivity1.class);
+//                        startActivity(i2);
+//                    }
 
 
                     break;

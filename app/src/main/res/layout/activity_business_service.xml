@@ -22,7 +22,9 @@
             android:gravity="center"
             android:layout_centerVertical="true"
             android:drawablePadding="10dp"
-            android:drawableRight="@mipmap/back" />
+            android:drawableRight="@mipmap/back"
+            android:paddingRight="15dp"
+           />
 
 
         <TextView
@@ -120,7 +122,9 @@
             android:drawablePadding="9dp"
             android:text="对账"
             android:textColor="@color/white"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+
+            android:padding="10dp"/>
         <View
             android:layout_width="2dp"
             android:layout_height="25dp"
@@ -138,7 +142,8 @@
             android:drawablePadding="9dp"
             android:text="提现"
             android:textColor="@color/white"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:padding="10dp"/>
     </RelativeLayout>
 
 
@@ -359,7 +364,7 @@
             android:textSize="17sp"
             android:text="信息管理"
             android:layout_marginLeft="15dp"
-            android:drawableLeft="@mipmap/business_evaluate"
+            android:drawableLeft="@mipmap/infomanage"
             android:drawablePadding="10dp"
             />
 

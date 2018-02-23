@@ -2,6 +2,7 @@ package com.praire.fire.merchant;
 
 import android.app.Dialog;
 import android.os.Bundle;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
@@ -16,11 +17,15 @@ import android.widget.Toast;
 
 import com.praire.fire.R;
 import com.praire.fire.base.BaseActivity;
+import com.praire.fire.common.ConstanUrl;
 import com.praire.fire.okhttp.GsonUtils.J2O;
 import com.praire.fire.okhttp.JavaBean.APIResultBean;
 import com.praire.fire.okhttp.JavaBean.ServiceListBean;
 import com.praire.fire.okhttp.JavaBean.ServiceTypeBean;
 import com.praire.fire.okhttp.JavaBean.ShopInfoBean;
+import com.praire.fire.okhttp.JavaBean.UserHeadBean;
+import com.praire.fire.okhttp.JavaBean.UserInfoBean;
+import com.praire.fire.okhttp.OkhttpRequestUtil;
 import com.praire.fire.okhttp.UseAPIs;
 import com.praire.fire.utils.SharePreferenceMgr;
 import com.wx.wheelview.adapter.ArrayWheelAdapter;
@@ -70,10 +75,12 @@ public class AddServiceActivity extends BaseActivity {
 
     String name = "";
     String type = "";
+    String id = "";
     String price = "";
     String introdction = "";
     String cookie;
-    ServiceListBean.PagelistBean s=new ServiceListBean.PagelistBean();
+    ServiceListBean.PagelistBean s = new ServiceListBean.PagelistBean();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,39 +91,43 @@ public class AddServiceActivity extends BaseActivity {
         cookie = (String) SharePreferenceMgr.get(this, LOGIN_COOKIE, "");
         initdata();
         Bundle b = getIntent().getExtras();
-        if (b!=null) {
-            s= (ServiceListBean.PagelistBean) b.getSerializable("data");
-            String tab=b.getString("tab");
+        if (b != null) {
+            s = (ServiceListBean.PagelistBean) b.getSerializable("data");
+            String tab = b.getString("tab");
 
 //            if (tab.equals("1")) {
 
-                etServiceName.setText(s.getName());
-                tvShowServiceType.setText(s.getClass_name());
-                etServicePrice.setText(s.getNprice());
-                etProductIntroduction.setText(s.getDesc());
-                submit.setText("修改");
-                submit.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        String id=s.getId();
-                        type=s.getClassX();
-                        getDate();
-                        if (name.length() == 0 || price.length() == 0 || introdction.length() == 0 || type.length() == 0) {
-                            Toast.makeText(AddServiceActivity.this, "请把信息填写完整！", Toast.LENGTH_SHORT).show();
-                        } else {
-                            String str = "";
-                            str=  new UseAPIs().changeServiceInfo(id,name,type,introdction,price,cookie);
+            etServiceName.setText(s.getName());
+            tvShowServiceType.setText(s.getClass_name());
+            etServicePrice.setText(s.getNprice());
+            etProductIntroduction.setText(s.getDesc());
+            submit.setText("修改");
+            id = s.getId();
+            type = s.getClassX();
+            submit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
 
-                            if (str.length() != 0) {
-                                APIResultBean a = new J2O().getAPIResult(str);
-                                Toast.makeText(AddServiceActivity.this, a.getMsg() + "", Toast.LENGTH_SHORT).show();
-                            } else {
-                                Toast.makeText(AddServiceActivity.this, "网络错误！", Toast.LENGTH_SHORT).show();
+                    getDate();
+                    if (name.length() == 0 || price.length() == 0 || introdction.length() == 0 || type.length() == 0) {
+                        Toast.makeText(AddServiceActivity.this, "请把信息填写完整！", Toast.LENGTH_SHORT).show();
+                    } else {
+                        String str = "";
+                        str = new UseAPIs().changeServiceInfo(id, name, type, introdction, price, cookie);
+
+                        if (str.length() != 0) {
+                            APIResultBean a = new J2O().getAPIResult(str);
+                            if (a.getCode() == 1) {
+                                AddServiceActivity.this.finish();
                             }
-
+                            Toast.makeText(AddServiceActivity.this, a.getMsg() + "", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(AddServiceActivity.this, "网络错误！", Toast.LENGTH_SHORT).show();
                         }
+
                     }
-                });
+                }
+            });
 //            }
         }
 
@@ -164,12 +175,15 @@ public class AddServiceActivity extends BaseActivity {
                 if (name.length() == 0 || price.length() == 0 || introdction.length() == 0 || type.length() == 0) {
                     Toast.makeText(this, "请把信息填写完整！", Toast.LENGTH_SHORT).show();
                 } else {
-                    String str ="";
-                    str= new UseAPIs().addService(name, type, introdction, price, cookie);
+                    String str = "";
+                    str = new UseAPIs().addService(name, type, introdction, price, cookie);
                     if (str.length() != 0) {
 
                         Log.d("onViewClicked", "onViewClicked: " + str);
                         APIResultBean a = new J2O().getAPIResult(str);
+                        if (a.getCode() == 1) {
+                            this.finish();
+                        }
                         Toast.makeText(this, a.getMsg() + "", Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(this, "网络错误！", Toast.LENGTH_SHORT).show();
@@ -181,29 +195,53 @@ public class AddServiceActivity extends BaseActivity {
         }
     }
 
-    private void  getDate(){
+    private void getDate() {
         name = etServiceName.getText().toString();
         price = etServicePrice.getText().toString();
         introdction = etProductIntroduction.getText().toString();
     }
 
+    @Override
+    protected void networkResponse(Message msg) {
+        super.networkResponse(msg);
+        switch (msg.what) {
+            case 1:
+                String str = msg.obj + "";
+                if (!str.isEmpty()) {
+                    ServiceTypeBean s = new J2O().getServiceType(str);
+                    for (int i = 0; i < s.getList().size(); i++) {
+                        String name = s.getList().get(i).getName();
+                        String code = s.getList().get(i).getId();
+                        servicelists.add(name);
+                        map.put(name, code);
+                    }
+                }
+                break;
+            default:
+                break;
+        }
+    }
 
     private void initdata() {
 
-        String str = "";
-        str=new UseAPIs().getServiceType();
 
-        if (str.length() != 0) {
-            ServiceTypeBean s = new J2O().getServiceType(str);
-            for (int i = 0; i < s.getList().size(); i++) {
-                String name = s.getList().get(i).getName();
-                String code = s.getList().get(i).getId();
-                servicelists.add(name);
-                map.put(name, code);
-            }
-        } else {
-            Toast.makeText(this, "网络错误！", Toast.LENGTH_SHORT).show();
-        }
+        OkhttpRequestUtil.get(ConstanUrl.GET_SERVICE_TYPE, 1, true, uiHandler);
+
+
+//        String str = "";
+//        str=new UseAPIs().getServiceType();
+//
+//        if (str.length() != 0) {
+//            ServiceTypeBean s = new J2O().getServiceType(str);
+//            for (int i = 0; i < s.getList().size(); i++) {
+//                String name = s.getList().get(i).getName();
+//                String code = s.getList().get(i).getId();
+//                servicelists.add(name);
+//                map.put(name, code);
+//            }
+//        } else {
+//            Toast.makeText(this, "网络错误！", Toast.LENGTH_SHORT).show();
+//        }
 
     }
 
