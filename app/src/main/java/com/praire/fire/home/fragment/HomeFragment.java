@@ -243,9 +243,10 @@ public class HomeFragment extends BaseFragment implements BaseSliderView.OnSlide
                 if (evEntity == null || evEntity.getPagelist().size() % 10 != 0) {
                     loadMore = false;
                 }
-                assert evEntity != null;
-                evEntitys.addAll(evEntity.getPagelist());
-                adapter.setEntities(evEntitys, longitude, latitude);
+                if(evEntity != null) {
+                    evEntitys.addAll(evEntity.getPagelist());
+                    adapter.setEntities(evEntitys, longitude, latitude);
+                }
                 break;
             case 2:
                 Gson gson2 = new Gson();

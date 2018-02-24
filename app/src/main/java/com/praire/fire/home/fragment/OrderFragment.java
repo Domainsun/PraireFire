@@ -178,12 +178,12 @@ public class OrderFragment extends BaseFragment implements TabLayout.OnTabSelect
                         PayActivity.startActivity(getActivity(), orderno, "0", paycost, false);
                         break;
                     case "1":
-                        CommonDialog.Build((BaseActivity) getActivity()).setTitle(false).setMessage("是否确认消费？").setConfirm(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                getPayPassword(orderlists.get(position).getId());
-                            }
-                        }).showconfirm();
+//                        CommonDialog.Build((BaseActivity) getActivity()).setTitle(false).setMessage("是否确认消费？").setConfirm(new View.OnClickListener() {
+//                            @Override
+//                            public void onClick(View view) {
+                        getPayPassword(orderlists.get(position).getId());
+//                            }
+//                        }).showconfirm();
 
                         break;
                     case "2":
@@ -207,6 +207,7 @@ public class OrderFragment extends BaseFragment implements TabLayout.OnTabSelect
         index = 1;
         getDates(index, statusType, ORDER_LIST);
     }
+
     @Override
     public void onResume() {
         if (hasLogin(false)) {
@@ -214,8 +215,9 @@ public class OrderFragment extends BaseFragment implements TabLayout.OnTabSelect
         }
         super.onResume();
     }
+
     private void getDates(int index, String status, int type) {
-        if ( !hasLogin(true)) {
+        if (!hasLogin(true)) {
             return;
         }
         OkhttpRequestUtil.get(ConstanUrl.ORDER_ORDERLIST + "?status=" + status + "&p=" + index, type, true, uiHandler);
@@ -224,18 +226,18 @@ public class OrderFragment extends BaseFragment implements TabLayout.OnTabSelect
 
     @Override
     protected void networkResponse(Message msg) {
-
+        Log.e("orderlist", (String) msg.obj);
         switch (msg.what) {
             case ORDER_LIST:
                 //结束加载
                 refreshLayout.finishRefresh();
                 refreshLayout.finishLoadmore();
-                if(isFrist){
+                if (isFrist) {
                     orderlists.clear();
                 }
                 Gson gson = new Gson();
                 OrderListBean orderlist = gson.fromJson((String) msg.obj, OrderListBean.class);
-                loadMore = orderlist.getPagelist().size()!=0 && orderlist.getPagelist().size() % 10 == 0;
+                loadMore = orderlist.getPagelist().size() != 0 && orderlist.getPagelist().size() % 10 == 0;
                 orderlists.addAll(orderlist.getPagelist());
                 adapter.setEntities(orderlists);
 
@@ -248,6 +250,7 @@ public class OrderFragment extends BaseFragment implements TabLayout.OnTabSelect
                 getDates(1, statusType, ORDER_LIST);
                 break;
             case REFUND_ORDER:
+                Log.e("退款", (String) msg.obj);
                 Gson gson6 = new Gson();
                 CommentResultBean resultBean1 = gson6.fromJson((String) msg.obj, CommentResultBean.class);
                 ToastUtil.show(getActivity(), resultBean1.getMsg());
@@ -264,7 +267,6 @@ public class OrderFragment extends BaseFragment implements TabLayout.OnTabSelect
                 break;
         }
     }
-
 
 
     public void getNextPage() {
@@ -345,9 +347,10 @@ public class OrderFragment extends BaseFragment implements TabLayout.OnTabSelect
 
     /**
      * 用户确认消费
+     *
      * @param orderId 订单id
      */
-      private void getPayPassword(final String orderId) {
+    private void getPayPassword(final String orderId) {
 //          输入支付密码
         InputPasswordPopwindows medicinePop = new InputPasswordPopwindows(getActivity());
         medicinePop.showAtLocation(tabLayout, Gravity.BOTTOM, 0, 0);
@@ -357,7 +360,7 @@ public class OrderFragment extends BaseFragment implements TabLayout.OnTabSelect
             public void onItemClick(String pwd) {
                 RequestBody requestBody = new FormBody.Builder()
                         .add("id", orderId)
-                        .add("paypassword",pwd)
+                        .add("paypassword", pwd)
                         .build();
                 OkhttpRequestUtil.post(ConstanUrl.ORDER_CHECKUSE, requestBody, CHECK_ORDER, uiHandler, true);
             }

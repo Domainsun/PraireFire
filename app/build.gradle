@@ -170,8 +170,8 @@ dependencies {
 
     //选择图片可裁剪http://blog.csdn.net/stephen2wong/article/details/68921740
     compile 'com.lzy.widget:imagepicker:0.5.0'
-
-
+//、生成二维码
+    compile 'cn.yipianfengye.android:zxing-library:2.2'
 }
 
 

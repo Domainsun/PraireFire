@@ -18,7 +18,7 @@
             android:drawableRight="@mipmap/tail"
             android:gravity="center"
             android:text="商家名称"
-            android:layout_marginLeft="15dp"
+            android:layout_marginLeft="10dp"
             android:drawablePadding="10dp"
             android:ellipsize="end"
             android:maxLines="1"
@@ -29,14 +29,13 @@
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:gravity="center_vertical"
-            android:text="订单编号："
             android:layout_weight="1"
             android:tag="订单编号：%s"
             android:layout_marginLeft="10dp"
             android:ellipsize="end"
             android:maxLines="1"
             android:textColor="@color/grey"
-            android:textSize="14sp" />
+            android:textSize="12sp" />
         <TextView
             android:id="@+id/item_order_list_status0"
             android:layout_width="wrap_content"

@@ -29,7 +29,7 @@ import butterknife.ButterKnife;
  * Created by lyp on 2018/1/2.
  */
 
-public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.MyViewHolder> implements View.OnClickListener{
+public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.MyViewHolder> implements View.OnClickListener {
 
 
     private Context context;
@@ -64,7 +64,8 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.MyVi
         holder.itemOrderListBusinessname.setText(bean.getShopname());
         holder.itemOrderListOrderId.setText(bean.getOrderno());
 
-        if ("1".equals(bean.getRefund())) {
+        if ("1".equals(bean.getStatus())) {
+
             holder.itemOrderListClean.setText(R.string.refund);
         } else if ("0".equals(bean.getStatus())) {
             holder.itemOrderListClean.setText(R.string.cancel);
@@ -74,23 +75,47 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.MyVi
         holder.itemOrderListClean.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(itemClickLister !=null) {
-                    itemClickLister.cancel(bean.getRefund(),bean.getId());
+                if (itemClickLister != null) {
+                    itemClickLister.cancel(bean.getStatus(), bean.getId());
                 }
             }
         });
         holder.itemOrderListStatus0.setText(OrderUtils.statusCN(bean.getStatus()));
         holder.itemOrderListStatusBtn.setText(OrderUtils.statusBtnCN(bean.getStatus()));
-        if("3".equals(bean.getStatus()) || "4".equals(bean.getStatus()) ||"5".equals(bean.getStatus())) {
+//        、退款状态
+        if ("1".equals(bean.getStatus())) {
+            switch (bean.getRefund()) {
+                case "1":
+                    holder.itemOrderListStatusBtn.setBackground(null);
+                    holder.itemOrderListStatusBtn.setText("退款中");
+                    holder.itemOrderListStatus0.setText("已申请退款");
+                    break;
+                case "2":
+                    holder.itemOrderListStatusBtn.setBackground(null);
+                    holder.itemOrderListStatusBtn.setText("拒绝退款");
+                    holder.itemOrderListStatus0.setText("拒绝退款");
+                    break;
+                case "3":
+                    holder.itemOrderListStatusBtn.setBackground(null);
+                    holder.itemOrderListStatusBtn.setText("已退款");
+                    holder.itemOrderListStatus0.setText("已退款");
+                    break;
+                default:
+                    break;
+            }
+
+        } else if ("3".equals(bean.getStatus()) || "4".equals(bean.getStatus()) || "5".equals(bean.getStatus())) {
+
             holder.itemOrderListStatusBtn.setVisibility(View.GONE);
         }
 
-        final String totlePrice =  OrderUtils.totlePriceList(bean.getPslist());
+        final String totlePrice = OrderUtils.totlePriceList(bean.getPslist());
+        //状态按钮
         holder.itemOrderListStatusBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(itemClickLister !=null) {
-                    itemClickLister.btnStatus(bean.getStatus(),bean.getOrderno(),position,totlePrice);
+                if (itemClickLister != null) {
+                    itemClickLister.btnStatus(bean.getStatus(), bean.getOrderno(), position, totlePrice);
                 }
             }
         });
@@ -136,8 +161,8 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.MyVi
 
     @Override
     public void onClick(View view) {
-        if(itemClickLister !=null) {
-            itemClickLister.itemClick(view,(int)view.getTag());
+        if (itemClickLister != null) {
+            itemClickLister.itemClick(view, (int) view.getTag());
         }
     }
 
@@ -165,7 +190,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.MyVi
         public MyViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
-              isFrist = true;
+            isFrist = true;
         }
 
     }
@@ -177,8 +202,10 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.MyVi
     }
 
     public interface ItemClickLister {
-        void cancel(String status,String orderId);
-        void itemClick(View itemView,int position);
-        void btnStatus(String status,String orderno,int position,String paycost);
+        void cancel(String status, String orderId);
+
+        void itemClick(View itemView, int position);
+
+        void btnStatus(String status, String orderno, int position, String paycost);
     }
 }

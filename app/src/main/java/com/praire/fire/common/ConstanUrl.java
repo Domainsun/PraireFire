@@ -319,4 +319,8 @@ public class ConstanUrl {
      * 自动升级
      */
     public static final String CHECK_VERSION = "https://www.lygyxh.cn/api.php/Public/getversion";
+    /**
+     * 邀请分享网页
+     * */
+    public static final String SHARE_URL = "http://www.lygyxh.cn/html/explain.html?managertel=";
 }

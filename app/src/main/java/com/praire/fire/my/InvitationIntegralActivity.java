@@ -7,14 +7,20 @@ import android.graphics.BitmapFactory;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
 
+import com.lzy.imagepicker.ui.ImageGridActivity;
 import com.praire.fire.R;
 import com.praire.fire.base.BaseActivity;
+import com.praire.fire.common.ConstanUrl;
 import com.praire.fire.common.Constants;
+import com.praire.fire.my.popwindows.ChoosePhotoPopWindow;
+import com.praire.fire.my.popwindows.SharePopWindow;
 import com.praire.fire.utils.ImageUtils;
 import com.praire.fire.utils.RecycleViewDivider;
+import com.praire.fire.utils.SharePreferenceMgr;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
@@ -39,6 +45,7 @@ import butterknife.OnClick;
  */
 
 public class InvitationIntegralActivity extends BaseActivity {
+
     @BindView(R.id.back)
     TextView back;
     @BindView(R.id.share_info)
@@ -135,15 +142,35 @@ public class InvitationIntegralActivity extends BaseActivity {
                 ShareExplainActivity.startActivity(this,false);
                 break;
             case R.id.btn_share:
-//                showShareDialog();
+                showShareDialog();
 //                startShare();
-                mTargetScene = SendMessageToWX.Req.WXSceneSession;
-//                mTargetScene = SendMessageToWX.Req.WXSceneTimeline;
-//                mTargetScene = SendMessageToWX.Req.WXSceneFavorite;
-                showShareWeixin();
+
+
                 break;
         }
     }
+
+    private void showShareDialog() {
+        SharePopWindow poop = new SharePopWindow(this);
+        poop.showAtLocation(back, Gravity.BOTTOM, 0, 0);
+        poop.setOnItemClickListener(new SharePopWindow.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                if (position == 1) {
+                    mTargetScene = SendMessageToWX.Req.WXSceneSession;
+//                mTargetScene = SendMessageToWX.Req.WXSceneTimeline;
+//                mTargetScene = SendMessageToWX.Req.WXSceneFavorite;
+
+                } else if (position == 2) {
+//                    mTargetScene = SendMessageToWX.Req.WXSceneSession;
+                mTargetScene = SendMessageToWX.Req.WXSceneTimeline;
+//                mTargetScene = SendMessageToWX.Req.WXSceneFavorite;
+                }
+                showShareWeixin();
+            }
+        });
+    }
+
     /**
      * 分享到微信
      */
@@ -153,7 +180,7 @@ public class InvitationIntegralActivity extends BaseActivity {
 // 将该app注册到微信
         api.registerApp(Constants.PRODUCT_WEIXIN_APP_ID);
         WXWebpageObject webpage = new WXWebpageObject();
-        webpage.webpageUrl = "http://www.qq.com";
+        webpage.webpageUrl = ConstanUrl.SHARE_URL + SharePreferenceMgr.get(this,Constants.USER_ID,"");
         WXMediaMessage msg = new WXMediaMessage(webpage);
         msg.title = "燎原生活APP，您身边的服务管家！";
         msg.description = "生活所需，服务所致，足不出户下单同城服务，省钱省力，分享还可赚钱";
@@ -191,17 +218,7 @@ public class InvitationIntegralActivity extends BaseActivity {
         ShareUtil.showShareDialog(this, testBean, ShareConstant.REQUEST_CODE);
     }*/
 
-    /**
-     * 使用分享功能，如下实例 使用 更多(系统自带) 分享功能：
-     */
-    public void startShare() {
-/*        ShareEntity testBean = new ShareEntity("“TA”！您身边的服务管家！", "生活所需，服务所致");
-        testBean.setUrl("https://www.baidu.com"); //分享链接
-//        testBean.setImgUrl("https://www.baidu.com/img/bd_logo1.png");
-        testBean.setDrawableId(R.mipmap.ic_launcher);
 
-        ShareUtil.startShare(this, ShareConstant.SHARE_CHANNEL_SYSTEM, testBean, ShareConstant.REQUEST_CODE);*/
-    }
 
 
     @Override
@@ -219,15 +236,7 @@ public class InvitationIntegralActivity extends BaseActivity {
         } */
     }
 
-    /**
-     * 分享回调处理
-     *
-     * @param channel
-     * @param status
-     */
-    private void onShareCallback(int channel, int status) {
-//        new ShareCallBack().onShareCallback(channel, status);
-    }
+
 
   /*  private String getResourcesUri(@DrawableRes int id) {
         Resources resources = getResources();
