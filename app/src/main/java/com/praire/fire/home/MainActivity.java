@@ -114,7 +114,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         setDefaultFragment();
         bottomNavigationBar.setTabSelectedListener(this);
         //从店铺点击进入
-        if (getIntent() != null) {
+        if (getIntent() != null ) {
             bottomNavigationBar.selectTab(getIntent().getIntExtra(Constants.UI_TYPE, 0));
         }
 

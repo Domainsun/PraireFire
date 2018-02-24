@@ -158,6 +158,7 @@ public class ShopActivity extends BaseActivity {
         adapterService = new ShopServiceAdapter(this);
         adapterProduct = new ShopProductAdapter(this);
         adapterEvaluate = new ShopEvalauteAdapter(this);
+
         recyclerviewProduct.setAdapter(adapterProduct);
         recyclerviewService.setAdapter(adapterService);
         recyclerviewEvaluate.setAdapter(adapterEvaluate);
@@ -187,6 +188,7 @@ public class ShopActivity extends BaseActivity {
         //添加分割线
         recyclerview.addItemDecoration(new RecycleViewDivider(
                 this, LinearLayoutManager.HORIZONTAL));
+        recyclerview.setNestedScrollingEnabled(false);
     }
 
     @Override
