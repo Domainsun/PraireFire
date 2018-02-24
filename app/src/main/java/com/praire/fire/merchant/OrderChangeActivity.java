@@ -2,25 +2,17 @@ package com.praire.fire.merchant;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.praire.fire.R;
 import com.praire.fire.base.BaseActivity;
 import com.praire.fire.merchant.adapter.OrderChangeAdapter;
-import com.praire.fire.merchant.adapter.ProductAdapter;
 import com.praire.fire.okhttp.GsonUtils.J2O;
 import com.praire.fire.okhttp.JavaBean.APIResultBean;
 import com.praire.fire.okhttp.JavaBean.OrderDetailsInfoBean;
@@ -29,6 +21,8 @@ import com.praire.fire.utils.DateUtils;
 import com.praire.fire.utils.SharePreferenceMgr;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,9 +66,13 @@ public class OrderChangeActivity extends BaseActivity {
     double sprice = 0.00;
 
 
+    String tag = "";
+
 
     OrderChangeAdapter adapter;
     List<OrderDetailsInfoBean.OrderinfoBean.PslistBean> datas = new ArrayList<>();
+    @BindView(R.id.rl_submit)
+    RelativeLayout rlSubmit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,12 +84,19 @@ public class OrderChangeActivity extends BaseActivity {
         cookie = (String) SharePreferenceMgr.get(this, LOGIN_COOKIE, "");
         Intent i = getIntent();
         orderId = i.getStringExtra("orderId");
+        tag = i.getStringExtra("tag");
+
+        if (tag.equals("0")) {
+            rlSubmit.setVisibility(View.INVISIBLE);
+        }
 
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new OrderChangeAdapter(this);
 
         getData();
+
+
 
 
 
@@ -103,9 +108,9 @@ public class OrderChangeActivity extends BaseActivity {
 
                     String str = u.changeOrderPrice(psId, nprice + "", orderId, cookie);
 
-                    Log.d("nprice", "nprice: "+nprice+"   "+psId+"  "+   orderId);
+                    Log.d("nprice", "nprice: " + nprice + "   " + psId + "  " + orderId);
                     APIResultBean a = j.getAPIResult(str);
-                    if (1==a.getCode()) {
+                    if (1 == a.getCode()) {
 
                         getData();
 
@@ -154,8 +159,8 @@ public class OrderChangeActivity extends BaseActivity {
 
     public void getData() {
 
-        cprice=0.00;
-        sprice=0.00;
+        cprice = 0.00;
+        sprice = 0.00;
 
 
         for (int i = 0; i < datas.size(); i++) {
@@ -169,19 +174,47 @@ public class OrderChangeActivity extends BaseActivity {
         Log.d("str", "onCreate: " + str);
         datas = o.getOrderinfo().getPslist();
         for (int j = 0; j < datas.size(); j++) {
+            if (tag.equals("0")) {
+                datas.get(j).setTag("0");
+            } else {
+                datas.get(j).setTag("1");
+            }
+
+
             int count = Integer.parseInt(o.getOrderinfo().getPslist().get(j).getNumber());
             double cprice1 = Double.parseDouble(o.getOrderinfo().getPslist().get(j).getPrice());
             double sprice1 = Double.parseDouble(o.getOrderinfo().getPslist().get(j).getShopprice());
-            cprice = cprice + (count * cprice1);
-            sprice = sprice + (count * sprice1);
+
+
+
+
+//            cprice = cprice + (count * cprice1);
+//            sprice = sprice + (count * sprice1);
+
+
+
+            BigDecimal b1=new BigDecimal(Double.toString(sprice1));
+            BigDecimal b2=new BigDecimal(Double.toString(count));
+            BigDecimal c1=new BigDecimal(Double.toString(cprice1));
+
+            sprice= sprice + b1.multiply(b2).doubleValue();
+            cprice = cprice +c1.multiply(b2).doubleValue();
+
+
+
+
+            Log.d("count", "count: "+j);
+            Log.d("单个产品总价", "sprice1: "+sprice1);
+            Log.d("订单总价sprice:", "sprice: "+sprice);
+
         }
 
         tvContactPerson.setText(o.getOrderinfo().getNickname());
         tvContactPhone.setText(o.getOrderinfo().getTel());
         tvOrderId.setText(o.getOrderinfo().getOrderno());
         tvTime.setText(DateUtils.times1(o.getOrderinfo().getCreate_time()));
-        tvPrice.setText(cprice + "");
-        tvShopPrice.setText(sprice + "");
+        tvPrice.setText(new DecimalFormat("0.00").format(cprice ) + "");
+        tvShopPrice.setText(new DecimalFormat("0.00").format(sprice )+ "");
 
         adapter.setData(datas);
     }

@@ -1,7 +1,7 @@
 package com.praire.fire.merchant.adapter;
 
 import android.content.Context;
-import android.graphics.Paint;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,13 +9,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.praire.fire.R;
+import com.praire.fire.merchant.OrderChangeActivity;
 import com.praire.fire.okhttp.JavaBean.BusinessOrderListBean;
 import com.praire.fire.utils.DateUtils;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.List;
 
 import butterknife.BindView;
@@ -60,17 +64,14 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
     }
 
 
-    int count=0;
-    double price11=0.00;
+    int count = 0;
+    double price11 = 0.00;
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
 
 
         holder.setIsRecyclable(false);
-
-
-
 
 
         holder.tvConfirmRefund.setVisibility(View.VISIBLE);
@@ -80,12 +81,12 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
 
         if (data.get(position).getStatus().equals("0")) {
             holder.tvConfirmRefund.setVisibility(View.VISIBLE);
-            holder.tvConfirmRefund.setText("修改");
+            holder.tvConfirmRefund.setText("修改订单价格");
         } else if (data.get(position).getRefund().equals("1")) {
             holder.tvConfirmRefund.setVisibility(View.VISIBLE);
             holder.tvConfirmRefund.setText("确认退款");
         } else {
-            holder.tvConfirmRefund.setVisibility(View.INVISIBLE);
+            holder.rlChange.setVisibility(View.GONE);
         }
 
 
@@ -108,10 +109,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
 
         holder.ivSex.setImageResource(data.get(position).getSex().equals("0") ? R.mipmap.business_order_female : R.mipmap.business_order_male);
         holder.tvName.setText(data.get(position).getNickname());
-        holder.tvOrderId.setText(data.get(position).getTel());
-
-
-
+        holder.tvOrderId.setText("Tel:" + data.get(position).getTel());
 
 
         if (data.get(position).getStatus().equals("0")) {
@@ -135,21 +133,32 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
 
         //防止滑动的时候重复显示数据
         if (holder.isFrist) {
-            count=0;
-            price11=0.00;
+            count = 0;
+            price11 = 0.00;
             for (int i = 0; i < data.get(position).getPslist().size(); i++) {
 
 
-                Log.d("name:", "name: "+"position:"+position+"name:"+data.get(position).getPslist().get(i).getName());
+                Log.d("name:", "name: " + "position:" + position + "name:" + data.get(position).getPslist().get(i).getName());
+
+
+                count = count + Integer.parseInt(data.get(position).getPslist().get(i).getNumber());
+
+
+
+                int count1=Integer.parseInt(data.get(position).getPslist().get(i).getNumber());
+                double sprice1 =Double.parseDouble(data.get(position).getPslist().get(i).getShopprice());
+
+                BigDecimal b1=new BigDecimal(Double.toString(sprice1));
+                BigDecimal b2=new BigDecimal(Double.toString(count1));
+
+
+                price11 = price11 + b1.multiply(b2).doubleValue();
 
 
 
 
-                count = count + Integer.parseInt( data.get(position).getPslist().get(i).getNumber()) ;
 
-                price11=price11 +( Double.parseDouble(data.get(position).getPslist().get(i).getShopprice()))  * Integer.parseInt(data.get(position).getPslist().get(i).getNumber())  ; ;
-
-                Log.d("price11", "price11: "+price11);
+                Log.d("price11", "price11: " + price11);
 
                 ViewGroup viewGroup = (ViewGroup) LayoutInflater.from(context).inflate(R.layout.item_business_order_content, null);
 
@@ -178,7 +187,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
 
 
                 tv_name.setText(data.get(position).getPslist().get(i).getName());
-                tv_count.setText("数量: " + data.get(position).getPslist().get(i).getNumber());
+                tv_count.setText("数量: x" + data.get(position).getPslist().get(i).getNumber());
                 type.setText(data.get(position).getPslist().get(i).getClasspath());
                 tv_nprice.setText("¥ " + data.get(position).getPslist().get(i).getShopprice());
 
@@ -189,14 +198,21 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
 //                oprice1.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
                 holder.addProducts.addView(viewGroup);
             }
+
+
+            holder.addProducts.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent i = new Intent(context, OrderChangeActivity.class);
+                    i.putExtra("orderId", data.get(position).getId());
+                    i.putExtra("tag", "0");
+                    context.startActivity(i);
+                }
+            });
             holder.isFrist = false;
-
-            holder.tvOrderid.setText("订单编号: "+data.get(position).getOrderno());
-            holder.tvTotalCount.setText("共"+count+"件商品  合计: ¥"+price11);
+            holder.tvOrderid.setText("订单编号: " + data.get(position).getOrderno());
+            holder.tvTotalCount.setText("共" + count + "件商品  合计: ¥" + new DecimalFormat("0.00").format(price11));
         }
-
-
-
     }
 
 
@@ -231,9 +247,11 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
         @BindView(R.id.tv_confirm_refund)
         TextView tvConfirmRefund;
         @BindView(R.id.add_products)
-
-
         LinearLayout addProducts;
+
+        @BindView(R.id.rl_change)
+        RelativeLayout rlChange;
+
         boolean isFrist = true;
 
         public MyViewHolder(View itemView) {

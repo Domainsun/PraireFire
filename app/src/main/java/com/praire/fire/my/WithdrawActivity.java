@@ -265,7 +265,7 @@ public class WithdrawActivity extends BaseActivity {
                             .add("pwd", password)
                             .build();
 
-                    OkhttpRequestUtil.post(ConstanUrl.GET_WITHDRAW_BANK_INFO,requestBody, 4, uiHandler,true );
+                    OkhttpRequestUtil.post(ConstanUrl.USER_WITHDRAW,requestBody, 4, uiHandler,true );
 
 
 //                    try {

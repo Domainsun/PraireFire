@@ -17,5 +17,6 @@ public class NetworkHandler extends Handler {
 
 	@Override
 	public final void handleMessage(Message msg) {
+
 	}
 }

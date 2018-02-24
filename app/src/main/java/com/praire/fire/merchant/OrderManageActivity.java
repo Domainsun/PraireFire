@@ -45,7 +45,7 @@ public class OrderManageActivity extends BaseActivity implements TabLayout.OnTab
     String cookie;
     List<BusinessOrderListBean.PagelistBean> Datas=new ArrayList<>();
 
-    String statu="0";
+    String statu="1";
     int index = 1;
     Boolean dataEmpty = false;
     Boolean hasMore = true;
@@ -73,7 +73,7 @@ public class OrderManageActivity extends BaseActivity implements TabLayout.OnTab
             Log.e("initData", "initData: "+e.toString() );
         }
         adapter = new OrderAdapter(this);
-        initData("0");
+        initData("1");
         initView();
 
 
@@ -149,8 +149,12 @@ public class OrderManageActivity extends BaseActivity implements TabLayout.OnTab
         LinearLayoutManager mLayoutManager =new LinearLayoutManager(this);
 
         myTabLayout = (TabLayout) findViewById(R.id.myTab);
+
+
+
+
         myTabLayout.addTab(myTabLayout.newTab().setText("待付款"));
-        myTabLayout.addTab(myTabLayout.newTab().setText("待消费"));
+        myTabLayout.addTab(myTabLayout.newTab().setText("待消费"),true);
         myTabLayout.addTab(myTabLayout.newTab().setText("已消费"));
         myTabLayout.addTab(myTabLayout.newTab().setText("已退款"));
         myTabLayout.setOnTabSelectedListener(this);
@@ -181,6 +185,7 @@ public class OrderManageActivity extends BaseActivity implements TabLayout.OnTab
 
                     Intent i=new Intent(OrderManageActivity.this,OrderChangeActivity.class);
                     i.putExtra("orderId",orderId);
+                    i.putExtra("tag","1");
                     startActivity(i);
 
 

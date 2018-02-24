@@ -41,6 +41,8 @@ public class OrderChangeAdapter extends RecyclerView.Adapter<OrderChangeAdapter.
 
     private OnItemClickListener mOnItemClickListener = null;
 
+
+
     public interface OnItemClickListener {
         void onItemClick(int position, String psId, double nprice);
     }
@@ -48,6 +50,9 @@ public class OrderChangeAdapter extends RecyclerView.Adapter<OrderChangeAdapter.
     public void setmOnItemClickListener(OnItemClickListener mOnItemClickListener) {
         this.mOnItemClickListener = mOnItemClickListener;
     }
+
+
+
 
 
     @Override
@@ -77,6 +82,14 @@ public class OrderChangeAdapter extends RecyclerView.Adapter<OrderChangeAdapter.
             holder.iv.setVisibility(View.VISIBLE);
             holder.iv.setImageURI(cover);
         }
+
+        if (data.get(position).getTag().equals("0")) {
+
+            holder.edit.setVisibility(View.INVISIBLE);
+
+        }
+
+
         holder.tvName.setText(data.get(position).getName());
         holder.tvPrice.setText("¥ " + nprice + "元");
         holder.tvCount.setText("数量: x" + data.get(position).getNumber());
