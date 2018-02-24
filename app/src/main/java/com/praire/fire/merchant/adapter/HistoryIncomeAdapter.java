@@ -1,6 +1,7 @@
 package com.praire.fire.merchant.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.praire.fire.R;
+import com.praire.fire.merchant.TodayIncomeActivity;
 import com.praire.fire.okhttp.JavaBean.HistoryIncomeBean;
 
 import java.util.List;
@@ -60,8 +62,22 @@ public class HistoryIncomeAdapter extends RecyclerView.Adapter<HistoryIncomeAdap
 
 //        holder.ivHead.setImageURI(data.get(position).getUserinfo().getHead());
 
+
+        holder.setIsRecyclable(false);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i=new Intent(context, TodayIncomeActivity.class);
+                i.putExtra("date",data.get(position).getUse_date());
+                context.startActivity(i);
+
+            }
+        });
+
+
         holder.tvIncome.setText(data.get(position).getTotalincome());
-        holder.tvOrderCount.setText(data.get(position).getOrdercount()+"件订单,"+data.get(position).getOrdercount()+"件商品");
+        holder.tvOrderCount.setText(data.get(position).getOrdercount()+"个订单,"+data.get(position).getPscount()+"件商品");
         holder.tvTime.setText(data.get(position).getUse_date());
 
     }

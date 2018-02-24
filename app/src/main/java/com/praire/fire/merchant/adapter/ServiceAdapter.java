@@ -60,6 +60,8 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.MyViewHo
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
+
+        holder.setIsRecyclable(false);
         holder.tvName.setText(data.get(position).getName());
         holder.tvIntroduce.setText(data.get(position).getDesc());
         holder.tvPrice.setText("¥ " + data.get(position).getNprice());
@@ -92,6 +94,19 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.MyViewHo
         });
 
         holder.tvChange.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ServiceListBean.PagelistBean s = data.get(position);
+                Intent i = new Intent(context, AddServiceActivity.class);
+                Bundle b = new Bundle();
+                b.putSerializable("data", s);
+                b.putString("tab", "1");
+                i.putExtras(b);
+                context.startActivity(i);
+            }
+        });
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ServiceListBean.PagelistBean s = data.get(position);

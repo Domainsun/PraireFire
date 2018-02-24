@@ -290,7 +290,35 @@
                 android:drawablePadding="9dp"/>
         </RelativeLayout>
 
+        <RelativeLayout
+            android:id="@+id/rl_address"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/white"
+            android:layout_marginTop="0.5dp">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:text="关于燎原"
+                android:textColor="@color/text_color"
+                android:textSize="19sp" />
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dp"
+                android:textColor="@color/text_color"
+                android:textSize="16sp"
+                android:drawableRight="@mipmap/tail"
+                android:drawablePadding="9dp"/>
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

@@ -3,6 +3,7 @@ package com.praire.fire.my.setActivitys;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -13,10 +14,13 @@ import android.widget.Toast;
 
 import com.praire.fire.R;
 import com.praire.fire.base.BaseActivity;
+import com.praire.fire.common.ConstanUrl;
 import com.praire.fire.common.Constants;
 import com.praire.fire.okhttp.GsonUtils.J2O;
 import com.praire.fire.okhttp.JavaBean.APIResultBean;
+import com.praire.fire.okhttp.JavaBean.UserHeadBean;
 import com.praire.fire.okhttp.JavaBean.UserInfoBean;
+import com.praire.fire.okhttp.OkhttpRequestUtil;
 import com.praire.fire.okhttp.UseAPIs;
 import com.praire.fire.utils.SharePreferenceMgr;
 
@@ -84,8 +88,9 @@ public class AddressActivity extends BaseActivity {
     protected void initViews() {
         ButterKnife.bind(this);
         cookie = (String) SharePreferenceMgr.get(this, LOGIN_COOKIE, "");
+        OkhttpRequestUtil.get(ConstanUrl.GET_USER_INFO, 1, true, uiHandler);
 
-        getUserInfo(cookie);
+//        getUserInfo(cookie);
 
 
     }
@@ -104,28 +109,58 @@ public class AddressActivity extends BaseActivity {
     protected void initData() {
 
     }
-
-    public void getUserInfo(String cookie) {
-
-        try {
-
-            String str = u.getUserInfo(cookie);
-            UserInfoBean o = j.getUserInfo(str);
-            etName.setText(o.getContact());
-            etPhone.setText(o.getContactnumber());
-            etAddress.setText(o.getAddress());
-            etPostCode.setText(o.getPostcode());
-
-            if (etPostCode.length()!=0) {
-                submit.setText("修改");
-            }
-        } catch (Exception e) {
+    @Override
+    protected void networkResponse(Message msg) {
+        super.networkResponse(msg);
 
 
+        switch (msg.what) {
+            case 1:
+                String str1 = msg.obj + "";
+                Log.d("adduinfo", "adduinfo: "+str1);
+                if (!str1.isEmpty()) {
+                    try {
+                        UserInfoBean o = j.getUserInfo(str1);
+                        etName.setText(o.getContact());
+                        etPhone.setText(o.getContactnumber());
+                        etAddress.setText(o.getAddress());
+                        etPostCode.setText(o.getPostcode());
+
+                        if (etPostCode.length()!=0) {
+                            submit.setText("保存");
+                        }
+                    } catch (Exception e) {
+                    }
+                }
+                break;
+            default:
+                break;
         }
-
-
     }
+//    public void getUserInfo(String cookie) {
+//
+//
+//
+//
+//        try {
+//
+//            String str = u.getUserInfo(cookie);
+//            UserInfoBean o = j.getUserInfo(str);
+//            etName.setText(o.getContact());
+//            etPhone.setText(o.getContactnumber());
+//            etAddress.setText(o.getAddress());
+//            etPostCode.setText(o.getPostcode());
+//
+//            if (etPostCode.length()!=0) {
+//                submit.setText("修改");
+//            }
+//        } catch (Exception e) {
+//
+//
+//        }
+//
+//
+//    }
 
 
     @OnClick({R.id.tv_back,R.id.tv_id_num, R.id.submit})

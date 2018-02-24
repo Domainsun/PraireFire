@@ -40,14 +40,13 @@ public class VerifySmsThread implements Callable {
 
         final OkHttpClient client = new OkHttpClient();
         RequestBody formBody = new FormBody.Builder()
-                .add("tel", tel)
                 .add("smscode", smscode)
 
                 .build();
         Request request = new Request.Builder()
                 .url(ConstanUrl.VERIFY_SMS)
                 .post(formBody)
-//                .addHeader("cookie",cookie)
+                .addHeader("cookie",tel)
                 .build();
         Response response = client.newCall(request).execute();
         if (!response.isSuccessful()) {

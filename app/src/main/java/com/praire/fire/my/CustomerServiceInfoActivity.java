@@ -2,6 +2,7 @@ package com.praire.fire.my;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 import com.praire.fire.R;
 import com.praire.fire.base.BaseActivity;
@@ -15,7 +16,11 @@ import com.praire.fire.common.Constants;
 
 public class CustomerServiceInfoActivity extends BaseTitleActivity {
 
+    String type="";
+
     public static void startActivity(Context context, boolean forResult) {
+
+
         Intent intent = new Intent(context, CustomerServiceInfoActivity.class);
 
         if (!forResult) {
@@ -32,6 +37,12 @@ public class CustomerServiceInfoActivity extends BaseTitleActivity {
 
     @Override
     protected void initViews() {
+
+
+        Intent i=getIntent();
+        type=i.getStringExtra("type");
+        Log.d("type", "initViews:  "+type);
+
 
     }
 

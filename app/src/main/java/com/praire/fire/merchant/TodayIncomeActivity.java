@@ -2,9 +2,11 @@ package com.praire.fire.merchant;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Message;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -13,10 +15,13 @@ import android.widget.Toast;
 
 import com.praire.fire.R;
 import com.praire.fire.base.BaseActivity;
+import com.praire.fire.common.ConstanUrl;
 import com.praire.fire.merchant.adapter.TodayIncomeAdapter;
 import com.praire.fire.okhttp.GsonUtils.J2O;
 import com.praire.fire.okhttp.JavaBean.ServiceListBean;
 import com.praire.fire.okhttp.JavaBean.TodayIncomeBean;
+import com.praire.fire.okhttp.JavaBean.WithdrawBankCardInfo;
+import com.praire.fire.okhttp.OkhttpRequestUtil;
 import com.praire.fire.okhttp.UseAPIs;
 import com.praire.fire.utils.SharePreferenceMgr;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
@@ -59,7 +64,9 @@ public class TodayIncomeActivity extends BaseActivity {
     TodayIncomeAdapter adapter;
 
 
-    private List<TodayIncomeBean.PagelistBean> Datas=new ArrayList<>();
+    String date;
+
+    private List<TodayIncomeBean.PagelistBean> Datas = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,34 +120,71 @@ public class TodayIncomeActivity extends BaseActivity {
         mRefreshLayout.setOnRefreshListener(mRefreshListener); // 刷新监听。
         recyclerView.setLoadMoreListener(mLoadMoreListener); // 加载更多的监听。
 
-        initdata(getTodayDate());
+        Intent i = getIntent();
+        date = i.getStringExtra("date");
+        if (TextUtils.isEmpty(date)) {
+            date = getTodayDate();
+        }
+        initdata(date);
+
 
     }
 
 
+    @Override
+    protected void networkResponse(Message msg) {
+        super.networkResponse(msg);
+
+
+        switch (msg.what) {
+            case 1:
+
+                String str = msg.obj + "";
+                if (!str.isEmpty()) {
+
+                    TodayIncomeBean s = j.geTodayIncome(str);
+                    Datas = s.getPagelist();
+                    adapter.setData(Datas);
+                    recyclerView.setAdapter(adapter);
+
+                    tvDate.setText(s.getDate() + " · 全部收入");
+                    tvIncomeCount1.setText("共计" + s.getAllcount() + "笔");
+                    tvShowTotalIncome.setText(s.getAllincome());
+
+                }
+
+
+                break;
+        }
+    }
 
 
     private void initdata(String date) {
+
+
         recyclerView.loadMoreFinish(false, true);
-        for (int i=0;i<Datas.size();i++) {
+        for (int i = 0; i < Datas.size(); i++) {
             Datas.remove(i);
         }
 
-        String str = "";
-        str = u.getTodayIncome(cookie, date,"1");
-        if (str.length() != 0) {
-            Log.d("initdata", "initdata: \n" + str);
-            TodayIncomeBean s = j.geTodayIncome(str);
-            Datas = s.getPagelist();
-            adapter.setData(Datas);
-            recyclerView.setAdapter(adapter);
+        OkhttpRequestUtil.get(ConstanUrl.GET_TODAY_INCOME + "?date=" + date + "&p=1", 1, true, uiHandler);
 
-            tvDate.setText(s.getDate() + " · 全部收入");
-            tvIncomeCount1.setText("共计" + s.getAllcount() + "笔");
-            tvShowTotalIncome.setText(s.getAllincome());
-        } else {
-            Toast.makeText(this, "网络错误", Toast.LENGTH_SHORT).show();
-        }
+
+//        String str = "";
+//        str = u.getTodayIncome(cookie, date, "1");
+//        if (str.length() != 0) {
+//            Log.d("initdata", "initdata: \n" + str);
+//            TodayIncomeBean s = j.geTodayIncome(str);
+//            Datas = s.getPagelist();
+//            adapter.setData(Datas);
+//            recyclerView.setAdapter(adapter);
+//
+//            tvDate.setText(s.getDate() + " · 全部收入");
+//            tvIncomeCount1.setText("共计" + s.getAllcount() + "笔");
+//            tvShowTotalIncome.setText(s.getAllincome());
+//        } else {
+//            Toast.makeText(this, "网络错误", Toast.LENGTH_SHORT).show();
+//        }
 
     }
 
@@ -162,20 +206,18 @@ public class TodayIncomeActivity extends BaseActivity {
         }
     }
 
-    public  String getTodayDate(){
+    public String getTodayDate() {
         SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String date = sDateFormat.format(new java.util.Date());
         return date;
     }
 
 
-
-
     /* 下拉刷新*/
     private SwipeRefreshLayout.OnRefreshListener mRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
         @Override
         public void onRefresh() {
-            initdata(getTodayDate());
+            initdata(date);
             adapter.notifyDataSetChanged();
             mRefreshLayout.setRefreshing(false);
             index = 1;
@@ -200,7 +242,7 @@ public class TodayIncomeActivity extends BaseActivity {
                     String index = String.valueOf(TodayIncomeActivity.this.index);
                     List<TodayIncomeBean.PagelistBean> data = new ArrayList<>();
                     String str = "";
-                    str = u.getTodayIncome(cookie, getTodayDate(),index);
+                    str = u.getTodayIncome(cookie, date, index);
                     if (str.length() != 0) {
                         TodayIncomeBean s = j.geTodayIncome(str);
 

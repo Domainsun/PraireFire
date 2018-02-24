@@ -208,7 +208,7 @@ public class FindPayPasswordActivity extends BaseActivity {
 
 
                         try {
-                            str= u.verifySms(phone,sms);
+                            str= u.verifySms(cookie,sms);
 
                             Log.d("str[0]", "onViewClicked: "+str[0]);
                             APIResultBean o = new J2O().getAPIResult(str[0]);

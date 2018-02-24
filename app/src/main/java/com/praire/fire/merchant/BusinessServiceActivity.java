@@ -101,8 +101,6 @@ public class BusinessServiceActivity extends BaseActivity {
 
 
 
-
-
         OkhttpRequestUtil.get(ConstanUrl.GET_BUSINESS_TODAY_COUNT, 1, true, uiHandler);
 
 

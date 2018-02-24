@@ -2,6 +2,7 @@ package com.praire.fire.my;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Message;
 import android.text.Html;
 import android.util.Log;
 import android.view.View;
@@ -14,19 +15,25 @@ import android.widget.Toast;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.praire.fire.R;
 import com.praire.fire.base.BaseActivity;
+import com.praire.fire.common.ConstanUrl;
 import com.praire.fire.common.Constants;
 import com.praire.fire.my.setActivitys.BankCardActivity;
 import com.praire.fire.okhttp.GsonUtils.J2O;
 import com.praire.fire.okhttp.JavaBean.APIResultBean;
 import com.praire.fire.okhttp.JavaBean.BindBankCardInfoBean;
+import com.praire.fire.okhttp.JavaBean.UserHeadBean;
+import com.praire.fire.okhttp.JavaBean.UserInfoBean;
 import com.praire.fire.okhttp.JavaBean.WalletCapitalBean;
 import com.praire.fire.okhttp.JavaBean.WithdrawBankCardInfo;
+import com.praire.fire.okhttp.OkhttpRequestUtil;
 import com.praire.fire.okhttp.UseAPIs;
 import com.praire.fire.utils.SharePreferenceMgr;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.FormBody;
+import okhttp3.RequestBody;
 
 import static com.praire.fire.common.Constants.LOGIN_COOKIE;
 
@@ -98,66 +105,125 @@ public class WithdrawActivity extends BaseActivity {
         tvExplain.setText( Html.fromHtml(explain));
 
 
-        try {
+//        try {
+//            String str1=u.getWalletCapital(cookie);
+//            WalletCapitalBean w =j.getWalletCapitalBean(str1);
+//            tvBalance.setText("可提现余额"+w.getCapital()+"元");
+//            String str = u.getBindBankCardInfo(cookie);
+//            BindBankCardInfoBean o = j.getBindBankCardInfo(str);
+//            if (1 == (o.getCode())) {
+//                ivBank.setImageURI(o.getCardinfo().getOssbankpic());
+//                tvBankCardNumber.setText("(" + o.getCardinfo().getCardno() + ")");
+//            } else {
+//                Toast.makeText(this, "请先绑定银行卡", Toast.LENGTH_SHORT).show();
+//            }
+//            Log.d("initData", "initData: " + str);
+//        } catch (Exception e) {
+//            Log.e("initData", "initData: " + e.toString());
+//        }
 
 
+        OkhttpRequestUtil.get(ConstanUrl.GET_WITHDRAW_BANK_INFO, 1, true, uiHandler);
+        OkhttpRequestUtil.get(ConstanUrl.GET_WALLET_CAPITAL, 2, true, uiHandler);
+        OkhttpRequestUtil.get(ConstanUrl.GET_BANK_INFO, 3, true, uiHandler);
 
-            String str1=u.getWalletCapital(cookie);
-            WalletCapitalBean w =j.getWalletCapitalBean(str1);
+//        getBankInfo();
+    }
 
-            tvBalance.setText("可提现余额"+w.getCapital()+"元");
-
-
-            String str = u.getBindBankCardInfo(cookie);
-            BindBankCardInfoBean o = j.getBindBankCardInfo(str);
-
-
-            if (1 == (o.getCode())) {
-
-                ivBank.setImageURI(o.getCardinfo().getOssbankpic());
-                tvBankCardNumber.setText("(" + o.getCardinfo().getCardno() + ")");
-
-            } else {
-                Toast.makeText(this, "请先绑定银行卡", Toast.LENGTH_SHORT).show();
-            }
-
-            Log.d("initData", "initData: " + str);
+    @Override
+    protected void networkResponse(Message msg) {
+        super.networkResponse(msg);
 
 
-        } catch (Exception e) {
+        switch (msg.what) {
+            case 1:
 
-            Log.e("initData", "initData: " + e.toString());
+                String str = msg.obj + "";
+                if (!str.isEmpty()) {
+                    WithdrawBankCardInfo o = j.getWithdrawBankCardInfo(str);
 
+
+                    if (1 == (o.getCode())) {
+
+                        ivBank.setImageURI(o.getCard().getCardtypepic());
+                        tvBankCardNumber.setText("尾号("+o.getCard().getCardno()+")");
+
+                    } else {
+                        Toast.makeText(this, "请先绑定银行卡", Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+
+
+                break;
+            case 2:
+                String str1 = msg.obj + "";
+                if (!str1.isEmpty()) {
+                    WalletCapitalBean w =j.getWalletCapitalBean(str1);
+                    tvBalance.setText("可提现余额"+w.getCapital()+"元");
+                }
+
+
+                break;
+
+            case 3:
+                String str3 = msg.obj + "";
+
+                BindBankCardInfoBean o = j.getBindBankCardInfo(str3);
+
+
+                if (1 == (o.getCode())) {
+
+                    ivBank.setImageURI(o.getCardinfo().getOssbankpic());
+                    tvBankCardNumber.setText("(" + o.getCardinfo().getCardno() + ")");
+
+                } else {
+                    Toast.makeText(this, "请先绑定银行卡", Toast.LENGTH_SHORT).show();
+                }
+
+                break;
+
+            case 4:
+                String str4 = msg.obj + "";
+                APIResultBean a = j.getAPIResult(str4);
+                Toast.makeText(this, a.getMsg()+"", Toast.LENGTH_SHORT).show();
+                if (1==a.getCode()) {
+                    finish();
+                }
+                break;
+            default:
+                break;
         }
 
 
-        getBankInfo();
     }
-    public void getBankInfo() {
-        try {
-
-            String str = u.getWithdrawBankCardInfo(cookie);
-            WithdrawBankCardInfo o = j.getWithdrawBankCardInfo(str);
 
 
-            if (1 == (o.getCode())) {
-
-                ivBank.setImageURI(o.getCard().getCardtypepic());
-                tvBankCardNumber.setText("尾号("+o.getCard().getCardno()+")");
-
-            } else {
-                Toast.makeText(this, "请先绑定银行卡", Toast.LENGTH_SHORT).show();
-            }
-
-            Log.d("initData", "initData: " + str);
-
-
-        } catch (Exception e) {
-
-            Log.e("initData", "initData: " + e.toString());
-
-        }
-    }
+//    public void getBankInfo() {
+//        try {
+//
+//            String str = u.getWithdrawBankCardInfo(cookie);
+//            WithdrawBankCardInfo o = j.getWithdrawBankCardInfo(str);
+//
+//
+//            if (1 == (o.getCode())) {
+//
+//                ivBank.setImageURI(o.getCard().getCardtypepic());
+//                tvBankCardNumber.setText("尾号("+o.getCard().getCardno()+")");
+//
+//            } else {
+//                Toast.makeText(this, "请先绑定银行卡", Toast.LENGTH_SHORT).show();
+//            }
+//
+//            Log.d("initData", "initData: " + str);
+//
+//
+//        } catch (Exception e) {
+//
+//            Log.e("initData", "initData: " + e.toString());
+//
+//        }
+//    }
 
     @Override
     protected void initListeners() {
@@ -193,19 +259,26 @@ public class WithdrawActivity extends BaseActivity {
 
                 if (price.length()!=0 & password.length()!=0) {
 
-                    try {
-                        String str=u.userWithdraw(price,password,cookie);
 
-                        APIResultBean o = j.getAPIResult(str);
-                        Toast.makeText(this, o.getMsg()+"", Toast.LENGTH_SHORT).show();
-                        if (1==o.getCode()) {
-                            finish();
-                        }
-                    } catch (Exception e) {
-                        Log.e("onViewClicked", "onViewClicked: "+e.toString());
-                    }
+                    RequestBody requestBody = new FormBody.Builder()
+                            .add("money", price)
+                            .add("pwd", password)
+                            .build();
+
+                    OkhttpRequestUtil.post(ConstanUrl.GET_WITHDRAW_BANK_INFO,requestBody, 4, uiHandler,true );
 
 
+//                    try {
+//                        String str=u.userWithdraw(price,password,cookie);
+//
+//                        APIResultBean o = j.getAPIResult(str);
+//                        Toast.makeText(this, o.getMsg()+"", Toast.LENGTH_SHORT).show();
+//                        if (1==o.getCode()) {
+//                            finish();
+//                        }
+//                    } catch (Exception e) {
+//                        Log.e("onViewClicked", "onViewClicked: "+e.toString());
+//                    }
                 }
 
 
@@ -216,6 +289,6 @@ public class WithdrawActivity extends BaseActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
-        getBankInfo();
+        OkhttpRequestUtil.get(ConstanUrl.GET_WITHDRAW_BANK_INFO, 1, true, uiHandler);
     }
 }

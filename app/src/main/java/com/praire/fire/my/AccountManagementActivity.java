@@ -337,7 +337,7 @@ public class AccountManagementActivity extends BaseTitleActivity {
             public void onClick(View view) {
                 try {
                     String str = "";
-                    str = u.changeUserInfo(cookie, "", "", "", "", "", "0");
+                    str = u.changeUserInfo(cookie, null, null, null, null, null, "0");
                     APIResultBean a = j.getAPIResult(str);
                     Toast.makeText(AccountManagementActivity.this, a.getMsg(), Toast.LENGTH_SHORT).show();
                     if (a.getCode()==1) {
@@ -355,7 +355,7 @@ public class AccountManagementActivity extends BaseTitleActivity {
             public void onClick(View view) {
                 try {
                     String str = "";
-                    str = u.changeUserInfo(cookie, "", "", "", "", "", "1");
+                    str = u.changeUserInfo(cookie, null, null, null, null, null, "1");
                     APIResultBean a = j.getAPIResult(str);
                     Toast.makeText(AccountManagementActivity.this, a.getMsg(), Toast.LENGTH_SHORT).show();
                     if (a.getCode()==1) {

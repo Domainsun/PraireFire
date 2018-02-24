@@ -147,7 +147,9 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
 
                 count = count + Integer.parseInt( data.get(position).getPslist().get(i).getNumber()) ;
 
-                price11=price11 + Double.parseDouble(data.get(position).getPslist().get(i).getPrice());
+                price11=price11 +( Double.parseDouble(data.get(position).getPslist().get(i).getShopprice()))  * Integer.parseInt(data.get(position).getPslist().get(i).getNumber())  ; ;
+
+                Log.d("price11", "price11: "+price11);
 
                 ViewGroup viewGroup = (ViewGroup) LayoutInflater.from(context).inflate(R.layout.item_business_order_content, null);
 
@@ -178,11 +180,13 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
                 tv_name.setText(data.get(position).getPslist().get(i).getName());
                 tv_count.setText("数量: " + data.get(position).getPslist().get(i).getNumber());
                 type.setText(data.get(position).getPslist().get(i).getClasspath());
-                tv_nprice.setText("¥ " + data.get(position).getPslist().get(i).getPrice());
-                oprice1.setText("¥ " + data.get(position).getPslist().get(i).getNprice());
+                tv_nprice.setText("¥ " + data.get(position).getPslist().get(i).getShopprice());
 
-                //添加删除线
-                oprice1.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+                oprice1.setVisibility(View.INVISIBLE);
+//                oprice1.setText("¥ " + data.get(position).getPslist().get(i).getNprice());
+////
+////                //添加删除线
+//                oprice1.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
                 holder.addProducts.addView(viewGroup);
             }
             holder.isFrist = false;

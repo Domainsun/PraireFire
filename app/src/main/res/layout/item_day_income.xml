@@ -9,7 +9,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="60dp"
         android:background="@color/white">
 
         <TextView
@@ -22,7 +22,7 @@
             android:layout_toRightOf="@id/iv_head"
             android:text="单号:201809040023832232"
             android:textColor="@color/product_text"
-            android:textSize="12sp" />
+            android:textSize="14sp" />
 
         <TextView
             android:layout_marginLeft="15dp"
@@ -54,7 +54,7 @@
             android:layout_marginTop="8dp"
             android:text="10:13:10"
             android:textColor="@color/grey"
-            android:textSize="12sp"
+            android:textSize="14sp"
             android:layout_marginRight="15dp"
             android:layout_alignParentRight="true"/>
     </RelativeLayout>

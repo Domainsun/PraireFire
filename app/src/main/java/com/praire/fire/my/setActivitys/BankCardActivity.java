@@ -3,6 +3,7 @@ package com.praire.fire.my.setActivitys;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Message;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -17,11 +18,15 @@ import android.widget.Toast;
 
 import com.praire.fire.R;
 import com.praire.fire.base.BaseActivity;
+import com.praire.fire.common.ConstanUrl;
 import com.praire.fire.common.Constants;
 import com.praire.fire.okhttp.GsonUtils.J2O;
 import com.praire.fire.okhttp.JavaBean.APIResultBean;
 import com.praire.fire.okhttp.JavaBean.BankCityBean;
 import com.praire.fire.okhttp.JavaBean.BindBankCardInfoBean;
+import com.praire.fire.okhttp.JavaBean.RealVerifyBean;
+import com.praire.fire.okhttp.JavaBean.UserInfoBean;
+import com.praire.fire.okhttp.OkhttpRequestUtil;
 import com.praire.fire.okhttp.UseAPIs;
 import com.praire.fire.utils.SharePreferenceMgr;
 import com.wx.wheelview.adapter.ArrayWheelAdapter;
@@ -118,163 +123,208 @@ public class BankCardActivity extends BaseActivity {
         ButterKnife.bind(this);
         cookie = (String) SharePreferenceMgr.get(this, LOGIN_COOKIE, "");
 
-        try {
 
-            String str = u.getBindBankCardInfo(cookie);
-            BindBankCardInfoBean o = j.getBindBankCardInfo(str);
-
-
-            if (1 == (o.getCode())) {
-
-                etName.setText(o.getCardinfo().getTruename());
-                etBankCardNum.setText(o.getCardinfo().getCardno());
-                tvChooseCreatAccount.setText(o.getCardinfo().getBankname());
-                tvChooseAddress.setText(o.getCardinfo().getScity());
-                etSubAccountName.setText(o.getCardinfo().getBranchname());
-
-                etName.setEnabled(false);
-                etBankCardNum.setEnabled(false);
-                rlCreatAccount.setEnabled(false);
-                rlAdder.setEnabled(false);
-                etSubAccountName.setEnabled(false);
-                rlSubmit.setVisibility(View.INVISIBLE);
-
-            }
-
-            Log.d("initData", "initData: " + str);
+        OkhttpRequestUtil.get(ConstanUrl.GET_VERIFY_INFO, 1, true, uiHandler);
+        OkhttpRequestUtil.get(ConstanUrl.GET_BANK_INFO, 2, true, uiHandler);
+        OkhttpRequestUtil.get(ConstanUrl.GET_BANK_CITY, 3, true, uiHandler);
 
 
-        } catch (Exception e) {
-
-            Log.e("initData", "initData: " + e.toString());
-
-        }
-    }
-
-    @Override
-    protected void initListeners() {
 
     }
 
+    Boolean b=false;
     @Override
-    protected void initAdapters() {
-
-    }
-
-    @Override
-    protected void initData() {
+    protected void networkResponse(Message msg) {
+        super.networkResponse(msg);
 
 
-        try {
+        switch (msg.what) {
+            case 1:
 
 
-            String str = new UseAPIs().getBankCity();
-            Log.d("str", "str: " + str);
-            if (str.length() != 0) {
-                BankCityBean s = new J2O().getBankCity(str);
+                String str1 = msg.obj + "";
+
+                if (!b) {
+                    if (!str1.isEmpty()) {
+                        RealVerifyBean r = j.getRealVerifyInfo(str1);
+                        etName.setText(r.getTruename()+"(不可修改)");
+                        Log.d("getTruename", "getTruename: "+r.getTruename());
+                    }
+                }
+
+                break;
+            case 2:
+                try {
+
+                    String str = msg.obj + "";
+                    BindBankCardInfoBean o = j.getBindBankCardInfo(str);
 
 
-                Log.d("size", "size: " + s.getCity().size());
+                    if (1 == (o.getCode())) {
+                        b=true;
+                        etName.setText(o.getCardinfo().getTruename());
+                        etBankCardNum.setText(o.getCardinfo().getCardno());
+                        tvChooseCreatAccount.setText(o.getCardinfo().getBankname());
+                        tvChooseAddress.setText(o.getCardinfo().getScity());
+                        etSubAccountName.setText(o.getCardinfo().getBranchname());
 
-                for (int i = 0; i < s.getCity().size(); i++) {
-                    String mainName = s.getCity().get(i).getName();
+                        etName.setEnabled(false);
+                        etBankCardNum.setEnabled(false);
+                        rlCreatAccount.setEnabled(false);
+                        rlAdder.setEnabled(false);
+                        etSubAccountName.setEnabled(false);
+                        rlSubmit.setVisibility(View.INVISIBLE);
 
-                    Log.d("cityname", "\ncityname: " + mainName);
-
-                    mainList.add(mainName);
-                    List<String> cSublist = new ArrayList<>();
-
-                    int size = 0;
-
-                    try {
-                        size = s.getCity().get(i).get_child().size();
-                    } catch (Exception e) {
-                        Log.e("initData", "initData: " + e.toString());
                     }
 
+                    Log.d("initData", "initData: " + str);
 
-                    if (size != 0) {
-                        for (int j = 0; j < s.getCity().get(i).get_child().size(); j++) {
-                            String subName = s.getCity().get(i).get_child().get(j).getName();
-                            String subCode = s.getCity().get(i).get_child().get(j).getId();
-                            cSublist.add(subName);
-                            subList.add(subName);
-                            subMap.put(subName, subCode);
 
+                } catch (Exception e) {
+
+                    Log.e("initData", "initData: " + e.toString());
+
+                }
+
+                break;
+            case 3:
+
+                try {
+
+
+                    String str = msg.obj + "";
+                    Log.d("str", "str: " + str);
+                    if (str.length() != 0) {
+                        BankCityBean s = new J2O().getBankCity(str);
+
+
+                        Log.d("size", "size: " + s.getCity().size());
+
+                        for (int i = 0; i < s.getCity().size(); i++) {
+                            String mainName = s.getCity().get(i).getName();
+
+                            Log.d("cityname", "\ncityname: " + mainName);
+
+                            mainList.add(mainName);
+                            List<String> cSublist = new ArrayList<>();
+
+                            int size = 0;
+
+                            try {
+                                size = s.getCity().get(i).get_child().size();
+                            } catch (Exception e) {
+                                Log.e("initData", "initData: " + e.toString());
+
+                            }
+
+
+                            if (size != 0) {
+                                for (int j = 0; j < s.getCity().get(i).get_child().size(); j++) {
+                                    String subName = s.getCity().get(i).get_child().get(j).getName();
+                                    String subCode = s.getCity().get(i).get_child().get(j).getId();
+                                    cSublist.add(subName);
+                                    subList.add(subName);
+                                    subMap.put(subName, subCode);
+
+                                }
+                                map.put(mainName, cSublist);
+                            }
                         }
-                        map.put(mainName, cSublist);
-                    }
-                }
-                String defaultType = s.getCity().get(0).get_child().get(0).getName();
-                String defaultTypeCode = s.getCity().get(0).get_child().get(0).getId();
+                        String defaultType = s.getCity().get(0).get_child().get(0).getName();
+                        String defaultTypeCode = s.getCity().get(0).get_child().get(0).getId();
 
-            } else {
-                Toast.makeText(this, "网络错误！", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(this, "网络错误！", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception e) {
+
+                    Log.e("e", "initDatae: " + e.toString());
+
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+
+        @Override
+        protected void initListeners () {
+
+        }
+
+        @Override
+        protected void initAdapters () {
+
+        }
+
+        @Override
+        protected void initData () {
+
+
+
+
+
+        }
+
+
+        @Override
+        protected void onActivityResult ( int requestCode, int resultCode, Intent data){
+            super.onActivityResult(requestCode, resultCode, data);
+
+
+            if (requestCode == REQUEST_BANK && resultCode == RESULT_OK) {
+                creatAccountId = data.getStringExtra("bankId");
+                creatAccountName = data.getStringExtra("bankName");
+                tvChooseCreatAccount.setText(creatAccountName);
             }
-        } catch (Exception e) {
-
-            Log.e("e", "initDatae: " + e.toString());
-
         }
 
 
-    }
+        @OnClick({R.id.tv_back, R.id.rl_creat_account, R.id.rl_adder, R.id.submit})
+        public void onViewClicked (View view){
+            switch (view.getId()) {
+                case R.id.tv_back:
+                    finish();
+                    break;
+                case R.id.rl_creat_account:
+                    ChooseBankActivity.startActivity(this, true);
+                    break;
+                case R.id.rl_adder:
+
+                    show1();
+
+                    System.out.println(map.get(mainList.get(0)));
+                    break;
+                case R.id.submit:
+
+                    bankAccountName = etName.getText().toString();
+                    bankAccountNum = etBankCardNum.getText().toString();
+                    creatAccountSubName = etSubAccountName.getText().toString();
+
+                    if (bankAccountName.length() != 0 && bankAccountNum.length() != 0 && creatAccountId.length() != 0 && creatAccountAddressId.length() != 0 && creatAccountSubName.length() != 0) {
+                        try {
+                            String str = u.bindBankCard(bankAccountNum, creatAccountId, creatAccountAddressId, creatAccountSubName, cookie);
+
+                            Log.d("str", "str: " + str);
+
+                            APIResultBean o = j.getAPIResult(str);
+                            Toast.makeText(this, o.getMsg() + "", Toast.LENGTH_SHORT).show();
+                            if (o.getCode()==1) {
+                                finish();
+                            }
+                        } catch (Exception e) {
+                            Log.e("onViewClicked", "onViewClicked: " + e.toString());
+                        }
 
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-
-        if (requestCode == REQUEST_BANK && resultCode == RESULT_OK) {
-            creatAccountId = data.getStringExtra("bankId");
-            creatAccountName = data.getStringExtra("bankName");
-            tvChooseCreatAccount.setText(creatAccountName);
-        }
-    }
-
-
-    @OnClick({R.id.tv_back, R.id.rl_creat_account, R.id.rl_adder, R.id.submit})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.tv_back:
-                finish();
-                break;
-            case R.id.rl_creat_account:
-                ChooseBankActivity.startActivity(this, true);
-                break;
-            case R.id.rl_adder:
-
-                show1();
-
-                System.out.println(map.get(mainList.get(0)));
-                break;
-            case R.id.submit:
-
-                bankAccountName = etName.getText().toString();
-                bankAccountNum = etBankCardNum.getText().toString();
-                creatAccountSubName = etSubAccountName.getText().toString();
-
-                if (bankAccountName.length() != 0 && bankAccountNum.length() != 0 && creatAccountId.length() != 0 && creatAccountAddressId.length() != 0 && creatAccountSubName.length() != 0) {
-                    try {
-                        String str = u.bindBankCard(bankAccountNum, creatAccountId, creatAccountAddressId, creatAccountSubName, cookie);
-
-                        Log.d("str", "str: " + str);
-
-                        APIResultBean o = j.getAPIResult(str);
-                        Toast.makeText(this, o.getMsg() + "", Toast.LENGTH_SHORT).show();
-
-                    } catch (Exception e) {
-                        Log.e("onViewClicked", "onViewClicked: " + e.toString());
-
+                    } else {
+                        Toast.makeText(this, "请把信息填写完整", Toast.LENGTH_SHORT).show();
                     }
 
-
-                }
-
-                break;
+                    break;
+            }
         }
-    }
 
 
     private void show1() {
@@ -321,8 +371,6 @@ public class BankCardActivity extends BaseActivity {
             }
         });
     }
-
-
 
 
 }

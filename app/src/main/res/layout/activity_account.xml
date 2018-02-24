@@ -21,7 +21,7 @@
             android:layout_marginLeft="8dp"
             android:layout_centerVertical="true"
             android:drawablePadding="10dp"
-            android:text="今日收益"
+            android:text="收益"
             android:textSize="20sp"
             android:textColor="@android:color/white"
             android:drawableLeft="@mipmap/back" />
