@@ -1,26 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-
-    android:background="@color/grey_background">
+    android:background="@color/grey_background"
+    android:orientation="vertical">
 
 
     <TextView
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="15dp"
+        android:id="@+id/comment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
         android:text="常见问题"
         android:textColor="@color/grey"
-        android:textSize="16sp"
-        android:layout_marginLeft="15dp"/>
+        android:textSize="16sp" />
 
     <RelativeLayout
         android:id="@+id/rl_1"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:layout_below="@id/comment"
         android:layout_marginTop="1dp"
         android:background="@color/white">
 
@@ -54,6 +55,7 @@
         android:id="@+id/rl_2"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:layout_below="@id/rl_1"
         android:layout_marginTop="1dp"
         android:background="@color/white">
 
@@ -87,6 +89,7 @@
         android:id="@+id/rl_3"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:layout_below="@id/rl_2"
         android:layout_marginTop="1dp"
         android:background="@color/white">
 
@@ -116,50 +119,45 @@
             android:textSize="16sp" />
     </RelativeLayout>
 
-    <LinearLayout
+
+    <RelativeLayout
+
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="bottom"
-        >
-        <RelativeLayout
+        android:layout_height="100dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white">
 
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:background="@color/white"
-            >
-            <Button
-                style="?android:attr/borderlessButtonStyle"
-                android:id="@+id/btn_phone_customer"
-                android:layout_width="150dp"
-                android:layout_height="50dp"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="15dp"
-                android:layout_centerVertical="true"
-                android:background="@drawable/shape_btn_resgister"
-                android:drawableLeft="@mipmap/phone2"
-                android:text="电话客服"
-                android:paddingLeft="15dp"
-                android:textColor="@color/white"
-                android:textSize="19sp" />
+        <Button
+            android:id="@+id/btn_phone_customer"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:background="@drawable/shape_btn_resgister"
+            android:drawableLeft="@mipmap/phone2"
+            android:paddingLeft="15dp"
+            android:text="电话客服"
+            android:textColor="@color/white"
+            android:textSize="19sp" />
 
-            <Button
-                android:paddingLeft="15dp"
-                style="?android:attr/borderlessButtonStyle"
-                android:id="@+id/btn_online_customer"
-                android:layout_width="150dp"
-                android:layout_height="50dp"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="15dp"
-                android:layout_centerVertical="true"
-                android:background="@drawable/shape_btn_customer_2"
-                android:drawableLeft="@mipmap/online"
+        <Button
+            android:id="@+id/btn_online_customer"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/shape_btn_customer_2"
+            android:drawableLeft="@mipmap/online"
+            android:paddingLeft="15dp"
 
-                android:text="在线客服"
-                android:textColor="@color/white"
-                android:textSize="19sp" />
-        </RelativeLayout>
-    </LinearLayout>
+            android:text="在线客服"
+            android:textColor="@color/white"
+            android:textSize="19sp" />
+    </RelativeLayout>
 
 
-
-</LinearLayout>
+</RelativeLayout>

@@ -49,7 +49,7 @@
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:tag="共%s1条记录  获得%s2积分"
-            android:text="共 条记录  获得 积分"
+            android:text="共0条记录  获得0积分"
             android:textColor="@color/text_color"
             android:textSize="17sp" />
 

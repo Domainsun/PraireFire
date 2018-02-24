@@ -61,8 +61,8 @@ public class SharePopWindow extends PopupWindow implements View.OnClickListener 
     private void initView() {
         info1  =  mainView.findViewById(R.id.share_info_how1);
         info2  =  mainView.findViewById(R.id.share_info_how2);
-        TextViewUtils.changeFontColor(context,info1,2,3,R.color.grey,R.color.orange);
-        TextViewUtils.changeFontColor(context,info2,1,4,R.color.grey,R.color.orange);
+        TextViewUtils.changeFontColor(context,info1,3,4,R.color.grey,R.color.orange);
+        TextViewUtils.changeFontColor(context,info2,1,3,R.color.grey,R.color.orange);
         QRCode =  mainView.findViewById(R.id.share_qr);
         take =  mainView.findViewById(R.id.share_weixin);
         take.setOnClickListener(this);

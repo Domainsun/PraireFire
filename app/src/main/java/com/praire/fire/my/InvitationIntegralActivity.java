@@ -143,9 +143,6 @@ public class InvitationIntegralActivity extends BaseActivity {
                 break;
             case R.id.btn_share:
                 showShareDialog();
-//                startShare();
-
-
                 break;
         }
     }
@@ -156,13 +153,11 @@ public class InvitationIntegralActivity extends BaseActivity {
         poop.setOnItemClickListener(new SharePopWindow.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                if (position == 1) {
+                if (position == 1) {//分享到微信
                     mTargetScene = SendMessageToWX.Req.WXSceneSession;
-//                mTargetScene = SendMessageToWX.Req.WXSceneTimeline;
 //                mTargetScene = SendMessageToWX.Req.WXSceneFavorite;
 
-                } else if (position == 2) {
-//                    mTargetScene = SendMessageToWX.Req.WXSceneSession;
+                } else if (position == 2) {//分享到微信朋友圈
                 mTargetScene = SendMessageToWX.Req.WXSceneTimeline;
 //                mTargetScene = SendMessageToWX.Req.WXSceneFavorite;
                 }
