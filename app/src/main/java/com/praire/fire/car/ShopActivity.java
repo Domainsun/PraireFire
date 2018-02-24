@@ -188,7 +188,7 @@ public class ShopActivity extends BaseActivity {
         //添加分割线
         recyclerview.addItemDecoration(new RecycleViewDivider(
                 this, LinearLayoutManager.HORIZONTAL));
-        recyclerview.setNestedScrollingEnabled(false);
+//        recyclerview.setNestedScrollingEnabled(false);
     }
 
     @Override

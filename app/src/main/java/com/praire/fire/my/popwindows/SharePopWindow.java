@@ -20,6 +20,7 @@ import com.praire.fire.R;
 import com.praire.fire.common.ConstanUrl;
 import com.praire.fire.common.Constants;
 import com.praire.fire.utils.SharePreferenceMgr;
+import com.praire.fire.utils.TextViewUtils;
 import com.uuzuche.lib_zxing.activity.CodeUtils;
 
 import java.util.Hashtable;
@@ -34,7 +35,7 @@ public class SharePopWindow extends PopupWindow implements View.OnClickListener 
 
     private Activity context;
     private View mainView;
-    private TextView take, photo;
+    private TextView take, photo,info1,info2;
     private ImageView cancer,QRCode;
     public SharePopWindow(final Activity context) {
         super(context);
@@ -58,7 +59,10 @@ public class SharePopWindow extends PopupWindow implements View.OnClickListener 
     }
 
     private void initView() {
-
+        info1  =  mainView.findViewById(R.id.share_info_how1);
+        info2  =  mainView.findViewById(R.id.share_info_how2);
+        TextViewUtils.changeFontColor(context,info1,2,3,R.color.grey,R.color.orange);
+        TextViewUtils.changeFontColor(context,info2,1,4,R.color.grey,R.color.orange);
         QRCode =  mainView.findViewById(R.id.share_qr);
         take =  mainView.findViewById(R.id.share_weixin);
         take.setOnClickListener(this);

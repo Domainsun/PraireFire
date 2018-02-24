@@ -184,7 +184,7 @@
 
         <!--分享-->
         <!-- QQ SDK 需要註冊Activity -->
-         <activity
+       <!--  <activity
             android:name="com.tencent.connect.common.AssistActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="behind"
@@ -198,10 +198,10 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="tencent222222" />  <!--    ;主要是因为这个scheme，回调时候因为找这个Activity才出现选择框
-                  -->
+                <data android:scheme="tencent222222" />  &lt;!&ndash;    ;主要是因为这个scheme，回调时候因为找这个Activity才出现选择框
+                  &ndash;&gt;
             </intent-filter>
-        </activity>
+        </activity>-->
         <!-- QQ SDK 需要註冊 Activity -->
         <activity
             android:name=".wxapi.WXEntryActivity"
