@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -111,6 +112,9 @@ public abstract class BaseActivity extends AppCompatActivity {
                     Log.d("isSign222222", "isSign222222: " + result);
                     Intent i = new Intent(context, SignAcitvity.class);
                     context.startActivity(i);
+
+
+
                 }
 
             }
@@ -136,8 +140,11 @@ public abstract class BaseActivity extends AppCompatActivity {
                     networkResponse(msg);
                 }
             }
+
         };
     }
+
+
 
     /**
      * @param msg
