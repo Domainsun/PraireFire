@@ -301,9 +301,6 @@ public class OrderManageActivity extends BaseActivity implements TabLayout.OnTab
                 } else {
                     Toast.makeText(OrderManageActivity.this, "网络错误！", Toast.LENGTH_SHORT).show();
                 }
-
-
-
             }
         });
 

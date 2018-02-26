@@ -36,6 +36,8 @@ public class OrderChangeAdapter extends RecyclerView.Adapter<OrderChangeAdapter.
     public OrderChangeAdapter(Context context) {
         this.context = context;
         inflater = LayoutInflater.from(context);
+
+
     }
 
 
